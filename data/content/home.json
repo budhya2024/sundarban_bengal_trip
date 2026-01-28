@@ -1,0 +1,37 @@
+{
+  "hero": {
+    "tag": "UNESCO World Heritage Site",
+    "title": "Discover the Wild Beauty of",
+    "titleHighlight": "Sundarbans",
+    "description": "Embark on an unforgettable journey through the world's largest mangrove forest. Witness the majestic Royal Bengal Tiger and explore the enchanting waterways of this natural wonder.",
+    "buttons": {
+      "primary": {
+        "text": "Explore Tours",
+        "link": "/packages"
+      },
+      "secondary": {
+        "text": "Plan Your Trip",
+        "link": "/contact"
+      }
+    },
+    "stats": [
+      {
+        "icon": "MapPin",
+        "value": "10K+",
+        "label": "Sq. Km Forest"
+      },
+      {
+        "icon": "Users",
+        "value": "50K+",
+        "label": "Happy Travelers"
+      },
+      {
+        "icon": "Star",
+        "value": "4.9",
+        "label": "Rating"
+      }
+    ],
+    "videoUrl": "https://cdn.pixabay.com/video/2020/05/25/40130-424930933_large.mp4",
+    "posterUrl": "https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?w=1920"
+  }
+}
