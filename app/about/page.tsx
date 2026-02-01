@@ -67,9 +67,9 @@ const About = () => {
       <Navbar />
 
       <PageHeader
-        title="About Sundarban Bengal Trips"
+        title="About Sundarban Tours"
         subtitle="For over 15 years, we've been the trusted gateway to the magnificent Sundarbans, helping thousands of travelers experience the magic of the world's largest mangrove forest."
-        backgroundImage={"/assets/hero-sundarban.jpg"}
+        backgroundImage="/assets/hero-sundarban.jpg"
       />
 
       {/* Story Section */}
@@ -85,8 +85,8 @@ const About = () => {
               </h2>
               <div className="space-y-4 text-muted-foreground">
                 <p>
-                  Sundarban Bengal Trips was founded in 2009 by Rajiv Banerjee,
-                  a lifelong nature enthusiast who grew up in the villages
+                  Sundarban Tours was founded in 2009 by Rajiv Banerjee, a
+                  lifelong nature enthusiast who grew up in the villages
                   surrounding the Sundarban delta. His deep connection to the
                   land and its wildlife inspired him to share this incredible
                   ecosystem with the world.
@@ -107,16 +107,14 @@ const About = () => {
             </div>
 
             <div data-aos="fade-left" className="relative">
-              <img
-                src={"/assets/gallery-tiger.jpg"}
-                alt="Royal Bengal Tiger"
-                className="rounded-2xl shadow-elevated w-full h-[400px] object-cover"
-              />
-              <img
-                src={"/assets/gallery-boat.jpg"}
-                alt="Boat Safari"
-                className="absolute -bottom-8 -left-8 w-48 h-48 rounded-xl shadow-elevated object-cover border-4 border-background"
-              />
+              <div className="relative rounded-2xl overflow-hidden shadow-elevated">
+                <img
+                  src="/assets/725c99c0eb67608c3a0870e428cf09d2.gif"
+                  alt="Royal Bengal Tiger"
+                  className="w-full h-auto object-contain "
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/40 to-transparent scale-x-[-1]" />
+              </div>
             </div>
           </div>
         </div>

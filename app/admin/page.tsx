@@ -9,14 +9,14 @@ export default function AdminDashboard() {
       title: "Home Page",
       description: "Edit hero section, stats, and main content",
       icon: Home,
-      href: "/admin/pages/home",
+      href: "/admin/home",
       lastUpdated: "Just now",
     },
     {
-      title: "About Page",
-      description: "Manage about section content",
+      title: "Manage Blogs",
+      description: "Manage Blogs",
       icon: FileText,
-      href: "/admin/pages/about",
+      href: "/admin/blogs",
       lastUpdated: "2 days ago",
     },
     {

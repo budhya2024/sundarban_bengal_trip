@@ -232,3 +232,23 @@
     }
   }
 }
+
+
+/* Tiptap Editor Custom Styles */
+.ProseMirror blockquote {
+  border-left: 4px solid #f59e0b; /* The Orange/Gold Line */
+  padding-left: 1rem;             /* Space between line and text */
+  margin-left: 0;
+  margin-right: 0;
+  font-style: italic;
+  color: #4a6741;                 /* The Green Text */
+  background: transparent;
+}
+
+/* Optional: Remove the default quote marks if Tailwind adds them */
+.ProseMirror blockquote p:first-of-type::before {
+  content: none;
+}
+.ProseMirror blockquote p:last-of-type::after {
+  content: none;
+}
