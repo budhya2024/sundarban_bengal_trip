@@ -7,9 +7,9 @@ import { cn } from "@/lib/utils";
 
 const navigation = [
   { name: "Dashboard", href: "/admin", icon: LayoutDashboard },
-  { name: "Home Page", href: "/admin/pages/home", icon: Home },
-  { name: "Pages", href: "/admin/pages", icon: FileText },
-  { name: "Media", href: "/admin/media", icon: Image },
+  { name: "Home Page", href: "/admin/home", icon: Home },
+  { name: "Manage Blogs", href: "/admin/blogs", icon: FileText },
+  { name: "Gallery", href: "/admin/gallery", icon: Image },
   { name: "Settings", href: "/admin/settings", icon: Settings },
 ];
 

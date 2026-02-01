@@ -1,4 +1,5 @@
 "use client";
+
 import { useEffect } from "react";
 import AOS from "aos";
 import { Shield, Award, Heart, Compass } from "lucide-react";
@@ -43,9 +44,9 @@ export const AboutSection = () => {
           >
             <div className="relative rounded-2xl overflow-hidden shadow-elevated">
               <img
-                src="/assets/gallery-tiger.jpg"
+                src="/assets/bdb854c5503dc026fef98347e8dd89d1.gif"
                 alt="Royal Bengal Tiger"
-                className="w-full h-[500px] object-cover"
+                className="w-full h-auto object-contain "
               />
               <div className="absolute inset-0 bg-gradient-to-t from-primary/40 to-transparent" />
             </div>
@@ -82,11 +83,11 @@ export const AboutSection = () => {
               Your Gateway to the Mystical Sundarbans
             </h2>
             <p className="text-muted-foreground leading-relaxed mb-6">
-              For over 15 years, Sundarban Bengal Trips has been the leading
-              travel agency specializing in expeditions to the magnificent
-              Sundarbans. Our passion for nature and commitment to sustainable
-              tourism has made us the preferred choice for wildlife enthusiasts
-              and adventure seekers.
+              For over 15 years, Sundarban Tours has been the leading travel
+              agency specializing in expeditions to the magnificent Sundarbans.
+              Our passion for nature and commitment to sustainable tourism has
+              made us the preferred choice for wildlife enthusiasts and
+              adventure seekers.
             </p>
             <p className="text-muted-foreground leading-relaxed mb-8">
               From thrilling tiger spotting safaris to peaceful bird watching

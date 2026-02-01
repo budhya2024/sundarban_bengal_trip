@@ -8,18 +8,10 @@ import {
   YoutubeIcon,
 } from "@/components/icons/SocialIcons";
 import Link from "next/link";
-
-interface BlogPost {
-  id: string;
-  slug: string;
-  title: string;
-  image: string;
-  date: string;
-}
+import { BlogType } from "@/db/schema";
 
 interface BlogSidebarProps {
-  latestPosts: BlogPost[];
-  currentPostId?: string;
+  latestPosts: BlogType[];
 }
 
 const tags = [
@@ -33,14 +25,7 @@ const tags = [
   "Nature",
 ];
 
-export const BlogSidebar = ({
-  latestPosts,
-  currentPostId,
-}: BlogSidebarProps) => {
-  const filteredPosts = latestPosts
-    .filter((post) => post.id !== currentPostId)
-    .slice(0, 4);
-
+export const BlogSidebar = ({ latestPosts }: BlogSidebarProps) => {
   return (
     <aside className="space-y-8">
       {/* Latest Posts */}
@@ -49,7 +34,7 @@ export const BlogSidebar = ({
           Latest Posts
         </h3>
         <div className="space-y-4">
-          {filteredPosts.map((post) => (
+          {latestPosts.map((post) => (
             <Link
               key={post.id}
               href={`/blog/${post.slug}`}
@@ -57,7 +42,7 @@ export const BlogSidebar = ({
             >
               <div className="w-20 h-20 rounded-lg overflow-hidden flex-shrink-0">
                 <img
-                  src={post.image}
+                  src={post.image || "/assets/placeholder.svg"}
                   alt={post.title}
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                 />
@@ -68,7 +53,7 @@ export const BlogSidebar = ({
                 </h4>
                 <div className="flex items-center gap-1 text-xs text-muted-foreground mt-2">
                   <Calendar className="w-3 h-3" />
-                  {post.date}
+                  {post.createdAt.toDateString()}
                 </div>
               </div>
             </Link>
