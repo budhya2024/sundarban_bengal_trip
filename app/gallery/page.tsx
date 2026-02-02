@@ -11,6 +11,7 @@ const page = async () => {
     getAllGalleryItems(),
     fetchGallertyCategories(),
   ]);
+
   return (
     <GalleryPage
       galleryItems={galleryItems || []}
