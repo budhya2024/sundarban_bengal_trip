@@ -40,7 +40,7 @@ export const SocialSidebar = () => {
 
   if (pathname?.includes("admin")) return null;
   return (
-    <div className="fixed right-0 top-1/2 -translate-y-1/2 z-40 hidden lg:flex flex-col gap-1">
+    <div className="fixed right-2 top-1/2 -translate-y-1/2 z-40 hidden lg:flex flex-col gap-2">
       {socialLinks.map((social) => (
         <a
           key={social.label}
@@ -48,7 +48,7 @@ export const SocialSidebar = () => {
           target="_blank"
           rel="noopener noreferrer"
           aria-label={social.label}
-          className={`w-12 h-12 flex items-center justify-center text-primary-foreground transition-all duration-300 hover:opacity-90 hover:scale-110 ${social.bgColor}`}
+          className={`w-12 h-12 flex items-center justify-center text-primary-foreground transition-all rounded-full scale-90 hover:scale-100 duration-300 ${social.bgColor}`}
         >
           <social.Icon className="w-5 h-5" />
         </a>

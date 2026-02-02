@@ -7,6 +7,7 @@ import {
 } from "@/components/icons/SocialIcons";
 import { GoogleIcon } from "@/components/icons/GoogleIcon";
 import Link from "next/link";
+import Image from "next/image";
 
 export const Footer = () => {
   return (
@@ -16,10 +17,13 @@ export const Footer = () => {
           {/* Brand */}
           <div>
             <Link href="/" className="flex items-center gap-2 mb-6">
-              <TreePine className="w-8 h-8" />
-              <span className="font-display text-xl font-bold">
-                Sundarban<span className="text-secondary">Tours</span>
-              </span>
+              <Image
+                src="/assets/logo.png"
+                alt="logo"
+                height={200}
+                width={200}
+                className="w-30 h-auto"
+              />
             </Link>
             <p className="text-primary-foreground/80 leading-relaxed mb-4">
               Experience the magic of the world's largest mangrove forest.
@@ -130,9 +134,8 @@ export const Footer = () => {
               <li className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-secondary mt-0.5 flex-shrink-0" />
                 <span className="text-primary-foreground/80">
-                  123 Forest Road, Canning
-                  <br />
-                  South 24 Parganas, West Bengal
+                  Dulki Purbo Para Road, Village & Post: Dulki, South 24
+                  Parganas, West Bengal – 743370, India
                 </span>
               </li>
               <li className="flex items-center gap-3">

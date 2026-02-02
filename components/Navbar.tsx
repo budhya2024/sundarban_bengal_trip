@@ -6,6 +6,7 @@ import { Menu, X, TreePine, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
 
 const tourPackages = [
   {
@@ -85,24 +86,13 @@ export const Navbar = () => {
         <nav className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 group z-50">
-            <div className="relative">
-              <TreePine
-                className={`w-8 h-8 transition-colors duration-300 ${
-                  isScrolled || isOpen
-                    ? "text-primary"
-                    : "text-primary-foreground"
-                }`}
-              />
-            </div>
-            <span
-              className={`font-display text-xl font-bold transition-colors duration-300 ${
-                isScrolled || isOpen
-                  ? "text-foreground"
-                  : "text-primary-foreground"
-              }`}
-            >
-              Sundarban<span className="text-secondary">Tours</span>
-            </span>
+            <Image
+              src="/assets/logo.png"
+              height={200}
+              width={200}
+              alt="logo"
+              className="w-40 h-auto"
+            />
           </Link>
 
           {/* Desktop Navigation */}
