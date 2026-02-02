@@ -6,26 +6,33 @@ import { Star, Quote } from "lucide-react";
 
 const testimonials = [
   {
-    name: "Rajesh Kumar",
-    location: "Mumbai",
+    name: "Polash Mondal",
+    location: "Nadia",
     rating: 5,
     text: "An absolutely incredible experience! We spotted a Royal Bengal Tiger on our first safari. The guides were knowledgeable and the houseboat accommodation was luxurious.",
-    avatar: "RK",
+    avatar: "pM",
   },
   {
-    name: "Sarah Mitchell",
-    location: "London, UK",
+    name: "Arup Mondal",
+    location: "Mednipur",
     rating: 5,
     text: "Sundarban Bengal Trips made our wildlife photography expedition unforgettable. The attention to detail and local expertise exceeded all expectations.",
-    avatar: "SM",
+    avatar: "AM",
   },
   {
     name: "Amit Sharma",
-    location: "Delhi",
+    location: "kolkata",
     rating: 5,
     text: "Perfect family trip! The kids loved every moment of the adventure. Safe, well-organized, and absolutely magical. Highly recommend!",
     avatar: "AS",
   },
+  //   {
+  //   name: "Amit Sharma",
+  //   location: "kolkata",
+  //   rating: 5,
+  //   text: "Perfect family trip! The kids loved every moment of the adventure. Safe, well-organized, and absolutely magical. Highly recommend!",
+  //   avatar: "AS",
+  // },
 ];
 
 export const TestimonialsSection = () => {

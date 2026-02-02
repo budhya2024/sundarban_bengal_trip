@@ -34,7 +34,27 @@ const galleryImages = [
   {
     src: "/assets/gallery-sunset.jpg",
     alt: "Sundarban Sunset",
-    span: "col-span-2 row-span-1",
+    span: "col-span-2 row-span-2",
+  },
+  {
+    src: "/assets/gallery-boat.jpg",
+    alt: "Traditional Boat Safari",
+    span: "col-span-1 row-span-1",
+  },
+  {
+    src: "/assets/gallery-bird.jpg",
+    alt: "Kingfisher Bird",
+    span: "col-span-1 row-span-1",
+  },
+  {
+    src: "/assets/gallery-deer.jpg",
+    alt: "Spotted Deer",
+    span: "col-span-1 row-span-1",
+  },
+  {
+    src: "/assets/gallery-crocodile.jpg",
+    alt: "Saltwater Crocodile",
+    span: "col-span-1 row-span-1",
   },
 ];
 
