@@ -88,7 +88,7 @@ export const GallerySection = () => {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 auto-rows-[200px]">
           {galleryImages.map((image, index) => (
             <div
-              key={image.alt}
+              key={index}
               data-aos="fade-up"
               data-aos-delay={index * 100}
               className={`${image.span} relative rounded-xl overflow-hidden group cursor-pointer`}

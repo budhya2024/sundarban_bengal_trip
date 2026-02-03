@@ -1,5 +1,12 @@
 import { InferInsertModel, InferSelectModel } from "drizzle-orm";
-import { pgTable, text, boolean, timestamp, uuid } from "drizzle-orm/pg-core";
+import {
+  pgTable,
+  text,
+  boolean,
+  timestamp,
+  uuid,
+  jsonb,
+} from "drizzle-orm/pg-core";
 
 export const blogs = pgTable("blog", {
   id: uuid("id").primaryKey().defaultRandom(),
@@ -35,3 +42,13 @@ export const gallery = pgTable("gallery", {
 
 export type GalleryType = InferSelectModel<typeof gallery>;
 export type NewGalleryType = InferInsertModel<typeof gallery>;
+
+export const siteSettings = pgTable("site_settings", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  key: text("key").notNull().unique(),
+  value: jsonb("value").notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+export type SiteSetting = typeof siteSettings.$inferSelect;
+export type NewSiteSetting = typeof siteSettings.$inferInsert;

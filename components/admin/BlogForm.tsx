@@ -188,7 +188,7 @@ export default function BlogForm({ initialData }: { initialData?: BlogType }) {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="max-w-[1600px] mx-auto pb-10"
+      className="max-w-[1600px] mx-auto pb-10 p-6"
     >
       {/* --- HEADER --- */}
       <div className="flex items-center justify-between mb-5 border-b border-gray-200 pb-4 sticky top-0">
