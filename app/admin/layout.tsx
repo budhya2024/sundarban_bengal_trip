@@ -37,7 +37,7 @@ export default function AdminLayout({
 
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Header */}
-        <header className="bg-card border-b border-border px-6 py-4 flex items-center justify-between">
+        {/* <header className="bg-card border-b border-border px-6 py-4 flex items-center justify-between">
           <div>
             <h2 className="text-2xl font-display font-bold text-foreground">
               Admin Panel
@@ -57,10 +57,10 @@ export default function AdminLayout({
             <LogOut className="w-4 h-4" />
             {isLoggingOut ? "Logging out..." : "Logout"}
           </Button>
-        </header>
+        </header> */}
 
         {/* Main Content */}
-        <main className="flex-1 overflow-y-auto p-6">{children}</main>
+        <main className="flex-1 overflow-y-auto">{children}</main>
       </div>
     </div>
   );

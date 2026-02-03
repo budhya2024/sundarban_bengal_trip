@@ -17,7 +17,7 @@ export default async function BlogList() {
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200">
+    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
       {/* Header */}
       <div className="flex items-center justify-between p-6 border-b border-gray-100">
         <div>
