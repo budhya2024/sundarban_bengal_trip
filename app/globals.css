@@ -148,13 +148,6 @@
     max-width: 100vw;
   }
 
-  /* Mobile section spacing */
-  @media (max-width: 767px) {
-    section {
-      padding-top: 40px !important;
-      padding-bottom: 40px !important;
-    }
-  }
 }
 
 @layer components {

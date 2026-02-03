@@ -31,31 +31,7 @@ const galleryImages = [
     alt: "Saltwater Crocodile",
     span: "col-span-1 row-span-1",
   },
-  {
-    src: "/assets/gallery-sunset.jpg",
-    alt: "Sundarban Sunset",
-    span: "col-span-2 row-span-2",
-  },
-  {
-    src: "/assets/gallery-boat.jpg",
-    alt: "Traditional Boat Safari",
-    span: "col-span-1 row-span-1",
-  },
-  {
-    src: "/assets/gallery-bird.jpg",
-    alt: "Kingfisher Bird",
-    span: "col-span-1 row-span-1",
-  },
-  {
-    src: "/assets/gallery-deer.jpg",
-    alt: "Spotted Deer",
-    span: "col-span-1 row-span-1",
-  },
-  {
-    src: "/assets/gallery-crocodile.jpg",
-    alt: "Saltwater Crocodile",
-    span: "col-span-1 row-span-1",
-  },
+  
 ];
 
 export const GallerySection = () => {
@@ -64,13 +40,13 @@ export const GallerySection = () => {
   }, []);
 
   return (
-    <section className="py-24 bg-background">
+    <section className="py-10 md:py-20 bg-muted">
       <div className="container mx-auto px-4">
         {/* Header */}
         <div
           data-aos="fade-up"
           data-aos-duration="600"
-          className="text-center mb-16"
+          className="text-center mb-8 md:mb-16"
         >
           <span className="text-secondary font-medium text-sm uppercase tracking-wider">
             Gallery

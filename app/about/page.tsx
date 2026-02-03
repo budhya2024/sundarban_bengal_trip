@@ -73,7 +73,7 @@ const About = () => {
       />
 
       {/* Story Section */}
-      <section className="py-24 bg-background">
+      <section className="py-10 md:py-20 bg-background">
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div data-aos="fade-right">
@@ -121,7 +121,7 @@ const About = () => {
       </section>
 
       {/* Mission & Vision */}
-      <section className="py-24 bg-muted">
+      <section className="py-10 md:py-20 bg-muted">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-8">
             <div
@@ -164,9 +164,9 @@ const About = () => {
       </section>
 
       {/* Values */}
-      <section className="py-24 bg-background">
+      <section className="py-10 md:py-20 bg-background">
         <div className="container mx-auto px-4">
-          <div data-aos="fade-up" className="text-center mb-16">
+          <div data-aos="fade-up" className="text-center mb-8 md:mb-16">
             <span className="text-secondary font-medium text-sm uppercase tracking-wider">
               Our Values
             </span>
@@ -199,9 +199,9 @@ const About = () => {
       </section>
 
       {/* Team */}
-      <section className="py-24 bg-primary">
+      {/* <section className="py-10 md:py-20 bg-primary">
         <div className="container mx-auto px-4">
-          <div data-aos="fade-up" className="text-center mb-16">
+          <div data-aos="fade-up" className="text-center mb-8 md:mb-16">
             <span className="text-secondary font-medium text-sm uppercase tracking-wider">
               Our Team
             </span>
@@ -234,7 +234,7 @@ const About = () => {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       <Footer />
     </main>

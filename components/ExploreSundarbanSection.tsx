@@ -39,7 +39,7 @@ const features = [
 
 export const ExploreSundarbanSection = () => {
   return (
-    <section className="py-20 bg-muted">
+    <section className="py-10 md:py-20 bg-muted">
       <div className="container mx-auto px-4">
         {/* Section Header */}
         <div className="text-center mb-12" data-aos="fade-up">
@@ -55,11 +55,11 @@ export const ExploreSundarbanSection = () => {
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-12 items-start">
+        <div className="grid lg:grid-cols-2 gap-6 md:gap-12 items-start">
           {/* Left Side - Details */}
-          <div data-aos="fade-right">
+          <div data-aos="fade-right" className="lg:sticky top-24">
             {/* Features Grid */}
-            <div className="grid sm:grid-cols-2 gap-6 mb-8">
+            <div className="grid sm:grid-cols-2 gap-6 mb-4 lg:mb-8">
               {features.map((feature, index) => (
                 <div
                   key={index}
@@ -81,7 +81,7 @@ export const ExploreSundarbanSection = () => {
             </div>
 
             {/* Description */}
-            <div className="bg-card p-6 rounded-xl shadow-soft mb-8">
+            <div className="bg-card p-6 rounded-xl shadow-soft lg:mb-8">
               <h3 className="font-display text-xl font-bold text-foreground mb-4">
                 Journey from Kolkata
               </h3>
@@ -103,7 +103,7 @@ export const ExploreSundarbanSection = () => {
           </div>
 
           {/* Right Side - Map with Highlighted Places */}
-          <div data-aos="fade-left" className="sticky top-24">
+          <div data-aos="fade-left">
             <div className="bg-card rounded-2xl shadow-elevated overflow-hidden">
               {/* Map Container */}
               <div className="relative aspect-square bg-primary/5">

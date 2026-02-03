@@ -26,7 +26,7 @@ const PrivacyPolicy = () => {
         backgroundImage="/assets/hero-sundarban.jpg"
       />
 
-      <section className="py-24 bg-background">
+      <section className="py-10 md:py-20 bg-background">
         <div className="container mx-auto px-4 max-w-4xl">
           <div
             data-aos="fade-up"

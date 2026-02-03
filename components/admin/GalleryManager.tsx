@@ -402,7 +402,7 @@ export default function GalleryManager({
           ))}
         </div>
       ) : (
-        <div className="flex flex-col items-center justify-center py-20 bg-gray-50 rounded-xl border-2 border-dashed border-gray-200 text-gray-500">
+        <div className="flex flex-col items-center justify-center py-10 md:py-20 bg-gray-50 rounded-xl border-2 border-dashed border-gray-200 text-gray-500">
           <ImageIcon className="text-gray-300 mb-3" size={32} />
           <p>No images found</p>
         </div>

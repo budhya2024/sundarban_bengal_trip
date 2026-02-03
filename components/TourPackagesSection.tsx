@@ -61,13 +61,13 @@ export const TourPackagesSection = () => {
   }, []);
 
   return (
-    <section className="py-24 bg-muted">
+    <section className="py-10 md:py-20 ">
       <div className="container mx-auto px-4">
         {/* Header */}
         <div
           data-aos="fade-up"
           data-aos-duration="600"
-          className="text-center mb-16"
+          className="text-center mb-8 md:mb-16"
         >
           <span className="text-secondary font-medium text-sm uppercase tracking-wider">
             Tour Packages

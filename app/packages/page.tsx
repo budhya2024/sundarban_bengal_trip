@@ -118,7 +118,7 @@ const Packages = () => {
       />
 
       {/* Packages */}
-      <section className="py-24 bg-background">
+      <section className="py-10 md:py-20 bg-background">
         <div className="container mx-auto px-4">
           <div className="space-y-16">
             {packages.map((pkg, index) => (
