@@ -26,6 +26,7 @@ import {
   deleteGalleryItem,
 } from "@/app/admin/actions/gallery.actions";
 import convertToBase64 from "@/lib/convertToBase64";
+import { Button } from "../ui/button";
 
 // --- CUSTOM COMPONENT: Dynamic Creatable Select ---
 const CreatableSelect = ({
@@ -303,110 +304,114 @@ export default function GalleryManager({
   };
 
   return (
-    <div className="p-6 max-w-[1600px] mx-auto">
+    <div className="max-w-[1600px] mx-auto">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
-        <div>
-          <h1 className="text-3xl font-serif font-bold text-[#1a472a]">
-            Media Gallery
-          </h1>
-          <p className="text-gray-500 mt-1">
-            Manage gallery images and categories
-          </p>
+      <div className="sticky top-0 z-30 w-full border-b bg-white/80 backdrop-blur-md px-4 py-3 sm:px-10">
+        <div className="mx-auto flex max-w-7xl items-center justify-between">
+          <div>
+            <h1 className="text-2xl font-display font-bold text-foreground">
+              Media Gallery
+            </h1>
+            <p className="hidden text-xs text-slate-500 md:block">
+              Manage your visual assets across the platform
+            </p>
+          </div>
+          <Button
+            onClick={() => setIsUploadOpen(true)}
+            className="bg-emerald-700 hover:bg-emerald-800 h-10 px-6 shadow-sm"
+          >
+            <Plus className="mr-2 h-4 w-4" /> Add New Image
+          </Button>
         </div>
-        <button
-          onClick={() => setIsUploadOpen(true)}
-          className="flex items-center gap-2 bg-[#4a6741] hover:bg-[#3a5233] text-white px-5 py-2.5 rounded-lg transition-all font-medium shadow-sm"
-        >
-          <Plus size={18} /> Add New Image
-        </button>
       </div>
 
-      {/* Filters */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-4 mb-6 scrollbar-hide">
-        <button
-          onClick={() => setActiveFilter("All")}
-          className={clsx(
-            "px-4 py-1.5 rounded-full text-sm font-medium transition-colors whitespace-nowrap border",
-            activeFilter === "All"
-              ? "bg-[#1a472a] text-white border-[#1a472a]"
-              : "bg-white text-gray-600 border-gray-200 hover:bg-gray-50",
-          )}
-        >
-          All
-        </button>
-        {availableCategories.map((cat) => (
+      <div className="p-6">
+        {/* Filters */}
+        <div className="flex items-center gap-2 overflow-x-auto pb-4 mb-6 scrollbar-hide">
           <button
-            key={cat}
-            onClick={() => setActiveFilter(cat)}
+            onClick={() => setActiveFilter("All")}
             className={clsx(
-              "px-4 py-1.5 rounded-full text-sm font-medium transition-colors whitespace-nowrap border capitalize",
-              activeFilter === cat
-                ? "bg-[#4a6741] text-white border-[#4a6741]"
+              "px-4 py-1.5 rounded-full text-sm font-medium transition-colors whitespace-nowrap border",
+              activeFilter === "All"
+                ? "bg-[#1a472a] text-white border-[#1a472a]"
                 : "bg-white text-gray-600 border-gray-200 hover:bg-gray-50",
             )}
           >
-            {cat}
+            All
           </button>
-        ))}
-      </div>
-
-      {/* Gallery Grid */}
-      {filteredImages.length > 0 ? (
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-          {filteredImages.map((img) => (
-            <div
-              key={img.id}
-              className="group relative bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow"
+          {availableCategories.map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setActiveFilter(cat)}
+              className={clsx(
+                "px-4 py-1.5 rounded-full text-sm font-medium transition-colors whitespace-nowrap border capitalize",
+                activeFilter === cat
+                  ? "bg-[#4a6741] text-white border-[#4a6741]"
+                  : "bg-white text-gray-600 border-gray-200 hover:bg-gray-50",
+              )}
             >
-              <div className="relative aspect-[4/3] w-full bg-gray-100">
-                <Image
-                  src={img.url}
-                  alt={img.title}
-                  fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  className="object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-
-                {/* --- Hover Actions (Preview & Delete) --- */}
-                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
-                  {/* Preview Button */}
-                  <button
-                    onClick={() => setPreviewTarget(img)}
-                    className="p-2 bg-white text-gray-700 rounded-full hover:bg-gray-100 shadow-sm transition-transform hover:scale-110"
-                    title="Preview Image"
-                  >
-                    <Eye size={18} />
-                  </button>
-
-                  {/* Delete Button */}
-                  <button
-                    onClick={() => setDeleteTarget(img)}
-                    className="p-2 bg-white text-red-600 rounded-full hover:bg-red-50 shadow-sm transition-transform hover:scale-110"
-                    title="Delete Image"
-                  >
-                    <Trash2 size={18} />
-                  </button>
-                </div>
-
-                <span className="absolute top-2 left-2 bg-black/60 backdrop-blur-md text-white text-[10px] px-2 py-1 rounded font-medium uppercase tracking-wider">
-                  {img.category}
-                </span>
-              </div>
-              <div className="p-3 border-t border-gray-100">
-                <p className="text-sm font-medium text-gray-900 truncate">
-                  {img.title}
-                </p>
-              </div>
-            </div>
+              {cat}
+            </button>
           ))}
         </div>
-      ) : (
-        <div className="flex flex-col items-center justify-center py-10 md:py-20 bg-gray-50 rounded-xl border-2 border-dashed border-gray-200 text-gray-500">
-          <ImageIcon className="text-gray-300 mb-3" size={32} />
-          <p>No images found</p>
-        </div>
-      )}
+
+        {/* Gallery Grid */}
+        {filteredImages.length > 0 ? (
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+            {filteredImages.map((img) => (
+              <div
+                key={img.id}
+                className="group relative bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow"
+              >
+                <div className="relative aspect-[4/3] w-full bg-gray-100">
+                  <Image
+                    src={img.url}
+                    alt={img.title}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+
+                  {/* --- Hover Actions (Preview & Delete) --- */}
+                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
+                    {/* Preview Button */}
+                    <button
+                      onClick={() => setPreviewTarget(img)}
+                      className="p-2 bg-white text-gray-700 rounded-full hover:bg-gray-100 shadow-sm transition-transform hover:scale-110"
+                      title="Preview Image"
+                    >
+                      <Eye size={18} />
+                    </button>
+
+                    {/* Delete Button */}
+                    <button
+                      onClick={() => setDeleteTarget(img)}
+                      className="p-2 bg-white text-red-600 rounded-full hover:bg-red-50 shadow-sm transition-transform hover:scale-110"
+                      title="Delete Image"
+                    >
+                      <Trash2 size={18} />
+                    </button>
+                  </div>
+
+                  <span className="absolute top-2 left-2 bg-black/60 backdrop-blur-md text-white text-[10px] px-2 py-1 rounded font-medium uppercase tracking-wider">
+                    {img.category}
+                  </span>
+                </div>
+                <div className="p-3 border-t border-gray-100">
+                  <p className="text-sm font-medium text-gray-900 truncate">
+                    {img.title}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="flex flex-col items-center justify-center py-20 bg-gray-50 rounded-xl border-2 border-dashed border-gray-200 text-gray-500">
+            <ImageIcon className="text-gray-300 mb-3" size={32} />
+            <p>No images found</p>
+          </div>
+        )}
+      </div>
 
       {/* --- UPLOAD MODAL (Existing) --- */}
       {isUploadOpen && (

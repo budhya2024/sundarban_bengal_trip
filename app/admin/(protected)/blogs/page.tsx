@@ -2,6 +2,8 @@ import { Plus } from "lucide-react";
 import Link from "next/link";
 import { getAllBlogs } from "../../actions/blogs.actions";
 import BlogRows from "@/components/admin/BlogRows";
+import { Button } from "@/components/ui/button";
+import { SidebarTrigger } from "@/components/admin/SidebarTrigger";
 
 export default async function BlogList() {
   const result = await getAllBlogs();
@@ -17,28 +19,31 @@ export default async function BlogList() {
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+    <div className="bg-white rounded-lg shadow-sm border border-gray-200">
       {/* Header */}
-      <div className="flex items-center justify-between p-6 border-b border-gray-100">
-        <div>
-          <h2 className="text-2xl font-serif font-bold text-gray-900">
-            Manage Blogs
-          </h2>
-          <p className="text-sm text-gray-500 mt-1">
-            View and manage your travel articles
-          </p>
+      <div className="sticky top-0 z-30 w-full border-b bg-background/95 backdrop-blur-md px-4 py-3 sm:px-10">
+        <div className="mx-auto flex max-w-7xl items-center justify-between">
+          <div className="flex items-center gap-2">
+            <SidebarTrigger />
+            <div>
+              <h1 className="text-2xl font-display font-bold text-foreground">
+                Manage Blogs
+              </h1>
+              <p className="hidden text-xs text-slate-500 md:block">
+                Create, edit, and curate your Sundarban travel stories
+              </p>
+            </div>
+          </div>
+          <Link href="/admin/blogs/new">
+            <Button className="bg-emerald-700 hover:bg-emerald-800 h-10 px-6 shadow-sm transition-all active:scale-95">
+              <Plus className="mr-2 h-4 w-4" /> Add New Post
+            </Button>
+          </Link>
         </div>
-        <Link
-          href="/admin/blogs/new"
-          className="flex items-center gap-2 bg-[#4a6741] hover:bg-[#3a5233] text-white px-4 py-2 rounded-md transition-colors text-sm font-medium"
-        >
-          <Plus size={16} />
-          Add New Post
-        </Link>
       </div>
 
       {/* Table */}
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto p-6">
         <table className="w-full text-left border-collapse">
           <thead className="bg-gray-50">
             <tr>

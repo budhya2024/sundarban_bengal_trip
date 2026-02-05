@@ -156,7 +156,7 @@ export default function ContactAdminForm({ initialData }: ContactAdminProps) {
           </div>
         </div>
 
-        <div className="mx-auto max-w-7xl p-4 sm:p-10">
+        <div className="mx-auto sm:p-10">
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
             <div className="space-y-8 lg:col-span-8">
               {/* Hero Settings */}
