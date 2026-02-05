@@ -107,14 +107,16 @@ const About = () => {
             </div>
 
             <div data-aos="fade-left" className="relative">
-              <div className="relative rounded-2xl overflow-hidden shadow-elevated">
-                <img
-                  src="/assets/725c99c0eb67608c3a0870e428cf09d2.gif"
-                  alt="Royal Bengal Tiger"
-                  className="w-full h-auto object-contain "
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/40 to-transparent scale-x-[-1]" />
-              </div>
+              <img
+                src="/assets/gallery-tiger.jpg"
+                alt="Royal Bengal Tiger"
+                className="rounded-2xl shadow-elevated w-full h-[400px] object-cover"
+              />
+              <img
+                src="/assets/gallery-boat.jpg"
+                alt="Boat Safari"
+                className="absolute -bottom-8 -left-8 w-48 h-48 rounded-xl shadow-elevated object-cover border-4 border-background"
+              />
             </div>
           </div>
         </div>
