@@ -1,12 +1,14 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import Image from "next/image";
+import { Button } from "@/components/ui/button";
+
+/* ------------------ DATA ------------------ */
 
 const tourPackages = [
   { name: "Day Trip Package", path: "/packages/day-trip" },
@@ -24,12 +26,15 @@ const navLinks = [
   { name: "Contact", path: "/contact" },
 ];
 
+/* ------------------ COMPONENT ------------------ */
+
 export const Navbar = () => {
+  const pathname = usePathname();
+
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMobilePackagesOpen, setIsMobilePackagesOpen] = useState(false);
-  const pathname = usePathname();
 
   /* Scroll shadow */
   useEffect(() => {
@@ -45,7 +50,7 @@ export const Navbar = () => {
     setIsMobilePackagesOpen(false);
   }, [pathname]);
 
-  /* 🔒 BODY SCROLL LOCK (FIXED) */
+  /* Body scroll lock */
   useEffect(() => {
     if (isOpen) {
       const scrollY = window.scrollY;
@@ -62,7 +67,7 @@ export const Navbar = () => {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
           ? "bg-background/95 backdrop-blur-md shadow-soft"
           : "bg-transparent"
@@ -70,7 +75,7 @@ export const Navbar = () => {
     >
       <div className="container mx-auto px-4">
         <nav className="flex items-center justify-between h-20">
-          {/* Logo */}
+          {/* LOGO */}
           <Link href="/" className="z-50">
             <Image
               src="/assets/logo.png"
@@ -81,7 +86,7 @@ export const Navbar = () => {
             />
           </Link>
 
-          {/* Desktop Nav */}
+          {/* DESKTOP NAV */}
           <div className="hidden lg:flex items-center gap-8">
             {navLinks.map((link) =>
               link.hasDropdown ? (
@@ -91,7 +96,13 @@ export const Navbar = () => {
                   onMouseEnter={() => setIsDropdownOpen(true)}
                   onMouseLeave={() => setIsDropdownOpen(false)}
                 >
-                  <button className="flex items-center gap-1 font-medium hover:text-secondary">
+                  <button
+                    className={`flex items-center gap-1 font-medium transition ${
+                      isScrolled
+                        ? "text-foreground hover:text-secondary"
+                        : "text-white hover:text-white/80"
+                    }`}
+                  >
                     {link.name}
                     <ChevronDown
                       className={`w-4 h-4 transition ${
@@ -106,14 +117,14 @@ export const Navbar = () => {
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 10 }}
-                        className="absolute top-full left-0 mt-2 w-60"
+                        className="absolute top-full left-0 mt-2 w-64"
                       >
                         <div className="bg-card rounded-xl shadow-elevated overflow-hidden">
                           {tourPackages.map((pkg) => (
                             <Link
                               key={pkg.path}
                               href={pkg.path}
-                              className="block px-4 py-3 hover:bg-muted"
+                              className="block px-4 py-3 hover:bg-muted transition"
                             >
                               {pkg.name}
                             </Link>
@@ -127,7 +138,11 @@ export const Navbar = () => {
                 <Link
                   key={link.path}
                   href={link.path}
-                  className="font-medium hover:text-secondary"
+                  className={`font-medium transition ${
+                    isScrolled
+                      ? "text-foreground hover:text-secondary"
+                      : "text-white hover:text-white/80"
+                  }`}
                 >
                   {link.name}
                 </Link>
@@ -135,14 +150,14 @@ export const Navbar = () => {
             )}
           </div>
 
-          {/* Desktop CTA */}
+          {/* DESKTOP CTA */}
           <div className="hidden lg:block">
             <Button variant="hero" asChild>
               <Link href="/packages">Book Now</Link>
             </Button>
           </div>
 
-          {/* Mobile Toggle */}
+          {/* MOBILE TOGGLE */}
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="lg:hidden z-50"
@@ -152,7 +167,7 @@ export const Navbar = () => {
         </nav>
       </div>
 
-      {/* 📱 MOBILE MENU */}
+      {/* ---------------- MOBILE MENU ---------------- */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -160,9 +175,9 @@ export const Navbar = () => {
             animate={{ x: 0 }}
             exit={{ x: "-100%" }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 bg-background z-40 lg:hidden"
+            className="fixed inset-0 z-40 bg-background lg:hidden"
           >
-            <div className="flex flex-col justify-center h-full px-8 gap-6">
+            <div className="flex flex-col justify-start pt-28 pb-10 px-4 gap-6 h-full overflow-y-auto">
               {navLinks.map((link) =>
                 link.hasDropdown ? (
                   <div key={link.path}>
@@ -170,7 +185,7 @@ export const Navbar = () => {
                       onClick={() =>
                         setIsMobilePackagesOpen(!isMobilePackagesOpen)
                       }
-                      className="w-full flex items-center justify-between text-2xl font-semibold"
+                      className="w-full flex items-center justify-between text-xl font-semibold"
                     >
                       {link.name}
                       <ChevronDown
@@ -180,7 +195,6 @@ export const Navbar = () => {
                       />
                     </button>
 
-                    {/* ⬇️ DROPDOWN OPENS DOWNWARD */}
                     <AnimatePresence>
                       {isMobilePackagesOpen && (
                         <motion.div
@@ -194,7 +208,7 @@ export const Navbar = () => {
                               key={pkg.path}
                               href={pkg.path}
                               onClick={() => setIsOpen(false)}
-                              className="block text-lg text-muted-foreground"
+                              className="block text-base text-muted-foreground"
                             >
                               {pkg.name}
                             </Link>
@@ -208,14 +222,14 @@ export const Navbar = () => {
                     key={link.path}
                     href={link.path}
                     onClick={() => setIsOpen(false)}
-                    className="text-2xl font-semibold"
+                    className="text-xl font-semibold"
                   >
                     {link.name}
                   </Link>
                 )
               )}
 
-              <Button variant="hero" size="xl" asChild className="mt-8">
+              <Button variant="hero" size="xl" asChild className="mt-2">
                 <Link href="/packages" onClick={() => setIsOpen(false)}>
                   Book Now
                 </Link>
