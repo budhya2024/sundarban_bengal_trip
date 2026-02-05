@@ -105,11 +105,11 @@ const Blog = ({
       />
 
       {/* Blog Posts */}
-      <section className="py-24 bg-background">
+      <section className="py-10 md:py-20 bg-background">
         <div className="container mx-auto px-4">
           {/* Featured Post */}
           {featureBlog && (
-            <div data-aos="fade-up" className="mb-16">
+            <div data-aos="fade-up" className="mb-8 md:mb-16">
               <Link
                 href={`/blog/${featureBlog.slug}`}
                 className="grid lg:grid-cols-2 gap-8 bg-card rounded-2xl overflow-hidden shadow-soft hover:shadow-elevated transition-all duration-300 group"

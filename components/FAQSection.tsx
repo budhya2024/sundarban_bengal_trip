@@ -58,13 +58,13 @@ export const FAQSection = () => {
   }, []);
 
   return (
-    <section className="py-24 bg-muted">
+    <section className="py-10 md:py-20 bg-background">
       <div className="container mx-auto px-4">
         {/* Header */}
         <div
           data-aos="fade-up"
           data-aos-duration="600"
-          className="text-center mb-16"
+          className="text-center mb-8 md:mb-16"
         >
           <span className="text-secondary font-medium text-sm uppercase tracking-wider">
             FAQ

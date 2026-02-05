@@ -33,7 +33,7 @@ export const AboutSection = () => {
   }, []);
 
   return (
-    <section className="py-24 bg-background overflow-hidden">
+    <section className="py-10 md:py-20 bg-background overflow-hidden">
       <div className="container mx-auto px-4">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Image */}

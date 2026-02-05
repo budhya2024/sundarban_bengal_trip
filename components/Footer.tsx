@@ -12,7 +12,7 @@ import Image from "next/image";
 export const Footer = () => {
   return (
     <footer className="bg-primary text-primary-foreground">
-      <div className="container mx-auto px-4 py-16">
+      <div className="container mx-auto px-4 py-8 md:py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Brand */}
           <div>
@@ -161,12 +161,12 @@ export const Footer = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-12 pt-8 border-t border-primary-foreground/20">
+        <div className="mt-8 md:mt-12 pt-6 md:pt-8 border-t border-primary-foreground/20">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-primary-foreground/60 text-sm">
               © 2024 Sundarban Bengal Trips. All rights reserved.
             </p>
-            <div className="flex gap-6 text-sm">
+            <div className="flex  gap-2 md:gap-6 text-sm">
               <Link
                 href="/privacy-policy"
                 className="text-primary-foreground/60 hover:text-secondary transition-colors"
