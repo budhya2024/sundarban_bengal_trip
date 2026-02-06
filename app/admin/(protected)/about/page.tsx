@@ -1,7 +1,6 @@
-import React from "react";
-import { getAboutPage } from "../admin/actions/about.actions";
+import AboutAdminForm from "@/components/admin/AboutAdminForm";
+import { getAboutPage } from "../../actions/about.actions";
 import { AboutValues } from "@/schemas/about.schema";
-import AboutPage from "@/components/pages/AboutPage";
 
 const page = async () => {
   const { data, success } = (await getAboutPage()) as {
@@ -9,7 +8,7 @@ const page = async () => {
     success: boolean;
     error?: string;
   };
-  return <AboutPage data={data} />;
+  return <AboutAdminForm initialData={success ? data : null} />;
 };
 
 export default page;

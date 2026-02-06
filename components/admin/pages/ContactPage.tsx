@@ -33,6 +33,7 @@ import {
   ContactPageValues,
 } from "@/schemas/adminContact.schema";
 import Image from "next/image";
+import { SidebarTrigger } from "../SidebarTrigger";
 
 interface ContactAdminProps {
   initialData: ContactPageValues | null;
@@ -132,13 +133,16 @@ export default function ContactAdminForm({ initialData }: ContactAdminProps) {
       >
         <div className="sticky top-0 z-30 w-full border-b bg-background px-4 py-3 sm:px-10">
           <div className="mx-auto flex max-w-7xl items-center justify-between">
-            <div>
-              <h1 className="text-2xl font-display font-bold text-foreground">
-                Contact Management
-              </h1>
-              <p className="hidden text-xs text-slate-500 md:block">
-                Real-time update for Sundarban Bengal Trip contact page
-              </p>
+            <div className="flex items-center gap-2">
+              <SidebarTrigger />
+              <div>
+                <h1 className="text-2xl font-display font-bold text-foreground">
+                  Contact Management
+                </h1>
+                <p className="hidden text-xs text-slate-500 md:block">
+                  Real-time update for Sundarban Bengal Trip contact page
+                </p>
+              </div>
             </div>
             <Button
               type="submit"
@@ -156,7 +160,7 @@ export default function ContactAdminForm({ initialData }: ContactAdminProps) {
           </div>
         </div>
 
-        <div className="mx-auto max-w-7xl p-4 sm:p-10">
+        <div className="mx-auto sm:p-10">
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
             <div className="space-y-8 lg:col-span-8">
               {/* Hero Settings */}

@@ -7,14 +7,15 @@ import { usePathname } from "next/navigation";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import { getPopularPackageKeys } from "@/app/admin/actions/package.actions";
 
 /* ------------------ DATA ------------------ */
 
 const tourPackages = [
-  { name: "Day Trip Package", path: "/packages/day-trip" },
-  { name: "Weekend Getaway", path: "/packages/weekend" },
-  { name: "Premium Safari", path: "/packages/premium" },
-  { name: "Adventure Expedition", path: "/packages/adventure" },
+  { name: "Day Trip Package", path: "/packages/day-trip-package" },
+  { name: "Weekend Getaway", path: "/packages/weekend-getaway" },
+  { name: "Premium Safari", path: "/packages/premium-safari" },
+  { name: "Adventure Expedition", path: "/packages/adventure-expedition" },
 ];
 
 const navLinks = [
@@ -30,11 +31,24 @@ const navLinks = [
 
 export const Navbar = () => {
   const pathname = usePathname();
+  const [packageList, setPackageList] = useState<
+    { key: string; name: string }[]
+  >([]);
 
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMobilePackagesOpen, setIsMobilePackagesOpen] = useState(false);
+
+  useEffect(() => {
+    const fetchPopularPackages = async () => {
+      const { data, success } = await getPopularPackageKeys();
+      if (success) {
+        setPackageList(data);
+      }
+    };
+    fetchPopularPackages();
+  }, []);
 
   /* Scroll shadow */
   useEffect(() => {
@@ -120,10 +134,10 @@ export const Navbar = () => {
                         className="absolute top-full left-0 mt-2 w-64"
                       >
                         <div className="bg-card rounded-xl shadow-elevated overflow-hidden">
-                          {tourPackages.map((pkg) => (
+                          {packageList.map((pkg) => (
                             <Link
-                              key={pkg.path}
-                              href={pkg.path}
+                              key={pkg.key}
+                              href={`/packages/${pkg.key}`}
                               className="block px-4 py-3 hover:bg-muted transition"
                             >
                               {pkg.name}
@@ -146,7 +160,7 @@ export const Navbar = () => {
                 >
                   {link.name}
                 </Link>
-              )
+              ),
             )}
           </div>
 
@@ -158,10 +172,7 @@ export const Navbar = () => {
           </div>
 
           {/* MOBILE TOGGLE */}
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="lg:hidden z-50"
-          >
+          <button onClick={() => setIsOpen(!isOpen)} className="lg:hidden z-50">
             {isOpen ? <X size={26} /> : <Menu size={26} />}
           </button>
         </nav>
@@ -226,7 +237,7 @@ export const Navbar = () => {
                   >
                     {link.name}
                   </Link>
-                )
+                ),
               )}
 
               <Button variant="hero" size="xl" asChild className="mt-2">

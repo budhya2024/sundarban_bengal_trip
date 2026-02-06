@@ -23,7 +23,6 @@ export default function RootLayout({
       <body className="antialiased">
         <TanstackProvider>
           <TooltipProvider>
-            <Toaster />
             <Sonner />
             <ScrollToTop />
             <SocialSidebar />
@@ -31,6 +30,7 @@ export default function RootLayout({
             {children}
           </TooltipProvider>
         </TanstackProvider>
+        <Toaster />
       </body>
     </html>
   );

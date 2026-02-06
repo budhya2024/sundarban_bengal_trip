@@ -36,7 +36,7 @@ export default function AdminDashboard() {
   ];
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 p-6">
       {/* Welcome Section */}
       <div className="bg-gradient-to-r from-primary to-forest p-8 rounded-xl text-primary-foreground">
         <h1 className="font-display text-3xl font-bold mb-2">
