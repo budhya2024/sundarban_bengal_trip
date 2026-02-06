@@ -37,6 +37,7 @@ const navigation = [
   { name: "Manage Blogs", href: "/admin/blogs", icon: FileText },
   { name: "Gallery", href: "/admin/gallery", icon: ImageIcon },
   { name: "Contact", icon: Mail, href: "/admin/contact" },
+  { name: "Package", icon: Mail, href: "/admin/package" },
   { name: "Settings", href: "/admin/settings", icon: Settings },
 ];
 

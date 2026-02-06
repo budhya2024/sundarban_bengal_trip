@@ -11,10 +11,10 @@ import { Button } from "@/components/ui/button";
 /* ------------------ DATA ------------------ */
 
 const tourPackages = [
-  { name: "Day Trip Package", path: "/packages/day-trip" },
-  { name: "Weekend Getaway", path: "/packages/weekend" },
-  { name: "Premium Safari", path: "/packages/premium" },
-  { name: "Adventure Expedition", path: "/packages/adventure" },
+  { name: "Day Trip Package", path: "/packages/day-trip-package" },
+  { name: "Weekend Getaway", path: "/packages/weekend-getaway" },
+  { name: "Premium Safari", path: "/packages/premium-safari" },
+  { name: "Adventure Expedition", path: "/packages/adventure-expedition" },
 ];
 
 const navLinks = [
@@ -146,7 +146,7 @@ export const Navbar = () => {
                 >
                   {link.name}
                 </Link>
-              )
+              ),
             )}
           </div>
 
@@ -158,10 +158,7 @@ export const Navbar = () => {
           </div>
 
           {/* MOBILE TOGGLE */}
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="lg:hidden z-50"
-          >
+          <button onClick={() => setIsOpen(!isOpen)} className="lg:hidden z-50">
             {isOpen ? <X size={26} /> : <Menu size={26} />}
           </button>
         </nav>
@@ -226,7 +223,7 @@ export const Navbar = () => {
                   >
                     {link.name}
                   </Link>
-                )
+                ),
               )}
 
               <Button variant="hero" size="xl" asChild className="mt-2">

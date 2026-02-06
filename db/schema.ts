@@ -52,3 +52,15 @@ export const siteSettings = pgTable("site_settings", {
 
 export type SiteSetting = typeof siteSettings.$inferSelect;
 export type NewSiteSetting = typeof siteSettings.$inferInsert;
+
+export const travelPackages = pgTable("travel_packages", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  key: text("key").notNull().unique(),
+  category: text("category").notNull(),
+  isPopular: boolean("is_popular").default(false).notNull(),
+  data: jsonb("data").notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+export type TravelPackage = typeof travelPackages.$inferSelect;
+export type NewTravelPackage = typeof travelPackages.$inferInsert;
