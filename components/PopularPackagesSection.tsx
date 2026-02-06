@@ -1,48 +1,36 @@
 import { Clock, Users, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { PackageValues } from "@/schemas/package.schema";
+import { getPopularPackages } from "@/app/admin/actions/package.actions";
+import { useEffect, useState } from "react";
 
-const popularPackages = [
-  {
-    id: "day-trip",
-    name: "Day Trip Package",
-    image: "/assets/tour-budget.jpg",
-    duration: "1 Day",
-    groupSize: "Up to 15",
-    price: "₹2,500",
-    rating: 4.6,
-  },
-  {
-    id: "weekend",
-    name: "Weekend Getaway",
-    image: "/assets/tour-adventure.jpg",
-    duration: "2 Days / 1 Night",
-    groupSize: "Up to 12",
-    price: "₹5,500",
-    rating: 4.8,
-  },
-  {
-    id: "premium",
-    name: "Premium Safari",
-    image: "/assets/tour-premium.jpg",
-    duration: "3 Days / 2 Nights",
-    groupSize: "Up to 8",
-    price: "₹12,000",
-    rating: 4.9,
-  },
-];
-
-interface PopularPackagesSectionProps {
-  currentPackageId?: string;
+interface PopularPackage extends PackageValues {
+  id: string;
+  key: string;
 }
 
 export const PopularPackagesSection = ({
-  currentPackageId,
-}: PopularPackagesSectionProps) => {
-  // Filter out the current package from the list
-  const filteredPackages = popularPackages.filter(
-    (pkg) => pkg.id !== currentPackageId,
-  );
+  excludePackage,
+}: {
+  excludePackage: string;
+}) => {
+  const [popularPackages, setPopularPackages] = useState<PopularPackage[]>([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchPopularPackages = async () => {
+      setLoading(true);
+      const { success, data, error } = await getPopularPackages(excludePackage);
+      if (success) {
+        setPopularPackages(data);
+      }
+      setLoading(false);
+    };
+    fetchPopularPackages();
+  }, []);
+
+  if (loading || popularPackages.length === 0) return null;
 
   return (
     <section className="py-16 bg-muted">
@@ -57,7 +45,7 @@ export const PopularPackagesSection = ({
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredPackages.map((pkg, index) => (
+          {popularPackages.map((pkg, index) => (
             <div
               key={pkg.id}
               data-aos="fade-up"
@@ -67,21 +55,21 @@ export const PopularPackagesSection = ({
               {/* Image */}
               <div className="relative h-48 overflow-hidden">
                 <img
-                  src={pkg.image}
-                  alt={pkg.name}
+                  src={pkg.packageImage}
+                  alt={pkg.packageName}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/60 to-transparent" />
                 <div className="absolute bottom-4 left-4 right-4 flex justify-between items-end">
                   <h3 className="font-display text-lg font-bold text-primary-foreground">
-                    {pkg.name}
+                    {pkg.packageName}
                   </h3>
-                  <div className="flex items-center gap-1 text-secondary">
+                  {/* <div className="flex items-center gap-1 text-secondary">
                     <Star className="w-4 h-4 fill-current" />
                     <span className="text-primary-foreground font-medium">
                       {pkg.rating}
                     </span>
-                  </div>
+                  </div> */}
                 </div>
               </div>
 
@@ -102,13 +90,13 @@ export const PopularPackagesSection = ({
                 {/* Price & CTA */}
                 <div className="flex items-center justify-between pt-4 border-t border-border">
                   <div>
-                    <span className="text-sm text-muted-foreground">From</span>
+                    {/* <span className="text-sm text-muted-foreground">From</span> */}
                     <p className="font-display text-xl font-bold text-foreground">
                       {pkg.price}
                     </p>
                   </div>
                   <Button variant="nature" size="sm" asChild>
-                    <Link href={`/packages/${pkg.id}`}>View Details</Link>
+                    <Link href={`/packages/${pkg.key}`}>View Details</Link>
                   </Button>
                 </div>
               </div>

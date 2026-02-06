@@ -4,7 +4,7 @@ import { db } from "@/db";
 import { travelPackages } from "@/db/schema";
 import { revalidatePath } from "next/cache";
 import { PackageValues } from "@/schemas/package.schema";
-import { desc, eq, or, sql } from "drizzle-orm";
+import { and, desc, eq, ne, or, sql } from "drizzle-orm";
 import { uploadImageFromBase64 } from "@/app/actions/imagekit.actions";
 
 export async function getPopularPackageKeys() {
@@ -19,6 +19,46 @@ export async function getPopularPackageKeys() {
     return {
       success: true,
       data: rawData,
+    };
+  } catch (error) {
+    console.error("GET_POPULAR_PACKAGES_ERROR:", error);
+    return {
+      success: false,
+      data: [],
+      error: "Failed to fetch popular packages",
+    };
+  }
+}
+
+export async function getPopularPackages(excludePackage?: string) {
+  try {
+    // 1. Initialize with your required conditions
+    const conditions = [eq(travelPackages.isPopular, true)];
+
+    // 2. Add the exclusion only if excludePackage is provided
+    if (excludePackage) {
+      conditions.push(ne(travelPackages.key, excludePackage));
+    }
+
+    // 3. Pass the array into the and() helper
+    const rawData = await db
+      .select()
+      .from(travelPackages)
+      .where(and(...conditions));
+
+    // REFACTORING: Flatten the JSONB 'data' into the object
+    const refactoredData = rawData.map((pkg) => {
+      const typedData = pkg.data as PackageValues;
+      return {
+        id: pkg.id,
+        key: pkg.key,
+        updatedAt: pkg.updatedAt,
+        ...typedData,
+      };
+    });
+    return {
+      success: true,
+      data: refactoredData,
     };
   } catch (error) {
     console.error("GET_POPULAR_PACKAGES_ERROR:", error);
