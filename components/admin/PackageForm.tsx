@@ -35,6 +35,7 @@ import { useToast } from "@/hooks/use-toast";
 import { PackageSchema, PackageValues } from "@/schemas/package.schema";
 import { upsertPackage } from "@/app/admin/actions/package.actions";
 import Image from "next/image";
+import { SidebarTrigger } from "./SidebarTrigger";
 
 function DayActivities({
   dayIndex,
@@ -230,6 +231,7 @@ export default function PackageForm({
       >
         <div className="sticky top-0 z-30 w-full border-b bg-background/95 backdrop-blur px-6 py-4 flex justify-between items-center shadow-sm">
           <div className="flex items-center gap-2">
+            <SidebarTrigger />
             <h1 className="text-xl font-display font-bold text-slate-800">
               Package Editor
             </h1>

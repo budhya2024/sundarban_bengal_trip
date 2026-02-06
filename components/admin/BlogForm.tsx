@@ -28,6 +28,7 @@ import { uploadImage } from "@/app/actions/imagekit.actions";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 import { BlogType, NewBlogType } from "@/db/schema";
+import { SidebarTrigger } from "./SidebarTrigger";
 
 // --- Schema ---
 const blogSchema = z.object({
@@ -192,7 +193,8 @@ export default function BlogForm({ initialData }: { initialData?: BlogType }) {
     >
       {/* --- HEADER --- */}
       <div className="flex items-center justify-between mb-5 border-b border-gray-200 pb-4 sticky top-0">
-        <div>
+        <div className="flex items-center gap-2">
+          <SidebarTrigger />
           <h1 className="text-2xl font-serif font-bold text-[#1a472a]">
             {initialData ? "Edit Post" : "New Post"}
           </h1>

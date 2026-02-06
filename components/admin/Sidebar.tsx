@@ -38,6 +38,7 @@ const navigation = [
   { name: "Gallery", href: "/admin/gallery", icon: ImageIcon },
   { name: "Contact", icon: Mail, href: "/admin/contact" },
   { name: "Package", icon: Mail, href: "/admin/package" },
+  { name: "About", icon: Mail, href: "/admin/about" },
   { name: "Settings", href: "/admin/settings", icon: Settings },
 ];
 

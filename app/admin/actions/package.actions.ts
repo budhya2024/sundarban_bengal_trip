@@ -7,9 +7,29 @@ import { PackageValues } from "@/schemas/package.schema";
 import { desc, eq, or, sql } from "drizzle-orm";
 import { uploadImageFromBase64 } from "@/app/actions/imagekit.actions";
 
-/**
- * Fetches and refactors travel packages for easier frontend consumption.
- */
+export async function getPopularPackageKeys() {
+  try {
+    const rawData = await db
+      .select({
+        key: travelPackages.key,
+        name: sql<string>`${travelPackages.data}->>'packageName'`,
+      })
+      .from(travelPackages);
+    // .where(eq(travelPackages.isPopular, true));
+    return {
+      success: true,
+      data: rawData,
+    };
+  } catch (error) {
+    console.error("GET_POPULAR_PACKAGES_ERROR:", error);
+    return {
+      success: false,
+      data: [],
+      error: "Failed to fetch popular packages",
+    };
+  }
+}
+
 export async function getPackages(onlyPopular = false) {
   try {
     const query = db.select().from(travelPackages);
@@ -53,14 +73,7 @@ export async function getPackageBySlug(slug: string) {
   try {
     // Fetch a single record instead of a list
     const pkg = await db.query.travelPackages.findFirst({
-      where: or(
-        eq(travelPackages.key, slug),
-        // Using sql helper for lower() and comparing it to the slugified category
-        eq(
-          sql`lower(${travelPackages.category})`,
-          slug.replace(/-/g, " ").toLowerCase(),
-        ),
-      ),
+      where: eq(travelPackages.key, slug),
     });
 
     if (!pkg) {

@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import { getPopularPackageKeys } from "@/app/admin/actions/package.actions";
 
 /* ------------------ DATA ------------------ */
 
@@ -30,11 +31,24 @@ const navLinks = [
 
 export const Navbar = () => {
   const pathname = usePathname();
+  const [packageList, setPackageList] = useState<
+    { key: string; name: string }[]
+  >([]);
 
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMobilePackagesOpen, setIsMobilePackagesOpen] = useState(false);
+
+  useEffect(() => {
+    const fetchPopularPackages = async () => {
+      const { data, success } = await getPopularPackageKeys();
+      if (success) {
+        setPackageList(data);
+      }
+    };
+    fetchPopularPackages();
+  }, []);
 
   /* Scroll shadow */
   useEffect(() => {
@@ -120,10 +134,10 @@ export const Navbar = () => {
                         className="absolute top-full left-0 mt-2 w-64"
                       >
                         <div className="bg-card rounded-xl shadow-elevated overflow-hidden">
-                          {tourPackages.map((pkg) => (
+                          {packageList.map((pkg) => (
                             <Link
-                              key={pkg.path}
-                              href={pkg.path}
+                              key={pkg.key}
+                              href={`/packages/${pkg.key}`}
                               className="block px-4 py-3 hover:bg-muted transition"
                             >
                               {pkg.name}

@@ -27,6 +27,7 @@ import {
 } from "@/app/admin/actions/gallery.actions";
 import convertToBase64 from "@/lib/convertToBase64";
 import { Button } from "../ui/button";
+import { SidebarTrigger } from "./SidebarTrigger";
 
 // --- CUSTOM COMPONENT: Dynamic Creatable Select ---
 const CreatableSelect = ({
@@ -308,13 +309,16 @@ export default function GalleryManager({
       {/* Header */}
       <div className="sticky top-0 z-30 w-full border-b bg-white/80 backdrop-blur-md px-4 py-3 sm:px-10">
         <div className="mx-auto flex max-w-7xl items-center justify-between">
-          <div>
-            <h1 className="text-2xl font-display font-bold text-foreground">
-              Media Gallery
-            </h1>
-            <p className="hidden text-xs text-slate-500 md:block">
-              Manage your visual assets across the platform
-            </p>
+          <div className="flex items-center gap-2">
+            <SidebarTrigger />
+            <div>
+              <h1 className="text-2xl font-display font-bold text-foreground">
+                Media Gallery
+              </h1>
+              <p className="hidden text-xs text-slate-500 md:block">
+                Manage your visual assets across the platform
+              </p>
+            </div>
           </div>
           <Button
             onClick={() => setIsUploadOpen(true)}
