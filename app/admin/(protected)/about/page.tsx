@@ -1,5 +1,5 @@
 import AboutAdminForm from "@/components/admin/AboutAdminForm";
-import { getAboutPage } from "../../actions/about.actions";
+import { getAboutPage } from "../../../actions/about.actions";
 import { AboutValues } from "@/schemas/about.schema";
 
 const page = async () => {

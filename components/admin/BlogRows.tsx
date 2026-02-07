@@ -19,7 +19,7 @@ import {
   toggleStatus,
   deleteBlog,
   setFeaturedBlog,
-} from "@/app/admin/actions/blogs.actions";
+} from "@/app/actions/blogs.actions";
 import { useToast } from "@/hooks/use-toast";
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";

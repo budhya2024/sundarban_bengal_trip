@@ -64,3 +64,22 @@ export const travelPackages = pgTable("travel_packages", {
 
 export type TravelPackage = typeof travelPackages.$inferSelect;
 export type NewTravelPackage = typeof travelPackages.$inferInsert;
+
+export const bookings = pgTable("bookings", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  name: text("name").notNull(),
+  email: text("email").notNull(),
+  phone: text("phone").notNull(),
+  guests: text("guests").notNull(),
+  package: text("package").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at")
+    .defaultNow()
+    .$onUpdate(() => new Date()),
+  status: text("status").default("pending").notNull(), // 'pending', 'contacted', 'confirmed', 'cancelled'
+  adminNotes: text("admin_notes"),
+  date: text("date").notNull(),
+});
+
+export type BookingType = InferSelectModel<typeof bookings>;
+export type NewBookingType = InferInsertModel<typeof bookings>;

@@ -1,6 +1,6 @@
 import { Plus } from "lucide-react";
 import Link from "next/link";
-import { getAllBlogs } from "../../actions/blogs.actions";
+import { getAllBlogs } from "../../../actions/blogs.actions";
 import BlogRows from "@/components/admin/BlogRows";
 import { Button } from "@/components/ui/button";
 import { SidebarTrigger } from "@/components/admin/SidebarTrigger";

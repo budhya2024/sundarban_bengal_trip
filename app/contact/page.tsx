@@ -1,5 +1,5 @@
 import React from "react";
-import { getContactSettings } from "@/app/admin/actions/contact-settings.actions";
+import { getContactSettings } from "@/app/actions/contact-settings.actions";
 import ContactPage from "@/components/pages/ContactPage";
 import { ContactPageValues } from "@/schemas/adminContact.schema";
 

@@ -30,7 +30,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { AboutSchema, AboutValues } from "@/schemas/about.schema";
 import Image from "next/image";
-import { upsertAboutPage } from "@/app/admin/actions/about.actions";
+import { upsertAboutPage } from "@/app/actions/about.actions";
 import { SidebarTrigger } from "./SidebarTrigger";
 
 export default function AboutAdminForm({

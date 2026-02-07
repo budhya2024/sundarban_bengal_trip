@@ -1,4 +1,3 @@
-// src/app/admin/packages/page.tsx
 import { SidebarTrigger } from "@/components/admin/SidebarTrigger";
 import {
   Table,
@@ -9,7 +8,7 @@ import {
 } from "@/components/ui/table";
 import { Plus } from "lucide-react";
 import Link from "next/link";
-import { getPackages } from "../../actions/package.actions";
+import { getPackages } from "../../../actions/package.actions";
 import { Button } from "@/components/ui/button";
 import { PackageRow } from "@/components/admin/PackageRow";
 

@@ -26,7 +26,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { upsertContactSettings } from "@/app/admin/actions/contact-settings.actions";
+import { upsertContactSettings } from "@/app/actions/contact-settings.actions";
 import { useToast } from "@/hooks/use-toast";
 import {
   ContactPageSchema,

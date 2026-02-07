@@ -1,5 +1,5 @@
 import React from "react";
-import { getAboutPage } from "../admin/actions/about.actions";
+import { getAboutPage } from "../actions/about.actions";
 import { AboutValues } from "@/schemas/about.schema";
 import AboutPage from "@/components/pages/AboutPage";
 

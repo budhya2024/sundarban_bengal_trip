@@ -3,7 +3,7 @@ import React from "react";
 import {
   fetchGallertyCategories,
   getAllGalleryItems,
-} from "../admin/actions/gallery.actions";
+} from "../actions/gallery.actions";
 import GalleryPage from "@/components/pages/GalleryPage";
 
 const page = async () => {

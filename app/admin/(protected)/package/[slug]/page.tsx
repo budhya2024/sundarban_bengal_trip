@@ -1,4 +1,4 @@
-import { getPackageBySlug } from "@/app/admin/actions/package.actions";
+import { getPackageBySlug } from "@/app/actions/package.actions";
 import PackageForm from "@/components/admin/PackageForm";
 import { PackageValues } from "@/schemas/package.schema";
 import React from "react";
