@@ -1,9 +1,6 @@
 "use server";
 
-import {
-  uploadImage,
-  uploadImageFromBase64,
-} from "@/app/actions/imagekit.actions";
+import { uploadImageFromBase64 } from "@/app/actions/imagekit.actions";
 import { db } from "@/db";
 import { gallery as Gallery } from "@/db/schema";
 import { desc, eq, notInArray } from "drizzle-orm";
@@ -57,16 +54,24 @@ export const addGallery = async (data: {
   }
 };
 
-export const getAllGalleryItems = async () => {
+export const getAllGalleryItems = async (limit?: number) => {
   try {
-    const data = await db
+    const query = db
       .select()
       .from(Gallery)
-      .orderBy(desc(Gallery.createdAt));
+      .orderBy(desc(Gallery.createdAt))
+      .$dynamic();
+
+    if (limit) {
+      query.limit(limit);
+    }
+
+    const data = await query;
+
     return { success: true, data };
   } catch (error) {
     console.error("Error fetch gallery items: ", error);
-    return { success: false, error };
+    return { success: false, error: "Failed to retrieve gallery items" };
   }
 };
 

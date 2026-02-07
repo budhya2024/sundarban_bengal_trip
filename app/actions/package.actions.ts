@@ -70,19 +70,31 @@ export async function getPopularPackages(excludePackage?: string) {
   }
 }
 
-export async function getPackages(onlyPopular = false) {
+export async function getPackages(onlyPopular = false, limit?: number) {
   try {
-    const query = db.select().from(travelPackages);
+    // 1. Initialize the query builder
+    let query = db.select().from(travelPackages).$dynamic();
 
-    let rawData;
-
+    // 2. Add conditional filters
+    const conditions = [];
     if (onlyPopular) {
-      rawData = await query
-        .where(eq(travelPackages.isPopular, true))
-        .orderBy(desc(travelPackages.updatedAt));
-    } else {
-      rawData = await query.orderBy(desc(travelPackages.updatedAt));
+      conditions.push(eq(travelPackages.isPopular, true));
     }
+
+    if (conditions.length > 0) {
+      query = query.where(and(...conditions));
+    }
+
+    // 3. Add global ordering
+    query = query.orderBy(desc(travelPackages.updatedAt));
+
+    // 4. Dynamically add limit if provided
+    if (limit) {
+      query = query.limit(limit);
+    }
+
+    // 5. Execute the query
+    const rawData = await query;
 
     // REFACTORING: Flatten the JSONB 'data' into the object
     const refactoredData = rawData.map((pkg) => {

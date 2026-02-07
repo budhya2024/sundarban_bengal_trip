@@ -18,6 +18,20 @@ export const getAllBlogs = async () => {
   }
 };
 
+export const getLimitedBlogs = async (limit: number = 3) => {
+  try {
+    const data = await db
+      .select()
+      .from(BlogModel)
+      .orderBy(desc(BlogModel.createdAt))
+      .limit(limit);
+    return { success: true, data };
+  } catch (error: any) {
+    console.log(error);
+    return { success: false, message: error.message };
+  }
+};
+
 export const getBlogById = async (id: string) => {
   try {
     const data = await db.select().from(BlogModel).where(eq(BlogModel.id, id));
