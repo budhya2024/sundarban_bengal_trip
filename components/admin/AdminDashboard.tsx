@@ -41,14 +41,14 @@ export default function AdminDashboard({ stats }: AdminDashboardProps) {
       title: "Packages",
       description: "Manage tour itineraries, pricing and timelines",
       icon: Package,
-      href: "/admin/packages",
+      href: "/admin/package",
       lastUpdated: "Today",
     },
     {
       title: "Booking Inquiries",
       description: "View and manage customer booking requests",
       icon: ClipboardList,
-      href: "/admin/bookings",
+      href: "/admin/inquiry",
       lastUpdated: "1 hour ago",
     },
     {
