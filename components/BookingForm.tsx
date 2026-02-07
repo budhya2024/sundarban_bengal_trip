@@ -46,12 +46,10 @@ export const BookingForm = () => {
 
   useEffect(() => {
     (async () => {
-      startTransition(async () => {
-        const { data, success } = await getPackageKeys();
-        if (success) {
-          setPackages(data);
-        }
-      });
+      const { data, success } = await getPackageKeys();
+      if (success) {
+        setPackages(data);
+      }
     })();
   }, []);
 

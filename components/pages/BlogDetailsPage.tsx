@@ -11,6 +11,13 @@ import { Calendar, User, Clock, ArrowLeft, Share2 } from "lucide-react";
 import { FacebookIcon, TwitterIcon } from "@/components/icons/SocialIcons";
 import Link from "next/link";
 import { BlogType } from "@/db/schema";
+import dynamic from "next/dynamic";
+const ShareButtons = dynamic(() => import("@/components/ShareButtons"), {
+  ssr: false,
+  loading: () => (
+    <div className="h-10 w-48 bg-slate-100 rounded-full animate-pulse" />
+  ),
+});
 
 const BlogDetails = ({
   post,
@@ -135,18 +142,7 @@ const BlogDetails = ({
                 data-aos="fade-up"
                 className="mt-12 pt-8 border-t border-border"
               >
-                <div className="flex items-center gap-4">
-                  <span className="font-medium text-foreground flex items-center gap-2">
-                    <Share2 className="w-5 h-5" />
-                    Share this article:
-                  </span>
-                  <button className="w-10 h-10 rounded-full bg-[hsl(221,44%,41%)] text-primary-foreground flex items-center justify-center hover:opacity-90 transition-opacity">
-                    <FacebookIcon className="w-5 h-5" />
-                  </button>
-                  <button className="w-10 h-10 rounded-full bg-[hsl(0,0%,0%)] text-primary-foreground flex items-center justify-center hover:opacity-90 transition-opacity">
-                    <TwitterIcon className="w-5 h-5" />
-                  </button>
-                </div>
+                <ShareButtons title={post.title} />
               </div>
             </div>
 

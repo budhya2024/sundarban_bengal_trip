@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useTransition } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -15,6 +15,7 @@ import {
   Package,
   Info,
   ClipboardList,
+  Loader2,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -33,11 +34,13 @@ import {
   TooltipPortal,
 } from "@/components/ui/tooltip";
 import { useSidebarContext } from "@/context/SidebarContext";
+import { useToast } from "@/hooks/use-toast";
+import { logoutAction } from "@/app/actions/auth.actions";
 
 const navigation = [
   {
     name: "Dashboard",
-    href: "/admin",
+    href: "/admin/dashboard",
     icon: LayoutDashboard,
   },
   {
@@ -81,6 +84,18 @@ export function Sidebar() {
   const pathname = usePathname();
   const { isOpen, closeSidebar } = useSidebarContext();
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const { toast } = useToast();
+  const [isPending, startTransition] = useTransition();
+
+  const handleLogout = () => {
+    startTransition(async () => {
+      await logoutAction(); // This handles cookie deletion and redirect
+      toast({
+        title: "Logged Out",
+        description: "You have been securely logged out.",
+      });
+    });
+  };
 
   const NavContent = ({ mobile = false }: { mobile?: boolean }) => (
     <TooltipProvider delayDuration={0}>
@@ -184,14 +199,21 @@ export function Sidebar() {
             <TooltipTrigger asChild>
               <Button
                 variant="ghost"
+                disabled={isPending}
                 className={cn(
                   "w-full justify-start text-primary-foreground/80 hover:bg-destructive hover:text-white gap-3 transition-colors",
                   isCollapsed && !mobile && "justify-center px-0",
                 )}
-                onClick={() => console.log("Logout Logic")}
+                onClick={handleLogout} // Hooked up the function
               >
-                <LogOut className="w-5 h-5 shrink-0" />
-                {(!isCollapsed || mobile) && <span>Logout</span>}
+                {isPending ? (
+                  <Loader2 className="w-5 h-5 animate-spin shrink-0" />
+                ) : (
+                  <LogOut className="w-5 h-5 shrink-0" />
+                )}
+                {(!isCollapsed || mobile) && (
+                  <span>{isPending ? "Logging out..." : "Logout"}</span>
+                )}
               </Button>
             </TooltipTrigger>
             {isCollapsed && !mobile && (

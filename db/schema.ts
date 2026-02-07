@@ -6,6 +6,7 @@ import {
   timestamp,
   uuid,
   jsonb,
+  varchar,
 } from "drizzle-orm/pg-core";
 
 export const blogs = pgTable("blog", {
@@ -83,3 +84,29 @@ export const bookings = pgTable("bookings", {
 
 export type BookingType = InferSelectModel<typeof bookings>;
 export type NewBookingType = InferInsertModel<typeof bookings>;
+
+export const newsletterSubscribers = pgTable("newsletter_subscribers", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  email: text("email").notNull().unique(),
+  // status: default to 'subscribed', can be 'unsubscribed'
+  status: varchar("status", { length: 20 }).notNull().default("subscribed"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const adminAuth = pgTable("admin_auth", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  email: text("email").notNull().unique(), //
+  hashedPassword: text("hashed_password").notNull(),
+  lastLogin: timestamp("last_login"),
+
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+export const passwordResetOtps = pgTable("password_reset_otps", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  email: text("email").notNull(),
+  otp: text("otp").notNull(),
+  expiresAt: timestamp("expires_at").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});

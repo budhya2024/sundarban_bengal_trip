@@ -9,50 +9,16 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-const faqs = [
-  {
-    question: "What is the best time to visit Sundarbans?",
-    answer:
-      "The best time to visit Sundarbans is from October to March when the weather is pleasant and wildlife sightings are more frequent. During this period, migratory birds also arrive, making it ideal for bird watching.",
-  },
-  {
-    question: "Is it safe to visit Sundarbans?",
-    answer:
-      "Yes, visiting Sundarbans is safe when you travel with experienced guides and follow safety protocols. Our tours are conducted with trained naturalists who ensure all safety measures are in place during boat safaris and jungle walks.",
-  },
-  {
-    question: "What should I pack for a Sundarbans trip?",
-    answer:
-      "We recommend packing light cotton clothes, comfortable walking shoes, sunscreen, insect repellent, a hat, sunglasses, binoculars for wildlife spotting, and a camera. During winter months, carry light woolens for early morning safaris.",
-  },
-  {
-    question: "Will I definitely see a Royal Bengal Tiger?",
-    answer:
-      "Tiger sightings cannot be guaranteed as they are wild animals. However, Sundarbans has one of the highest tiger populations, and our experienced guides take you to the best spots to maximize your chances of spotting one.",
-  },
-  {
-    question: "How do I reach Sundarbans from Kolkata?",
-    answer:
-      "The most common route is from Kolkata to Godkhali (approximately 4 hours by road), from where you take a boat into the Sundarbans. All our tour packages include comfortable pick-up and drop from Kolkata.",
-  },
-  {
-    question: "Are meals included in the tour packages?",
-    answer:
-      "Yes, all our packages include traditional Bengali meals prepared with fresh local ingredients. We cater to vegetarian requirements as well. Meals are served on the houseboat or at our forest camps.",
-  },
-  {
-    question: "What types of accommodations are available?",
-    answer:
-      "We offer a range of accommodations from comfortable houseboats to forest lodges and premium eco-resorts. Our Premium Safari package features luxury houseboat stays with private cabins and attached bathrooms.",
-  },
-  {
-    question: "Can I customize my tour itinerary?",
-    answer:
-      "Absolutely! We offer customized tour packages based on your interests, whether it's wildlife photography, bird watching, or cultural immersion. Contact our team to design your perfect Sundarbans adventure.",
-  },
-];
-
-export const FAQSection = () => {
+export const FAQSection = ({
+  data,
+  loading,
+}: {
+  data: {
+    question: string;
+    answer: string;
+  }[];
+  loading: boolean;
+}) => {
   useEffect(() => {
     AOS.refresh();
   }, []);
@@ -85,24 +51,49 @@ export const FAQSection = () => {
           data-aos-delay="100"
           className="max-w-3xl mx-auto"
         >
-          <Accordion type="single" collapsible className="space-y-4">
-            {faqs.map((faq, index) => (
-              <AccordionItem
-                key={index}
-                value={`item-${index}`}
-                className="bg-card rounded-xl px-6 border border-border shadow-soft"
-              >
-                <AccordionTrigger className="text-left font-display text-lg font-semibold text-foreground hover:no-underline py-5">
-                  {faq.question}
-                </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground pb-5 leading-relaxed">
-                  {faq.answer}
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
+          {loading ? (
+            <FAQSkeleton />
+          ) : (
+            <Accordion type="single" collapsible className="space-y-4">
+              {data.map((faq, index) => (
+                <AccordionItem
+                  key={index}
+                  value={`item-${index}`}
+                  className="bg-card rounded-xl px-6 border border-border shadow-soft"
+                >
+                  <AccordionTrigger className="text-left font-display text-lg font-semibold text-foreground hover:no-underline py-5">
+                    {faq.question}
+                  </AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground pb-5 leading-relaxed">
+                    {faq.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          )}
         </div>
       </div>
     </section>
+  );
+};
+
+export const FAQSkeleton = () => {
+  return (
+    <div className="max-w-3xl mx-auto space-y-4">
+      {[1, 2, 3, 4, 5].map((i) => (
+        <div
+          key={i}
+          className="bg-card rounded-xl px-6 border border-border shadow-soft animate-pulse"
+        >
+          <div className="flex items-center justify-between py-6">
+            {/* Question Line Placeholder */}
+            <div className="h-4 w-3/4 bg-slate-200 rounded" />
+
+            {/* Arrow Icon Placeholder */}
+            <div className="h-4 w-4 bg-slate-100 rounded-full" />
+          </div>
+        </div>
+      ))}
+    </div>
   );
 };

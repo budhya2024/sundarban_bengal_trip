@@ -20,7 +20,7 @@ const InquiriesPage = async ({
   searchParams: Promise<{ page?: string }>;
 }) => {
   const currentPage = Number((await searchParams).page) || 1;
-  const { success, data, totalPages } = await getInquiryRows(currentPage, 2);
+  const { success, data, totalPages } = await getInquiryRows(currentPage, 20);
 
   if (!success || !data) {
     return (

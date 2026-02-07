@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { PackageValues } from "@/schemas/package.schema";
+import { BookingModal } from "../BookingModal";
 
 const PackageDetailsPage = ({
   data,
@@ -245,9 +246,7 @@ const PackageDetailsPage = ({
                   </div>
                 </div>
 
-                <Button variant="hero" size="xl" className="w-full mb-4">
-                  Book This Package
-                </Button>
+                <BookingModal packageName={data.packageName} />
                 <Button variant="outline" className="w-full" asChild>
                   <Link href="/contact">Contact for Custom Tour</Link>
                 </Button>

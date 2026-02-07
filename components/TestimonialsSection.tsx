@@ -9,38 +9,18 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import "swiper/css";
 
-const testimonials = [
-  {
-    name: "Polash Mondal",
-    location: "Nadia",
-    rating: 5,
-    text: "An absolutely incredible experience! We spotted a Royal Bengal Tiger on our first safari. The guides were knowledgeable and the houseboat accommodation was luxurious.",
-    avatar: "PM",
-  },
-  {
-    name: "Arup Mondal",
-    location: "Mednipur",
-    rating: 5,
-    text: "Sundarban Bengal Trips made our wildlife photography expedition unforgettable. The attention to detail and local expertise exceeded all expectations.",
-    avatar: "AM",
-  },
-  {
-    name: "Amit Sharma",
-    location: "Kolkata",
-    rating: 5,
-    text: "Perfect family trip! The kids loved every moment of the adventure. Safe, well-organized, and absolutely magical.",
-    avatar: "AS",
-  },
-  {
-    name: "Rahul Das",
-    location: "Howrah",
-    rating: 5,
-    text: "Smooth booking, friendly staff, and unforgettable memories. Highly recommended!",
-    avatar: "RD",
-  },
-];
-
-export const TestimonialsSection = () => {
+export const TestimonialsSection = ({
+  data,
+  loading,
+}: {
+  data: {
+    review: string;
+    name: string;
+    place: string;
+    rating: number;
+  }[];
+  loading: boolean;
+}) => {
   useEffect(() => {
     AOS.refresh();
   }, []);
@@ -74,57 +54,113 @@ export const TestimonialsSection = () => {
           </p>
         </div>
 
-        {/* Swiper */}
-        <Swiper
-          modules={[Autoplay]}
-          autoplay={{ delay: 3500, disableOnInteraction: false }}
-          loop
-          spaceBetween={24}
-          className="items-stretch"
-          breakpoints={{
-            0: { slidesPerView: 1 },
-            768: { slidesPerView: 2 },
-            1024: { slidesPerView: 3 },
-          }}
-        >
-          {testimonials.map((testimonial, index) => (
-            <SwiperSlide key={index} className="!h-auto">
-              <div className="h-full flex flex-col bg-primary-foreground/10 backdrop-blur-md rounded-2xl p-8 border border-primary-foreground/20">
-                <Quote className="w-10 h-10 text-secondary mb-4" />
-                <p className="text-primary-foreground/90 mb-6 leading-relaxed">
-                  “{testimonial.text}”
-                </p>
+        {loading ? (
+          <TestimonialSkeleton />
+        ) : (
+          <Swiper
+            modules={[Autoplay]}
+            autoplay={{ delay: 3500, disableOnInteraction: false }}
+            loop
+            spaceBetween={24}
+            className="items-stretch"
+            breakpoints={{
+              0: { slidesPerView: 1 },
+              768: { slidesPerView: 2 },
+              1024: { slidesPerView: 3 },
+            }}
+          >
+            {data.map((testimonial, index) => (
+              <SwiperSlide key={index} className="!h-auto">
+                <div className="h-full flex flex-col bg-primary-foreground/10 backdrop-blur-md rounded-2xl p-8 border border-primary-foreground/20">
+                  <Quote className="w-10 h-10 text-secondary mb-4" />
+                  <p className="text-primary-foreground/90 mb-6 leading-relaxed">
+                    “{testimonial.review}”
+                  </p>
 
-                <div className="mt-auto flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-full bg-secondary flex items-center justify-center">
-                    <span className="font-semibold text-secondary-foreground">
-                      {testimonial.avatar}
-                    </span>
-                  </div>
+                  <div className="mt-auto flex items-center gap-4">
+                    <div className="w-12 h-12 rounded-full bg-secondary flex items-center justify-center">
+                      <span className="font-semibold text-secondary-foreground">
+                        {testimonial.name
+                          .split(" ")
+                          .map((word) => word[0])
+                          .join("")}
+                      </span>
+                    </div>
 
-                  <div>
-                    <h4 className="font-semibold text-primary-foreground">
-                      {testimonial.name}
-                    </h4>
-                    <p className="text-sm text-primary-foreground/60">
-                      {testimonial.location}
-                    </p>
-                  </div>
+                    <div>
+                      <h4 className="font-semibold text-primary-foreground">
+                        {testimonial.name}
+                      </h4>
+                      <p className="text-sm text-primary-foreground/60">
+                        {testimonial.place}
+                      </p>
+                    </div>
 
-                  <div className="ml-auto flex">
-                    {Array.from({ length: testimonial.rating }).map((_, i) => (
-                      <Star
-                        key={i}
-                        className="w-4 h-4 text-secondary fill-current"
-                      />
-                    ))}
+                    <div className="ml-auto flex">
+                      {Array.from({ length: testimonial.rating }).map(
+                        (_, i) => (
+                          <Star
+                            key={i}
+                            className="w-4 h-4 text-secondary fill-current"
+                          />
+                        ),
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
-            </SwiperSlide>
-          ))}
-        </Swiper>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        )}
       </div>
     </section>
+  );
+};
+
+export const TestimonialSkeleton = () => {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {[1, 2, 3].map((i) => (
+        <div
+          key={i}
+          className="flex flex-col bg-primary-foreground/5 backdrop-blur-md rounded-2xl p-8 border border-primary-foreground/10 animate-pulse h-full"
+        >
+          {/* Quote Icon Placeholder */}
+          <div className="w-10 h-10 rounded-lg bg-secondary/20 mb-4 flex items-center justify-center">
+            <Quote className="w-6 h-6 text-secondary/30" />
+          </div>
+
+          {/* Review Text Lines */}
+          <div className="space-y-3 mb-8">
+            <div className="h-3 w-full bg-primary-foreground/10 rounded" />
+            <div className="h-3 w-5/6 bg-primary-foreground/10 rounded" />
+            <div className="h-3 w-4/6 bg-primary-foreground/10 rounded" />
+          </div>
+
+          {/* Footer Info */}
+          <div className="mt-auto flex items-center gap-4">
+            {/* Avatar Circle */}
+            <div className="w-12 h-12 rounded-full bg-primary-foreground/20" />
+
+            <div className="space-y-2">
+              {/* Name */}
+              <div className="h-3 w-24 bg-primary-foreground/20 rounded" />
+              {/* Place */}
+              <div className="h-2 w-16 bg-primary-foreground/10 rounded" />
+            </div>
+
+            {/* Stars */}
+            <div className="ml-auto flex gap-1">
+              {[1, 2, 3, 4, 5].map((star) => (
+                <div
+                  key={star}
+                  className="w-3 h-3 bg-secondary/20 rounded-full"
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
   );
 };
