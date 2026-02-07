@@ -15,7 +15,14 @@ const page = async () => {
   return (
     <GalleryPage
       galleryItems={galleryItems || []}
-      categories={categories || []}
+      categories={[
+        "all",
+        "wildlife",
+        "landscape",
+        "activities",
+        "sunset",
+        ...(categories || []),
+      ]}
     />
   );
 };

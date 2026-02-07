@@ -23,6 +23,7 @@ export async function fetchGallertyCategories() {
           "sunset",
         ]),
       );
+
     return { success: true, data: data.map((c) => c.category) };
   } catch (error) {
     console.error("Error Fetch Gallery Categories ", error);
