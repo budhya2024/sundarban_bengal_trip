@@ -2,7 +2,7 @@ import GalleryManager from "@/components/admin/GalleryManager";
 import {
   fetchGallertyCategories,
   getAllGalleryItems,
-} from "../../actions/gallery.actions";
+} from "../../../actions/gallery.actions";
 
 export default async function GalleryPage() {
   const [{ data }, { data: categoryData }] = await Promise.all([

@@ -1,4 +1,4 @@
-import { getPackageBySlug } from "@/app/admin/actions/package.actions";
+import { getPackageBySlug } from "@/app/actions/package.actions";
 import PackageDetailsPage from "@/components/pages/PackageDetailPage";
 
 const PackageDetails = async ({

@@ -12,6 +12,9 @@ import {
   Mail,
   LogOut,
   ChevronLeft,
+  Package,
+  Info,
+  ClipboardList,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -32,14 +35,46 @@ import {
 import { useSidebarContext } from "@/context/SidebarContext";
 
 const navigation = [
-  { name: "Dashboard", href: "/admin", icon: LayoutDashboard },
-  { name: "Home Page", href: "/admin/home", icon: Home },
-  { name: "Manage Blogs", href: "/admin/blogs", icon: FileText },
-  { name: "Gallery", href: "/admin/gallery", icon: ImageIcon },
-  { name: "Contact", icon: Mail, href: "/admin/contact" },
-  { name: "Package", icon: Mail, href: "/admin/package" },
-  { name: "About", icon: Mail, href: "/admin/about" },
-  { name: "Settings", href: "/admin/settings", icon: Settings },
+  {
+    name: "Dashboard",
+    href: "/admin",
+    icon: LayoutDashboard,
+  },
+  {
+    name: "Home Page",
+    href: "/admin/home",
+    icon: Home,
+  },
+  {
+    name: "Manage Blogs",
+    href: "/admin/blogs",
+    icon: FileText,
+  },
+  {
+    name: "Gallery",
+    href: "/admin/gallery",
+    icon: ImageIcon,
+  },
+  {
+    name: "Contact",
+    href: "/admin/contact",
+    icon: Mail,
+  },
+  {
+    name: "Package",
+    href: "/admin/package",
+    icon: Package,
+  },
+  {
+    name: "About",
+    href: "/admin/about",
+    icon: Info,
+  },
+  {
+    name: "Booking Inquiry",
+    href: "/admin/inquiry",
+    icon: ClipboardList,
+  },
 ];
 
 export function Sidebar() {

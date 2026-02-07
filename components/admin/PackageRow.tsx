@@ -23,7 +23,7 @@ import {
 import Link from "next/link";
 import Image from "next/image";
 import { format } from "date-fns";
-import { deletePackage } from "@/app/admin/actions/package.actions";
+import { deletePackage } from "@/app/actions/package.actions";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 

@@ -21,10 +21,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { GalleryType } from "@/db/schema";
 import * as z from "zod";
-import {
-  addGallery,
-  deleteGalleryItem,
-} from "@/app/admin/actions/gallery.actions";
+import { addGallery, deleteGalleryItem } from "@/app/actions/gallery.actions";
 import convertToBase64 from "@/lib/convertToBase64";
 import { Button } from "../ui/button";
 import { SidebarTrigger } from "./SidebarTrigger";

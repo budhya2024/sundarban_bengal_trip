@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { getPopularPackageKeys } from "@/app/admin/actions/package.actions";
+import { getPackageKeys } from "@/app/actions/package.actions";
 
 /* ------------------ DATA ------------------ */
 
@@ -42,7 +42,7 @@ export const Navbar = () => {
 
   useEffect(() => {
     const fetchPopularPackages = async () => {
-      const { data, success } = await getPopularPackageKeys();
+      const { data, success } = await getPackageKeys();
       if (success) {
         setPackageList(data);
       }

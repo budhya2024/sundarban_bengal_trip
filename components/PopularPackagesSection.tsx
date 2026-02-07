@@ -2,7 +2,7 @@ import { Clock, Users, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { PackageValues } from "@/schemas/package.schema";
-import { getPopularPackages } from "@/app/admin/actions/package.actions";
+import { getPopularPackages } from "@/app/actions/package.actions";
 import { useEffect, useState } from "react";
 
 interface PopularPackage extends PackageValues {

@@ -23,7 +23,7 @@ import Link from "next/link";
 import { useState, useRef } from "react";
 import clsx from "clsx";
 import Image from "next/image";
-import { createBlog, updateBlog } from "@/app/admin/actions/blogs.actions";
+import { createBlog, updateBlog } from "@/app/actions/blogs.actions";
 import { uploadImage } from "@/app/actions/imagekit.actions";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";

@@ -1,5 +1,5 @@
 import ContactPage from "@/components/admin/pages/ContactPage";
-import { getContactSettings } from "../../actions/contact-settings.actions";
+import { getContactSettings } from "../../../actions/contact-settings.actions";
 import { ContactPageValues } from "@/schemas/adminContact.schema";
 
 const Page = async () => {

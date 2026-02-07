@@ -7,7 +7,7 @@ import { PackageValues } from "@/schemas/package.schema";
 import { and, desc, eq, ne, or, sql } from "drizzle-orm";
 import { uploadImageFromBase64 } from "@/app/actions/imagekit.actions";
 
-export async function getPopularPackageKeys() {
+export async function getPackageKeys() {
   try {
     const rawData = await db
       .select({
@@ -16,16 +16,18 @@ export async function getPopularPackageKeys() {
       })
       .from(travelPackages);
     // .where(eq(travelPackages.isPopular, true));
+
+    console.log({ rawData });
     return {
       success: true,
       data: rawData,
     };
   } catch (error) {
-    console.error("GET_POPULAR_PACKAGES_ERROR:", error);
+    console.error("GET_PACKAGE_KEYS_ERROR:", error);
     return {
       success: false,
       data: [],
-      error: "Failed to fetch popular packages",
+      error: "Failed to fetch package keys",
     };
   }
 }
