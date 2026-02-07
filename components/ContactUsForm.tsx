@@ -10,7 +10,7 @@ import { Input } from "./ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { Textarea } from "./ui/textarea";
 import { Button } from "./ui/button";
-import { sendMail } from "@/app/actions/sendmail.action";
+import { sendContactInquiry } from "@/app/actions/sendmail.action";
 
 const contactSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -71,7 +71,7 @@ const ContactUsForm = () => {
 
   const onSubmit = async (data: ContactFormValues) => {
     setIsSubmitting(true);
-    const response = await sendMail(data);
+    const response = await sendContactInquiry(data);
 
     if (response.success) {
       toast({

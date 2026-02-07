@@ -1,7 +1,6 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect, useTransition } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -12,109 +11,224 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Lock, Leaf } from "lucide-react";
+import {
+  Lock,
+  Leaf,
+  Mail,
+  Loader2,
+  UserPlus,
+  ArrowLeft,
+  KeyRound,
+} from "lucide-react";
+import {
+  authAction,
+  checkAdminExists,
+  requestOtpAction,
+  resetPasswordAction,
+} from "@/app/actions/auth.actions";
+import { useToast } from "@/hooks/use-toast";
+
+type AuthView = "auth" | "forgot_request" | "forgot_reset";
 
 export default function AdminLoginPage() {
-  const router = useRouter();
-  const [password, setPassword] = useState("");
+  const [isPending, startTransition] = useTransition();
+  const [isSetupMode, setIsSetupMode] = useState(false);
+  const [view, setView] = useState<AuthView>("auth");
   const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [resetEmail, setResetEmail] = useState("");
+  const { toast } = useToast();
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  useEffect(() => {
+    const checkStatus = async () => {
+      const exists = await checkAdminExists();
+      setIsSetupMode(!exists);
+    };
+    checkStatus();
+  }, []);
+
+  const handleMainAction = async (formData: FormData) => {
     setError("");
-    setIsLoading(true);
-
-    try {
-      const response = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ password }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        router.push("/admin");
-      } else {
-        setError(data.error || "Login failed");
+    startTransition(async () => {
+      if (view === "auth") {
+        const result = await authAction(formData);
+        if (result?.success === false)
+          setError(result.message || "Auth failed");
+      } else if (view === "forgot_request") {
+        const email = formData.get("email") as string;
+        const result = await requestOtpAction(email);
+        if (result.success) {
+          setResetEmail(email);
+          setView("forgot_reset");
+          toast({
+            title: "OTP Sent",
+            description: "Check your email for the 6-digit code.",
+          });
+        } else {
+          setError(result.message);
+        }
+      } else if (view === "forgot_reset") {
+        const result = await resetPasswordAction(formData);
+        if (result.success) {
+          toast({ title: "Success", description: result.message });
+          setView("auth");
+        } else {
+          setError(result.message);
+        }
       }
-    } catch (err) {
-      setError("An error occurred. Please try again.");
-    } finally {
-      setIsLoading(false);
-    }
+    });
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary to-forest p-4 absolute top-0 left-0 right-0 bottom-0">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-10">
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-          }}
-        />
+    <div className="min-h-screen flex items-center justify-center bg-[#1a2e23] p-4 relative overflow-hidden">
+      <div className="absolute inset-0 opacity-5 pointer-events-none">
+        <div className="absolute top-0 left-0 w-96 h-96 bg-emerald-500 rounded-full blur-[120px]" />
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-forest rounded-full blur-[120px]" />
       </div>
 
-      <Card className="w-full max-w-md relative z-10 shadow-elevated border-primary-foreground/20">
-        <CardHeader className="text-center space-y-4">
-          <div className="mx-auto w-16 h-16 bg-secondary/20 rounded-full flex items-center justify-center">
-            <Leaf className="w-8 h-8 text-secondary" />
+      <Card className="w-full max-w-md relative z-10 shadow-2xl border-emerald-900/20 rounded-3xl overflow-hidden animate-in fade-in zoom-in-95 duration-500">
+        <CardHeader className="text-center space-y-2 pb-2">
+          {view !== "auth" && (
+            <button
+              onClick={() => {
+                setView("auth");
+                setError("");
+              }}
+              className="absolute left-6 top-8 text-slate-400 hover:text-emerald-700 transition-colors"
+            >
+              <ArrowLeft size={20} />
+            </button>
+          )}
+
+          <div
+            className={`mx-auto w-16 h-16 rounded-2xl flex items-center justify-center mb-2 transition-all duration-500 
+            ${isSetupMode || view !== "auth" ? "bg-amber-100" : "bg-emerald-100"}`}
+          >
+            {isSetupMode ? (
+              <UserPlus className="w-8 h-8 text-amber-700" />
+            ) : view !== "auth" ? (
+              <KeyRound className="w-8 h-8 text-amber-700" />
+            ) : (
+              <Leaf className="w-8 h-8 text-emerald-700" />
+            )}
           </div>
-          <div>
-            <CardTitle className="font-display text-3xl text-foreground">
-              Sundarban CMS
-            </CardTitle>
-            <CardDescription className="mt-2">
-              Enter your password to access the admin panel
-            </CardDescription>
-          </div>
+
+          <CardTitle className="font-display text-3xl text-slate-800 italic">
+            {isSetupMode
+              ? "Setup Admin"
+              : view === "auth"
+                ? "Sundarban CMS"
+                : "Reset Password"}
+          </CardTitle>
+          <CardDescription>
+            {isSetupMode
+              ? "Create the primary administrator account"
+              : view === "forgot_request"
+                ? "Enter your email to receive a reset code"
+                : view === "forgot_reset"
+                  ? "Enter the code and your new password"
+                  : "Enter credentials to access the panel"}
+          </CardDescription>
         </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
+
+        <CardContent className="pt-6">
+          <form action={handleMainAction} className="space-y-5">
+            {/* EMAIL FIELD (Hidden in Reset Phase to prevent email mismatch) */}
             <div className="space-y-2">
-              <Label htmlFor="password" className="text-foreground">
-                Admin Password
+              <Label className="text-xs font-bold uppercase text-slate-500 ml-1">
+                Email Address
               </Label>
               <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
                 <Input
-                  id="password"
-                  type="password"
-                  placeholder="Enter your password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="pl-10"
+                  name="email"
+                  type="email"
+                  defaultValue={view === "forgot_reset" ? resetEmail : ""}
+                  readOnly={view === "forgot_reset"}
+                  placeholder="admin@sundarban.com"
+                  className="pl-10 h-12 rounded-xl border-slate-200"
                   required
-                  autoFocus
                 />
               </div>
             </div>
 
+            {/* OTP FIELD (Only in Reset Phase) */}
+            {view === "forgot_reset" && (
+              <div className="space-y-2 animate-in slide-in-from-top-2">
+                <Label className="text-xs font-bold uppercase text-slate-500 ml-1">
+                  6-Digit Code
+                </Label>
+                <Input
+                  name="otp"
+                  type="text"
+                  maxLength={6}
+                  placeholder="000000"
+                  className="h-12 rounded-xl text-center tracking-[1em] font-bold border-emerald-200"
+                  required
+                />
+              </div>
+            )}
+
+            {/* PASSWORD FIELD (Hidden in Request Phase) */}
+            {view !== "forgot_request" && (
+              <div className="space-y-2">
+                <div className="flex justify-between items-center">
+                  <Label className="text-xs font-bold uppercase text-slate-500 ml-1">
+                    {view === "forgot_reset" ? "New Password" : "Password"}
+                  </Label>
+                  {view === "auth" && !isSetupMode && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setView("forgot_request");
+                        setError("");
+                      }}
+                      className="text-[10px] font-bold text-emerald-700 uppercase hover:underline"
+                    >
+                      Forgot?
+                    </button>
+                  )}
+                </div>
+                <div className="relative">
+                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                  <Input
+                    name="password"
+                    type="password"
+                    placeholder="••••••••"
+                    className="pl-10 h-12 rounded-xl border-slate-200"
+                    required
+                  />
+                </div>
+              </div>
+            )}
+
             {error && (
-              <div className="bg-destructive/10 border border-destructive/20 text-destructive px-4 py-3 rounded-lg text-sm">
+              <div className="bg-red-50 border border-red-100 text-red-600 px-4 py-3 rounded-xl text-sm font-medium">
                 {error}
               </div>
             )}
 
             <Button
               type="submit"
-              className="w-full"
-              disabled={isLoading}
-              size="lg"
+              disabled={isPending}
+              className={`w-full h-12 rounded-xl text-lg font-bold shadow-lg transition-all active:scale-[0.98] ${
+                isSetupMode || view !== "auth"
+                  ? "bg-[#C58940] hover:bg-[#B37A36]"
+                  : "bg-[#2D4A39] hover:bg-[#1f3327]"
+              }`}
             >
-              {isLoading ? "Logging in..." : "Login"}
+              {isPending ? (
+                <Loader2 className="w-5 h-5 animate-spin" />
+              ) : isSetupMode ? (
+                "Create Account"
+              ) : view === "forgot_request" ? (
+                "Send Reset Code"
+              ) : view === "forgot_reset" ? (
+                "Update Password"
+              ) : (
+                "Login to Dashboard"
+              )}
             </Button>
           </form>
-
-          <div className="mt-6 text-center text-xs text-muted-foreground">
-            <p>Protected admin area</p>
-            <p className="mt-1">© 2026 Sundarban Bengal Trips</p>
-          </div>
         </CardContent>
       </Card>
     </div>

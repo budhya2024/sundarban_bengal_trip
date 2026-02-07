@@ -2,27 +2,23 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 const SESSION_COOKIE_NAME = "admin_session";
+// Ensure this matches exactly with what you set in your Server Action
 const SESSION_SECRET = process.env.SESSION_SECRET || "default-secret-change-me";
 
 export function proxy(request: NextRequest) {
+  // Renamed from proxy
   const { pathname } = request.nextUrl;
+  const session = request.cookies.get(SESSION_COOKIE_NAME)?.value;
 
-  // Only protect /admin routes (except login page)
+  // 1. Protect /admin routes (except login)
   if (pathname.startsWith("/admin") && pathname !== "/admin/login") {
-    const session = request.cookies.get(SESSION_COOKIE_NAME)?.value;
-
-    // Check if session exists and is valid
     if (!session || !session.includes(SESSION_SECRET)) {
-      // Redirect to login page
-      const loginUrl = new URL("/admin/login", request.url);
-      loginUrl.searchParams.set("redirect", pathname);
-      return NextResponse.redirect(loginUrl);
+      return NextResponse.redirect(new URL("/admin/login", request.url));
     }
   }
 
-  // If already logged in and trying to access login page, redirect to dashboard
+  // 2. Prevent logged-in users from seeing the login page
   if (pathname === "/admin/login") {
-    const session = request.cookies.get(SESSION_COOKIE_NAME)?.value;
     if (session && session.includes(SESSION_SECRET)) {
       return NextResponse.redirect(new URL("/admin", request.url));
     }
@@ -32,5 +28,5 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: "/admin/:path*",
+  matcher: ["/admin/:path*"],
 };

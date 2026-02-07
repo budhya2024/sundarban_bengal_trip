@@ -136,12 +136,12 @@ export const TourPackagesSection = () => {
                     <h3 className="font-display text-xl font-bold text-primary-foreground">
                       {pkg.packageName}
                     </h3>
-                    {/* <div className="flex items-center gap-1 text-secondary">
-                    <Star className="w-4 h-4 fill-current" />
-                    <span className="text-primary-foreground font-medium">
-                      {pkg.rating}
-                    </span>
-                  </div> */}
+                    <div className="flex items-center gap-1 text-secondary">
+                      <Star className="w-4 h-4 fill-current" />
+                      <span className="text-primary-foreground font-medium">
+                        {pkg.rating}
+                      </span>
+                    </div>
                   </div>
                 </div>
 

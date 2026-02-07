@@ -9,6 +9,7 @@ import {
 } from "@/components/icons/SocialIcons";
 import Link from "next/link";
 import { BlogType } from "@/db/schema";
+import Newsletter from "./Newsletter";
 
 interface BlogSidebarProps {
   latestPosts: BlogType[];
@@ -62,7 +63,7 @@ export const BlogSidebar = ({ latestPosts }: BlogSidebarProps) => {
       </div>
 
       {/* Tags */}
-      <div
+      {/* <div
         className="bg-card rounded-2xl p-6 shadow-soft"
         data-aos="fade-left"
         data-aos-delay="100"
@@ -81,7 +82,7 @@ export const BlogSidebar = ({ latestPosts }: BlogSidebarProps) => {
             </Link>
           ))}
         </div>
-      </div>
+      </div> */}
 
       {/* Follow Us */}
       <div
@@ -121,29 +122,7 @@ export const BlogSidebar = ({ latestPosts }: BlogSidebarProps) => {
       </div>
 
       {/* Newsletter */}
-      <div
-        className="bg-primary rounded-2xl p-6 shadow-soft"
-        data-aos="fade-left"
-        data-aos-delay="300"
-      >
-        <h3 className="font-display text-xl font-bold text-primary-foreground mb-3">
-          Newsletter
-        </h3>
-        <p className="text-primary-foreground/80 text-sm mb-4">
-          Subscribe to get the latest travel tips and tour updates.
-        </p>
-        <form className="space-y-3">
-          <Input
-            type="email"
-            placeholder="Your email address"
-            className="bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground placeholder:text-primary-foreground/50"
-          />
-          <Button variant="hero" className="w-full">
-            <Send className="w-4 h-4 mr-2" />
-            Subscribe
-          </Button>
-        </form>
-      </div>
+      <Newsletter />
     </aside>
   );
 };

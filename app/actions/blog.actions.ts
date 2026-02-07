@@ -10,6 +10,7 @@ export const getBlogBySlug = async (slug: string) => {
       .select()
       .from(BlogModel)
       .where(eq(BlogModel.slug, slug));
+    console.log({ data });
     return { success: true, data: data[0] };
   } catch (error) {
     console.log(error);
@@ -22,7 +23,7 @@ export const getFeaturedBlog = async () => {
     const data = await db
       .select()
       .from(BlogModel)
-      .where(eq(BlogModel.isFeatured, true))
+      .where(and(eq(BlogModel.published, true), eq(BlogModel.isFeatured, true)))
       .orderBy(desc(BlogModel.createdAt))
       .limit(1);
     return { success: true, data: data[0] };
@@ -48,12 +49,20 @@ export const getPublishedBlogs = async () => {
   }
 };
 
-export const getLatestLimitedPublishedBlogs = async (limit: number = 5) => {
+export const getLatestLimitedPublishedBlogs = async (
+  excludeSlug: string,
+  limit: number = 5,
+) => {
   try {
     const data = await db
       .select()
       .from(BlogModel)
-      .where(eq(BlogModel.published, true))
+      .where(
+        and(
+          eq(BlogModel.published, true),
+          not(eq(BlogModel.slug, excludeSlug)),
+        ),
+      )
       .orderBy(desc(BlogModel.createdAt))
       .limit(limit);
     return { success: true, data };

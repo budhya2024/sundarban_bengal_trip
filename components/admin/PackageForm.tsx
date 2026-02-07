@@ -33,9 +33,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/hooks/use-toast";
 import { PackageSchema, PackageValues } from "@/schemas/package.schema";
-import { upsertPackage } from "@/app/actions/package.actions";
+
 import Image from "next/image";
 import { SidebarTrigger } from "./SidebarTrigger";
+import { upsertPackage } from "@/app/actions/package.actions";
 
 function DayActivities({
   dayIndex,
