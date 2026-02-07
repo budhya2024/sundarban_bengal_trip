@@ -16,6 +16,7 @@ import {
   Info,
   ClipboardList,
   Loader2,
+  Newspaper,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -77,6 +78,11 @@ const navigation = [
     name: "Booking Inquiry",
     href: "/admin/inquiry",
     icon: ClipboardList,
+  },
+  {
+    name: "Newsletter",
+    href: "/admin/newsletter",
+    icon: Newspaper,
   },
 ];
 
