@@ -28,9 +28,12 @@ const GalleryPage = ({
   }, []);
 
   const filteredImages =
-    selectedCategory === "All"
+    selectedCategory.toLowerCase() === "all"
       ? galleryItems
-      : galleryItems.filter((img) => img.category === selectedCategory);
+      : galleryItems.filter(
+          (img) =>
+            img.category.toLowerCase() === selectedCategory.toLowerCase(),
+        );
 
   return (
     <main className="min-h-screen">
@@ -54,7 +57,7 @@ const GalleryPage = ({
               <button
                 key={category}
                 onClick={() => setSelectedCategory(category)}
-                className={`px-6 py-2 rounded-full font-medium transition-all ${
+                className={`px-6 py-2 rounded-full font-medium transition-all capitalize ${
                   selectedCategory === category
                     ? "bg-primary text-primary-foreground"
                     : "bg-muted text-muted-foreground hover:bg-primary/10"

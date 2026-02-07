@@ -16,8 +16,6 @@ export async function getPackageKeys() {
       })
       .from(travelPackages);
     // .where(eq(travelPackages.isPopular, true));
-
-    console.log({ rawData });
     return {
       success: true,
       data: rawData,
