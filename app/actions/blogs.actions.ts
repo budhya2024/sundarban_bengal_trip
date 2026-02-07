@@ -78,7 +78,7 @@ export const toggleStatus = async (id: string, status: boolean) => {
       .set({ published: status })
       .where(eq(BlogModel.id, id))
       .returning();
-    revalidatePath("/admin/BlogModel");
+    revalidatePath("/admin/blogs");
     return { success: true, data };
   } catch (error: any) {
     console.log(error);
