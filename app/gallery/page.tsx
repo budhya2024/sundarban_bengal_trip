@@ -6,6 +6,8 @@ import {
 } from "../actions/gallery.actions";
 import GalleryPage from "@/components/pages/GalleryPage";
 
+export const dynamic = "force-dynamic";
+
 const page = async () => {
   const [{ data: galleryItems }, { data: categories }] = await Promise.all([
     getAllGalleryItems(),

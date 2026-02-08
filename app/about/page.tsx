@@ -3,6 +3,8 @@ import { getAboutPage } from "../actions/about.actions";
 import { AboutValues } from "@/schemas/about.schema";
 import AboutPage from "@/components/pages/AboutPage";
 
+export const dynamic = "force-dynamic";
+
 const page = async () => {
   const { data, success } = (await getAboutPage()) as {
     data: AboutValues;

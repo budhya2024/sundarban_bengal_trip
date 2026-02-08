@@ -1,6 +1,8 @@
 import BlogPage from "@/components/pages/BlogPage";
 import { getFeaturedBlog, getPublishedBlogs } from "@/app/actions/blog.actions";
 
+export const dynamic = "force-dynamic";
+
 const Blog = async () => {
   const [{ data: blogs }, { data: featureBlog }] = await Promise.all([
     getPublishedBlogs(),

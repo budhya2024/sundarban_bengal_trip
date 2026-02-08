@@ -5,6 +5,8 @@ import BlogRows from "@/components/admin/BlogRows";
 import { Button } from "@/components/ui/button";
 import { SidebarTrigger } from "@/components/admin/SidebarTrigger";
 
+export const dynamic = "force-dynamic";
+
 export default async function BlogList() {
   const result = await getAllBlogs();
 
