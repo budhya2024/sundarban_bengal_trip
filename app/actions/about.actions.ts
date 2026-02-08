@@ -32,22 +32,35 @@ export async function getAboutPage() {
 
 export async function upsertAboutPage(formValues: any) {
   try {
+    // 1. Create a queue for uploads
+    const uploadPromises = [];
+
     if (formValues.heroImage.startsWith("data:image")) {
-      const { url } = await uploadImageFromBase64(
-        formValues.heroImage,
-        "about-hero",
+      uploadPromises.push(
+        uploadImageFromBase64(formValues.heroImage, "about-hero").then(
+          (res) => {
+            formValues.heroImage = res.url;
+          },
+        ),
       );
-      formValues.heroImage = url;
     }
 
     if (formValues.storyImage.startsWith("data:image")) {
-      const { url } = await uploadImageFromBase64(
-        formValues.storyImage,
-        "about-story",
+      uploadPromises.push(
+        uploadImageFromBase64(formValues.storyImage, "about-story").then(
+          (res) => {
+            formValues.storyImage = res.url;
+          },
+        ),
       );
-      formValues.storyImage = url;
     }
 
+    // 2. Execute all uploads in parallel
+    if (uploadPromises.length > 0) {
+      await Promise.all(uploadPromises);
+    }
+
+    // 3. Database operation
     await db
       .insert(siteSettings)
       .values({
@@ -62,7 +75,10 @@ export async function upsertAboutPage(formValues: any) {
         },
       });
 
+    // 4. Clear cache for BOTH the public page and the admin editor
     revalidatePath("/about");
+    revalidatePath("/admin/about");
+
     return { success: true };
   } catch (error) {
     console.error("UPSERT_ABOUT_ERROR:", error);
