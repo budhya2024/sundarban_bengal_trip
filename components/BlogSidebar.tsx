@@ -28,7 +28,7 @@ const tags = [
 
 export const BlogSidebar = ({ latestPosts }: BlogSidebarProps) => {
   return (
-    <aside className="space-y-8">
+    <aside className="space-y-8 sticky top-20">
       {/* Latest Posts */}
       <div className="bg-card rounded-2xl p-6 shadow-soft" data-aos="fade-left">
         <h3 className="font-display text-xl font-bold text-foreground mb-6 pb-3 border-b border-border">

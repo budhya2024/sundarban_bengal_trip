@@ -21,13 +21,15 @@ export const ContactSection = () => {
             </h2>
 
             <p className="text-muted-foreground  mb-10">
-              Whether you’re planning a family trip, honeymoon, or wildlife
-              expedition, our experts are here to craft the perfect experience
-              for you.
+              Whether it’s a family vacation, honeymoon, or wildlife adventure,
+              our travel experts create customized tour packages tailored to
+              your needs and budget. From accommodation and transport to
+              sightseeing, we handle every detail—so you can travel stress-free
+              and create unforgettable memories.
             </p>
 
             <Button variant="hero" size="xl" asChild>
-              <Link href="/packages" className="group">
+              <Link href="/contact" className="group">
                 Get In Touch
                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
@@ -36,14 +38,13 @@ export const ContactSection = () => {
 
           {/* RIGHT IMAGE */}
           <div className="relative">
-              <Image
-                src="/assets/tourman.jpg"
-                alt="Sundarban Tour"
-                width={600}
-                height={600}
-                className="w-full h-auto object-contain"
-              />
-         
+            <Image
+              src="/assets/tourman.jpg"
+              alt="Sundarban Tour"
+              width={600}
+              height={600}
+              className="w-full h-auto object-contain"
+            />
           </div>
         </div>
       </div>
