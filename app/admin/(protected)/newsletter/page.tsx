@@ -1,16 +1,7 @@
 "use client";
 
-import React, { useState, useEffect, useTransition } from "react";
-import {
-  Users,
-  Mail,
-  Calendar,
-  Trash2,
-  ChevronLeft,
-  ChevronRight,
-  Download,
-  RefreshCcw,
-} from "lucide-react";
+import { useState, useEffect, useTransition } from "react";
+import { ChevronLeft, ChevronRight, Download, RefreshCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import {
@@ -124,7 +115,7 @@ export default function NewsletterAdmin() {
                     variant="ghost"
                     size="sm"
                     onClick={() => handleToggle(sub.id, sub.status)}
-                    className="text-xs text-slate-400 hover:text-emerald-600"
+                    className="text-xs text-slate-400"
                   >
                     <RefreshCcw size={14} className="mr-2" />
                     {sub.status === "subscribed"
