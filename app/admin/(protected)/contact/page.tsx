@@ -7,16 +7,6 @@ export const dynamic = "force-dynamic";
 const Page = async () => {
   const result = await getContactSettings();
 
-  if (!result.success) {
-    return (
-      <div className="p-8">
-        <div className="bg-red-50 text-red-600 p-4 rounded-lg border border-red-200">
-          <strong>Error:</strong> {result.error}. Please try refreshing.
-        </div>
-      </div>
-    );
-  }
-
   // Normalize data to ensure it matches ContactPageValues exactly
   const contactData = result.data as ContactPageValues | null;
 
