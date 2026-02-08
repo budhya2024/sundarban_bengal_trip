@@ -200,6 +200,17 @@ export default function HomeSettingsForm({
                             onChange={(e) => {
                               const file = e.target.files?.[0];
                               if (file) {
+                                if (file.size > 5 * 1024 * 1024) {
+                                  toast({
+                                    variant: "destructive",
+                                    title: "File too large",
+                                    description:
+                                      "Please upload an image smaller than 5MB.",
+                                  });
+                                  // Clear the input so the same file can't be "re-selected" without fixing
+                                  e.target.value = "";
+                                  return;
+                                }
                                 const reader = new FileReader();
                                 reader.onloadend = () => {
                                   setHeroPreview(reader.result as string);

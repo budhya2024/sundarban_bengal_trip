@@ -36,6 +36,7 @@ export default function AboutAdminForm({
 }: {
   initialData: AboutValues | null;
 }) {
+  const MAX_FILE_SIZE = 5 * 1024 * 1024;
   const [isPending, startTransition] = useTransition();
   const { toast } = useToast();
 
@@ -183,6 +184,17 @@ export default function AboutAdminForm({
                             onChange={(e) => {
                               const file = e.target.files?.[0];
                               if (file) {
+                                if (file.size > MAX_FILE_SIZE) {
+                                  toast({
+                                    variant: "destructive",
+                                    title: "File too large",
+                                    description:
+                                      "Please upload an image smaller than 5MB.",
+                                  });
+                                  // Clear the input so the same file can't be "re-selected" without fixing
+                                  e.target.value = "";
+                                  return;
+                                }
                                 const r = new FileReader();
                                 r.onloadend = () => {
                                   const result = r.result as string;
@@ -299,6 +311,17 @@ export default function AboutAdminForm({
                             onChange={(e) => {
                               const file = e.target.files?.[0];
                               if (file) {
+                                if (file.size > MAX_FILE_SIZE) {
+                                  toast({
+                                    variant: "destructive",
+                                    title: "File too large",
+                                    description:
+                                      "Please upload an image smaller than 5MB.",
+                                  });
+                                  // Clear the input so the same file can't be "re-selected" without fixing
+                                  e.target.value = "";
+                                  return;
+                                }
                                 const r = new FileReader();
                                 r.onloadend = () => {
                                   const result = r.result as string;
