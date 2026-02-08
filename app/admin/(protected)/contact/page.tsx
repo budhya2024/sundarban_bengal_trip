@@ -2,6 +2,8 @@ import ContactPage from "@/components/admin/pages/ContactPage";
 import { getContactSettings } from "../../../actions/contact-settings.actions";
 import { ContactPageValues } from "@/schemas/adminContact.schema";
 
+export const dynamic = "force-dynamic";
+
 const Page = async () => {
   const result = await getContactSettings();
 

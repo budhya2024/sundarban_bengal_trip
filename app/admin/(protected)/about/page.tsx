@@ -2,6 +2,8 @@ import AboutAdminForm from "@/components/admin/AboutAdminForm";
 import { getAboutPage } from "../../../actions/about.actions";
 import { AboutValues } from "@/schemas/about.schema";
 
+export const dynamic = "force-dynamic";
+
 const page = async () => {
   const { data, success } = (await getAboutPage()) as {
     data: AboutValues;

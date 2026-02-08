@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import HomeSettingsForm from "@/components/admin/HomeSettingsForm";
 
+export const dynamic = "force-dynamic";
+
 const page = async () => {
   const { success, data } = await getHomeSettings();
 

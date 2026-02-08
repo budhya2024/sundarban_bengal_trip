@@ -13,8 +13,6 @@ import {
   X,
   Clock,
   AlertCircle,
-  Info,
-  History,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -81,7 +79,14 @@ export default function AboutAdminForm({
     });
   };
 
-  const hasErrors = Object.keys(form.formState.errors).length > 0;
+  // Helper to check if a specific section has errors
+  const errors = form.formState.errors;
+  const hasHeroErrors =
+    errors.heroImage || errors.heroTitle || errors.heroSubtitle;
+  const hasStoryErrors =
+    errors.storyImage || errors.storyTitle || errors.storyDescription;
+  const hasObjectiveErrors =
+    errors.ourMissionContent || errors.ourVisionContent;
 
   return (
     <Form {...form}>
@@ -89,22 +94,23 @@ export default function AboutAdminForm({
         onSubmit={form.handleSubmit(onSubmit)}
         className="min-h-screen bg-slate-50/30 pb-20"
       >
-        {/* --- STICKY ACTION BAR (Identical to Package Form) --- */}
         <div className="sticky top-0 z-30 w-full border-b bg-background/95 backdrop-blur px-6 py-4 flex justify-between items-center shadow-sm">
           <div className="flex items-center gap-2">
             <SidebarTrigger />
             <h1 className="text-xl font-display font-bold text-slate-800">
               About Management
             </h1>
-            {hasErrors && (
+            {Object.keys(errors).length > 0 && (
               <div className="flex items-center gap-1 text-red-500 bg-red-50 px-2 py-0.5 rounded text-[10px] font-bold animate-pulse">
-                <AlertCircle size={12} /> ERRORS DETECTED
+                <AlertCircle size={12} /> {Object.keys(errors).length} ERRORS
+                DETECTED
               </div>
             )}
           </div>
           <Button
+            type="submit"
             disabled={isPending}
-            className="bg-emerald-700 hover:bg-emerald-800 shadow-lg px-8"
+            className="bg-emerald-700 hover:bg-emerald-800 shadow-lg px-8 transition-all"
           >
             {isPending ? (
               <Clock className="mr-2 h-4 w-4 animate-spin" />
@@ -116,23 +122,29 @@ export default function AboutAdminForm({
         </div>
 
         <div className="mx-auto max-w-7xl p-6 grid grid-cols-1 lg:grid-cols-12 gap-8">
-          {/* --- LEFT COLUMN: CORE CONTENT (8 COLS) --- */}
           <div className="lg:col-span-8 space-y-8">
             {/* 1. Hero Section */}
-            <div className="bg-white p-6 rounded-2xl border shadow-sm space-y-4">
-              <div className="flex items-center gap-2 font-bold text-emerald-800 border-b pb-2">
-                <Layout size={18} /> Hero Section
+            <div
+              className={`bg-white p-6 rounded-2xl border shadow-sm space-y-4 transition-colors ${hasHeroErrors ? "border-red-200 ring-1 ring-red-50" : "border-slate-200"}`}
+            >
+              <div className="flex items-center justify-between border-b pb-2">
+                <div
+                  className={`flex items-center gap-2 font-bold ${hasHeroErrors ? "text-red-600" : "text-emerald-800"}`}
+                >
+                  <Layout size={18} /> Hero Section
+                </div>
               </div>
+
               <FormField
                 control={form.control}
                 name="heroImage"
-                render={({ fieldState }) => (
+                render={({ field, fieldState }) => (
                   <FormItem className="space-y-2">
                     <FormLabel className="text-[10px] font-bold uppercase text-slate-500">
                       Background Image
                     </FormLabel>
                     <div
-                      className={`relative h-60 w-full rounded-xl overflow-hidden border-2 border-dashed flex items-center justify-center transition-all ${fieldState.error ? "border-red-300 bg-red-50/30" : "bg-slate-50 border-slate-200"}`}
+                      className={`relative h-60 w-full rounded-xl overflow-hidden border-2 border-dashed flex items-center justify-center transition-all ${fieldState.error ? "border-red-400 bg-red-50/50" : "bg-slate-50 border-slate-200"}`}
                     >
                       {heroPreview ? (
                         <>
@@ -149,7 +161,10 @@ export default function AboutAdminForm({
                             className="absolute top-2 right-2 h-8 w-8 rounded-full"
                             onClick={() => {
                               setHeroPreview(null);
-                              form.setValue("heroImage", "");
+                              form.setValue("heroImage", "", {
+                                shouldValidate: true,
+                                shouldDirty: true,
+                              });
                             }}
                           >
                             <X size={14} />
@@ -170,11 +185,11 @@ export default function AboutAdminForm({
                               if (file) {
                                 const r = new FileReader();
                                 r.onloadend = () => {
-                                  setHeroPreview(r.result as string);
-                                  form.setValue(
-                                    "heroImage",
-                                    r.result as string,
-                                  );
+                                  const result = r.result as string;
+                                  setHeroPreview(result);
+                                  form.setValue("heroImage", result, {
+                                    shouldValidate: true,
+                                  });
                                 };
                                 r.readAsDataURL(file);
                               }
@@ -183,10 +198,11 @@ export default function AboutAdminForm({
                         </label>
                       )}
                     </div>
-                    <FormMessage className="text-[10px]" />
+                    <FormMessage className="text-[10px] font-bold" />
                   </FormItem>
                 )}
               />
+
               <div className="grid gap-4 pt-2">
                 <FormField
                   control={form.control}
@@ -197,8 +213,12 @@ export default function AboutAdminForm({
                         Headline
                       </FormLabel>
                       <FormControl>
-                        <Input placeholder="Who we are..." {...field} />
+                        <Input
+                          placeholder="e.g., Discover the wild Sundarbans"
+                          {...field}
+                        />
                       </FormControl>
+                      <FormMessage className="text-[10px] font-bold" />
                     </FormItem>
                   )}
                 />
@@ -211,8 +231,13 @@ export default function AboutAdminForm({
                         Subtext
                       </FormLabel>
                       <FormControl>
-                        <Textarea rows={2} {...field} />
+                        <Textarea
+                          rows={2}
+                          placeholder="A short welcoming subtitle..."
+                          {...field}
+                        />
                       </FormControl>
+                      <FormMessage className="text-[10px] font-bold" />
                     </FormItem>
                   )}
                 />
@@ -220,20 +245,22 @@ export default function AboutAdminForm({
             </div>
 
             {/* 2. Our Story Section */}
-            <div className="bg-white p-6 rounded-2xl border shadow-sm space-y-4">
+            <div
+              className={`bg-white p-6 rounded-2xl border shadow-sm space-y-4 transition-colors ${hasStoryErrors ? "border-red-200 ring-1 ring-red-50" : "border-slate-200"}`}
+            >
               <div className="flex items-center gap-2 font-bold text-amber-600 border-b pb-2">
                 <BookOpen size={18} /> Our Story
               </div>
               <FormField
                 control={form.control}
                 name="storyImage"
-                render={({ fieldState }) => (
+                render={({ field, fieldState }) => (
                   <FormItem className="space-y-2">
                     <FormLabel className="text-[10px] font-bold uppercase text-slate-400">
                       Narrative Image
                     </FormLabel>
                     <div
-                      className={`relative h-56 w-full rounded-xl overflow-hidden border-2 border-dashed flex items-center justify-center transition-all ${fieldState.error ? "border-red-300 bg-red-50/20" : "bg-slate-50 border-slate-200"}`}
+                      className={`relative h-56 w-full rounded-xl overflow-hidden border-2 border-dashed flex items-center justify-center transition-all ${fieldState.error ? "border-red-400 bg-red-50/50" : "bg-slate-50 border-slate-200"}`}
                     >
                       {storyPreview ? (
                         <>
@@ -250,7 +277,10 @@ export default function AboutAdminForm({
                             className="absolute top-2 right-2 h-8 w-8 rounded-full"
                             onClick={() => {
                               setStoryPreview(null);
-                              form.setValue("storyImage", "");
+                              form.setValue("storyImage", "", {
+                                shouldValidate: true,
+                                shouldDirty: true,
+                              });
                             }}
                           >
                             <X size={14} />
@@ -271,11 +301,11 @@ export default function AboutAdminForm({
                               if (file) {
                                 const r = new FileReader();
                                 r.onloadend = () => {
-                                  setStoryPreview(r.result as string);
-                                  form.setValue(
-                                    "storyImage",
-                                    r.result as string,
-                                  );
+                                  const result = r.result as string;
+                                  setStoryPreview(result);
+                                  form.setValue("storyImage", result, {
+                                    shouldValidate: true,
+                                  });
                                 };
                                 r.readAsDataURL(file);
                               }
@@ -284,6 +314,7 @@ export default function AboutAdminForm({
                         </label>
                       )}
                     </div>
+                    <FormMessage className="text-[10px] font-bold" />
                   </FormItem>
                 )}
               />
@@ -297,8 +328,12 @@ export default function AboutAdminForm({
                         Section Title
                       </FormLabel>
                       <FormControl>
-                        <Input {...field} />
+                        <Input
+                          placeholder="e.g., Our Humble Beginnings"
+                          {...field}
+                        />
                       </FormControl>
+                      <FormMessage className="text-[10px] font-bold" />
                     </FormItem>
                   )}
                 />
@@ -311,8 +346,13 @@ export default function AboutAdminForm({
                         Story Narrative
                       </FormLabel>
                       <FormControl>
-                        <Textarea rows={8} {...field} />
+                        <Textarea
+                          rows={8}
+                          placeholder="Tell your journey..."
+                          {...field}
+                        />
                       </FormControl>
+                      <FormMessage className="text-[10px] font-bold" />
                     </FormItem>
                   )}
                 />
@@ -320,18 +360,21 @@ export default function AboutAdminForm({
             </div>
           </div>
 
-          {/* --- RIGHT COLUMN: QUICK INFO STYLE (4 COLS) --- */}
           <div className="lg:col-span-4 space-y-8">
-            <div className="bg-white p-6 rounded-2xl border shadow-sm space-y-6 sticky top-24">
+            <div
+              className={`bg-white p-6 rounded-2xl border shadow-sm space-y-6 sticky top-24 transition-colors ${hasObjectiveErrors ? "border-red-200" : "border-slate-200"}`}
+            >
               <div className="flex items-center gap-2 font-bold text-slate-700 border-b pb-3">
-                <History size={18} className="text-slate-400" />
+                <Target size={18} className="text-slate-400" />
                 <span className="text-sm tracking-tight">Objectives</span>
               </div>
 
               <div className="space-y-6">
                 <div className="space-y-2">
-                  <div className="flex items-center gap-2 font-bold text-[10px] text-blue-700 uppercase tracking-widest">
-                    <Target size={14} /> Our Mission
+                  <div
+                    className={`flex items-center gap-2 font-bold text-[10px] uppercase tracking-widest ${errors.ourMissionContent ? "text-red-600" : "text-blue-700"}`}
+                  >
+                    Our Mission
                   </div>
                   <FormField
                     control={form.control}
@@ -341,18 +384,21 @@ export default function AboutAdminForm({
                         <FormControl>
                           <Textarea
                             rows={6}
-                            className="bg-slate-50/50 border-slate-200 text-xs leading-relaxed"
+                            className={`bg-slate-50/50 text-xs leading-relaxed transition-colors ${errors.ourMissionContent ? "border-red-300 focus-visible:ring-red-500" : "border-slate-200"}`}
                             {...field}
                           />
                         </FormControl>
+                        <FormMessage className="text-[10px] font-bold" />
                       </FormItem>
                     )}
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <div className="flex items-center gap-2 font-bold text-[10px] text-emerald-700 uppercase tracking-widest">
-                    <Eye size={14} /> Our Vision
+                  <div
+                    className={`flex items-center gap-2 font-bold text-[10px] uppercase tracking-widest ${errors.ourVisionContent ? "text-red-600" : "text-emerald-700"}`}
+                  >
+                    Our Vision
                   </div>
                   <FormField
                     control={form.control}
@@ -362,10 +408,11 @@ export default function AboutAdminForm({
                         <FormControl>
                           <Textarea
                             rows={6}
-                            className="bg-slate-50/50 border-slate-200 text-xs leading-relaxed"
+                            className={`bg-slate-50/50 text-xs leading-relaxed transition-colors ${errors.ourVisionContent ? "border-red-300 focus-visible:ring-red-500" : "border-slate-200"}`}
                             {...field}
                           />
                         </FormControl>
+                        <FormMessage className="text-[10px] font-bold" />
                       </FormItem>
                     )}
                   />

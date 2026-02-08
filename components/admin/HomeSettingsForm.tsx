@@ -38,6 +38,7 @@ import {
   HomeSettingsValues,
 } from "@/schemas/homeSettings.schema";
 import { updateHomeSettings } from "@/app/actions/home.actions";
+import { cn } from "@/lib/utils";
 
 export default function HomeSettingsForm({
   initialData,
@@ -99,10 +100,26 @@ export default function HomeSettingsForm({
     });
   };
 
+  const onError = (errors: any) => {
+    // Check for testimonial errors
+    if (errors.testimonials) {
+      const firstErrorIndex = Object.keys(errors.testimonials)[0];
+      setExpandedTestimonial(parseInt(firstErrorIndex));
+      return;
+    }
+
+    // Check for FAQ errors
+    if (errors.faqs) {
+      const firstErrorIndex = Object.keys(errors.faqs)[0];
+      setExpandedFaq(parseInt(firstErrorIndex));
+      return;
+    }
+  };
+
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(onSubmit)}
+        onSubmit={form.handleSubmit(onSubmit, onError)}
         className="min-h-screen bg-slate-50/30 pb-20"
       >
         {/* --- STICKY COMMAND HEADER --- */}
@@ -408,77 +425,110 @@ export default function HomeSettingsForm({
                 </Button>
               </div>
               <div className="divide-y divide-slate-100">
-                {fFields.map((field, index) => (
-                  <div key={field.id}>
+                {fFields.map((field, index) => {
+                  // Check if this specific FAQ has errors
+                  const faqErrors = form.formState.errors.faqs?.[index];
+
+                  return (
                     <div
-                      className="flex items-center justify-between p-4 cursor-pointer hover:bg-slate-50 transition-colors"
-                      onClick={() =>
-                        setExpandedFaq(expandedFaq === index ? null : index)
-                      }
+                      key={field.id}
+                      className={cn(
+                        "transition-colors",
+                        faqErrors && "bg-red-50/50 border-l-2 border-red-500",
+                      )}
                     >
-                      <span className="text-xs font-bold text-slate-600 truncate mr-4">
-                        {form.watch(`faqs.${index}.question`) || "New Question"}
-                      </span>
-                      <div className="flex items-center gap-2">
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="icon"
-                          className="h-7 w-7 text-slate-300 hover:text-red-500"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            fRemove(index);
-                          }}
-                        >
-                          <Trash2 size={14} />
-                        </Button>
-                        {expandedFaq === index ? (
-                          <ChevronUp size={14} />
-                        ) : (
-                          <ChevronDown size={14} />
-                        )}
+                      <div
+                        className="flex items-center justify-between p-4 cursor-pointer hover:bg-slate-50 transition-colors"
+                        onClick={() =>
+                          setExpandedFaq(expandedFaq === index ? null : index)
+                        }
+                      >
+                        <div className="flex flex-col">
+                          <span
+                            className={cn(
+                              "text-xs font-bold truncate mr-4",
+                              faqErrors ? "text-red-600" : "text-slate-600",
+                            )}
+                          >
+                            {form.watch(`faqs.${index}.question`) ||
+                              "New Question"}
+                          </span>
+                          {faqErrors && (
+                            <span className="text-[9px] font-bold text-red-500 uppercase animate-pulse">
+                              Invalid Content
+                            </span>
+                          )}
+                        </div>
+
+                        <div className="flex items-center gap-2">
+                          {faqErrors && (
+                            <AlertCircle size={14} className="text-red-500" />
+                          )}
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="icon"
+                            className="h-7 w-7 text-slate-300 hover:text-red-500"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              fRemove(index);
+                            }}
+                          >
+                            <Trash2 size={14} />
+                          </Button>
+                          {expandedFaq === index ? (
+                            <ChevronUp size={14} />
+                          ) : (
+                            <ChevronDown size={14} />
+                          )}
+                        </div>
                       </div>
+
+                      {expandedFaq === index && (
+                        <div className="p-4 bg-slate-50/30 border-t space-y-3 animate-in slide-in-from-top-1">
+                          <FormField
+                            control={form.control}
+                            name={`faqs.${index}.question`}
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel className="text-[9px] font-black uppercase text-slate-400">
+                                  Question
+                                </FormLabel>
+                                <FormControl>
+                                  <Input
+                                    className="h-8 text-xs bg-white"
+                                    {...field}
+                                  />
+                                </FormControl>
+                                {/* CRITICAL: ADD THIS LINE */}
+                                <FormMessage className="text-[10px] font-bold text-red-500" />
+                              </FormItem>
+                            )}
+                          />
+                          <FormField
+                            control={form.control}
+                            name={`faqs.${index}.answer`}
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel className="text-[9px] font-black uppercase text-slate-400">
+                                  Answer
+                                </FormLabel>
+                                <FormControl>
+                                  <Textarea
+                                    className="text-xs min-h-[80px] bg-white"
+                                    {...field}
+                                  />
+                                </FormControl>
+                                {/* CRITICAL: ADD THIS LINE */}
+                                <FormMessage className="text-[10px] font-bold text-red-500" />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      )}
                     </div>
-                    {expandedFaq === index && (
-                      <div className="p-4 bg-slate-50/30 border-t space-y-3 animate-in slide-in-from-top-1">
-                        <FormField
-                          control={form.control}
-                          name={`faqs.${index}.question`}
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel className="text-[9px] font-black uppercase text-slate-400">
-                                Question
-                              </FormLabel>
-                              <FormControl>
-                                <Input
-                                  className="h-8 text-xs bg-white"
-                                  {...field}
-                                />
-                              </FormControl>
-                            </FormItem>
-                          )}
-                        />
-                        <FormField
-                          control={form.control}
-                          name={`faqs.${index}.answer`}
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel className="text-[9px] font-black uppercase text-slate-400">
-                                Answer
-                              </FormLabel>
-                              <FormControl>
-                                <Textarea
-                                  className="text-xs min-h-[80px] bg-white"
-                                  {...field}
-                                />
-                              </FormControl>
-                            </FormItem>
-                          )}
-                        />
-                      </div>
-                    )}
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           </div>

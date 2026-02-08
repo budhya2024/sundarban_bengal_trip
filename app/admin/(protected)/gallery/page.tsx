@@ -4,6 +4,8 @@ import {
   getAllGalleryItems,
 } from "../../../actions/gallery.actions";
 
+export const dynamic = "force-dynamic";
+
 export default async function GalleryPage() {
   const [{ data }, { data: categoryData }] = await Promise.all([
     await getAllGalleryItems(),
