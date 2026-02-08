@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useTransition } from "react";
+import React, { memo, useState, useTransition } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -86,16 +86,16 @@ const navigation = [
   },
 ];
 
-export function Sidebar() {
+const NavContent = memo(({ mobile = false }: { mobile?: boolean }) => {
   const pathname = usePathname();
-  const { isOpen, closeSidebar } = useSidebarContext();
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const { isCollapsed, setIsCollapsed } = useSidebarContext();
+
   const { toast } = useToast();
   const [isPending, startTransition] = useTransition();
 
   const handleLogout = () => {
     startTransition(async () => {
-      await logoutAction(); // This handles cookie deletion and redirect
+      await logoutAction();
       toast({
         title: "Logged Out",
         description: "You have been securely logged out.",
@@ -103,7 +103,7 @@ export function Sidebar() {
     });
   };
 
-  const NavContent = ({ mobile = false }: { mobile?: boolean }) => (
+  return (
     <TooltipProvider delayDuration={0}>
       <div
         className={cn(
@@ -238,7 +238,10 @@ export function Sidebar() {
       </div>
     </TooltipProvider>
   );
+});
 
+export const Sidebar = memo(() => {
+  const { isOpen, closeSidebar, isCollapsed } = useSidebarContext();
   return (
     <>
       {/* MOBILE SIDEBAR (Context Controlled) */}
@@ -267,4 +270,6 @@ export function Sidebar() {
       </aside>
     </>
   );
-}
+});
+
+Sidebar.displayName = "Sidebar";

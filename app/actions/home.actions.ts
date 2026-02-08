@@ -76,7 +76,7 @@ export async function updateBookingStatus(
       })
       .where(eq(bookings.id, id));
 
-    revalidatePath("/admin/inquiries");
+    revalidatePath("/admin/inquiry");
     return { success: true, message: "Inquiry updated successfully" };
   } catch (error) {
     console.error(error);
@@ -108,7 +108,6 @@ export async function updateHomeSettings(values: HomeSettingsValues) {
       });
 
     revalidatePath("/");
-    revalidatePath("/admin/settings");
 
     return { success: true, message: "Settings synced successfully" };
   } catch (error) {

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useMemo, useEffect } from "react";
+import { useState, useRef, useMemo, useEffect, useTransition } from "react";
 import Image from "next/image";
 import {
   UploadCloud,
@@ -25,6 +25,7 @@ import { addGallery, deleteGalleryItem } from "@/app/actions/gallery.actions";
 import convertToBase64 from "@/lib/convertToBase64";
 import { Button } from "../ui/button";
 import { SidebarTrigger } from "./SidebarTrigger";
+import { useToast } from "@/hooks/use-toast";
 
 // --- CUSTOM COMPONENT: Dynamic Creatable Select ---
 const CreatableSelect = ({
@@ -183,6 +184,7 @@ export default function GalleryManager({
   initialImages?: GalleryType[];
   categoryData: string[];
 }) {
+  const [isPending, startTransition] = useTransition();
   const [images, setImages] = useState<GalleryType[]>(initialImages || []);
   const [activeFilter, setActiveFilter] = useState("All");
   const [isUploadOpen, setIsUploadOpen] = useState(false);
@@ -199,6 +201,8 @@ export default function GalleryManager({
   const [previewTarget, setPreviewTarget] = useState<GalleryType | null>(null);
   const [deleteTarget, setDeleteTarget] = useState<GalleryType | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
+
+  const { toast } = useToast();
 
   const filteredImages =
     activeFilter === "All"
@@ -258,29 +262,31 @@ export default function GalleryManager({
     category: string;
     url: string;
   }) => {
-    const { success, data } = await addGallery(formdata);
+    // Use startTransition to track the server-side work
+    startTransition(async () => {
+      const { success, data } = await addGallery(formdata);
 
-    if (success && data) {
-      setImages((prev) => [
-        {
-          id: data.id,
-          title: data.title,
-          url: data.url,
-          fileId: data.fileId,
-          category: data.category.toLowerCase(),
-          createdAt: data.createdAt,
-          updatedAt: data.updatedAt,
-        },
-        ...prev,
-      ]);
-      if (!availableCategories.includes(formdata.category)) {
-        setAvailableCategories((prev) => [...prev, formdata.category]);
+      if (success && data) {
+        setImages((prev) => [
+          {
+            id: data.id,
+            title: data.title,
+            url: data.url,
+            fileId: data.fileId,
+            category: data.category.toLowerCase(),
+            createdAt: data.createdAt,
+            updatedAt: data.updatedAt,
+          },
+          ...prev,
+        ]);
+
+        // Cleanup UI
+        setIsUploadOpen(false);
+        setPreviewUrl(null);
+        reset();
+        toast({ title: "Success", description: "Image added to gallery" });
       }
-      setIsUploadOpen(false);
-      setPreviewUrl(null);
-      reset();
-      setActiveFilter("All");
-    }
+    });
   };
 
   // --- DELETE HANDLER ---
@@ -415,25 +421,37 @@ export default function GalleryManager({
       </div>
 
       {/* --- UPLOAD MODAL (Existing) --- */}
+
       {isUploadOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-in fade-in duration-200">
           <div className="bg-white rounded-xl w-full max-w-lg shadow-2xl scale-100 animate-in zoom-in-95 duration-200">
             <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
-              <h3 className="text-lg font-serif font-bold text-gray-900">
-                Upload Image
-              </h3>
-              <button onClick={() => setIsUploadOpen(false)}>
+              <div>
+                <h3 className="text-lg font-serif font-bold text-gray-900">
+                  Upload New Asset
+                </h3>
+                <p className="text-[10px] text-gray-400 uppercase tracking-widest font-bold">
+                  Media Library
+                </p>
+              </div>
+              <button
+                onClick={() => {
+                  setIsUploadOpen(false);
+                  setUploadError(null);
+                  reset();
+                }}
+              >
                 <X size={20} className="text-gray-400 hover:text-gray-600" />
               </button>
             </div>
 
             <form
               onSubmit={handleSubmit(handleUploadSubmit)}
-              className="p-6 space-y-5"
+              className="p-6 space-y-6"
             >
-              {/* ... Upload Form Inputs Same as Before ... */}
+              {/* 1. IMAGE UPLOAD FIELD */}
               <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-700">
+                <label className="text-xs font-bold text-gray-500 uppercase tracking-wider">
                   Image File
                 </label>
                 <input
@@ -445,30 +463,46 @@ export default function GalleryManager({
                 />
                 {!previewUrl ? (
                   <div
-                    onClick={() => fileInputRef.current?.click()}
-                    className="border-2 border-dashed border-gray-300 bg-gray-50 rounded-lg h-40 flex flex-col items-center justify-center cursor-pointer hover:border-[#4a6741] transition-colors"
+                    onClick={() =>
+                      !isUploading && fileInputRef.current?.click()
+                    }
+                    className={clsx(
+                      "border-2 border-dashed rounded-xl h-44 flex flex-col items-center justify-center cursor-pointer transition-all",
+                      errors.url || uploadError
+                        ? "border-red-300 bg-red-50/30"
+                        : "border-gray-300 bg-gray-50 hover:border-[#4a6741] hover:bg-gray-100/50",
+                    )}
                   >
                     {isUploading ? (
                       <>
                         <Loader2
-                          className="text-gray-400 mb-2 animate-spin"
-                          size={28}
+                          className="text-[#4a6741] mb-2 animate-spin"
+                          size={32}
                         />
-                        <span className="text-sm text-gray-600 font-medium">
-                          Uploading...
+                        <span className="text-sm text-[#4a6741] font-bold">
+                          Processing Image...
                         </span>
                       </>
                     ) : (
                       <>
-                        <UploadCloud className="text-gray-400 mb-2" size={28} />
+                        <UploadCloud
+                          className={clsx(
+                            "mb-2",
+                            errors.url ? "text-red-400" : "text-gray-400",
+                          )}
+                          size={32}
+                        />
                         <span className="text-sm text-gray-600 font-medium">
-                          Click to upload
+                          Click to select image
                         </span>
+                        <p className="text-[10px] text-gray-400 mt-1">
+                          PNG, JPG or WebP (Max 5MB)
+                        </p>
                       </>
                     )}
                   </div>
                 ) : (
-                  <div className="relative h-40 w-full rounded-lg overflow-hidden border border-gray-200 group">
+                  <div className="relative h-44 w-full rounded-xl overflow-hidden border border-gray-200 group ring-4 ring-green-50">
                     <Image
                       src={previewUrl}
                       alt="Preview"
@@ -477,60 +511,97 @@ export default function GalleryManager({
                     />
                     <button
                       type="button"
-                      onClick={() => setPreviewUrl(null)}
-                      className="absolute top-2 right-2 bg-white/90 p-1.5 rounded-full text-red-500 hover:text-red-700 shadow-sm opacity-0 group-hover:opacity-100 transition-opacity"
+                      onClick={() => {
+                        setPreviewUrl(null);
+                        setValue("url", "");
+                      }}
+                      className="absolute top-3 right-3 bg-white p-2 rounded-full text-red-500 hover:bg-red-50 shadow-md transition-all active:scale-90"
                     >
                       <Trash2 size={16} />
                     </button>
                   </div>
                 )}
-                {errors.url && (
-                  <p className="text-red-500 text-sm">{errors.url.message}</p>
+                {(errors.url || uploadError) && (
+                  <p className="text-red-500 text-[10px] font-bold uppercase flex items-center gap-1">
+                    <AlertTriangle size={12} />{" "}
+                    {errors.url?.message || uploadError}
+                  </p>
                 )}
               </div>
 
+              {/* 2. TITLE FIELD */}
               <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-700">
-                  Title
+                <label className="text-xs font-bold text-gray-500 uppercase tracking-wider">
+                  Image Title
                 </label>
                 <input
-                  required
                   {...register("title")}
-                  placeholder="Image Caption"
-                  className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#4a6741] outline-none text-sm"
+                  placeholder="e.g., Royal Bengal Tiger at Sunrise"
+                  className={clsx(
+                    "w-full px-4 py-2.5 rounded-lg border outline-none text-sm transition-all",
+                    errors.title
+                      ? "border-red-300 bg-red-50/20 focus:border-red-500"
+                      : "border-gray-300 focus:border-[#4a6741] focus:ring-2 focus:ring-[#4a6741]/10",
+                  )}
                 />
+                {errors.title && (
+                  <p className="text-red-500 text-[10px] font-bold uppercase">
+                    {errors.title.message}
+                  </p>
+                )}
               </div>
 
+              {/* 3. CATEGORY FIELD */}
               <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-700">
+                <label className="text-xs font-bold text-gray-500 uppercase tracking-wider">
                   Category
                 </label>
                 <CreatableSelect
                   options={availableCategories}
                   value={category}
-                  onChange={(val) => setValue("category", val)}
-                  placeholder="Select or Create Category..."
+                  onChange={(val) =>
+                    setValue("category", val, { shouldValidate: true })
+                  }
+                  placeholder="Choose or type new category..."
                 />
+                {errors.category && (
+                  <p className="text-red-500 text-[10px] font-bold uppercase">
+                    {errors.category.message}
+                  </p>
+                )}
               </div>
 
-              <div className="pt-4 flex justify-end gap-3">
+              {/* FORM ACTIONS */}
+              <div className="pt-4 flex items-center justify-end gap-3">
                 <button
                   type="button"
-                  onClick={() => setIsUploadOpen(false)}
-                  className="px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 rounded-lg"
+                  onClick={() => {
+                    setIsUploadOpen(false);
+                    reset();
+                  }}
+                  className="px-5 py-2 text-sm font-bold text-gray-500 hover:text-gray-800 transition-colors"
                 >
                   Cancel
                 </button>
-                <button
+                <Button
                   type="submit"
-                  disabled={isUploading}
-                  className="px-6 py-2 text-sm font-medium text-white bg-[#4a6741] hover:bg-[#3a5233] rounded-lg shadow-sm flex items-center gap-2 disabled:opacity-70"
-                >
-                  {isUploading && (
-                    <Loader2 className="animate-spin" size={16} />
+                  disabled={isUploading || isPending}
+                  className={clsx(
+                    "h-11 px-8 rounded-full font-bold shadow-lg transition-all active:scale-95",
+                    "bg-[#4a6741] hover:bg-[#3a5233] disabled:bg-gray-200 disabled:text-gray-400",
                   )}
-                  {isUploading ? "Saving..." : "Save Image"}
-                </button>
+                >
+                  {isUploading || isPending ? (
+                    <Loader2 className="animate-spin h-5 w-5" />
+                  ) : (
+                    <Check className="mr-2 h-5 w-5" />
+                  )}
+                  {isUploading
+                    ? "Processing..."
+                    : isPending
+                      ? "Saving..."
+                      : "Publish Image"}
+                </Button>
               </div>
             </form>
           </div>
