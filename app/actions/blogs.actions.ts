@@ -4,6 +4,7 @@ import { db } from "@/db";
 import { blogs as BlogModel, NewBlogType } from "@/db/schema";
 import { desc, eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
+import { uploadImageFromBase64 } from "./imagekit.actions";
 
 export const getAllBlogs = async () => {
   try {
@@ -44,6 +45,12 @@ export const getBlogById = async (id: string) => {
 
 export const createBlog = async (newBlog: NewBlogType) => {
   try {
+    if (!newBlog.image?.startsWith("http")) {
+      const result = await uploadImageFromBase64(newBlog.image, newBlog.title);
+      if (result.success && result.url) {
+        newBlog.image = result.url;
+      }
+    }
     const slug = newBlog.title.toLowerCase().replace(/\s+/g, "-");
     const data = await db
       .insert(BlogModel)
@@ -89,7 +96,7 @@ export const toggleStatus = async (id: string, status: boolean) => {
 export const deleteBlog = async (id: string) => {
   try {
     await db.delete(BlogModel).where(eq(BlogModel.id, id));
-    revalidatePath("/admin/BlogModel");
+    revalidatePath("/admin/blogs");
     return { success: true };
   } catch (error: any) {
     console.log(error);
@@ -109,7 +116,7 @@ export const setFeaturedBlog = async (id: string, isFeatured: boolean) => {
         .set({ isFeatured: isFeatured })
         .where(eq(BlogModel.id, id));
     });
-    revalidatePath("/admin/BlogModel");
+    revalidatePath("/admin/blogs");
     return { success: true };
   } catch (error: any) {
     console.log(error);

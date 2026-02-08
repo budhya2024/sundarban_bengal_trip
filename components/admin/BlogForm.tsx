@@ -134,29 +134,37 @@ export default function BlogForm({ initialData }: { initialData?: BlogType }) {
     // 1. Reset previous errors
     setUploadError(null);
 
-    // 2. Validate Size (2MB = 2 * 1024 * 1024 bytes)
+    // 2. Validate Size (2MB)
     const MAX_SIZE = 2 * 1024 * 1024;
     if (file.size > MAX_SIZE) {
       setUploadError("File is too large. Max size is 2MB.");
-      return; // Stop execution
+      // Clear the input so the user can re-try with the same file if they shrink it
+      e.target.value = "";
+      return;
     }
 
-    setIsUploading(true);
+    // 3. Process the file locally
     try {
-      const formData = new FormData();
-      formData.append("file", file);
-      const result = await uploadImage(formData);
-      console.log({ result });
-      if (result.success && result.url) {
-        setValue("image", result.url);
-      } else {
-        setUploadError("Upload failed server-side.");
-      }
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        const base64String = reader.result as string;
+
+        // Set the value in React Hook Form
+        setValue("image", base64String, {
+          shouldValidate: true,
+          shouldDirty: true,
+        });
+      };
+
+      reader.onerror = () => {
+        setUploadError("Could not read the file locally.");
+      };
+
+      reader.readAsDataURL(file);
     } catch (error) {
-      console.error(error);
-      setUploadError("Network error occurred.");
-    } finally {
-      setIsUploading(false);
+      console.error("Local Conversion Error:", error);
+      setUploadError("An unexpected error occurred.");
     }
   };
 

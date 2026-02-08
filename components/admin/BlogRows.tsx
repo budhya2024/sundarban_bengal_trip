@@ -23,6 +23,7 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
+import { createPortal } from "react-dom";
 
 const BlogRows = ({ blogs }: { blogs: BlogType[] }) => {
   const router = useRouter();
@@ -326,54 +327,57 @@ const BlogRows = ({ blogs }: { blogs: BlogType[] }) => {
       ))}
 
       {/* --- DELETE MODAL --- */}
-      {deleteId && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm animate-in fade-in duration-200">
-          {/* Modal Content */}
-          <div className="bg-white rounded-xl shadow-2xl w-full max-w-md p-6 border border-gray-100 scale-100 animate-in zoom-in-95 duration-200">
-            <div className="flex items-start gap-4">
-              {/* Icon */}
-              <div className="flex-shrink-0 p-3 bg-red-50 rounded-full text-red-600">
-                <AlertTriangle size={24} />
+      {deleteId &&
+        typeof document !== "undefined" &&
+        createPortal(
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm animate-in fade-in duration-200">
+            {/* Modal Content */}
+            <div className="bg-white rounded-xl shadow-2xl w-full max-w-md p-6 border border-gray-100 scale-100 animate-in zoom-in-95 duration-200">
+              <div className="flex items-start gap-4">
+                {/* Icon */}
+                <div className="flex-shrink-0 p-3 bg-red-50 rounded-full text-red-600">
+                  <AlertTriangle size={24} />
+                </div>
+
+                {/* Text */}
+                <div className="flex-1">
+                  <h3 className="text-xl font-serif font-bold text-gray-900">
+                    Delete Post?
+                  </h3>
+                  <p className="text-gray-500 mt-2 text-sm leading-relaxed">
+                    Are you sure you want to delete this blog post? This action
+                    is permanent and cannot be undone.
+                  </p>
+                </div>
               </div>
 
-              {/* Text */}
-              <div className="flex-1">
-                <h3 className="text-xl font-serif font-bold text-gray-900">
-                  Delete Post?
-                </h3>
-                <p className="text-gray-500 mt-2 text-sm leading-relaxed">
-                  Are you sure you want to delete this blog post? This action is
-                  permanent and cannot be undone.
-                </p>
+              {/* Actions */}
+              <div className="flex items-center justify-end gap-3 mt-8">
+                <button
+                  onClick={() => setDeleteId(null)}
+                  disabled={isDeleting}
+                  className="px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 text-sm font-medium transition-colors"
+                >
+                  Cancel
+                </button>
+
+                <button
+                  onClick={handleDeleteConfirm}
+                  disabled={isDeleting}
+                  className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 text-sm font-medium transition-colors flex items-center gap-2 shadow-sm disabled:opacity-70"
+                >
+                  {isDeleting ? (
+                    <Loader2 className="animate-spin" size={16} />
+                  ) : (
+                    <Trash2 size={16} />
+                  )}
+                  {isDeleting ? "Deleting..." : "Delete Post"}
+                </button>
               </div>
             </div>
-
-            {/* Actions */}
-            <div className="flex items-center justify-end gap-3 mt-8">
-              <button
-                onClick={() => setDeleteId(null)}
-                disabled={isDeleting}
-                className="px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 text-sm font-medium transition-colors"
-              >
-                Cancel
-              </button>
-
-              <button
-                onClick={handleDeleteConfirm}
-                disabled={isDeleting}
-                className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 text-sm font-medium transition-colors flex items-center gap-2 shadow-sm disabled:opacity-70"
-              >
-                {isDeleting ? (
-                  <Loader2 className="animate-spin" size={16} />
-                ) : (
-                  <Trash2 size={16} />
-                )}
-                {isDeleting ? "Deleting..." : "Delete Post"}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+          </div>,
+          document.body,
+        )}
     </>
   );
 };

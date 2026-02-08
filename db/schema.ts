@@ -14,7 +14,7 @@ export const blogs = pgTable("blog", {
   title: text("title").notNull(),
   slug: text("slug").notNull().unique(),
   description: text("description"),
-  image: text("image"),
+  image: text("image").notNull(),
   content: text("content").notNull(),
   published: boolean("published").default(false).notNull(),
   isFeatured: boolean("is_featured").default(false).notNull(),

@@ -217,7 +217,7 @@ export async function upsertPackage(values: PackageValues) {
       });
 
     // 4. Invalidate Caches
-    revalidatePath("/admin/packages");
+    revalidatePath("/admin/package");
     revalidatePath(`/packages/${packageKey}`);
 
     return { success: true, key: packageKey };
@@ -242,7 +242,7 @@ export async function deletePackage(key: string) {
     }
 
     // Clear the cache for the listing page and the specific public page
-    revalidatePath("/admin/packages");
+    revalidatePath("/admin/package");
     revalidatePath(`/packages/${key}`);
 
     return { success: true, message: "Package deleted successfully" };
