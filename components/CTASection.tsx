@@ -18,7 +18,7 @@ export const CTASection = () => {
           alt="Sundarban Sunset"
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/90 to-primary/70" />
+        <div className="absolute inset-0 bg-black/70" />
       </div>
 
       {/* Content */}

@@ -83,7 +83,7 @@ export const AboutSection = () => {
               Your Gateway to the Mystical Sundarbans
             </h2>
             <p className="text-muted-foreground leading-relaxed mb-6">
-              For over 15 years, Sundarban Tours has been the leading travel
+              For over 15 years, Sundarban Bengal Trip has been the leading travel
               agency specializing in expeditions to the magnificent Sundarbans.
               Our passion for nature and commitment to sustainable tourism has
               made us the preferred choice for wildlife enthusiasts and

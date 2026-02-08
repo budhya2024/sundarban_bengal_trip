@@ -68,7 +68,7 @@ const AboutPage = ({ data }: { data: AboutValues }) => {
       <Navbar />
 
       <PageHeader
-        title={data.heroTitle || "About Sundarban Tours"}
+        title={data.heroTitle || "About Sundarban Bengal Trip"}
         subtitle={
           data.heroSubtitle ||
           "For over 15 years, we've been the trusted gateway to the magnificent Sundarbans, helping thousands of travelers experience the magic of the world's largest mangrove forest."
@@ -91,7 +91,7 @@ const AboutPage = ({ data }: { data: AboutValues }) => {
                 {data.storyDescription || (
                   <>
                     <p>
-                      Sundarban Tours was founded in 2009 by Rajiv Banerjee, a
+                      Sundarban Bengal Trip was founded in 2009 by Rajiv Banerjee, a
                       lifelong nature enthusiast who grew up in the villages
                       surrounding the Sundarban delta. His deep connection to
                       the land and its wildlife inspired him to share this
