@@ -11,7 +11,6 @@ import {
   Info,
   Clock,
   CheckCircle,
-  XCircle,
   Upload,
   X,
   Star,
@@ -33,6 +32,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/hooks/use-toast";
 import { PackageSchema, PackageValues } from "@/schemas/package.schema";
+import { cn } from "@/lib/utils";
 
 import Image from "next/image";
 import { SidebarTrigger } from "./SidebarTrigger";
@@ -65,7 +65,7 @@ function DayActivities({
             name={`timeline.${dayIndex}.events.${index}.time`}
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-[9px] font-bold uppercase">
+                <FormLabel className="text-[9px] font-bold uppercase text-slate-500">
                   Time
                 </FormLabel>
                 <FormControl>
@@ -75,6 +75,7 @@ function DayActivities({
                     placeholder="08:00 AM"
                   />
                 </FormControl>
+                <FormMessage className="text-[9px] font-bold" />
               </FormItem>
             )}
           />
@@ -83,7 +84,7 @@ function DayActivities({
             name={`timeline.${dayIndex}.events.${index}.title`}
             render={({ field }) => (
               <FormItem className="md:col-span-3">
-                <FormLabel className="text-[9px] font-bold uppercase">
+                <FormLabel className="text-[9px] font-bold uppercase text-slate-500">
                   Activity Title
                 </FormLabel>
                 <FormControl>
@@ -93,6 +94,7 @@ function DayActivities({
                     placeholder="Morning Boat Safari"
                   />
                 </FormControl>
+                <FormMessage className="text-[9px] font-bold" />
               </FormItem>
             )}
           />
@@ -101,7 +103,7 @@ function DayActivities({
             name={`timeline.${dayIndex}.events.${index}.description`}
             render={({ field }) => (
               <FormItem className="md:col-span-4">
-                <FormLabel className="text-[9px] font-bold uppercase">
+                <FormLabel className="text-[9px] font-bold uppercase text-slate-500">
                   Activity Detail
                 </FormLabel>
                 <FormControl>
@@ -110,6 +112,7 @@ function DayActivities({
                     {...field}
                   />
                 </FormControl>
+                <FormMessage className="text-[9px] font-bold" />
               </FormItem>
             )}
           />
@@ -169,7 +172,6 @@ export default function PackageForm({
   const [isPending, startTransition] = useTransition();
   const { toast } = useToast();
 
-  // Separate previews for Hero and Package images
   const [heroPreview, setHeroPreview] = useState<string | null>(
     initialData?.heroImage || null,
   );
@@ -224,12 +226,22 @@ export default function PackageForm({
     });
   };
 
+  const onError = (errors: any) => {
+    console.log("Validation Errors:", errors);
+    toast({
+      variant: "destructive",
+      title: "Form Error",
+      description: "Please fill in all required fields before saving.",
+    });
+  };
+
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(onSubmit)}
+        onSubmit={form.handleSubmit(onSubmit, onError)}
         className="min-h-screen bg-slate-50/30 pb-20"
       >
+        {/* --- STICKY HEADER --- */}
         <div className="sticky top-0 z-30 w-full border-b bg-background/95 backdrop-blur px-6 py-4 flex justify-between items-center shadow-sm">
           <div className="flex items-center gap-2">
             <SidebarTrigger />
@@ -237,14 +249,15 @@ export default function PackageForm({
               Package Editor
             </h1>
             {Object.keys(form.formState.errors).length > 0 && (
-              <div className="flex items-center gap-1 text-red-500 bg-red-50 px-2 py-0.5 rounded text-[10px] font-bold">
-                <AlertCircle size={12} /> ERRORS IN FORM
+              <div className="flex items-center gap-1 text-red-500 bg-red-50 px-2.5 py-1 rounded-full text-[10px] font-bold border border-red-100 animate-pulse">
+                <AlertCircle size={12} />{" "}
+                {Object.keys(form.formState.errors).length} ERRORS DETECTED
               </div>
             )}
           </div>
           <Button
             disabled={isPending}
-            className="bg-emerald-700 hover:bg-emerald-800 shadow-lg px-8"
+            className="bg-emerald-700 hover:bg-emerald-800 shadow-lg px-8 transition-all active:scale-95"
           >
             {isPending ? (
               <Clock className="mr-2 h-4 w-4 animate-spin" />
@@ -257,8 +270,13 @@ export default function PackageForm({
 
         <div className="mx-auto max-w-7xl p-6 grid grid-cols-1 lg:grid-cols-12 gap-8">
           <div className="lg:col-span-8 space-y-8">
-            {/* --- 1. HERO SECTION --- */}
-            <div className="bg-white p-6 rounded-2xl border shadow-sm space-y-4 transition-all hover:shadow-md">
+            {/* --- HERO SECTION --- */}
+            <div
+              className={cn(
+                "bg-white p-6 rounded-2xl border shadow-sm space-y-4 transition-all hover:shadow-md",
+                form.formState.errors.heroImage && "border-red-200",
+              )}
+            >
               <div className="flex items-center gap-2 font-bold text-emerald-800 border-b pb-2">
                 <Layout size={18} /> Hero Section
               </div>
@@ -271,7 +289,12 @@ export default function PackageForm({
                       Hero Background Image
                     </FormLabel>
                     <div
-                      className={`relative h-48  w-full rounded-xl overflow-hidden border-2 border-dashed flex items-center justify-center transition-all ${fieldState.error ? "border-red-300 bg-red-50/20" : "bg-slate-50/50 border-slate-200 hover:border-emerald-200"}`}
+                      className={cn(
+                        "relative h-48 w-full rounded-xl overflow-hidden border-2 border-dashed flex items-center justify-center transition-all",
+                        fieldState.error
+                          ? "border-red-400 bg-red-50/20"
+                          : "bg-slate-50/50 border-slate-200 hover:border-emerald-200",
+                      )}
                     >
                       {heroPreview ? (
                         <>
@@ -297,7 +320,12 @@ export default function PackageForm({
                       ) : (
                         <label className="cursor-pointer text-center p-10 w-full group">
                           <Upload
-                            className={`mx-auto mb-2 transition-transform group-hover:-translate-y-1 ${fieldState.error ? "text-red-400" : "text-slate-400"}`}
+                            className={cn(
+                              "mx-auto mb-2 transition-transform group-hover:-translate-y-1",
+                              fieldState.error
+                                ? "text-red-400"
+                                : "text-slate-400",
+                            )}
                           />
                           <span className="text-xs font-medium text-slate-500 group-hover:text-emerald-600">
                             Click to upload Hero Image
@@ -309,12 +337,21 @@ export default function PackageForm({
                             onChange={(e) => {
                               const file = e.target.files?.[0];
                               if (file) {
+                                if (file.size > 5 * 1024 * 1024) {
+                                  toast({
+                                    variant: "destructive",
+                                    title: "File too large",
+                                    description: "Image must be under 5MB",
+                                  });
+                                  return;
+                                }
                                 const reader = new FileReader();
                                 reader.onloadend = () => {
                                   setHeroPreview(reader.result as string);
                                   form.setValue(
                                     "heroImage",
                                     reader.result as string,
+                                    { shouldValidate: true },
                                   );
                                 };
                                 reader.readAsDataURL(file);
@@ -324,7 +361,7 @@ export default function PackageForm({
                         </label>
                       )}
                     </div>
-                    <FormMessage className="text-[10px]" />
+                    <FormMessage className="text-[10px] font-bold" />
                   </FormItem>
                 )}
               />
@@ -340,6 +377,7 @@ export default function PackageForm({
                       <FormControl>
                         <Input placeholder="Adventure Awaits..." {...field} />
                       </FormControl>
+                      <FormMessage className="text-[10px] font-bold" />
                     </FormItem>
                   )}
                 />
@@ -358,19 +396,23 @@ export default function PackageForm({
                           {...field}
                         />
                       </FormControl>
+                      <FormMessage className="text-[10px] font-bold" />
                     </FormItem>
                   )}
                 />
               </div>
             </div>
 
-            {/* --- 2. PRICING & PACKAGE IMAGE --- */}
-            <div className="bg-white p-6 rounded-2xl border shadow-sm space-y-6">
+            {/* --- PRICING SECTION --- */}
+            <div
+              className={cn(
+                "bg-white p-6 rounded-2xl border shadow-sm space-y-6",
+                form.formState.errors.packageImage && "border-red-200",
+              )}
+            >
               <div className="flex items-center gap-2 font-bold text-amber-600 border-b pb-2">
                 <Info size={18} /> Pricing & Package Image
               </div>
-
-              {/* Package Image Upload */}
               <FormField
                 control={form.control}
                 name="packageImage"
@@ -380,7 +422,12 @@ export default function PackageForm({
                       Secondary Package Image
                     </FormLabel>
                     <div
-                      className={`relative h-48 w-full rounded-xl overflow-hidden border-2 border-dashed flex items-center justify-center transition-all ${fieldState.error ? "border-red-300 bg-red-50/20" : "bg-slate-50/50 border-slate-200 hover:border-emerald-200"}`}
+                      className={cn(
+                        "relative h-48 w-full rounded-xl overflow-hidden border-2 border-dashed flex items-center justify-center transition-all",
+                        fieldState.error
+                          ? "border-red-400 bg-red-50/20"
+                          : "bg-slate-50/50 border-slate-200 hover:border-emerald-200",
+                      )}
                     >
                       {packagePreview ? (
                         <>
@@ -406,10 +453,15 @@ export default function PackageForm({
                       ) : (
                         <label className="cursor-pointer text-center p-6 w-full group">
                           <ImageIcon
-                            className={`mx-auto mb-2 transition-transform group-hover:-translate-y-1 ${fieldState.error ? "text-red-400" : "text-slate-400"}`}
+                            className={cn(
+                              "mx-auto mb-2 transition-transform group-hover:-translate-y-1",
+                              fieldState.error
+                                ? "text-red-400"
+                                : "text-slate-400",
+                            )}
                           />
                           <span className="text-xs font-medium text-slate-500 group-hover:text-emerald-600">
-                            Click to upload Package Image
+                            Upload Package Image
                           </span>
                           <input
                             type="file"
@@ -424,6 +476,7 @@ export default function PackageForm({
                                   form.setValue(
                                     "packageImage",
                                     reader.result as string,
+                                    { shouldValidate: true },
                                   );
                                 };
                                 reader.readAsDataURL(file);
@@ -433,28 +486,27 @@ export default function PackageForm({
                         </label>
                       )}
                     </div>
-                    <FormMessage className="text-[10px]" />
+                    <FormMessage className="text-[10px] font-bold" />
                   </FormItem>
                 )}
               />
-
               <div className="space-y-4">
                 <FormField
                   control={form.control}
                   name="packageName"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-[10px] font-bold uppercase text-slate-400 italic tracking-widest">
+                      <FormLabel className="text-[10px] font-bold uppercase text-slate-400 tracking-widest italic">
                         Full Package Name
                       </FormLabel>
                       <FormControl>
                         <Input
-                          placeholder="Sundarban 2 Days 1 Night Deluxe Tour"
+                          placeholder="Sundarban Deluxe Tour"
                           {...field}
                           className="bg-slate-50/50 font-bold text-lg h-12"
                         />
                       </FormControl>
-                      <FormMessage />
+                      <FormMessage className="text-[10px] font-bold" />
                     </FormItem>
                   )}
                 />
@@ -470,6 +522,7 @@ export default function PackageForm({
                         <FormControl>
                           <Input placeholder="2500" {...field} />
                         </FormControl>
+                        <FormMessage className="text-[10px] font-bold" />
                       </FormItem>
                     )}
                   />
@@ -484,6 +537,7 @@ export default function PackageForm({
                         <FormControl>
                           <Input placeholder="3500" {...field} />
                         </FormControl>
+                        <FormMessage className="text-[10px] font-bold" />
                       </FormItem>
                     )}
                   />
@@ -500,6 +554,7 @@ export default function PackageForm({
                     <FormControl>
                       <Textarea rows={4} {...field} />
                     </FormControl>
+                    <FormMessage className="text-[10px] font-bold" />
                   </FormItem>
                 )}
               />
@@ -512,14 +567,15 @@ export default function PackageForm({
                       Important Note
                     </FormLabel>
                     <FormControl>
-                      <Input placeholder="e.g. *Conditions Apply" {...field} />
+                      <Input placeholder="*Conditions Apply" {...field} />
                     </FormControl>
+                    <FormMessage className="text-[10px] font-bold" />
                   </FormItem>
                 )}
               />
             </div>
 
-            {/* --- 3. TIMELINE --- */}
+            {/* --- TIMELINE SECTION --- */}
             <div className="bg-white p-6 rounded-2xl border shadow-sm space-y-6">
               <div className="flex items-center gap-2 font-bold text-blue-600 border-b pb-2">
                 <CalendarDays size={18} /> Tour Itinerary
@@ -528,7 +584,12 @@ export default function PackageForm({
                 {tFields.map((field, index) => (
                   <div
                     key={field.id}
-                    className="p-6 border rounded-2xl bg-slate-50/40 relative border-slate-200 group"
+                    className={cn(
+                      "p-6 border rounded-2xl bg-slate-50/40 relative group transition-colors",
+                      form.formState.errors.timeline?.[index]
+                        ? "border-red-200"
+                        : "border-slate-200",
+                    )}
                   >
                     <div className="flex items-center gap-4 mb-2">
                       <FormField
@@ -536,16 +597,16 @@ export default function PackageForm({
                         name={`timeline.${index}.dayTitle`}
                         render={({ field }) => (
                           <FormItem className="flex-1">
-                            <FormLabel className="text-[9px] font-black uppercase tracking-widest text-slate-400 italic">
+                            <FormLabel className="text-[9px] font-black uppercase text-slate-400 italic">
                               Day Header
                             </FormLabel>
                             <FormControl>
                               <Input
                                 className="bg-white font-bold h-10"
                                 {...field}
-                                placeholder="e.g. Day 1: Exploring the Mangroves"
                               />
                             </FormControl>
+                            <FormMessage className="text-[9px] font-bold" />
                           </FormItem>
                         )}
                       />
@@ -565,7 +626,7 @@ export default function PackageForm({
                 <Button
                   type="button"
                   variant="outline"
-                  className="w-full border-dashed h-12 border-slate-300 text-slate-500 hover:text-blue-700 hover:border-blue-300"
+                  className="w-full border-dashed h-12 border-slate-300 text-slate-500"
                   onClick={() =>
                     tAppend({
                       dayTitle: `Day ${tFields.length + 1}`,
@@ -575,6 +636,11 @@ export default function PackageForm({
                 >
                   <Plus className="mr-2 h-4 w-4" /> Add Next Day
                 </Button>
+                {form.formState.errors.timeline && (
+                  <p className="text-xs font-bold text-red-500 px-2 italic">
+                    At least one day in itinerary is required.
+                  </p>
+                )}
               </div>
             </div>
           </div>
@@ -623,6 +689,7 @@ export default function PackageForm({
                       <FormControl>
                         <Input className="bg-slate-50/50 h-9" {...field} />
                       </FormControl>
+                      <FormMessage className="text-[9px] font-bold" />
                     </FormItem>
                   )}
                 />
@@ -657,37 +724,49 @@ export default function PackageForm({
             ].map((section) => (
               <div
                 key={section.title}
-                className="bg-white p-6 rounded-2xl border shadow-sm space-y-4"
+                className={cn(
+                  "bg-white p-6 rounded-2xl border shadow-sm space-y-4",
+                  form.formState.errors[section.name as keyof PackageValues] &&
+                    "border-red-200",
+                )}
               >
                 <div
-                  className={`flex items-center gap-2 font-bold text-[13px] border-b pb-2 ${section.color}`}
+                  className={cn(
+                    "flex items-center gap-2 font-bold text-[13px] border-b pb-2",
+                    section.color,
+                  )}
                 >
                   <CheckCircle size={16} /> {section.title}
                 </div>
                 <div className="space-y-3">
                   {section.fields.map((field, idx) => (
-                    <div key={field.id} className="flex gap-2">
-                      <FormField
-                        control={form.control}
-                        name={`${section.name}.${idx}.value` as any}
-                        render={({ field }) => (
-                          <FormControl className="flex-1">
-                            <Input
-                              className="bg-slate-50/50 h-9 text-sm"
-                              {...field}
-                            />
-                          </FormControl>
-                        )}
-                      />
-                      <Button
-                        type="button"
-                        variant="ghost"
-                        size="icon"
-                        className="h-9 w-9 text-slate-300 hover:text-red-500"
-                        onClick={() => section.remove(idx)}
-                      >
-                        <Trash2 size={14} />
-                      </Button>
+                    <div key={field.id} className="space-y-1">
+                      <div className="flex gap-2">
+                        <FormField
+                          control={form.control}
+                          name={`${section.name}.${idx}.value` as any}
+                          render={({ field }) => (
+                            <FormItem className="flex-1 space-y-0">
+                              <FormControl>
+                                <Input
+                                  className="bg-slate-50/50 h-9 text-sm"
+                                  {...field}
+                                />
+                              </FormControl>
+                              <FormMessage className="text-[10px] font-bold" />
+                            </FormItem>
+                          )}
+                        />
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="icon"
+                          className="h-9 w-9 text-slate-300 hover:text-red-500 shrink-0"
+                          onClick={() => section.remove(idx)}
+                        >
+                          <Trash2 size={14} />
+                        </Button>
+                      </div>
                     </div>
                   ))}
                   <Button

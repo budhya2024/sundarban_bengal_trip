@@ -88,8 +88,7 @@ export default function ContactAdminForm({ initialData }: ContactAdminProps) {
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      if (file.size > 2 * 1024 * 1024) {
-        // 2MB limit for Base64 (JSONB storage)
+      if (file.size > 5 * 1024 * 1024) {
         toast({
           title: "Error",
           description: "Image size should be less than 2MB",
