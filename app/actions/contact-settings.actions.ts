@@ -29,18 +29,6 @@ export async function getContactSettings() {
 export async function upsertContactSettings(data: ContactPageValues) {
   const SETTINGS_KEY = "contact_page_settings";
 
-  if (!data.heroImage.startsWith("http")) {
-    const { url, success } = await uploadImageFromBase64(
-      data.heroImage,
-      data.heroTitle.replace(" ", "_"),
-    );
-
-    if (!success || !url) {
-      return { success: false, error: "Upload failed" };
-    }
-    data.heroImage = url;
-  }
-
   try {
     const existing = await db
       .select()

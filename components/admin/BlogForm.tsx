@@ -1,8 +1,10 @@
 "use client";
 
+import React, { useTransition, useState, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import { ImageKitProvider, IKUpload } from "imagekitio-next";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import {
@@ -18,29 +20,30 @@ import {
   X,
   ImageIcon,
   AlertCircle,
+  Trash2,
 } from "lucide-react";
 import Link from "next/link";
-import { useState, useRef } from "react";
 import clsx from "clsx";
 import Image from "next/image";
 import { createBlog, updateBlog } from "@/app/actions/blogs.actions";
-import { uploadImage } from "@/app/actions/imagekit.actions";
+import {
+  getIKAuthenticationParameters,
+  deleteFromImageKit,
+} from "@/app/actions/imagekit.actions";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 import { BlogType, NewBlogType } from "@/db/schema";
 import { SidebarTrigger } from "./SidebarTrigger";
 
-// --- Schema ---
 const blogSchema = z.object({
-  title: z.string().min(5, "Title is required"),
-  description: z.string().min(5, "Description is required"),
+  title: z.string().min(5, "Minimum 5 characters required"),
+  description: z.string().min(5, "Minimum 5 characters required"),
   image: z.string().url("Valid URL required").optional().or(z.literal("")),
-  content: z.string().min(20, "Content is too short"),
-  author: z.string().min(2, "Author is required"),
+  content: z.string().min(20, "Minimum 20 characters required"),
+  author: z.string().min(2, "Minimum 2 characters required"),
   published: z.boolean().default(false),
 });
 
-// --- Compact Toolbar ---
 const MenuBar = ({ editor }: { editor: any }) => {
   if (!editor) return null;
   return (
@@ -102,11 +105,14 @@ const MenuBar = ({ editor }: { editor: any }) => {
 
 export default function BlogForm({ initialData }: { initialData?: BlogType }) {
   const router = useRouter();
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isUploading, setIsUploading] = useState(false);
-  const [uploadError, setUploadError] = useState<string | null>(null);
-  const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
+  const [isPending, startTransition] = useTransition();
+
+  // State for ImageKit management
+  const [uploadingStatus, setUploadingStatus] = useState(false);
+  const [deletingStatus, setDeletingStatus] = useState(false);
+  const [uploadKey, setUploadKey] = useState(0);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const {
     register,
@@ -127,80 +133,64 @@ export default function BlogForm({ initialData }: { initialData?: BlogType }) {
     },
   });
 
-  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+  const currentImage = watch("image");
 
-    // 1. Reset previous errors
-    setUploadError(null);
+  const onUploadSuccess = (res: any) => {
+    const smartUrl = `${res.url}?ikid=${res.fileId}`
+      .replace(/['"]+/g, "")
+      .trim();
+    setValue("image", smartUrl, { shouldValidate: true, shouldDirty: true });
+    setUploadingStatus(false);
+    toast({ title: "Success", description: "Cover image uploaded." });
+  };
 
-    // 2. Validate Size (2MB)
-    const MAX_SIZE = 2 * 1024 * 1024;
-    if (file.size > MAX_SIZE) {
-      setUploadError("File is too large. Max size is 2MB.");
-      // Clear the input so the user can re-try with the same file if they shrink it
-      e.target.value = "";
-      return;
-    }
+  const handleRemoveImage = async () => {
+    if (!currentImage) return;
 
-    // 3. Process the file locally
     try {
-      const reader = new FileReader();
+      const urlObj = new URL(currentImage.replace(/['"]+/g, "").trim());
+      const fileId = urlObj.searchParams.get("ikid");
 
-      reader.onload = () => {
-        const base64String = reader.result as string;
+      if (fileId) {
+        setDeletingStatus(true);
+        const res = await deleteFromImageKit(fileId);
+        if (!res.success) throw new Error();
+      }
 
-        // Set the value in React Hook Form
-        setValue("image", base64String, {
-          shouldValidate: true,
-          shouldDirty: true,
-        });
-      };
-
-      reader.onerror = () => {
-        setUploadError("Could not read the file locally.");
-      };
-
-      reader.readAsDataURL(file);
+      setValue("image", "");
+      setUploadKey((prev) => prev + 1);
+      toast({ title: "Removed", description: "Cloud storage cleaned." });
     } catch (error) {
-      console.error("Local Conversion Error:", error);
-      setUploadError("An unexpected error occurred.");
+      setValue("image", "");
+    } finally {
+      setDeletingStatus(false);
     }
   };
 
   const onSubmit = async (data: NewBlogType) => {
-    setIsSubmitting(true);
-    try {
-      initialData?.id
-        ? await updateBlog(initialData.id, data)
-        : await createBlog(data);
-
-      toast({
-        title: "Success",
-        description: "Blog saved successfully.",
-      });
-      router.push("/admin/blogs");
-    } catch (error) {
-      console.error(error);
-      toast({
-        title: "Error",
-        description: "Failed to save blog.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
+    startTransition(async () => {
+      try {
+        initialData?.id
+          ? await updateBlog(initialData.id, data)
+          : await createBlog(data);
+        toast({ title: "Success", description: "Blog saved successfully." });
+        router.push("/admin/blogs");
+      } catch (error) {
+        toast({
+          title: "Error",
+          description: "Failed to save blog.",
+          variant: "destructive",
+        });
+      }
+    });
   };
-
-  const currentImage = watch("image");
 
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
       className="max-w-[1600px] mx-auto pb-10 p-6"
     >
-      {/* --- HEADER --- */}
-      <div className="flex items-center justify-between mb-5 border-b border-gray-200 pb-4 sticky top-0">
+      <div className="flex items-center justify-between mb-5 border-b border-gray-200 pb-4 sticky top-0 bg-white/80 backdrop-blur-sm z-30">
         <div className="flex items-center gap-2">
           <SidebarTrigger />
           <h1 className="text-2xl font-serif font-bold text-[#1a472a]">
@@ -216,10 +206,10 @@ export default function BlogForm({ initialData }: { initialData?: BlogType }) {
           </Link>
           <button
             type="submit"
-            disabled={isSubmitting || isUploading}
+            disabled={isPending || uploadingStatus || deletingStatus}
             className="px-4 py-1.5 bg-[#4a6741] hover:bg-[#3a5233] text-white rounded-md text-sm font-medium shadow-sm flex items-center gap-2 disabled:opacity-70"
           >
-            {isSubmitting ? (
+            {isPending ? (
               <Loader2 className="animate-spin" size={14} />
             ) : (
               <Save size={14} />
@@ -229,21 +219,17 @@ export default function BlogForm({ initialData }: { initialData?: BlogType }) {
         </div>
       </div>
 
-      {/* --- COMPACT GRID LAYOUT --- */}
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 items-start">
-        {/* --- LEFT COLUMN: MAIN CONTENT (75%) --- */}
         <div className="lg:col-span-3 space-y-4">
-          {/* Top Row: Title + Author + Status */}
+          {/* Title / Author / Status Card */}
           <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200 grid grid-cols-1 md:grid-cols-12 gap-4">
-            {/* Title */}
             <div className="md:col-span-7">
               <label className="text-xs font-bold text-gray-500 uppercase tracking-wider block mb-1">
                 Title
               </label>
               <input
                 {...register("title")}
-                placeholder="Enter blog title..."
-                className="w-full px-3 py-2 text-sm rounded-md border border-gray-300 focus:ring-1 focus:ring-[#4a6741] focus:border-[#4a6741] outline-none"
+                className="w-full px-3 py-2 text-sm rounded-md border border-gray-300 focus:ring-1 focus:ring-[#4a6741] outline-none"
               />
               {errors.title && (
                 <p className="text-red-500 text-xs mt-1">
@@ -251,16 +237,13 @@ export default function BlogForm({ initialData }: { initialData?: BlogType }) {
                 </p>
               )}
             </div>
-
-            {/* Author */}
             <div className="md:col-span-3">
               <label className="text-xs font-bold text-gray-500 uppercase tracking-wider block mb-1">
                 Author
               </label>
               <input
                 {...register("author")}
-                placeholder="Author"
-                className="w-full px-3 py-2 text-sm rounded-md border border-gray-300 focus:ring-1 focus:ring-[#4a6741] focus:border-[#4a6741] outline-none"
+                className="w-full px-3 py-2 text-sm rounded-md border border-gray-300 focus:ring-1 focus:ring-[#4a6741] outline-none"
               />
               {errors.author && (
                 <p className="text-red-500 text-xs mt-1">
@@ -268,8 +251,6 @@ export default function BlogForm({ initialData }: { initialData?: BlogType }) {
                 </p>
               )}
             </div>
-
-            {/* Status */}
             <div className="md:col-span-2">
               <label className="text-xs font-bold text-gray-500 uppercase tracking-wider block mb-1">
                 Status
@@ -291,7 +272,7 @@ export default function BlogForm({ initialData }: { initialData?: BlogType }) {
             </div>
           </div>
 
-          {/* Editor Area */}
+          {/* Tiptap Editor */}
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 flex flex-col min-h-[500px]">
             <Controller
               name="content"
@@ -318,98 +299,71 @@ export default function BlogForm({ initialData }: { initialData?: BlogType }) {
               }}
             />
           </div>
-          {errors.content && (
-            <p className="text-red-500 text-xs mt-1">
-              {errors.content.message}
-            </p>
-          )}
         </div>
 
-        {/* --- RIGHT COLUMN: SIDEBAR (25%) --- */}
         <div className="lg:col-span-1 space-y-4">
-          {/* Image Upload Card */}
+          {/* Sidebar: Image Upload */}
           <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
-            <label className="text-xs font-bold text-gray-500 uppercase tracking-wider block mb-2 flex items-center justify-between">
-              <span className="flex items-center gap-1">
-                <ImageIcon size={12} /> Featured Image
-              </span>
-              <span className="text-[10px] text-gray-400">Max 2MB</span>
+            <label className="text-xs font-bold text-gray-500 uppercase tracking-wider block mb-2 flex items-center gap-1">
+              <ImageIcon size={12} /> Featured Image
             </label>
 
-            <input
-              type="file"
+            <IKUpload
+              key={`blog-up-${uploadKey}`}
               ref={fileInputRef}
-              onChange={handleImageUpload}
               className="hidden"
-              accept="image/*"
+              folder="/blogs"
+              onUploadStart={() => setUploadingStatus(true)}
+              onSuccess={onUploadSuccess}
+              onError={() => {
+                setUploadingStatus(false);
+                setUploadKey((k) => k + 1);
+              }}
             />
 
             {!currentImage ? (
               <div
-                onClick={() => fileInputRef.current?.click()}
-                className={`
-                            border border-dashed bg-gray-50 rounded-md h-[140px] flex flex-col items-center justify-center cursor-pointer hover:bg-gray-100 transition-all
-                            ${uploadError ? "border-red-300 bg-red-50" : "border-gray-300"} 
-                            ${isUploading ? "opacity-50 pointer-events-none" : ""}
-                        `}
+                onClick={() =>
+                  !uploadingStatus && fileInputRef.current?.click()
+                }
+                className="border border-dashed bg-gray-50 rounded-md h-[140px] flex flex-col items-center justify-center cursor-pointer hover:bg-gray-100 transition-all border-gray-300"
               >
-                {isUploading ? (
+                {uploadingStatus ? (
                   <Loader2 className="animate-spin text-[#4a6741]" size={20} />
                 ) : (
                   <>
-                    <UploadCloud
-                      className={
-                        uploadError ? "text-red-400 mb-1" : "text-gray-400 mb-1"
-                      }
-                      size={20}
-                    />
-                    <span
-                      className={
-                        uploadError
-                          ? "text-xs text-red-500 font-medium"
-                          : "text-xs text-gray-500 font-medium"
-                      }
-                    >
-                      {uploadError ? "Retry Upload" : "Upload Image"}
+                    <UploadCloud className="text-gray-400 mb-1" size={20} />
+                    <span className="text-xs text-gray-500 font-medium">
+                      Upload Image
                     </span>
                   </>
                 )}
               </div>
             ) : (
-              <div className="relative rounded-md overflow-hidden border border-gray-200 h-[140px] group">
+              <div className="relative rounded-md overflow-hidden border border-gray-200 h-[140px] group bg-slate-50">
+                {deletingStatus ? (
+                  <div className="absolute inset-0 flex items-center justify-center bg-white/80 z-10">
+                    <Loader2 className="animate-spin text-red-500" size={20} />
+                  </div>
+                ) : null}
                 <Image
                   src={currentImage}
                   alt="Cover"
                   fill
+                  unoptimized
                   className="object-contain"
                 />
                 <button
                   type="button"
-                  onClick={() => setValue("image", "")}
+                  onClick={handleRemoveImage}
                   className="absolute top-1 right-1 bg-white p-1 rounded shadow-sm text-red-500 hover:bg-red-50 opacity-0 group-hover:opacity-100 transition-opacity"
                 >
-                  <X size={14} />
+                  <Trash2 size={14} />
                 </button>
-                <button
-                  type="button"
-                  onClick={() => fileInputRef.current?.click()}
-                  className="absolute bottom-1 right-1 bg-white px-2 py-0.5 text-xs rounded shadow-sm text-gray-700 hover:bg-gray-50 opacity-0 group-hover:opacity-100 transition-opacity"
-                >
-                  Change
-                </button>
-              </div>
-            )}
-
-            {/* Detailed Error Message */}
-            {uploadError && (
-              <div className="mt-2 flex items-center gap-1.5 text-xs text-red-600 bg-red-50 p-2 rounded border border-red-100 animate-in slide-in-from-top-1">
-                <AlertCircle size={12} className="flex-shrink-0" />
-                <span>{uploadError}</span>
               </div>
             )}
           </div>
 
-          {/* Excerpt Card */}
           <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
             <label className="text-xs font-bold text-gray-500 uppercase tracking-wider block mb-2">
               Description
@@ -417,7 +371,6 @@ export default function BlogForm({ initialData }: { initialData?: BlogType }) {
             <textarea
               {...register("description")}
               rows={6}
-              placeholder="Short summary for SEO..."
               className="w-full px-3 py-2 text-sm rounded-md border border-gray-300 focus:ring-1 focus:ring-[#4a6741] outline-none resize-none"
             />
           </div>

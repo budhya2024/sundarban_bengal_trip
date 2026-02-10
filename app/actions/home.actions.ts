@@ -86,16 +86,6 @@ export async function updateBookingStatus(
 
 export async function updateHomeSettings(values: HomeSettingsValues) {
   try {
-    if (!values.hero.image.startsWith("http")) {
-      const { success, url, fileId } = await uploadImageFromBase64(
-        values.hero.image,
-        values.hero.title,
-      );
-      if (!success || !url) {
-        return { success: false, message: "Failed to upload hero image" };
-      }
-      values.hero.image = url + "?fileId=" + fileId;
-    }
     await db
       .insert(siteSettings)
       .values({
@@ -152,28 +142,33 @@ export async function getHomeSettings(): Promise<{
 
 export async function getDashboardStats() {
   try {
-    const [blogCount] = await db
-      .select({ value: count() })
-      .from(blogs)
-      .where(eq(blogs.published, true));
-    const [bookingCount] = await db
-      .select({ value: count() })
-      .from(bookings)
-      .where(eq(bookings.status, "pending"));
-    const [subscriberCount] = await db
-      .select({ value: count() })
-      .from(newsletterSubscribers);
+    // Parallelize queries for better performance on Neon/Serverless
+    const [blogRes, bookingRes, subscriberRes] = await Promise.all([
+      db
+        .select({ value: count() })
+        .from(blogs)
+        .where(eq(blogs.published, true)),
+      db
+        .select({ value: count() })
+        .from(bookings)
+        .where(eq(bookings.status, "pending")),
+      db.select({ value: count() }).from(newsletterSubscribers),
+    ]);
 
     return {
       success: true,
       stats: {
-        totalBlogs: blogCount.value,
-        totalBookings: bookingCount.value,
-        totalSubscribers: subscriberCount.value,
+        // Fallback to 0 if database returns something unexpected
+        totalBlogs: blogRes[0]?.value ?? 0,
+        totalBookings: bookingRes[0]?.value ?? 0,
+        totalSubscribers: subscriberRes[0]?.value ?? 0,
       },
     };
   } catch (error) {
-    console.error("Dashboard Stats Error:", error);
+    // Log the actual error for debugging in Vercel/Netlify logs
+    console.error("DASHBOARD_STATS_ERROR:", error);
+
+    // Return empty state instead of crashing the UI
     return {
       success: false,
       stats: { totalBlogs: 0, totalBookings: 0, totalSubscribers: 0 },

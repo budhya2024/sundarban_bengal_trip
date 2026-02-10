@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useTransition, useState } from "react";
+import React, { useTransition, useState, useRef } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { ImageKitProvider, IKUpload } from "imagekitio-next";
 import {
   Plus,
   Trash2,
@@ -12,7 +13,7 @@ import {
   Smartphone,
   Upload,
   X,
-  ImageIcon,
+  Clock,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -27,6 +28,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { upsertContactSettings } from "@/app/actions/contact-settings.actions";
+import {
+  getIKAuthenticationParameters,
+  deleteFromImageKit,
+} from "@/app/actions/imagekit.actions";
 import { useToast } from "@/hooks/use-toast";
 import {
   ContactPageSchema,
@@ -42,6 +47,13 @@ interface ContactAdminProps {
 export default function ContactAdminForm({ initialData }: ContactAdminProps) {
   const [isPending, startTransition] = useTransition();
   const { toast } = useToast();
+
+  // ImageKit specific states
+  const [isUploading, setIsUploading] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [uploadKey, setUploadKey] = useState(0);
+  const ikUploadRef = useRef<HTMLInputElement>(null);
+
   const [preview, setPreview] = useState<string | null>(
     initialData?.heroImage || null,
   );
@@ -84,25 +96,51 @@ export default function ContactAdminForm({ initialData }: ContactAdminProps) {
     remove: removeSchedule,
   } = useFieldArray({ control: form.control, name: "schedules" });
 
-  // Handle Image to Base64 Conversion
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      if (file.size > 5 * 1024 * 1024) {
-        toast({
-          title: "Error",
-          description: "Image size should be less than 2MB",
-          variant: "destructive",
-        });
-        return;
+  const onUploadSuccess = (res: any) => {
+    // Append ikid query parameter
+    const smartUrl = `${res.url}?ikid=${res.fileId}`
+      .replace(/['"]+/g, "")
+      .trim();
+    setPreview(smartUrl);
+    form.setValue("heroImage", smartUrl, {
+      shouldDirty: true,
+      shouldValidate: true,
+    });
+    setIsUploading(false);
+    toast({ title: "Success", description: "Hero image uploaded to cloud." });
+  };
+
+  const handleRemoveImage = async () => {
+    const currentUrl = form.getValues("heroImage");
+    if (!currentUrl) return;
+
+    try {
+      const urlObj = new URL(currentUrl.replace(/['"]+/g, "").trim());
+      const fileId = urlObj.searchParams.get("ikid");
+
+      if (fileId) {
+        setIsDeleting(true);
+        const res = await deleteFromImageKit(fileId);
+        if (!res.success) {
+          toast({
+            variant: "destructive",
+            title: "Error",
+            description: "Failed to delete from cloud.",
+          });
+          setIsDeleting(false);
+          return;
+        }
       }
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const base64String = reader.result as string;
-        setPreview(base64String);
-        form.setValue("heroImage", base64String);
-      };
-      reader.readAsDataURL(file);
+
+      setPreview(null);
+      setUploadKey((prev) => prev + 1);
+      form.setValue("heroImage", "", { shouldDirty: true });
+      toast({ title: "Removed", description: "Cloud storage cleaned." });
+    } catch (error) {
+      setPreview(null);
+      form.setValue("heroImage", "");
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -138,23 +176,19 @@ export default function ContactAdminForm({ initialData }: ContactAdminProps) {
                 <h1 className="text-2xl font-display font-bold text-foreground">
                   Contact Management
                 </h1>
-                <p className="hidden text-xs text-slate-500 md:block">
-                  Real-time update for Sundarban Bengal Trip contact page
-                </p>
               </div>
             </div>
             <Button
               type="submit"
-              disabled={isPending}
+              disabled={isPending || isUploading || isDeleting}
               className="bg-emerald-700 hover:bg-emerald-800 h-10 px-6 shadow-sm"
             >
               {isPending ? (
-                "Syncing..."
+                <Clock className="mr-2 h-4 w-4 animate-spin" />
               ) : (
-                <>
-                  <Save className="mr-2 h-4 w-4" /> Save Changes
-                </>
+                <Save className="mr-2 h-4 w-4" />
               )}
+              {isPending ? "Syncing..." : "Save Changes"}
             </Button>
           </div>
         </div>
@@ -168,53 +202,75 @@ export default function ContactAdminForm({ initialData }: ContactAdminProps) {
                   <Layout className="h-5 w-5" /> 1. Hero Section
                 </div>
 
-                {/* Image Upload Feature */}
                 <div className="mb-6 space-y-4">
                   <FormLabel className="text-xs font-bold text-slate-500 uppercase">
                     Hero Background Image
                   </FormLabel>
+
+                  {/* SDK UPLOADER */}
+                  <IKUpload
+                    key={`contact-up-${uploadKey}`}
+                    ref={ikUploadRef}
+                    className="hidden"
+                    folder="/contact-page"
+                    onUploadStart={() => setIsUploading(true)}
+                    onSuccess={onUploadSuccess}
+                    onError={() => {
+                      setIsUploading(false);
+                      setUploadKey((k) => k + 1);
+                    }}
+                  />
+
                   <div className="flex flex-col items-center justify-center w-full">
-                    {preview ? (
+                    {isUploading ? (
+                      <div className="flex flex-col items-center justify-center w-full h-48 border-2 border-dashed rounded-xl bg-slate-50 border-emerald-300">
+                        <Clock className="w-8 h-8 text-emerald-600 animate-spin mb-2" />
+                        <p className="text-sm font-bold text-emerald-700">
+                          Uploading to Cloud...
+                        </p>
+                      </div>
+                    ) : isDeleting ? (
+                      <div className="flex flex-col items-center justify-center w-full h-48 border-2 border-dashed rounded-xl bg-slate-50 border-red-300">
+                        <Trash2 className="w-8 h-8 text-red-600 animate-pulse mb-2" />
+                        <p className="text-sm font-bold text-red-700">
+                          Cleaning Storage...
+                        </p>
+                      </div>
+                    ) : preview ? (
                       <div className="relative w-full h-48 rounded-xl overflow-hidden border">
                         <Image
                           src={preview}
                           alt="Hero Preview"
                           fill
+                          unoptimized
                           className="object-cover"
                         />
                         <button
                           type="button"
-                          onClick={() => {
-                            setPreview(null);
-                            form.setValue("heroImage", "");
-                          }}
+                          onClick={handleRemoveImage}
                           className="absolute top-2 right-2 p-1 bg-red-500 text-white rounded-full hover:bg-red-600 transition-colors"
                         >
                           <X size={16} />
                         </button>
                       </div>
                     ) : (
-                      <label className="flex flex-col items-center justify-center w-full h-48 border-2 border-dashed rounded-xl cursor-pointer bg-slate-50 hover:bg-slate-100 transition-colors border-slate-300">
-                        <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                          <Upload className="w-8 h-8 text-slate-400 mb-2" />
-                          <p className="text-sm text-slate-500 font-medium">
-                            Click to upload hero image
-                          </p>
-                          <p className="text-xs text-slate-400 mt-1">
-                            PNG, JPG or WEBP (Max 2MB)
-                          </p>
-                        </div>
-                        <input
-                          type="file"
-                          className="hidden"
-                          accept="image/*"
-                          onChange={handleImageChange}
-                        />
-                      </label>
+                      <div
+                        onClick={() => ikUploadRef.current?.click()}
+                        className="flex flex-col items-center justify-center w-full h-48 border-2 border-dashed rounded-xl cursor-pointer bg-slate-50 hover:bg-slate-100 transition-colors border-slate-300"
+                      >
+                        <Upload className="w-8 h-8 text-slate-400 mb-2" />
+                        <p className="text-sm text-slate-500 font-medium">
+                          Click to upload via SDK
+                        </p>
+                        <p className="text-xs text-slate-400 mt-1">
+                          Direct to ImageKit (Max 5MB)
+                        </p>
+                      </div>
                     )}
                   </div>
                 </div>
 
+                {/* Rest of Hero Fields */}
                 <div className="space-y-5">
                   <FormField
                     control={form.control}
@@ -253,7 +309,7 @@ export default function ContactAdminForm({ initialData }: ContactAdminProps) {
                 </div>
               </div>
 
-              {/* Sidebar Help Settings */}
+              {/* Sidebar Section */}
               <div className="rounded-2xl border bg-white p-6 shadow-sm">
                 <div className="mb-6 flex items-center gap-2 font-bold text-amber-700 border-b pb-3">
                   <MessageSquare className="h-5 w-5" /> 2. Help Sidebar
@@ -314,20 +370,20 @@ export default function ContactAdminForm({ initialData }: ContactAdminProps) {
               </div>
             </div>
 
-            {/* --- RIGHT COLUMN: CONTACT DETAILS (4 COLS) --- */}
+            {/* Right Column Details */}
             <div className="space-y-8 lg:col-span-4">
               <div className="rounded-2xl border bg-white p-6 shadow-sm">
                 <div className="mb-6 flex items-center gap-2 font-bold text-blue-900 border-b pb-3">
                   <Smartphone className="h-5 w-5" /> 3. Contact Details
                 </div>
                 <div className="space-y-8">
-                  {/* Schedules */}
+                  {/* Time Schedules */}
                   <div className="space-y-3">
                     <FormLabel className="text-[10px] font-black uppercase text-slate-400">
                       Time Schedules
                     </FormLabel>
                     {scheduleFields.map((field, index) => (
-                      <div key={field.id} className="flex gap-2 group">
+                      <div key={field.id} className="flex gap-2">
                         <FormField
                           control={form.control}
                           name={`schedules.${index}.value`}

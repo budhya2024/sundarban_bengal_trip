@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useRef, useMemo, useEffect, useTransition } from "react";
+import React, { useTransition, useState, useRef, useEffect } from "react";
 import Image from "next/image";
+import { IKUpload } from "imagekitio-next";
 import {
   UploadCloud,
   Trash2,
@@ -16,18 +17,26 @@ import {
   AlertTriangle,
 } from "lucide-react";
 import clsx from "clsx";
-import { uploadImage } from "@/app/actions/imagekit.actions";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { GalleryType } from "@/db/schema";
 import * as z from "zod";
 import { addGallery, deleteGalleryItem } from "@/app/actions/gallery.actions";
-import convertToBase64 from "@/lib/convertToBase64";
+import {
+  getIKAuthenticationParameters,
+  deleteFromImageKit,
+} from "@/app/actions/imagekit.actions";
 import { Button } from "../ui/button";
 import { SidebarTrigger } from "./SidebarTrigger";
 import { useToast } from "@/hooks/use-toast";
 
-// --- CUSTOM COMPONENT: Dynamic Creatable Select ---
+// --- VALIDATION SCHEMA ---
+const gallerySchema = z.object({
+  title: z.string().min(1, "Title is required"),
+  category: z.string().min(1, "Category is required"),
+  url: z.string().min(1, "Image is required"),
+});
+
 const CreatableSelect = ({
   options,
   value,
@@ -167,16 +176,6 @@ const CreatableSelect = ({
   );
 };
 
-// --- MAIN PAGE COMPONENT ---
-
-const DEFAULT_CATEGORIES = ["wildlife", "landscape", "activities", "sunset"];
-
-const gallerySchema = z.object({
-  title: z.string().min(1, "Title is required"),
-  category: z.string().min(1, "Category is required"),
-  url: z.string().min(1, "Image is required"),
-});
-
 export default function GalleryManager({
   initialImages = [],
   categoryData = [],
@@ -185,29 +184,26 @@ export default function GalleryManager({
   categoryData: string[];
 }) {
   const [isPending, startTransition] = useTransition();
+  const { toast } = useToast();
+
+  // Core State
   const [images, setImages] = useState<GalleryType[]>(initialImages || []);
   const [activeFilter, setActiveFilter] = useState("All");
   const [isUploadOpen, setIsUploadOpen] = useState(false);
-  const [isUploading, setIsUploading] = useState(false);
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-  const fileInputRef = useRef<HTMLInputElement>(null);
-  const [uploadError, setUploadError] = useState<string | null>(null);
-  const [availableCategories, setAvailableCategories] = useState<string[]>([
-    ...DEFAULT_CATEGORIES,
-    ...categoryData,
-  ]);
 
-  // --- NEW STATES for Preview and Delete ---
+  // Upload & Delete States
+  const [uploadingStatus, setUploadingStatus] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [uploadKey, setUploadKey] = useState(0); // For resetting IKUpload
+
+  // Modals
   const [previewTarget, setPreviewTarget] = useState<GalleryType | null>(null);
   const [deleteTarget, setDeleteTarget] = useState<GalleryType | null>(null);
-  const [isDeleting, setIsDeleting] = useState(false);
 
-  const { toast } = useToast();
-
-  const filteredImages =
-    activeFilter === "All"
-      ? images
-      : images.filter((img) => img.category === activeFilter);
+  const ikUploadRef = useRef<HTMLInputElement>(null);
+  const availableCategories = [
+    ...new Set([...["wildlife", "landscape", "sunset"], ...categoryData]),
+  ];
 
   const {
     register,
@@ -216,96 +212,104 @@ export default function GalleryManager({
     watch,
     formState: { errors },
     reset,
-  } = useForm<GalleryType>({
+  } = useForm<z.infer<typeof gallerySchema>>({
     resolver: zodResolver(gallerySchema),
-    defaultValues: {
-      title: "",
-      category: "",
-      url: "",
-    },
+    defaultValues: { title: "", category: "", url: "" },
   });
 
   const category = watch("category");
+  const previewUrl = watch("url");
 
-  const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    const MAX_SIZE = 5 * 1024 * 1024;
-    if (file.size > MAX_SIZE) {
-      setUploadError("File is too large. Max size is 5MB.");
-      return;
-    }
-
-    setIsUploading(true);
-    try {
-      const base64 = await convertToBase64(file);
-      if (base64) {
-        setValue("url", base64);
-        setPreviewUrl(base64);
-      } else {
-        setUploadError("Upload failed server-side.");
-      }
-    } catch (error) {
-      console.error(error);
-      setUploadError("Network error occurred.");
-    } finally {
-      setIsUploading(false);
-      if (fileInputRef?.current) {
-        fileInputRef.current.value = "";
-      }
-    }
+  // --- IMAGEKIT AUTHENTICATOR ---
+  const authenticator = async () => {
+    const auth = await getIKAuthenticationParameters();
+    if (!auth) throw new Error("Authentication failed");
+    return {
+      signature: auth.signature,
+      expire: auth.expire,
+      token: auth.token,
+    };
   };
 
-  const handleUploadSubmit = async (formdata: {
-    title: string;
-    category: string;
-    url: string;
-  }) => {
-    // Use startTransition to track the server-side work
+  // --- UPLOAD HANDLERS ---
+  const handleUploadSuccess = (res: any) => {
+    // Smart URL Strategy: Append fileId to URL
+    const smartUrl = `${res.url}?ikid=${res.fileId}`
+      .replace(/['"]+/g, "")
+      .trim();
+    setValue("url", smartUrl, { shouldValidate: true });
+    setUploadingStatus(false);
+    toast({ title: "Success", description: "Image synced to cloud." });
+  };
+
+  const handleUploadError = (err: any) => {
+    console.error("Upload Error:", err);
+    setUploadingStatus(false);
+    setUploadKey((prev) => prev + 1);
+    toast({
+      variant: "destructive",
+      title: "Upload Failed",
+      description: "Could not sync to cloud storage.",
+    });
+  };
+
+  const handleUploadSubmit = async (values: z.infer<typeof gallerySchema>) => {
     startTransition(async () => {
-      const { success, data } = await addGallery(formdata);
-
+      const { success, data } = await addGallery(values);
       if (success && data) {
-        setImages((prev) => [
-          {
-            id: data.id,
-            title: data.title,
-            url: data.url,
-            fileId: data.fileId,
-            category: data.category.toLowerCase(),
-            createdAt: data.createdAt,
-            updatedAt: data.updatedAt,
-          },
-          ...prev,
-        ]);
-
-        // Cleanup UI
+        setImages((prev) => [data, ...prev]);
         setIsUploadOpen(false);
-        setPreviewUrl(null);
         reset();
-        toast({ title: "Success", description: "Image added to gallery" });
+        setUploadKey((prev) => prev + 1);
+        toast({
+          title: "Published",
+          description: "Image added to your public gallery.",
+        });
       }
     });
   };
 
-  // --- DELETE HANDLER ---
+  // --- DELETE HANDLER (SMART URL) ---
   const handleConfirmDelete = async () => {
     if (!deleteTarget) return;
-
     setIsDeleting(true);
-    try {
-      const { success, error } = await deleteGalleryItem(deleteTarget.id);
-      if (!success) throw error;
 
-      setImages((prev) => prev.filter((i) => i.id !== deleteTarget.id));
-      setDeleteTarget(null);
+    try {
+      // 1. Extract ikid from the Smart URL
+      const urlObj = new URL(deleteTarget.url.replace(/['"]+/g, "").trim());
+      const fileId = urlObj.searchParams.get("ikid");
+
+      // 2. Delete from ImageKit Cloud if ID exists
+      if (fileId) {
+        const cloudRes = await deleteFromImageKit(fileId);
+        if (!cloudRes.success) throw new Error("Cloud deletion failed");
+      }
+
+      // 3. Delete from Database
+      const { success } = await deleteGalleryItem(deleteTarget.id);
+      if (success) {
+        setImages((prev) => prev.filter((i) => i.id !== deleteTarget.id));
+        setDeleteTarget(null);
+        toast({
+          title: "Deleted",
+          description: "Asset removed",
+        });
+      }
     } catch (error) {
-      console.error("Delete failed", error);
+      toast({
+        variant: "destructive",
+        title: "Delete Error",
+        description: "Failed to remove asset.",
+      });
     } finally {
       setIsDeleting(false);
     }
   };
+
+  const filteredImages =
+    activeFilter === "All"
+      ? images
+      : images.filter((img) => img.category === activeFilter);
 
   return (
     <div className="max-w-[1600px] mx-auto">
@@ -314,20 +318,13 @@ export default function GalleryManager({
         <div className="mx-auto flex max-w-7xl items-center justify-between">
           <div className="flex items-center gap-2">
             <SidebarTrigger />
-            <div>
-              <h1 className="text-2xl font-display font-bold text-foreground">
-                Media Gallery
-              </h1>
-              <p className="hidden text-xs text-slate-500 md:block">
-                Manage your visual assets across the platform
-              </p>
-            </div>
+            <h1 className="text-2xl font-bold">Media Gallery</h1>
           </div>
           <Button
             onClick={() => setIsUploadOpen(true)}
-            className="bg-emerald-700 hover:bg-emerald-800 h-10 px-6 shadow-sm"
+            className="bg-emerald-700 hover:bg-emerald-800"
           >
-            <Plus className="mr-2 h-4 w-4" /> Add New Image
+            <Plus className="mr-2 h-4 w-4" /> Add Image
           </Button>
         </div>
       </div>
@@ -338,10 +335,10 @@ export default function GalleryManager({
           <button
             onClick={() => setActiveFilter("All")}
             className={clsx(
-              "px-4 py-1.5 rounded-full text-sm font-medium transition-colors whitespace-nowrap border",
+              "px-4 py-1.5 rounded-full text-sm font-medium border",
               activeFilter === "All"
-                ? "bg-[#1a472a] text-white border-[#1a472a]"
-                : "bg-white text-gray-600 border-gray-200 hover:bg-gray-50",
+                ? "bg-[#1a472a] text-white"
+                : "bg-white text-gray-600 border-gray-200",
             )}
           >
             All
@@ -351,10 +348,10 @@ export default function GalleryManager({
               key={cat}
               onClick={() => setActiveFilter(cat)}
               className={clsx(
-                "px-4 py-1.5 rounded-full text-sm font-medium transition-colors whitespace-nowrap border capitalize",
+                "px-4 py-1.5 rounded-full text-sm font-medium border capitalize",
                 activeFilter === cat
-                  ? "bg-[#4a6741] text-white border-[#4a6741]"
-                  : "bg-white text-gray-600 border-gray-200 hover:bg-gray-50",
+                  ? "bg-[#4a6741] text-white"
+                  : "bg-white text-gray-600 border-gray-200",
               )}
             >
               {cat}
@@ -363,85 +360,51 @@ export default function GalleryManager({
         </div>
 
         {/* Gallery Grid */}
-        {filteredImages.length > 0 ? (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-            {filteredImages.map((img) => (
-              <div
-                key={img.id}
-                className="group relative bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow"
-              >
-                <div className="relative aspect-[4/3] w-full bg-gray-100">
-                  <Image
-                    src={img.url}
-                    alt={img.title}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-
-                  {/* --- Hover Actions (Preview & Delete) --- */}
-                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
-                    {/* Preview Button */}
-                    <button
-                      onClick={() => setPreviewTarget(img)}
-                      className="p-2 bg-white text-gray-700 rounded-full hover:bg-gray-100 shadow-sm transition-transform hover:scale-110"
-                      title="Preview Image"
-                    >
-                      <Eye size={18} />
-                    </button>
-
-                    {/* Delete Button */}
-                    <button
-                      onClick={() => setDeleteTarget(img)}
-                      className="p-2 bg-white text-red-600 rounded-full hover:bg-red-50 shadow-sm transition-transform hover:scale-110"
-                      title="Delete Image"
-                    >
-                      <Trash2 size={18} />
-                    </button>
-                  </div>
-
-                  <span className="absolute top-2 left-2 bg-black/60 backdrop-blur-md text-white text-[10px] px-2 py-1 rounded font-medium uppercase tracking-wider">
-                    {img.category}
-                  </span>
-                </div>
-                <div className="p-3 border-t border-gray-100">
-                  <p className="text-sm font-medium text-gray-900 truncate">
-                    {img.title}
-                  </p>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+          {filteredImages.map((img) => (
+            <div
+              key={img.id}
+              className="group relative bg-white rounded-xl shadow-sm border overflow-hidden"
+            >
+              <div className="relative aspect-[4/3] w-full">
+                <Image
+                  src={img.url}
+                  alt={img.title}
+                  fill
+                  unoptimized
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
+                  <button
+                    onClick={() => setPreviewTarget(img)}
+                    className="p-2 bg-white rounded-full hover:bg-gray-100"
+                  >
+                    <Eye size={18} />
+                  </button>
+                  <button
+                    onClick={() => setDeleteTarget(img)}
+                    className="p-2 bg-white text-red-600 rounded-full hover:bg-red-50"
+                  >
+                    <Trash2 size={18} />
+                  </button>
                 </div>
               </div>
-            ))}
-          </div>
-        ) : (
-          <div className="flex flex-col items-center justify-center py-20 bg-gray-50 rounded-xl border-2 border-dashed border-gray-200 text-gray-500">
-            <ImageIcon className="text-gray-300 mb-3" size={32} />
-            <p>No images found</p>
-          </div>
-        )}
+              <div className="p-3 border-t text-sm font-medium truncate">
+                {img.title}
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
 
-      {/* --- UPLOAD MODAL (Existing) --- */}
-
+      {/* Upload Modal */}
       {isUploadOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-in fade-in duration-200">
-          <div className="bg-white rounded-xl w-full max-w-lg shadow-2xl scale-100 animate-in zoom-in-95 duration-200">
-            <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
-              <div>
-                <h3 className="text-lg font-serif font-bold text-gray-900">
-                  Upload New Asset
-                </h3>
-                <p className="text-[10px] text-gray-400 uppercase tracking-widest font-bold">
-                  Media Library
-                </p>
-              </div>
-              <button
-                onClick={() => {
-                  setIsUploadOpen(false);
-                  setUploadError(null);
-                  reset();
-                }}
-              >
-                <X size={20} className="text-gray-400 hover:text-gray-600" />
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+          <div className="bg-white rounded-xl w-full max-w-lg shadow-2xl">
+            <div className="flex items-center justify-between px-6 py-4 border-b">
+              <h3 className="text-lg font-bold">Upload New Asset</h3>
+              <button onClick={() => setIsUploadOpen(false)}>
+                <X size={20} className="text-gray-400" />
               </button>
             </div>
 
@@ -449,111 +412,96 @@ export default function GalleryManager({
               onSubmit={handleSubmit(handleUploadSubmit)}
               className="p-6 space-y-6"
             >
-              {/* 1. IMAGE UPLOAD FIELD */}
               <div className="space-y-2">
-                <label className="text-xs font-bold text-gray-500 uppercase tracking-wider">
-                  Image File
+                <label className="text-xs font-bold uppercase text-gray-500">
+                  Asset File
                 </label>
-                <input
-                  type="file"
-                  ref={fileInputRef}
-                  onChange={handleFileSelect}
+
+                {/* SDK UPLOADER */}
+                <IKUpload
+                  key={`gallery-up-${uploadKey}`}
+                  ref={ikUploadRef}
                   className="hidden"
-                  accept="image/*"
+                  folder="/gallery"
+                  authenticator={authenticator}
+                  onUploadStart={() => setUploadingStatus(true)}
+                  onError={handleUploadError}
+                  onSuccess={handleUploadSuccess}
                 />
+
                 {!previewUrl ? (
                   <div
                     onClick={() =>
-                      !isUploading && fileInputRef.current?.click()
+                      !uploadingStatus && ikUploadRef.current?.click()
                     }
                     className={clsx(
-                      "border-2 border-dashed rounded-xl h-44 flex flex-col items-center justify-center cursor-pointer transition-all",
-                      errors.url || uploadError
-                        ? "border-red-300 bg-red-50/30"
-                        : "border-gray-300 bg-gray-50 hover:border-[#4a6741] hover:bg-gray-100/50",
+                      "border-2 border-dashed rounded-xl h-44 flex flex-col items-center justify-center cursor-pointer",
+                      errors.url
+                        ? "border-red-300 bg-red-50"
+                        : "border-gray-300 bg-gray-50",
                     )}
                   >
-                    {isUploading ? (
-                      <>
-                        <Loader2
-                          className="text-[#4a6741] mb-2 animate-spin"
-                          size={32}
-                        />
-                        <span className="text-sm text-[#4a6741] font-bold">
-                          Processing Image...
-                        </span>
-                      </>
+                    {uploadingStatus ? (
+                      <Loader2
+                        className="text-[#4a6741] animate-spin"
+                        size={32}
+                      />
                     ) : (
                       <>
-                        <UploadCloud
-                          className={clsx(
-                            "mb-2",
-                            errors.url ? "text-red-400" : "text-gray-400",
-                          )}
-                          size={32}
-                        />
-                        <span className="text-sm text-gray-600 font-medium">
+                        <UploadCloud className="text-gray-400 mb-2" size={32} />
+                        <span className="text-sm font-medium">
                           Click to select image
                         </span>
-                        <p className="text-[10px] text-gray-400 mt-1">
-                          PNG, JPG or WebP (Max 5MB)
-                        </p>
                       </>
                     )}
                   </div>
                 ) : (
-                  <div className="relative h-44 w-full rounded-xl overflow-hidden border border-gray-200 group ring-4 ring-green-50">
+                  <div className="relative h-44 w-full rounded-xl overflow-hidden ring-4 ring-green-50">
                     <Image
                       src={previewUrl}
                       alt="Preview"
                       fill
+                      unoptimized
                       className="object-cover"
                     />
                     <button
                       type="button"
                       onClick={() => {
-                        setPreviewUrl(null);
                         setValue("url", "");
+                        setUploadKey((k) => k + 1);
                       }}
-                      className="absolute top-3 right-3 bg-white p-2 rounded-full text-red-500 hover:bg-red-50 shadow-md transition-all active:scale-90"
+                      className="absolute top-3 right-3 bg-white p-2 rounded-full text-red-500 shadow-md"
                     >
                       <Trash2 size={16} />
                     </button>
                   </div>
                 )}
-                {(errors.url || uploadError) && (
-                  <p className="text-red-500 text-[10px] font-bold uppercase flex items-center gap-1">
-                    <AlertTriangle size={12} />{" "}
-                    {errors.url?.message || uploadError}
+                {errors.url && (
+                  <p className="text-red-500 text-[10px] font-bold uppercase tracking-wider">
+                    {errors.url.message}
                   </p>
                 )}
               </div>
 
-              {/* 2. TITLE FIELD */}
+              {/* Fields */}
               <div className="space-y-2">
-                <label className="text-xs font-bold text-gray-500 uppercase tracking-wider">
+                <label className="text-xs font-bold uppercase text-gray-500">
                   Image Title
                 </label>
                 <input
                   {...register("title")}
-                  placeholder="e.g., Royal Bengal Tiger at Sunrise"
-                  className={clsx(
-                    "w-full px-4 py-2.5 rounded-lg border outline-none text-sm transition-all",
-                    errors.title
-                      ? "border-red-300 bg-red-50/20 focus:border-red-500"
-                      : "border-gray-300 focus:border-[#4a6741] focus:ring-2 focus:ring-[#4a6741]/10",
-                  )}
+                  placeholder="Title..."
+                  className="w-full px-4 py-2.5 rounded-lg border outline-none text-sm focus:border-[#4a6741]"
                 />
                 {errors.title && (
-                  <p className="text-red-500 text-[10px] font-bold uppercase">
+                  <p className="text-red-500 text-[10px]">
                     {errors.title.message}
                   </p>
                 )}
               </div>
 
-              {/* 3. CATEGORY FIELD */}
               <div className="space-y-2">
-                <label className="text-xs font-bold text-gray-500 uppercase tracking-wider">
+                <label className="text-xs font-bold uppercase text-gray-500">
                   Category
                 </label>
                 <CreatableSelect
@@ -562,45 +510,29 @@ export default function GalleryManager({
                   onChange={(val) =>
                     setValue("category", val, { shouldValidate: true })
                   }
-                  placeholder="Choose or type new category..."
+                  placeholder="Category..."
                 />
-                {errors.category && (
-                  <p className="text-red-500 text-[10px] font-bold uppercase">
-                    {errors.category.message}
-                  </p>
-                )}
               </div>
 
-              {/* FORM ACTIONS */}
               <div className="pt-4 flex items-center justify-end gap-3">
                 <button
                   type="button"
-                  onClick={() => {
-                    setIsUploadOpen(false);
-                    reset();
-                  }}
-                  className="px-5 py-2 text-sm font-bold text-gray-500 hover:text-gray-800 transition-colors"
+                  onClick={() => setIsUploadOpen(false)}
+                  className="px-5 py-2 text-sm font-bold text-gray-500"
                 >
                   Cancel
                 </button>
                 <Button
                   type="submit"
-                  disabled={isUploading || isPending}
-                  className={clsx(
-                    "h-11 px-8 rounded-full font-bold shadow-lg transition-all active:scale-95",
-                    "bg-[#4a6741] hover:bg-[#3a5233] disabled:bg-gray-200 disabled:text-gray-400",
-                  )}
+                  disabled={uploadingStatus || isPending}
+                  className="h-11 px-8 rounded-full font-bold bg-[#4a6741] hover:bg-[#3a5233]"
                 >
-                  {isUploading || isPending ? (
-                    <Loader2 className="animate-spin h-5 w-5" />
+                  {isPending ? (
+                    <Loader2 className="animate-spin" />
                   ) : (
-                    <Check className="mr-2 h-5 w-5" />
+                    <Check className="mr-2" />
                   )}
-                  {isUploading
-                    ? "Processing..."
-                    : isPending
-                      ? "Saving..."
-                      : "Publish Image"}
+                  Publish Image
                 </Button>
               </div>
             </form>
@@ -608,92 +540,45 @@ export default function GalleryManager({
         </div>
       )}
 
-      {/* --- PREVIEW MODAL --- */}
+      {/* Preview Modal */}
       {previewTarget && (
         <div
-          className="fixed inset-0 z-[60] flex items-center justify-center bg-black/80 backdrop-blur-sm animate-in fade-in duration-200 p-4"
+          className="fixed inset-0 z-[60] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4"
           onClick={() => setPreviewTarget(null)}
         >
-          <div
-            className="relative max-w-5xl w-full max-h-[90vh] flex items-center justify-center"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Close Button */}
-            <button
-              onClick={() => setPreviewTarget(null)}
-              className="absolute -top-12 right-0 text-white hover:text-gray-300 transition-colors bg-white/10 p-2 rounded-full backdrop-blur-md"
-            >
-              <X size={24} />
-            </button>
-
-            {/* Large Image */}
-            <div className="relative w-full h-[80vh] rounded-lg overflow-hidden shadow-2xl">
-              <Image
-                src={previewTarget.url}
-                alt={previewTarget.title}
-                fill
-                className="object-contain"
-                sizes="100vw"
-                priority
-              />
-            </div>
-
-            {/* Caption */}
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/60 backdrop-blur-md px-4 py-2 rounded-full text-white text-sm font-medium">
-              {previewTarget.title}
-            </div>
+          <div className="relative max-w-5xl w-full h-[80vh]">
+            <Image
+              src={previewTarget.url}
+              alt={previewTarget.title}
+              fill
+              unoptimized
+              className="object-contain"
+            />
           </div>
         </div>
       )}
 
-      {/* --- DELETE CONFIRMATION MODAL --- */}
+      {/* Delete Confirmation */}
       {deleteTarget && (
-        <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-in fade-in duration-200">
-          <div className="bg-white rounded-xl w-full max-w-sm shadow-2xl p-6 scale-100 animate-in zoom-in-95 duration-200">
-            <div className="flex items-center gap-4 mb-4">
-              <div className="p-3 bg-red-100 rounded-full text-red-600">
-                <AlertTriangle size={24} />
-              </div>
-              <div>
-                <h3 className="text-lg font-bold text-gray-900">
-                  Delete Image?
-                </h3>
-                <p className="text-sm text-gray-500 mt-1">
-                  Are you sure you want to delete this image? This action cannot
-                  be undone.
-                </p>
-              </div>
-            </div>
-
-            {/* Optional: Small thumbnail of what's being deleted */}
-            <div className="relative h-32 w-full rounded-lg overflow-hidden border border-gray-100 mb-6 bg-gray-50">
-              <Image
-                src={deleteTarget.url}
-                alt={deleteTarget.title}
-                fill
-                className="object-cover opacity-80"
-              />
-            </div>
-
+        <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/50">
+          <div className="bg-white rounded-xl w-full max-w-sm p-6 shadow-2xl">
+            <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
+              <AlertTriangle className="text-red-600" /> Delete Asset?
+            </h3>
             <div className="flex items-center justify-end gap-3">
               <button
                 onClick={() => setDeleteTarget(null)}
                 disabled={isDeleting}
-                className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+                className="px-4 py-2 text-sm"
               >
                 Cancel
               </button>
               <button
                 onClick={handleConfirmDelete}
                 disabled={isDeleting}
-                className="px-4 py-2 text-sm font-medium text-white bg-red-600 hover:bg-red-700 rounded-lg shadow-sm flex items-center gap-2 disabled:opacity-70 transition-colors"
+                className="px-4 py-2 text-sm text-white bg-red-600 rounded-lg"
               >
-                {isDeleting ? (
-                  <Loader2 className="animate-spin" size={16} />
-                ) : (
-                  <Trash2 size={16} />
-                )}
-                {isDeleting ? "Deleting..." : "Delete"}
+                {isDeleting ? "Deleting..." : "Delete Permanently"}
               </button>
             </div>
           </div>
