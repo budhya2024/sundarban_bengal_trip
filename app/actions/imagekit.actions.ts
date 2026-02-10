@@ -3,13 +3,37 @@
 import "dotenv/config";
 import ImageKit from "imagekit";
 
-const imagekit = new ImageKit({
-  publicKey: process.env.IMAGEKIT_PUBLIC_KEY!,
-  privateKey: process.env.IMAGEKIT_PRIVATE_KEY!,
-  urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT!,
-});
+// 1. Declare a variable to hold the instance (Singleton)
+let imagekitInstance: ImageKit | null = null;
+
+// 2. Create a helper function to get/initialize the instance
+const getIK = () => {
+  if (imagekitInstance) return imagekitInstance;
+
+  const publicKey = process.env.IMAGEKIT_PUBLIC_KEY;
+  const privateKey = process.env.IMAGEKIT_PRIVATE_KEY;
+  const urlEndpoint = process.env.IMAGEKIT_URL_ENDPOINT;
+
+  if (!publicKey || !privateKey || !urlEndpoint) {
+    // During build time, if keys are missing, we log a warning instead of crashing
+    console.warn(
+      "ImageKit keys missing. Initialization skipped (expected during build).",
+    );
+    return null;
+  }
+
+  imagekitInstance = new ImageKit({
+    publicKey,
+    privateKey,
+    urlEndpoint,
+  });
+
+  return imagekitInstance;
+};
 
 export async function uploadImage(formData: FormData, folder?: string) {
+  const imagekit = getIK();
+  if (!imagekit) return { success: false, error: "Configuration missing" };
   try {
     const file = formData.get("file") as File;
     if (!file) {
@@ -38,6 +62,8 @@ export async function uploadImageFromBase64(
   fileName: string,
   folder?: string,
 ) {
+  const imagekit = getIK();
+  if (!imagekit) return { success: false, error: "Configuration missing" };
   try {
     if (!base64) {
       throw new Error("No base64 string provided");
@@ -53,5 +79,23 @@ export async function uploadImageFromBase64(
   } catch (error) {
     console.error("Image upload failed:", error);
     return { success: false, error: "Upload failed" };
+  }
+}
+
+export async function getIKAuthenticationParameters() {
+  const ik = getIK();
+  return ik ? ik.getAuthenticationParameters() : null;
+}
+
+export async function deleteFromImageKit(fileId: string) {
+  const ik = getIK();
+  if (!ik) return { success: false, error: "Configuration missing" };
+
+  try {
+    await ik.deleteFile(fileId);
+    return { success: true };
+  } catch (error) {
+    console.error("Cloud Delete Error:", error);
+    return { success: false, error: "Failed to delete image from cloud" };
   }
 }

@@ -1,18 +1,19 @@
 "use client";
 
-import React, { useTransition, useState } from "react";
+import React, { useTransition, useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { ImageKitProvider, IKUpload } from "imagekitio-next";
 import {
   Save,
   Layout,
   BookOpen,
   Target,
-  Eye,
   Upload,
   X,
   Clock,
   AlertCircle,
+  Trash2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -29,6 +30,10 @@ import { useToast } from "@/hooks/use-toast";
 import { AboutSchema, AboutValues } from "@/schemas/about.schema";
 import Image from "next/image";
 import { upsertAboutPage } from "@/app/actions/about.actions";
+import {
+  getIKAuthenticationParameters,
+  deleteFromImageKit,
+} from "@/app/actions/imagekit.actions";
 import { SidebarTrigger } from "./SidebarTrigger";
 
 export default function AboutAdminForm({
@@ -36,9 +41,20 @@ export default function AboutAdminForm({
 }: {
   initialData: AboutValues | null;
 }) {
-  const MAX_FILE_SIZE = 5 * 1024 * 1024;
+  const [heroKey, setHeroKey] = useState(0);
+  const [storyKey, setStoryKey] = useState(0);
   const [isPending, startTransition] = useTransition();
   const { toast } = useToast();
+
+  const [uploadingField, setUploadingField] = useState<"hero" | "story" | null>(
+    null,
+  );
+  const [deletingField, setDeletingField] = useState<"hero" | "story" | null>(
+    null,
+  );
+
+  const heroUploadRef = useRef<HTMLInputElement>(null);
+  const storyUploadRef = useRef<HTMLInputElement>(null);
 
   const [heroPreview, setHeroPreview] = useState<string | null>(
     initialData?.heroImage || null,
@@ -62,6 +78,66 @@ export default function AboutAdminForm({
     mode: "onTouched",
   });
 
+  const onUploadSuccess = (res: any, fieldName: "heroImage" | "storyImage") => {
+    // Smart URL strategy: append ikid to the URL string
+    const smartUrl = `${res.url}?ikid=${res.fileId}`;
+
+    console.log({ smartUrl });
+
+    if (fieldName === "heroImage") setHeroPreview(smartUrl);
+    else setStoryPreview(smartUrl);
+
+    form.setValue(fieldName, smartUrl, {
+      shouldValidate: true,
+      shouldDirty: true,
+    });
+    setUploadingField(null);
+    toast({ title: "Success", description: "Image uploaded and linked." });
+  };
+
+  const handleRemoveImage = async (fieldName: "heroImage" | "storyImage") => {
+    const currentUrl = form.getValues(fieldName);
+    if (!currentUrl) return;
+
+    try {
+      const urlObj = new URL(currentUrl);
+      const fileId = urlObj.searchParams.get("ikid");
+
+      if (fileId) {
+        setDeletingField(fieldName === "heroImage" ? "hero" : "story");
+        const res = await deleteFromImageKit(fileId);
+        if (!res.success) {
+          toast({
+            variant: "destructive",
+            title: "Cloud Error",
+            description: "Failed to delete from ImageKit.",
+          });
+          setDeletingField(null);
+          return;
+        }
+      }
+
+      // Clear states
+      if (fieldName === "heroImage") {
+        setHeroPreview(null);
+      } else {
+        setStoryPreview(null);
+      }
+      form.setValue(fieldName, "", { shouldValidate: true, shouldDirty: true });
+      toast({
+        title: "Removed",
+        description: "Image deleted from cloud and form.",
+      });
+    } catch (error) {
+      // Fallback for non-URL strings or unexpected errors
+      if (fieldName === "heroImage") setHeroPreview(null);
+      else setStoryPreview(null);
+      form.setValue(fieldName, "");
+    } finally {
+      setDeletingField(null);
+    }
+  };
+
   const onSubmit = async (values: AboutValues) => {
     startTransition(async () => {
       const res = await upsertAboutPage(values);
@@ -80,7 +156,6 @@ export default function AboutAdminForm({
     });
   };
 
-  // Helper to check if a specific section has errors
   const errors = form.formState.errors;
   const hasHeroErrors =
     errors.heroImage || errors.heroTitle || errors.heroSubtitle;
@@ -110,7 +185,7 @@ export default function AboutAdminForm({
           </div>
           <Button
             type="submit"
-            disabled={isPending}
+            disabled={isPending || !!uploadingField || !!deletingField}
             className="bg-emerald-700 hover:bg-emerald-800 shadow-lg px-8 transition-all"
           >
             {isPending ? (
@@ -139,15 +214,45 @@ export default function AboutAdminForm({
               <FormField
                 control={form.control}
                 name="heroImage"
-                render={({ field, fieldState }) => (
+                render={({ fieldState }) => (
                   <FormItem className="space-y-2">
                     <FormLabel className="text-[10px] font-bold uppercase text-slate-500">
                       Background Image
                     </FormLabel>
+                    <IKUpload
+                      key={`hero-upload-${heroKey}`}
+                      ref={heroUploadRef}
+                      className="hidden"
+                      useUniqueFileName={true}
+                      folder="/about"
+                      onUploadStart={() => setUploadingField("hero")}
+                      onError={() => {
+                        setUploadingField(null);
+                        toast({
+                          variant: "destructive",
+                          title: "Upload failed",
+                        });
+                      }}
+                      onSuccess={(res) => onUploadSuccess(res, "heroImage")}
+                    />
                     <div
                       className={`relative h-60 w-full rounded-xl overflow-hidden border-2 border-dashed flex items-center justify-center transition-all ${fieldState.error ? "border-red-400 bg-red-50/50" : "bg-slate-50 border-slate-200"}`}
                     >
-                      {heroPreview ? (
+                      {uploadingField === "hero" ? (
+                        <div className="text-center">
+                          <Clock className="mx-auto animate-spin text-emerald-600 mb-2" />
+                          <span className="text-xs font-bold text-slate-500">
+                            Uploading...
+                          </span>
+                        </div>
+                      ) : deletingField === "hero" ? (
+                        <div className="text-center">
+                          <Trash2 className="mx-auto animate-spin text-red-600 mb-2" />
+                          <span className="text-xs font-bold text-slate-500">
+                            Deleting...
+                          </span>
+                        </div>
+                      ) : heroPreview ? (
                         <>
                           <Image
                             src={heroPreview}
@@ -160,61 +265,27 @@ export default function AboutAdminForm({
                             variant="destructive"
                             size="icon"
                             className="absolute top-2 right-2 h-8 w-8 rounded-full"
-                            onClick={() => {
-                              setHeroPreview(null);
-                              form.setValue("heroImage", "", {
-                                shouldValidate: true,
-                                shouldDirty: true,
-                              });
-                            }}
+                            onClick={() => handleRemoveImage("heroImage")}
                           >
                             <X size={14} />
                           </Button>
                         </>
                       ) : (
-                        <label className="cursor-pointer text-center p-10 w-full group">
+                        <div
+                          onClick={() => heroUploadRef.current?.click()}
+                          className="cursor-pointer text-center p-10 w-full group"
+                        >
                           <Upload className="mx-auto mb-2 text-slate-400 group-hover:text-emerald-600 transition-colors" />
                           <span className="text-xs font-medium text-slate-500">
-                            Click to upload cover image
+                            Click to upload via SDK
                           </span>
-                          <input
-                            type="file"
-                            className="hidden"
-                            accept="image/*"
-                            onChange={(e) => {
-                              const file = e.target.files?.[0];
-                              if (file) {
-                                if (file.size > MAX_FILE_SIZE) {
-                                  toast({
-                                    variant: "destructive",
-                                    title: "File too large",
-                                    description:
-                                      "Please upload an image smaller than 5MB.",
-                                  });
-                                  // Clear the input so the same file can't be "re-selected" without fixing
-                                  e.target.value = "";
-                                  return;
-                                }
-                                const r = new FileReader();
-                                r.onloadend = () => {
-                                  const result = r.result as string;
-                                  setHeroPreview(result);
-                                  form.setValue("heroImage", result, {
-                                    shouldValidate: true,
-                                  });
-                                };
-                                r.readAsDataURL(file);
-                              }
-                            }}
-                          />
-                        </label>
+                        </div>
                       )}
                     </div>
                     <FormMessage className="text-[10px] font-bold" />
                   </FormItem>
                 )}
               />
-
               <div className="grid gap-4 pt-2">
                 <FormField
                   control={form.control}
@@ -230,7 +301,7 @@ export default function AboutAdminForm({
                           {...field}
                         />
                       </FormControl>
-                      <FormMessage className="text-[10px] font-bold" />
+                      <FormMessage />
                     </FormItem>
                   )}
                 />
@@ -249,7 +320,7 @@ export default function AboutAdminForm({
                           {...field}
                         />
                       </FormControl>
-                      <FormMessage className="text-[10px] font-bold" />
+                      <FormMessage />
                     </FormItem>
                   )}
                 />
@@ -264,17 +335,47 @@ export default function AboutAdminForm({
                 <BookOpen size={18} /> Our Story
               </div>
               <FormField
+                key={`story-upload-${storyKey}`}
                 control={form.control}
                 name="storyImage"
-                render={({ field, fieldState }) => (
+                render={({ fieldState }) => (
                   <FormItem className="space-y-2">
                     <FormLabel className="text-[10px] font-bold uppercase text-slate-400">
                       Narrative Image
                     </FormLabel>
+                    <IKUpload
+                      ref={storyUploadRef}
+                      className="hidden"
+                      useUniqueFileName={true}
+                      folder="/about"
+                      onUploadStart={() => setUploadingField("story")}
+                      onError={() => {
+                        setUploadingField(null);
+                        toast({
+                          variant: "destructive",
+                          title: "Upload failed",
+                        });
+                      }}
+                      onSuccess={(res) => onUploadSuccess(res, "storyImage")}
+                    />
                     <div
                       className={`relative h-56 w-full rounded-xl overflow-hidden border-2 border-dashed flex items-center justify-center transition-all ${fieldState.error ? "border-red-400 bg-red-50/50" : "bg-slate-50 border-slate-200"}`}
                     >
-                      {storyPreview ? (
+                      {uploadingField === "story" ? (
+                        <div className="text-center">
+                          <Clock className="mx-auto animate-spin text-amber-600 mb-2" />
+                          <span className="text-xs font-bold text-slate-500">
+                            Uploading Story Image...
+                          </span>
+                        </div>
+                      ) : deletingField === "story" ? (
+                        <div className="text-center">
+                          <Trash2 className="mx-auto animate-spin text-red-600 mb-2" />
+                          <span className="text-xs font-bold text-slate-500">
+                            Deleting...
+                          </span>
+                        </div>
+                      ) : storyPreview ? (
                         <>
                           <Image
                             src={storyPreview}
@@ -287,57 +388,24 @@ export default function AboutAdminForm({
                             variant="destructive"
                             size="icon"
                             className="absolute top-2 right-2 h-8 w-8 rounded-full"
-                            onClick={() => {
-                              setStoryPreview(null);
-                              form.setValue("storyImage", "", {
-                                shouldValidate: true,
-                                shouldDirty: true,
-                              });
-                            }}
+                            onClick={() => handleRemoveImage("storyImage")}
                           >
                             <X size={14} />
                           </Button>
                         </>
                       ) : (
-                        <label className="cursor-pointer text-center p-10 w-full group">
+                        <div
+                          onClick={() => storyUploadRef.current?.click()}
+                          className="cursor-pointer text-center p-10 w-full group"
+                        >
                           <Upload className="mx-auto mb-2 text-slate-400" />
                           <span className="text-xs font-medium text-slate-500">
                             Upload Story Image
                           </span>
-                          <input
-                            type="file"
-                            className="hidden"
-                            accept="image/*"
-                            onChange={(e) => {
-                              const file = e.target.files?.[0];
-                              if (file) {
-                                if (file.size > MAX_FILE_SIZE) {
-                                  toast({
-                                    variant: "destructive",
-                                    title: "File too large",
-                                    description:
-                                      "Please upload an image smaller than 5MB.",
-                                  });
-                                  // Clear the input so the same file can't be "re-selected" without fixing
-                                  e.target.value = "";
-                                  return;
-                                }
-                                const r = new FileReader();
-                                r.onloadend = () => {
-                                  const result = r.result as string;
-                                  setStoryPreview(result);
-                                  form.setValue("storyImage", result, {
-                                    shouldValidate: true,
-                                  });
-                                };
-                                r.readAsDataURL(file);
-                              }
-                            }}
-                          />
-                        </label>
+                        </div>
                       )}
                     </div>
-                    <FormMessage className="text-[10px] font-bold" />
+                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -356,7 +424,7 @@ export default function AboutAdminForm({
                           {...field}
                         />
                       </FormControl>
-                      <FormMessage className="text-[10px] font-bold" />
+                      <FormMessage />
                     </FormItem>
                   )}
                 />
@@ -375,7 +443,7 @@ export default function AboutAdminForm({
                           {...field}
                         />
                       </FormControl>
-                      <FormMessage className="text-[10px] font-bold" />
+                      <FormMessage />
                     </FormItem>
                   )}
                 />
@@ -391,7 +459,6 @@ export default function AboutAdminForm({
                 <Target size={18} className="text-slate-400" />
                 <span className="text-sm tracking-tight">Objectives</span>
               </div>
-
               <div className="space-y-6">
                 <div className="space-y-2">
                   <div
@@ -407,16 +474,15 @@ export default function AboutAdminForm({
                         <FormControl>
                           <Textarea
                             rows={6}
-                            className={`bg-slate-50/50 text-xs leading-relaxed transition-colors ${errors.ourMissionContent ? "border-red-300 focus-visible:ring-red-500" : "border-slate-200"}`}
+                            className={`bg-slate-50/50 text-xs leading-relaxed ${errors.ourMissionContent ? "border-red-300" : "border-slate-200"}`}
                             {...field}
                           />
                         </FormControl>
-                        <FormMessage className="text-[10px] font-bold" />
+                        <FormMessage />
                       </FormItem>
                     )}
                   />
                 </div>
-
                 <div className="space-y-2">
                   <div
                     className={`flex items-center gap-2 font-bold text-[10px] uppercase tracking-widest ${errors.ourVisionContent ? "text-red-600" : "text-emerald-700"}`}
@@ -431,11 +497,11 @@ export default function AboutAdminForm({
                         <FormControl>
                           <Textarea
                             rows={6}
-                            className={`bg-slate-50/50 text-xs leading-relaxed transition-colors ${errors.ourVisionContent ? "border-red-300 focus-visible:ring-red-500" : "border-slate-200"}`}
+                            className={`bg-slate-50/50 text-xs leading-relaxed ${errors.ourVisionContent ? "border-red-300" : "border-slate-200"}`}
                             {...field}
                           />
                         </FormControl>
-                        <FormMessage className="text-[10px] font-bold" />
+                        <FormMessage />
                       </FormItem>
                     )}
                   />

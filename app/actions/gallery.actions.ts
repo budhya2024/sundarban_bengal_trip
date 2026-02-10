@@ -28,24 +28,12 @@ export async function fetchGallertyCategories() {
   }
 }
 
-export const addGallery = async (data: {
-  title: string;
-  category: string;
-  url: string;
-}) => {
+export const addGallery = async (data: any) => {
+  console.log({ data });
   try {
-    const { success, fileId, url } = await uploadImageFromBase64(
-      data.url,
-      data.title,
-    );
-
-    if (!success || !fileId || !url) {
-      return { success: false, error: "Upload failed" };
-    }
-
     const result = await db
       .insert(Gallery)
-      .values({ ...data, url, fileId })
+      .values({ ...data })
       .returning();
     return { success: true, data: result[0] };
   } catch (error) {

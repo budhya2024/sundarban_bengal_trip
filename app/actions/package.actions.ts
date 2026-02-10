@@ -170,33 +170,7 @@ export async function upsertPackage(values: PackageValues) {
       .replace(/\s+/g, "-") // Replace spaces with hyphens
       .replace(/-+/g, "-"); // Remove duplicate hyphens
 
-    // 2. Handle Image Upload if it's a new Base64 string
-    if (values.heroImage && values.heroImage.startsWith("data:image")) {
-      const { success, url } = await uploadImageFromBase64(
-        values.heroImage,
-        values.heroTitle,
-      );
-
-      if (!success || !url) {
-        return { success: false, error: "Image upload failed" };
-      }
-
-      values.heroImage = url; // Update values with the permanent URL
-    }
-
-    if (values.packageImage && values.heroImage.startsWith("data:image")) {
-      const { success, url } = await uploadImageFromBase64(
-        values.packageImage,
-        values.packageName,
-      );
-
-      if (!success || !url) {
-        return { success: false, error: "Image upload failed" };
-      }
-
-      values.packageImage = url;
-    }
-    // 3. Perform the Upsert
+    // 2. Perform the Upsert
     await db
       .insert(travelPackages)
       .values({

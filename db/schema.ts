@@ -32,7 +32,6 @@ export const gallery = pgTable("gallery", {
   id: uuid("id").primaryKey().defaultRandom(),
 
   url: text("url").notNull(),
-  fileId: text("file_id").notNull(),
   title: text("title").notNull(),
   category: text("category").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),

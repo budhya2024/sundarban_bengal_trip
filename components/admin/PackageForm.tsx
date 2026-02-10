@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useTransition, useState } from "react";
+import React, { useTransition, useState, useRef } from "react";
 import { useFieldArray, useForm, Control } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -37,6 +37,8 @@ import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { SidebarTrigger } from "./SidebarTrigger";
 import { upsertPackage } from "@/app/actions/package.actions";
+import { deleteFromImageKit } from "@/app/actions/imagekit.actions";
+import { IKUpload } from "imagekitio-next";
 
 function DayActivities({
   dayIndex,
@@ -172,6 +174,19 @@ export default function PackageForm({
   const [isPending, startTransition] = useTransition();
   const { toast } = useToast();
 
+  // ImageKit specific states
+  const [uploadingField, setUploadingField] = useState<
+    "hero" | "package" | null
+  >(null);
+  const [deletingField, setDeletingField] = useState<"hero" | "package" | null>(
+    null,
+  );
+  const [heroKey, setHeroKey] = useState(0);
+  const [packageKey, setPackageKey] = useState(0);
+
+  const heroUploadRef = useRef<HTMLInputElement>(null);
+  const packageUploadRef = useRef<HTMLInputElement>(null);
+
   const [heroPreview, setHeroPreview] = useState<string | null>(
     initialData?.heroImage || null,
   );
@@ -205,6 +220,57 @@ export default function PackageForm({
     append: eAppend,
     remove: eRemove,
   } = useFieldArray({ control: form.control, name: "exclusions" });
+
+  const onUploadSuccess = (
+    res: any,
+    fieldName: "heroImage" | "packageImage",
+  ) => {
+    const smartUrl = `${res.url}?ikid=${res.fileId}`
+      .replace(/['"]+/g, "")
+      .trim();
+    if (fieldName === "heroImage") setHeroPreview(smartUrl);
+    else setPackagePreview(smartUrl);
+
+    form.setValue(fieldName, smartUrl, {
+      shouldValidate: true,
+      shouldDirty: true,
+    });
+    setUploadingField(null);
+    toast({ title: "Success", description: "Image synced to cloud." });
+  };
+
+  const handleRemoveImage = async (fieldName: "heroImage" | "packageImage") => {
+    const currentUrl = form.getValues(fieldName);
+    if (!currentUrl) return;
+
+    try {
+      const urlObj = new URL(currentUrl.replace(/['"]+/g, "").trim());
+      const fileId = urlObj.searchParams.get("ikid");
+
+      if (fileId) {
+        setDeletingField(fieldName === "heroImage" ? "hero" : "package");
+        const res = await deleteFromImageKit(fileId);
+        if (!res.success) throw new Error();
+      }
+
+      if (fieldName === "heroImage") {
+        setHeroPreview(null);
+        setHeroKey((k) => k + 1);
+      } else {
+        setPackagePreview(null);
+        setPackageKey((k) => k + 1);
+      }
+
+      form.setValue(fieldName, "", { shouldDirty: true });
+      toast({ title: "Removed", description: "Storage cleaned." });
+    } catch (error) {
+      if (fieldName === "heroImage") setHeroPreview(null);
+      else setPackagePreview(null);
+      form.setValue(fieldName, "");
+    } finally {
+      setDeletingField(null);
+    }
+  };
 
   const onSubmit = async (values: PackageValues) => {
     startTransition(async () => {
@@ -283,25 +349,43 @@ export default function PackageForm({
               <FormField
                 control={form.control}
                 name="heroImage"
-                render={({ fieldState }) => (
+                render={() => (
                   <FormItem className="space-y-2">
                     <FormLabel className="text-[10px] font-bold uppercase text-slate-400">
-                      Hero Background Image
+                      Hero Background
                     </FormLabel>
-                    <div
-                      className={cn(
-                        "relative h-48 w-full rounded-xl overflow-hidden border-2 border-dashed flex items-center justify-center transition-all",
-                        fieldState.error
-                          ? "border-red-400 bg-red-50/20"
-                          : "bg-slate-50/50 border-slate-200 hover:border-emerald-200",
-                      )}
-                    >
-                      {heroPreview ? (
+
+                    <IKUpload
+                      key={`hero-up-${heroKey}`}
+                      ref={heroUploadRef}
+                      className="hidden"
+                      folder="/packages/hero"
+                      onUploadStart={() => setUploadingField("hero")}
+                      onSuccess={(res) => onUploadSuccess(res, "heroImage")}
+                      onError={() => {
+                        setUploadingField(null);
+                        setHeroKey((k) => k + 1);
+                      }}
+                    />
+
+                    <div className="relative h-48 w-full rounded-xl overflow-hidden border-2 border-dashed flex items-center justify-center bg-slate-50">
+                      {uploadingField === "hero" ? (
+                        <div className="text-center animate-pulse">
+                          <Clock className="mx-auto mb-1 text-emerald-600" />{" "}
+                          Uploading...
+                        </div>
+                      ) : deletingField === "hero" ? (
+                        <div className="text-center animate-pulse">
+                          <Trash2 className="mx-auto mb-1 text-red-600" />{" "}
+                          Deleting...
+                        </div>
+                      ) : heroPreview ? (
                         <>
                           <Image
-                            src={heroPreview}
+                            src={heroPreview.replace(/['"]+/g, "")}
                             alt="Hero"
                             fill
+                            unoptimized
                             className="object-cover"
                           />
                           <Button
@@ -309,59 +393,24 @@ export default function PackageForm({
                             variant="destructive"
                             size="icon"
                             className="absolute top-2 right-2 h-8 w-8 rounded-full"
-                            onClick={() => {
-                              setHeroPreview(null);
-                              form.setValue("heroImage", "");
-                            }}
+                            onClick={() => handleRemoveImage("heroImage")}
                           >
                             <X size={14} />
                           </Button>
                         </>
                       ) : (
-                        <label className="cursor-pointer text-center p-10 w-full group">
-                          <Upload
-                            className={cn(
-                              "mx-auto mb-2 transition-transform group-hover:-translate-y-1",
-                              fieldState.error
-                                ? "text-red-400"
-                                : "text-slate-400",
-                            )}
-                          />
-                          <span className="text-xs font-medium text-slate-500 group-hover:text-emerald-600">
-                            Click to upload Hero Image
+                        <div
+                          onClick={() => heroUploadRef.current?.click()}
+                          className="cursor-pointer text-center p-10 group w-full"
+                        >
+                          <Upload className="mx-auto mb-2 text-slate-400 group-hover:text-emerald-600 transition-colors" />
+                          <span className="text-xs font-medium text-slate-500">
+                            Click to Upload Hero
                           </span>
-                          <input
-                            type="file"
-                            className="hidden"
-                            accept="image/*"
-                            onChange={(e) => {
-                              const file = e.target.files?.[0];
-                              if (file) {
-                                if (file.size > 5 * 1024 * 1024) {
-                                  toast({
-                                    variant: "destructive",
-                                    title: "File too large",
-                                    description: "Image must be under 5MB",
-                                  });
-                                  return;
-                                }
-                                const reader = new FileReader();
-                                reader.onloadend = () => {
-                                  setHeroPreview(reader.result as string);
-                                  form.setValue(
-                                    "heroImage",
-                                    reader.result as string,
-                                    { shouldValidate: true },
-                                  );
-                                };
-                                reader.readAsDataURL(file);
-                              }
-                            }}
-                          />
-                        </label>
+                        </div>
                       )}
                     </div>
-                    <FormMessage className="text-[10px] font-bold" />
+                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -416,25 +465,43 @@ export default function PackageForm({
               <FormField
                 control={form.control}
                 name="packageImage"
-                render={({ fieldState }) => (
+                render={() => (
                   <FormItem className="space-y-2">
                     <FormLabel className="text-[10px] font-bold uppercase text-slate-400">
-                      Secondary Package Image
+                      Card Image
                     </FormLabel>
-                    <div
-                      className={cn(
-                        "relative h-48 w-full rounded-xl overflow-hidden border-2 border-dashed flex items-center justify-center transition-all",
-                        fieldState.error
-                          ? "border-red-400 bg-red-50/20"
-                          : "bg-slate-50/50 border-slate-200 hover:border-emerald-200",
-                      )}
-                    >
-                      {packagePreview ? (
+
+                    <IKUpload
+                      key={`pkg-up-${packageKey}`}
+                      ref={packageUploadRef}
+                      className="hidden"
+                      folder="/packages/cards"
+                      onUploadStart={() => setUploadingField("package")}
+                      onSuccess={(res) => onUploadSuccess(res, "packageImage")}
+                      onError={() => {
+                        setUploadingField(null);
+                        setPackageKey((k) => k + 1);
+                      }}
+                    />
+
+                    <div className="relative h-48 w-full rounded-xl overflow-hidden border-2 border-dashed flex items-center justify-center bg-slate-50">
+                      {uploadingField === "package" ? (
+                        <div className="text-center animate-pulse">
+                          <Clock className="mx-auto mb-1 text-amber-600" />{" "}
+                          Uploading...
+                        </div>
+                      ) : deletingField === "package" ? (
+                        <div className="text-center animate-pulse">
+                          <Trash2 className="mx-auto mb-1 text-red-600" />{" "}
+                          Deleting...
+                        </div>
+                      ) : packagePreview ? (
                         <>
                           <Image
-                            src={packagePreview}
+                            src={packagePreview.replace(/['"]+/g, "")}
                             alt="Package"
                             fill
+                            unoptimized
                             className="object-cover"
                           />
                           <Button
@@ -442,51 +509,24 @@ export default function PackageForm({
                             variant="destructive"
                             size="icon"
                             className="absolute top-2 right-2 h-8 w-8 rounded-full"
-                            onClick={() => {
-                              setPackagePreview(null);
-                              form.setValue("packageImage", "");
-                            }}
+                            onClick={() => handleRemoveImage("packageImage")}
                           >
                             <X size={14} />
                           </Button>
                         </>
                       ) : (
-                        <label className="cursor-pointer text-center p-6 w-full group">
-                          <ImageIcon
-                            className={cn(
-                              "mx-auto mb-2 transition-transform group-hover:-translate-y-1",
-                              fieldState.error
-                                ? "text-red-400"
-                                : "text-slate-400",
-                            )}
-                          />
-                          <span className="text-xs font-medium text-slate-500 group-hover:text-emerald-600">
+                        <div
+                          onClick={() => packageUploadRef.current?.click()}
+                          className="cursor-pointer text-center p-6 group w-full"
+                        >
+                          <ImageIcon className="mx-auto mb-2 text-slate-400 group-hover:text-amber-600 transition-colors" />
+                          <span className="text-xs font-medium text-slate-500">
                             Upload Package Image
                           </span>
-                          <input
-                            type="file"
-                            className="hidden"
-                            accept="image/*"
-                            onChange={(e) => {
-                              const file = e.target.files?.[0];
-                              if (file) {
-                                const reader = new FileReader();
-                                reader.onloadend = () => {
-                                  setPackagePreview(reader.result as string);
-                                  form.setValue(
-                                    "packageImage",
-                                    reader.result as string,
-                                    { shouldValidate: true },
-                                  );
-                                };
-                                reader.readAsDataURL(file);
-                              }
-                            }}
-                          />
-                        </label>
+                        </div>
                       )}
                     </div>
-                    <FormMessage className="text-[10px] font-bold" />
+                    <FormMessage />
                   </FormItem>
                 )}
               />

@@ -45,12 +45,6 @@ export const getBlogById = async (id: string) => {
 
 export const createBlog = async (newBlog: NewBlogType) => {
   try {
-    if (!newBlog.image?.startsWith("http")) {
-      const result = await uploadImageFromBase64(newBlog.image, newBlog.title);
-      if (result.success && result.url) {
-        newBlog.image = result.url;
-      }
-    }
     const slug = newBlog.title.toLowerCase().replace(/\s+/g, "-");
     const data = await db
       .insert(BlogModel)
