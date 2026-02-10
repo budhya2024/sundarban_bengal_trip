@@ -2,7 +2,8 @@
 
 import React, { useTransition, useState, useRef, useEffect } from "react";
 import Image from "next/image";
-import { IKUpload } from "imagekitio-next";
+// Modular upload and provider for transformation props only
+import { upload, ImageKitProvider } from "@imagekit/next";
 import {
   UploadCloud,
   Trash2,
@@ -186,21 +187,17 @@ export default function GalleryManager({
   const [isPending, startTransition] = useTransition();
   const { toast } = useToast();
 
-  // Core State
   const [images, setImages] = useState<GalleryType[]>(initialImages || []);
   const [activeFilter, setActiveFilter] = useState("All");
   const [isUploadOpen, setIsUploadOpen] = useState(false);
 
-  // Upload & Delete States
   const [uploadingStatus, setUploadingStatus] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
-  const [uploadKey, setUploadKey] = useState(0); // For resetting IKUpload
 
-  // Modals
   const [previewTarget, setPreviewTarget] = useState<GalleryType | null>(null);
   const [deleteTarget, setDeleteTarget] = useState<GalleryType | null>(null);
 
-  const ikUploadRef = useRef<HTMLInputElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const availableCategories = [
     ...new Set([...["wildlife", "landscape", "sunset"], ...categoryData]),
   ];
@@ -220,37 +217,40 @@ export default function GalleryManager({
   const category = watch("category");
   const previewUrl = watch("url");
 
-  // --- IMAGEKIT AUTHENTICATOR ---
-  const authenticator = async () => {
-    const auth = await getIKAuthenticationParameters();
-    if (!auth) throw new Error("Authentication failed");
-    return {
-      signature: auth.signature,
-      expire: auth.expire,
-      token: auth.token,
-    };
-  };
+  // --- MODERN UPLOAD HANDLER ---
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
 
-  // --- UPLOAD HANDLERS ---
-  const handleUploadSuccess = (res: any) => {
-    // Smart URL Strategy: Append fileId to URL
-    const smartUrl = `${res.url}?ikid=${res.fileId}`
-      .replace(/['"]+/g, "")
-      .trim();
-    setValue("url", smartUrl, { shouldValidate: true });
-    setUploadingStatus(false);
-    toast({ title: "Success", description: "Image synced to cloud." });
-  };
+    setUploadingStatus(true);
 
-  const handleUploadError = (err: any) => {
-    console.error("Upload Error:", err);
-    setUploadingStatus(false);
-    setUploadKey((prev) => prev + 1);
-    toast({
-      variant: "destructive",
-      title: "Upload Failed",
-      description: "Could not sync to cloud storage.",
-    });
+    try {
+      // 1. Get auth params from your server action
+      const auth = await getIKAuthenticationParameters();
+      if (!auth) throw new Error("Auth failed");
+
+      // 2. Perform direct browser-to-cloud upload
+      const res = await upload({
+        file,
+        fileName: file.name,
+        publicKey: process.env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY!,
+        signature: auth.signature,
+        token: auth.token,
+        expire: auth.expire,
+        folder: "/gallery",
+      });
+
+      // 3. Smart URL Strategy
+      const smartUrl = `${res.url}?ikid=${res.fileId}`;
+      setValue("url", smartUrl, { shouldValidate: true });
+      toast({ title: "Success", description: "Image synced to cloud." });
+    } catch (error) {
+      console.error("Upload Error:", error);
+      toast({ variant: "destructive", title: "Upload Failed" });
+    } finally {
+      setUploadingStatus(false);
+      if (fileInputRef.current) fileInputRef.current.value = "";
+    }
   };
 
   const handleUploadSubmit = async (values: z.infer<typeof gallerySchema>) => {
@@ -260,47 +260,32 @@ export default function GalleryManager({
         setImages((prev) => [data, ...prev]);
         setIsUploadOpen(false);
         reset();
-        setUploadKey((prev) => prev + 1);
-        toast({
-          title: "Published",
-          description: "Image added to your public gallery.",
-        });
+        toast({ title: "Published", description: "Added to gallery." });
       }
     });
   };
 
-  // --- DELETE HANDLER (SMART URL) ---
   const handleConfirmDelete = async () => {
     if (!deleteTarget) return;
     setIsDeleting(true);
 
     try {
-      // 1. Extract ikid from the Smart URL
       const urlObj = new URL(deleteTarget.url.replace(/['"]+/g, "").trim());
       const fileId = urlObj.searchParams.get("ikid");
 
-      // 2. Delete from ImageKit Cloud if ID exists
       if (fileId) {
         const cloudRes = await deleteFromImageKit(fileId);
         if (!cloudRes.success) throw new Error("Cloud deletion failed");
       }
 
-      // 3. Delete from Database
       const { success } = await deleteGalleryItem(deleteTarget.id);
       if (success) {
         setImages((prev) => prev.filter((i) => i.id !== deleteTarget.id));
         setDeleteTarget(null);
-        toast({
-          title: "Deleted",
-          description: "Asset removed",
-        });
+        toast({ title: "Deleted", description: "Asset removed" });
       }
     } catch (error) {
-      toast({
-        variant: "destructive",
-        title: "Delete Error",
-        description: "Failed to remove asset.",
-      });
+      toast({ variant: "destructive", title: "Delete Error" });
     } finally {
       setIsDeleting(false);
     }
@@ -330,7 +315,7 @@ export default function GalleryManager({
       </div>
 
       <div className="p-6">
-        {/* Filters */}
+        {/* Filters and Grid remain exactly as your design ... */}
         <div className="flex items-center gap-2 overflow-x-auto pb-4 mb-6 scrollbar-hide">
           <button
             onClick={() => setActiveFilter("All")}
@@ -359,7 +344,6 @@ export default function GalleryManager({
           ))}
         </div>
 
-        {/* Gallery Grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
           {filteredImages.map((img) => (
             <div
@@ -417,22 +401,19 @@ export default function GalleryManager({
                   Asset File
                 </label>
 
-                {/* SDK UPLOADER */}
-                <IKUpload
-                  key={`gallery-up-${uploadKey}`}
-                  ref={ikUploadRef}
+                {/* MANUAL INPUT triggers FUNCTIONAL UPLOAD */}
+                <input
+                  type="file"
+                  ref={fileInputRef}
                   className="hidden"
-                  folder="/gallery"
-                  authenticator={authenticator}
-                  onUploadStart={() => setUploadingStatus(true)}
-                  onError={handleUploadError}
-                  onSuccess={handleUploadSuccess}
+                  accept="image/*"
+                  onChange={handleFileUpload}
                 />
 
                 {!previewUrl ? (
                   <div
                     onClick={() =>
-                      !uploadingStatus && ikUploadRef.current?.click()
+                      !uploadingStatus && fileInputRef.current?.click()
                     }
                     className={clsx(
                       "border-2 border-dashed rounded-xl h-44 flex flex-col items-center justify-center cursor-pointer",
@@ -466,24 +447,16 @@ export default function GalleryManager({
                     />
                     <button
                       type="button"
-                      onClick={() => {
-                        setValue("url", "");
-                        setUploadKey((k) => k + 1);
-                      }}
+                      onClick={() => setValue("url", "")}
                       className="absolute top-3 right-3 bg-white p-2 rounded-full text-red-500 shadow-md"
                     >
                       <Trash2 size={16} />
                     </button>
                   </div>
                 )}
-                {errors.url && (
-                  <p className="text-red-500 text-[10px] font-bold uppercase tracking-wider">
-                    {errors.url.message}
-                  </p>
-                )}
               </div>
 
-              {/* Fields */}
+              {/* Title & Category inputs remain exactly the same ... */}
               <div className="space-y-2">
                 <label className="text-xs font-bold uppercase text-gray-500">
                   Image Title
@@ -540,7 +513,7 @@ export default function GalleryManager({
         </div>
       )}
 
-      {/* Preview Modal */}
+      {/* Preview Modal & Delete Confirmation remain exactly the same ... */}
       {previewTarget && (
         <div
           className="fixed inset-0 z-[60] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4"
@@ -558,7 +531,6 @@ export default function GalleryManager({
         </div>
       )}
 
-      {/* Delete Confirmation */}
       {deleteTarget && (
         <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/50">
           <div className="bg-white rounded-xl w-full max-w-sm p-6 shadow-2xl">

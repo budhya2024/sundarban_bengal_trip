@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useTransition, useState, useRef } from "react";
+import React, { useTransition, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ImageKitProvider, IKUpload } from "imagekitio-next";
+import { upload } from "@imagekit/next";
 import {
   Save,
   Layout,
@@ -30,19 +30,18 @@ import { useToast } from "@/hooks/use-toast";
 import { AboutSchema, AboutValues } from "@/schemas/about.schema";
 import Image from "next/image";
 import { upsertAboutPage } from "@/app/actions/about.actions";
-import {
-  getIKAuthenticationParameters,
-  deleteFromImageKit,
-} from "@/app/actions/imagekit.actions";
+
 import { SidebarTrigger } from "./SidebarTrigger";
+import {
+  deleteFromImageKit,
+  getIKAuthenticationParameters,
+} from "@/app/actions/imagekit.actions";
 
 export default function AboutAdminForm({
   initialData,
 }: {
   initialData: AboutValues | null;
 }) {
-  const [heroKey, setHeroKey] = useState(0);
-  const [storyKey, setStoryKey] = useState(0);
   const [isPending, startTransition] = useTransition();
   const { toast } = useToast();
 
@@ -52,9 +51,6 @@ export default function AboutAdminForm({
   const [deletingField, setDeletingField] = useState<"hero" | "story" | null>(
     null,
   );
-
-  const heroUploadRef = useRef<HTMLInputElement>(null);
-  const storyUploadRef = useRef<HTMLInputElement>(null);
 
   const [heroPreview, setHeroPreview] = useState<string | null>(
     initialData?.heroImage || null,
@@ -78,21 +74,50 @@ export default function AboutAdminForm({
     mode: "onTouched",
   });
 
-  const onUploadSuccess = (res: any, fieldName: "heroImage" | "storyImage") => {
-    // Smart URL strategy: append ikid to the URL string
-    const smartUrl = `${res.url}?ikid=${res.fileId}`;
+  // Modern Functional Upload Handler (Bypasses Vercel 4.5MB limit)
+  const handleFileUpload = async (
+    e: React.ChangeEvent<HTMLInputElement>,
+    fieldName: "heroImage" | "storyImage",
+  ) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
 
-    console.log({ smartUrl });
+    setUploadingField(fieldName === "heroImage" ? "hero" : "story");
 
-    if (fieldName === "heroImage") setHeroPreview(smartUrl);
-    else setStoryPreview(smartUrl);
+    try {
+      // 1. Get auth params from your existing server action
+      const auth = await getIKAuthenticationParameters();
+      if (!auth) throw new Error("Authentication failed");
 
-    form.setValue(fieldName, smartUrl, {
-      shouldValidate: true,
-      shouldDirty: true,
-    });
-    setUploadingField(null);
-    toast({ title: "Success", description: "Image uploaded and linked." });
+      // 2. Perform modular upload (No Provider needed)
+      const res = await upload({
+        file,
+        fileName: file.name,
+        publicKey: process.env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY!,
+        signature: auth.signature,
+        token: auth.token,
+        expire: auth.expire,
+        folder: "/about",
+      });
+
+      // 3. Smart URL strategy: append ikid for easy cloud deletion
+      const smartUrl = `${res.url}?ikid=${res.fileId}`;
+
+      if (fieldName === "heroImage") setHeroPreview(smartUrl);
+      else setStoryPreview(smartUrl);
+
+      form.setValue(fieldName, smartUrl, {
+        shouldValidate: true,
+        shouldDirty: true,
+      });
+      toast({ title: "Success", description: "Image synced to cloud." });
+    } catch (error) {
+      console.error("Upload Error:", error);
+      toast({ variant: "destructive", title: "Upload failed" });
+    } finally {
+      setUploadingField(null);
+      e.target.value = ""; // Clear input for same-file re-uploads
+    }
   };
 
   const handleRemoveImage = async (fieldName: "heroImage" | "storyImage") => {
@@ -106,30 +131,15 @@ export default function AboutAdminForm({
       if (fileId) {
         setDeletingField(fieldName === "heroImage" ? "hero" : "story");
         const res = await deleteFromImageKit(fileId);
-        if (!res.success) {
-          toast({
-            variant: "destructive",
-            title: "Cloud Error",
-            description: "Failed to delete from ImageKit.",
-          });
-          setDeletingField(null);
-          return;
-        }
+        if (!res.success) throw new Error();
       }
 
-      // Clear states
-      if (fieldName === "heroImage") {
-        setHeroPreview(null);
-      } else {
-        setStoryPreview(null);
-      }
+      if (fieldName === "heroImage") setHeroPreview(null);
+      else setStoryPreview(null);
+
       form.setValue(fieldName, "", { shouldValidate: true, shouldDirty: true });
-      toast({
-        title: "Removed",
-        description: "Image deleted from cloud and form.",
-      });
+      toast({ title: "Removed", description: "Cloud storage cleaned." });
     } catch (error) {
-      // Fallback for non-URL strings or unexpected errors
       if (fieldName === "heroImage") setHeroPreview(null);
       else setStoryPreview(null);
       form.setValue(fieldName, "");
@@ -170,6 +180,7 @@ export default function AboutAdminForm({
         onSubmit={form.handleSubmit(onSubmit)}
         className="min-h-screen bg-slate-50/30 pb-20"
       >
+        {/* Header */}
         <div className="sticky top-0 z-30 w-full border-b bg-background/95 backdrop-blur px-6 py-4 flex justify-between items-center shadow-sm">
           <div className="flex items-center gap-2">
             <SidebarTrigger />
@@ -219,35 +230,19 @@ export default function AboutAdminForm({
                     <FormLabel className="text-[10px] font-bold uppercase text-slate-500">
                       Background Image
                     </FormLabel>
-                    <IKUpload
-                      key={`hero-upload-${heroKey}`}
-                      ref={heroUploadRef}
-                      className="hidden"
-                      useUniqueFileName={true}
-                      folder="/about"
-                      onUploadStart={() => setUploadingField("hero")}
-                      onError={() => {
-                        setUploadingField(null);
-                        toast({
-                          variant: "destructive",
-                          title: "Upload failed",
-                        });
-                      }}
-                      onSuccess={(res) => onUploadSuccess(res, "heroImage")}
-                    />
                     <div
                       className={`relative h-60 w-full rounded-xl overflow-hidden border-2 border-dashed flex items-center justify-center transition-all ${fieldState.error ? "border-red-400 bg-red-50/50" : "bg-slate-50 border-slate-200"}`}
                     >
                       {uploadingField === "hero" ? (
-                        <div className="text-center">
-                          <Clock className="mx-auto animate-spin text-emerald-600 mb-2" />
+                        <div className="text-center animate-pulse">
+                          <Clock className="mx-auto text-emerald-600 mb-2" />
                           <span className="text-xs font-bold text-slate-500">
-                            Uploading...
+                            Uploading to Cloud...
                           </span>
                         </div>
                       ) : deletingField === "hero" ? (
-                        <div className="text-center">
-                          <Trash2 className="mx-auto animate-spin text-red-600 mb-2" />
+                        <div className="text-center animate-pulse">
+                          <Trash2 className="mx-auto text-red-600 mb-2" />
                           <span className="text-xs font-bold text-slate-500">
                             Deleting...
                           </span>
@@ -258,6 +253,7 @@ export default function AboutAdminForm({
                             src={heroPreview}
                             alt="Hero"
                             fill
+                            unoptimized
                             className="object-cover"
                           />
                           <Button
@@ -271,21 +267,25 @@ export default function AboutAdminForm({
                           </Button>
                         </>
                       ) : (
-                        <div
-                          onClick={() => heroUploadRef.current?.click()}
-                          className="cursor-pointer text-center p-10 w-full group"
-                        >
+                        <label className="cursor-pointer text-center p-10 w-full group">
                           <Upload className="mx-auto mb-2 text-slate-400 group-hover:text-emerald-600 transition-colors" />
                           <span className="text-xs font-medium text-slate-500">
-                            Click to upload via SDK
+                            Click to upload (Direct Mode)
                           </span>
-                        </div>
+                          <input
+                            type="file"
+                            className="hidden"
+                            onChange={(e) => handleFileUpload(e, "heroImage")}
+                            accept="image/*"
+                          />
+                        </label>
                       )}
                     </div>
                     <FormMessage className="text-[10px] font-bold" />
                   </FormItem>
                 )}
               />
+
               <div className="grid gap-4 pt-2">
                 <FormField
                   control={form.control}
@@ -335,7 +335,6 @@ export default function AboutAdminForm({
                 <BookOpen size={18} /> Our Story
               </div>
               <FormField
-                key={`story-upload-${storyKey}`}
                 control={form.control}
                 name="storyImage"
                 render={({ fieldState }) => (
@@ -343,34 +342,19 @@ export default function AboutAdminForm({
                     <FormLabel className="text-[10px] font-bold uppercase text-slate-400">
                       Narrative Image
                     </FormLabel>
-                    <IKUpload
-                      ref={storyUploadRef}
-                      className="hidden"
-                      useUniqueFileName={true}
-                      folder="/about"
-                      onUploadStart={() => setUploadingField("story")}
-                      onError={() => {
-                        setUploadingField(null);
-                        toast({
-                          variant: "destructive",
-                          title: "Upload failed",
-                        });
-                      }}
-                      onSuccess={(res) => onUploadSuccess(res, "storyImage")}
-                    />
                     <div
                       className={`relative h-56 w-full rounded-xl overflow-hidden border-2 border-dashed flex items-center justify-center transition-all ${fieldState.error ? "border-red-400 bg-red-50/50" : "bg-slate-50 border-slate-200"}`}
                     >
                       {uploadingField === "story" ? (
-                        <div className="text-center">
-                          <Clock className="mx-auto animate-spin text-amber-600 mb-2" />
+                        <div className="text-center animate-pulse">
+                          <Clock className="mx-auto text-amber-600 mb-2" />
                           <span className="text-xs font-bold text-slate-500">
                             Uploading Story Image...
                           </span>
                         </div>
                       ) : deletingField === "story" ? (
-                        <div className="text-center">
-                          <Trash2 className="mx-auto animate-spin text-red-600 mb-2" />
+                        <div className="text-center animate-pulse">
+                          <Trash2 className="mx-auto text-red-600 mb-2" />
                           <span className="text-xs font-bold text-slate-500">
                             Deleting...
                           </span>
@@ -381,6 +365,7 @@ export default function AboutAdminForm({
                             src={storyPreview}
                             alt="Story"
                             fill
+                            unoptimized
                             className="object-cover"
                           />
                           <Button
@@ -394,15 +379,18 @@ export default function AboutAdminForm({
                           </Button>
                         </>
                       ) : (
-                        <div
-                          onClick={() => storyUploadRef.current?.click()}
-                          className="cursor-pointer text-center p-10 w-full group"
-                        >
+                        <label className="cursor-pointer text-center p-10 w-full group">
                           <Upload className="mx-auto mb-2 text-slate-400" />
                           <span className="text-xs font-medium text-slate-500">
                             Upload Story Image
                           </span>
-                        </div>
+                          <input
+                            type="file"
+                            className="hidden"
+                            onChange={(e) => handleFileUpload(e, "storyImage")}
+                            accept="image/*"
+                          />
+                        </label>
                       )}
                     </div>
                     <FormMessage />
