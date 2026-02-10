@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useTransition, useState, useRef } from "react";
+import React, { useTransition, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ImageKitProvider, IKUpload } from "imagekitio-next";
+// Updated import for @imagekit/next v2.x
+import { upload } from "@imagekit/next";
 import {
   Plus,
   Trash2,
@@ -51,8 +52,6 @@ export default function ContactAdminForm({ initialData }: ContactAdminProps) {
   // ImageKit specific states
   const [isUploading, setIsUploading] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
-  const [uploadKey, setUploadKey] = useState(0);
-  const ikUploadRef = useRef<HTMLInputElement>(null);
 
   const [preview, setPreview] = useState<string | null>(
     initialData?.heroImage || null,
@@ -96,18 +95,47 @@ export default function ContactAdminForm({ initialData }: ContactAdminProps) {
     remove: removeSchedule,
   } = useFieldArray({ control: form.control, name: "schedules" });
 
-  const onUploadSuccess = (res: any) => {
-    // Append ikid query parameter
-    const smartUrl = `${res.url}?ikid=${res.fileId}`
-      .replace(/['"]+/g, "")
-      .trim();
-    setPreview(smartUrl);
-    form.setValue("heroImage", smartUrl, {
-      shouldDirty: true,
-      shouldValidate: true,
-    });
-    setIsUploading(false);
-    toast({ title: "Success", description: "Hero image uploaded to cloud." });
+  // Modern Functional Upload Handler (Bypasses Vercel 4.5MB limit)
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setIsUploading(true);
+
+    try {
+      // 1. Get auth params from your existing server action
+      const auth = await getIKAuthenticationParameters();
+      if (!auth) throw new Error("Authentication failed");
+
+      // 2. Perform modular upload (Direct browser-to-cloud)
+      const res = await upload({
+        file,
+        fileName: file.name,
+        publicKey: process.env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY!,
+        signature: auth.signature,
+        token: auth.token,
+        expire: auth.expire,
+        folder: "/contact-page",
+      });
+
+      // 3. Smart URL strategy: append ikid for easy cloud deletion
+      const smartUrl = `${res.url}?ikid=${res.fileId}`
+        .replace(/['"]+/g, "")
+        .trim();
+
+      setPreview(smartUrl);
+      form.setValue("heroImage", smartUrl, {
+        shouldDirty: true,
+        shouldValidate: true,
+      });
+      toast({ title: "Success", description: "Hero image uploaded to cloud." });
+    } catch (error) {
+      console.error("Upload Error:", error);
+      toast({ variant: "destructive", title: "Upload failed" });
+    } finally {
+      setIsUploading(false);
+      e.target.value = ""; // Clear input for same-file re-uploads
+    }
   };
 
   const handleRemoveImage = async () => {
@@ -133,7 +161,6 @@ export default function ContactAdminForm({ initialData }: ContactAdminProps) {
       }
 
       setPreview(null);
-      setUploadKey((prev) => prev + 1);
       form.setValue("heroImage", "", { shouldDirty: true });
       toast({ title: "Removed", description: "Cloud storage cleaned." });
     } catch (error) {
@@ -207,20 +234,6 @@ export default function ContactAdminForm({ initialData }: ContactAdminProps) {
                     Hero Background Image
                   </FormLabel>
 
-                  {/* SDK UPLOADER */}
-                  <IKUpload
-                    key={`contact-up-${uploadKey}`}
-                    ref={ikUploadRef}
-                    className="hidden"
-                    folder="/contact-page"
-                    onUploadStart={() => setIsUploading(true)}
-                    onSuccess={onUploadSuccess}
-                    onError={() => {
-                      setIsUploading(false);
-                      setUploadKey((k) => k + 1);
-                    }}
-                  />
-
                   <div className="flex flex-col items-center justify-center w-full">
                     {isUploading ? (
                       <div className="flex flex-col items-center justify-center w-full h-48 border-2 border-dashed rounded-xl bg-slate-50 border-emerald-300">
@@ -254,18 +267,23 @@ export default function ContactAdminForm({ initialData }: ContactAdminProps) {
                         </button>
                       </div>
                     ) : (
-                      <div
-                        onClick={() => ikUploadRef.current?.click()}
-                        className="flex flex-col items-center justify-center w-full h-48 border-2 border-dashed rounded-xl cursor-pointer bg-slate-50 hover:bg-slate-100 transition-colors border-slate-300"
-                      >
-                        <Upload className="w-8 h-8 text-slate-400 mb-2" />
-                        <p className="text-sm text-slate-500 font-medium">
-                          Click to upload via SDK
-                        </p>
-                        <p className="text-xs text-slate-400 mt-1">
-                          Direct to ImageKit (Max 5MB)
-                        </p>
-                      </div>
+                      <label className="flex flex-col items-center justify-center w-full h-48 border-2 border-dashed rounded-xl cursor-pointer bg-slate-50 hover:bg-slate-100 transition-colors border-slate-300">
+                        <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                          <Upload className="w-8 h-8 text-slate-400 mb-2" />
+                          <p className="text-sm text-slate-500 font-medium">
+                            Click to upload via SDK
+                          </p>
+                          <p className="text-xs text-slate-400 mt-1">
+                            Direct to ImageKit (Max 5MB)
+                          </p>
+                        </div>
+                        <input
+                          type="file"
+                          className="hidden"
+                          accept="image/*"
+                          onChange={handleFileUpload}
+                        />
+                      </label>
                     )}
                   </div>
                 </div>

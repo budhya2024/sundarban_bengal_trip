@@ -4,7 +4,8 @@ import React, { useTransition, useState, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { ImageKitProvider, IKUpload } from "imagekitio-next";
+// Updated import for @imagekit/next v2.x
+import { upload } from "@imagekit/next";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import {
@@ -108,10 +109,8 @@ export default function BlogForm({ initialData }: { initialData?: BlogType }) {
   const { toast } = useToast();
   const [isPending, startTransition] = useTransition();
 
-  // State for ImageKit management
   const [uploadingStatus, setUploadingStatus] = useState(false);
   const [deletingStatus, setDeletingStatus] = useState(false);
-  const [uploadKey, setUploadKey] = useState(0);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const {
@@ -135,13 +134,38 @@ export default function BlogForm({ initialData }: { initialData?: BlogType }) {
 
   const currentImage = watch("image");
 
-  const onUploadSuccess = (res: any) => {
-    const smartUrl = `${res.url}?ikid=${res.fileId}`
-      .replace(/['"]+/g, "")
-      .trim();
-    setValue("image", smartUrl, { shouldValidate: true, shouldDirty: true });
-    setUploadingStatus(false);
-    toast({ title: "Success", description: "Cover image uploaded." });
+  // Manual Upload Handler for @imagekit/next v2.x
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploadingStatus(true);
+
+    try {
+      const auth = await getIKAuthenticationParameters();
+      if (!auth) throw new Error("Authentication failed");
+
+      // Direct browser-to-cloud upload (Bypasses Vercel 4.5MB limit)
+      const res = await upload({
+        file,
+        fileName: file.name,
+        publicKey: process.env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY!,
+        signature: auth.signature,
+        token: auth.token,
+        expire: auth.expire,
+        folder: "/blogs",
+      });
+
+      const smartUrl = `${res.url}?ikid=${res.fileId}`;
+      setValue("image", smartUrl, { shouldValidate: true, shouldDirty: true });
+      toast({ title: "Success", description: "Cover image uploaded." });
+    } catch (error) {
+      console.error("Upload Error:", error);
+      toast({ variant: "destructive", title: "Upload failed" });
+    } finally {
+      setUploadingStatus(false);
+      if (fileInputRef.current) fileInputRef.current.value = "";
+    }
   };
 
   const handleRemoveImage = async () => {
@@ -158,7 +182,6 @@ export default function BlogForm({ initialData }: { initialData?: BlogType }) {
       }
 
       setValue("image", "");
-      setUploadKey((prev) => prev + 1);
       toast({ title: "Removed", description: "Cloud storage cleaned." });
     } catch (error) {
       setValue("image", "");
@@ -221,7 +244,6 @@ export default function BlogForm({ initialData }: { initialData?: BlogType }) {
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 items-start">
         <div className="lg:col-span-3 space-y-4">
-          {/* Title / Author / Status Card */}
           <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200 grid grid-cols-1 md:grid-cols-12 gap-4">
             <div className="md:col-span-7">
               <label className="text-xs font-bold text-gray-500 uppercase tracking-wider block mb-1">
@@ -272,7 +294,6 @@ export default function BlogForm({ initialData }: { initialData?: BlogType }) {
             </div>
           </div>
 
-          {/* Tiptap Editor */}
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 flex flex-col min-h-[500px]">
             <Controller
               name="content"
@@ -302,23 +323,18 @@ export default function BlogForm({ initialData }: { initialData?: BlogType }) {
         </div>
 
         <div className="lg:col-span-1 space-y-4">
-          {/* Sidebar: Image Upload */}
           <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
             <label className="text-xs font-bold text-gray-500 uppercase tracking-wider block mb-2 flex items-center gap-1">
               <ImageIcon size={12} /> Featured Image
             </label>
 
-            <IKUpload
-              key={`blog-up-${uploadKey}`}
+            {/* Manual file input triggers functional upload */}
+            <input
+              type="file"
               ref={fileInputRef}
               className="hidden"
-              folder="/blogs"
-              onUploadStart={() => setUploadingStatus(true)}
-              onSuccess={onUploadSuccess}
-              onError={() => {
-                setUploadingStatus(false);
-                setUploadKey((k) => k + 1);
-              }}
+              accept="image/*"
+              onChange={handleImageUpload}
             />
 
             {!currentImage ? (

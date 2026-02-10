@@ -3,6 +3,8 @@
 import React, { useTransition, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+// Updated import for @imagekit/next v2.x
+import { upload } from "@imagekit/next";
 import {
   Plus,
   Trash2,
@@ -12,7 +14,6 @@ import {
   HelpCircle,
   ChevronDown,
   ChevronUp,
-  Image as ImageIcon,
   Upload,
   X,
   Clock,
@@ -38,6 +39,10 @@ import {
   HomeSettingsValues,
 } from "@/schemas/homeSettings.schema";
 import { updateHomeSettings } from "@/app/actions/home.actions";
+import {
+  getIKAuthenticationParameters,
+  deleteFromImageKit,
+} from "@/app/actions/imagekit.actions";
 import { cn } from "@/lib/utils";
 
 export default function HomeSettingsForm({
@@ -53,6 +58,9 @@ export default function HomeSettingsForm({
     null,
   );
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
+
+  // ImageKit states
+  const [isUploading, setIsUploading] = useState(false);
   const [heroPreview, setHeroPreview] = useState<string | null>(
     initialData?.hero?.image || null,
   );
@@ -84,6 +92,66 @@ export default function HomeSettingsForm({
     name: "faqs",
   });
 
+  // Modern Functional Upload Handler
+  const handleHeroUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setIsUploading(true);
+
+    try {
+      const auth = await getIKAuthenticationParameters();
+      if (!auth) throw new Error("Auth failed");
+
+      // Direct browser-to-cloud upload (Bypasses Vercel 4.5MB limit)
+      const res = await upload({
+        file,
+        fileName: file.name,
+        publicKey: process.env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY!,
+        signature: auth.signature,
+        token: auth.token,
+        expire: auth.expire,
+        folder: "/home",
+      });
+
+      const smartUrl = `${res.url}?ikid=${res.fileId}`;
+      setHeroPreview(smartUrl);
+      form.setValue("hero.image", smartUrl, {
+        shouldValidate: true,
+        shouldDirty: true,
+      });
+      toast({ title: "Success", description: "Hero image synced to cloud." });
+    } catch (error) {
+      console.error("Upload Error:", error);
+      toast({ variant: "destructive", title: "Upload failed" });
+    } finally {
+      setIsUploading(false);
+      e.target.value = "";
+    }
+  };
+
+  const handleRemoveHero = async () => {
+    const currentUrl = form.getValues("hero.image");
+    if (!currentUrl) return;
+
+    try {
+      const urlObj = new URL(currentUrl.replace(/['"]+/g, "").trim());
+      const fileId = urlObj.searchParams.get("ikid");
+
+      if (fileId) {
+        const res = await deleteFromImageKit(fileId);
+        if (!res.success) throw new Error();
+      }
+
+      setHeroPreview(null);
+      form.setValue("hero.image", "", { shouldDirty: true });
+      toast({ title: "Removed", description: "Cloud storage cleaned." });
+    } catch (error) {
+      setHeroPreview(null);
+      form.setValue("hero.image", "");
+    }
+  };
+
   const onSubmit = async (values: HomeSettingsValues) => {
     startTransition(async () => {
       const res = await updateHomeSettings(values);
@@ -101,14 +169,11 @@ export default function HomeSettingsForm({
   };
 
   const onError = (errors: any) => {
-    // Check for testimonial errors
     if (errors.testimonials) {
       const firstErrorIndex = Object.keys(errors.testimonials)[0];
       setExpandedTestimonial(parseInt(firstErrorIndex));
       return;
     }
-
-    // Check for FAQ errors
     if (errors.faqs) {
       const firstErrorIndex = Object.keys(errors.faqs)[0];
       setExpandedFaq(parseInt(firstErrorIndex));
@@ -136,7 +201,7 @@ export default function HomeSettingsForm({
             )}
           </div>
           <Button
-            disabled={isPending}
+            disabled={isPending || isUploading}
             className="bg-emerald-700 hover:bg-emerald-800 shadow-lg px-8 rounded-full"
           >
             {isPending ? (
@@ -149,7 +214,6 @@ export default function HomeSettingsForm({
         </div>
 
         <div className="mx-auto max-w-7xl p-6 grid grid-cols-1 lg:grid-cols-12 gap-8">
-          {/* --- MAIN COLUMN (8) --- */}
           <div className="lg:col-span-8 space-y-8">
             {/* 1. HERO SECTION */}
             <div className="bg-white p-6 rounded-2xl border shadow-sm space-y-6">
@@ -166,12 +230,20 @@ export default function HomeSettingsForm({
                       Hero Background
                     </FormLabel>
                     <div className="relative h-56 w-full rounded-xl overflow-hidden border-2 border-dashed bg-slate-50/50 border-slate-200 flex items-center justify-center transition-all hover:border-emerald-200">
-                      {heroPreview ? (
+                      {isUploading ? (
+                        <div className="text-center animate-pulse">
+                          <Clock className="mx-auto mb-1 text-emerald-600" />
+                          <span className="text-xs font-bold text-emerald-600">
+                            Uploading...
+                          </span>
+                        </div>
+                      ) : heroPreview ? (
                         <>
                           <Image
                             src={heroPreview}
                             alt="Hero"
                             fill
+                            unoptimized
                             className="object-cover"
                           />
                           <Button
@@ -179,10 +251,7 @@ export default function HomeSettingsForm({
                             variant="destructive"
                             size="icon"
                             className="absolute top-2 right-2 h-8 w-8 rounded-full"
-                            onClick={() => {
-                              setHeroPreview(null);
-                              form.setValue("hero.image", "");
-                            }}
+                            onClick={handleRemoveHero}
                           >
                             <X size={14} />
                           </Button>
@@ -197,31 +266,7 @@ export default function HomeSettingsForm({
                             type="file"
                             className="hidden"
                             accept="image/*"
-                            onChange={(e) => {
-                              const file = e.target.files?.[0];
-                              if (file) {
-                                if (file.size > 5 * 1024 * 1024) {
-                                  toast({
-                                    variant: "destructive",
-                                    title: "File too large",
-                                    description:
-                                      "Please upload an image smaller than 5MB.",
-                                  });
-                                  // Clear the input so the same file can't be "re-selected" without fixing
-                                  e.target.value = "";
-                                  return;
-                                }
-                                const reader = new FileReader();
-                                reader.onloadend = () => {
-                                  setHeroPreview(reader.result as string);
-                                  form.setValue(
-                                    "hero.image",
-                                    reader.result as string,
-                                  );
-                                };
-                                reader.readAsDataURL(file);
-                              }
-                            }}
+                            onChange={handleHeroUpload}
                           />
                         </label>
                       )}
@@ -270,7 +315,7 @@ export default function HomeSettingsForm({
               </div>
             </div>
 
-            {/* 2. COMPACT TESTIMONIALS */}
+            {/* Testimonials section remains identical ... */}
             <div className="bg-white rounded-2xl border shadow-sm overflow-hidden">
               <div className="p-6 border-b bg-slate-50/50 flex justify-between items-center">
                 <div className="flex items-center gap-2 font-bold text-blue-700">
@@ -414,7 +459,7 @@ export default function HomeSettingsForm({
             </div>
           </div>
 
-          {/* --- SIDEBAR COLUMN (4) --- */}
+          {/* Sidebar FAQ column remains identical ... */}
           <div className="lg:col-span-4 space-y-8">
             <div className="bg-white rounded-2xl border shadow-sm overflow-hidden">
               <div className="p-5 border-b bg-slate-50/50 flex justify-between items-center">
@@ -437,9 +482,7 @@ export default function HomeSettingsForm({
               </div>
               <div className="divide-y divide-slate-100">
                 {fFields.map((field, index) => {
-                  // Check if this specific FAQ has errors
                   const faqErrors = form.formState.errors.faqs?.[index];
-
                   return (
                     <div
                       key={field.id}
@@ -470,7 +513,6 @@ export default function HomeSettingsForm({
                             </span>
                           )}
                         </div>
-
                         <div className="flex items-center gap-2">
                           {faqErrors && (
                             <AlertCircle size={14} className="text-red-500" />
@@ -494,7 +536,6 @@ export default function HomeSettingsForm({
                           )}
                         </div>
                       </div>
-
                       {expandedFaq === index && (
                         <div className="p-4 bg-slate-50/30 border-t space-y-3 animate-in slide-in-from-top-1">
                           <FormField
@@ -511,7 +552,6 @@ export default function HomeSettingsForm({
                                     {...field}
                                   />
                                 </FormControl>
-                                {/* CRITICAL: ADD THIS LINE */}
                                 <FormMessage className="text-[10px] font-bold text-red-500" />
                               </FormItem>
                             )}
@@ -530,7 +570,6 @@ export default function HomeSettingsForm({
                                     {...field}
                                   />
                                 </FormControl>
-                                {/* CRITICAL: ADD THIS LINE */}
                                 <FormMessage className="text-[10px] font-bold text-red-500" />
                               </FormItem>
                             )}
