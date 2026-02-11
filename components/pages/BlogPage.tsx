@@ -41,7 +41,7 @@ const Blog = ({
       <PageHeader
         title="Travel Blog"
         subtitle="Stories, tips, and insights from our expert guides and fellow travelers to help you make the most of your Sundarban adventure."
-        backgroundImage="/assets/gallery-boat.jpg"
+        backgroundImage="/assets/tiger-photo.jpg"
       />
 
       {/* Blog Posts */}
