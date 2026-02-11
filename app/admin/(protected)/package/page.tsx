@@ -12,6 +12,8 @@ import { getPackages } from "../../../actions/package.actions";
 import { Button } from "@/components/ui/button";
 import { PackageRow } from "@/components/admin/PackageRow";
 
+export const dynamic = "force-dynamic";
+
 export default async function PackageListingPage() {
   const { success, data: packages } = await getPackages();
 
