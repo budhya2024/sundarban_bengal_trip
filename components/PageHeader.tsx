@@ -27,7 +27,7 @@ export const PageHeader = ({
           className="w-full h-full object-cover"
         />
         {/* Green Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-primary/85 via-primary/75 to-primary/90" />
+        <div className="absolute inset-0 bg-primary/80" />
       </div>
 
       {/* Content */}
