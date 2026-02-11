@@ -26,6 +26,7 @@ import { format } from "date-fns";
 import { deletePackage } from "@/app/actions/package.actions";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { createPortal } from "react-dom";
 
 export function PackageRow({ pkg }: { pkg: any }) {
   const [isDeleting, setIsDeleting] = useState(false);
@@ -174,53 +175,55 @@ export function PackageRow({ pkg }: { pkg: any }) {
       </TableRow>
 
       {/* --- DELETE MODAL --- */}
-      {showDeleteModal && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm animate-in fade-in duration-200">
-          <div className="bg-white rounded-xl shadow-2xl w-full max-w-md p-6 border border-gray-100 scale-100 animate-in zoom-in-95 duration-200 text-left">
-            <div className="flex items-start gap-4">
-              <div className="flex-shrink-0 p-3 bg-red-50 rounded-full text-red-600">
-                <AlertTriangle size={24} />
+      {showDeleteModal &&
+        createPortal(
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm animate-in fade-in duration-200">
+            <div className="bg-white rounded-xl shadow-2xl w-full max-w-md p-6 border border-gray-100 scale-100 animate-in zoom-in-95 duration-200 text-left">
+              <div className="flex items-start gap-4">
+                <div className="flex-shrink-0 p-3 bg-red-50 rounded-full text-red-600">
+                  <AlertTriangle size={24} />
+                </div>
+
+                <div className="flex-1">
+                  <h3 className="text-xl font-sans font-bold text-gray-900">
+                    Delete Package?
+                  </h3>
+                  <p className="text-gray-500 mt-2 text-sm leading-relaxed">
+                    Are you sure you want to delete{" "}
+                    <span className="font-semibold text-gray-700">
+                      "{pkg.heroTitle}"
+                    </span>
+                    ? This action is permanent and cannot be undone.
+                  </p>
+                </div>
               </div>
 
-              <div className="flex-1">
-                <h3 className="text-xl font-sans font-bold text-gray-900">
-                  Delete Package?
-                </h3>
-                <p className="text-gray-500 mt-2 text-sm leading-relaxed">
-                  Are you sure you want to delete{" "}
-                  <span className="font-semibold text-gray-700">
-                    "{pkg.heroTitle}"
-                  </span>
-                  ? This action is permanent and cannot be undone.
-                </p>
+              <div className="flex items-center justify-end gap-3 mt-8">
+                <button
+                  onClick={() => setShowDeleteModal(false)}
+                  disabled={isDeleting}
+                  className="px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 text-sm font-medium transition-colors disabled:opacity-50"
+                >
+                  Cancel
+                </button>
+
+                <button
+                  onClick={handleDeleteConfirm}
+                  disabled={isDeleting}
+                  className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 text-sm font-medium transition-colors flex items-center gap-2 shadow-sm disabled:opacity-70"
+                >
+                  {isDeleting ? (
+                    <Loader2 className="animate-spin" size={16} />
+                  ) : (
+                    <Trash2 size={16} />
+                  )}
+                  {isDeleting ? "Deleting..." : "Delete Package"}
+                </button>
               </div>
             </div>
-
-            <div className="flex items-center justify-end gap-3 mt-8">
-              <button
-                onClick={() => setShowDeleteModal(false)}
-                disabled={isDeleting}
-                className="px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 text-sm font-medium transition-colors disabled:opacity-50"
-              >
-                Cancel
-              </button>
-
-              <button
-                onClick={handleDeleteConfirm}
-                disabled={isDeleting}
-                className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 text-sm font-medium transition-colors flex items-center gap-2 shadow-sm disabled:opacity-70"
-              >
-                {isDeleting ? (
-                  <Loader2 className="animate-spin" size={16} />
-                ) : (
-                  <Trash2 size={16} />
-                )}
-                {isDeleting ? "Deleting..." : "Delete Package"}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+          </div>,
+          document.body,
+        )}
     </>
   );
 }

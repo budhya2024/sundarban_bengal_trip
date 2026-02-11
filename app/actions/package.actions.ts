@@ -5,7 +5,6 @@ import { travelPackages } from "@/db/schema";
 import { revalidatePath } from "next/cache";
 import { PackageValues } from "@/schemas/package.schema";
 import { and, desc, eq, ne, or, sql } from "drizzle-orm";
-import { uploadImageFromBase64 } from "@/app/actions/imagekit.actions";
 
 export async function getPackageKeys() {
   try {
