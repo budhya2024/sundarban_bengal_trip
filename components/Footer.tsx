@@ -144,16 +144,16 @@ export const Footer = () => {
                   href="tel:+919876543210"
                   className="text-primary-foreground/80 hover:text-secondary transition-colors"
                 >
-                  +91 98765 43210
+                  +917074432628
                 </a>
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="w-5 h-5 text-secondary flex-shrink-0" />
                 <a
-                  href="mailto:info@sundarbantours.com"
+                  href="mailto:sundarbanbengaltrip@gmail.com"
                   className="text-primary-foreground/80 hover:text-secondary transition-colors"
                 >
-                  info@sundarbantours.com
+                  sundarbanbengaltrip@gmail.com
                 </a>
               </li>
             </ul>

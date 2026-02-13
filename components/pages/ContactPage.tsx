@@ -21,9 +21,9 @@ const DEFAULT_CONTACT_DATA = {
   heroSubtitle:
     "Have questions about our tours? We're here to help you plan the perfect Sundarban adventure.",
   heroImage: "/assets/hero-sundarban.jpg",
-  phones: [{ value: "+91 98765 43210" }, { value: "+91 87654 32109" }],
+  phones: [{ value: "+917074432628" }, { value: "+91 87654 32109" }],
   emails: [
-    { value: "info@sundarbantours.com" },
+    { value: "sundarbanbengaltrip@gmail.com" },
     { value: "bookings@sundarbantours.com" },
   ],
   address: "123 Forest Road, Canning, South 24 Parganas, WB - 743329",

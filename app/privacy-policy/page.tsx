@@ -102,7 +102,7 @@ const PrivacyPolicy = () => {
             <p>
               Email: privacy@sundarbantours.com
               <br />
-              Phone: +91 98765 43210
+              Phone: +917074432628
               <br />
               Address: 123 Forest Road, Canning, South 24 Parganas, West Bengal
             </p>
