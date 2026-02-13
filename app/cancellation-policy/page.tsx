@@ -126,9 +126,9 @@ const CancellationPolicy = () => {
             <p>
               Email: bookings@sundarbantours.com
               <br />
-              Phone: +91 98765 43210
+              Phone: +917074432628
               <br />
-              WhatsApp: +91 98765 43210
+              WhatsApp: +917074432628
             </p>
             <p>
               Please include your booking reference number and the name under
