@@ -5,33 +5,34 @@ import {
   TwitterIcon,
   WhatsAppIcon,
 } from "@/components/icons/SocialIcons";
+import { PhoneIcon } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 const socialLinks = [
   {
     Icon: FacebookIcon,
-    href: "https://facebook.com",
+    href: "https://www.facebook.com/profile.php?id=61588168291064",
     label: "Facebook",
-    bgColor: "bg-[hsl(221,44%,41%)]", // Facebook blue
+    bgColor: "bg-[hsl(221,44%,41%)]", 
   },
   {
     Icon: InstagramIcon,
-    href: "https://instagram.com",
+    href: "https://www.instagram.com/sundarbanbengaltrip/",
     label: "Instagram",
     bgColor:
       "bg-gradient-to-br from-[hsl(280,100%,44%)] via-[hsl(350,100%,55%)] to-[hsl(28,95%,59%)]", // Instagram gradient
   },
-  {
-    Icon: TwitterIcon,
-    href: "https://twitter.com",
-    label: "Twitter",
-    bgColor: "bg-[hsl(0,0%,0%)]", // X/Twitter black
-  },
+{
+  Icon: PhoneIcon, 
+  href: "tel:+919876543210", 
+  label: "Call",
+  bgColor: "bg-green-600",
+},
   {
     Icon: WhatsAppIcon,
     href: "https://wa.me/919876543210",
     label: "WhatsApp",
-    bgColor: "bg-[hsl(142,70%,49%)]", // WhatsApp green
+    bgColor: "bg-[hsl(142,70%,49%)]", 
   },
 ];
 
@@ -40,7 +41,7 @@ export const SocialSidebar = () => {
 
   if (pathname?.includes("admin")) return null;
   return (
-    <div className="fixed right-2 top-1/2 -translate-y-1/2 z-40 hidden lg:flex flex-col gap-2">
+    <div className="fixed right-1 md:right-2 top-1/2 -translate-y-1/2 z-40 scale-75 md:scale-100 flex flex-col gap-2">
       {socialLinks.map((social) => (
         <a
           key={social.label}

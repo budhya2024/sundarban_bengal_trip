@@ -37,6 +37,7 @@ import {
 import { useSidebarContext } from "@/context/SidebarContext";
 import { useToast } from "@/hooks/use-toast";
 import { logoutAction } from "@/app/actions/auth.actions";
+import Image from "next/image";
 
 const navigation = [
   {
@@ -120,9 +121,13 @@ const NavContent = memo(({ mobile = false }: { mobile?: boolean }) => {
         >
           {(!isCollapsed || mobile) && (
             <div className="animate-in fade-in duration-300">
-              <h1 className="font-display text-2xl font-bold text-secondary">
-                Sundarban
-              </h1>
+              <Image
+                src="/assets/logo.png"
+                height={100}
+                width={200}
+                alt="sundarban logo"
+                className="w-auto h-12"
+              />
               <p className="text-primary-foreground/70 text-xs mt-1">
                 CMS Panel
               </p>
