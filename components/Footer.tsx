@@ -1,8 +1,9 @@
-import { TreePine, Phone, Mail, MapPin } from "lucide-react";
+import { TreePine, Phone, Mail, MapPin, PhoneIcon } from "lucide-react";
 import {
   FacebookIcon,
   InstagramIcon,
   TwitterIcon,
+  WhatsAppIcon,
   YoutubeIcon,
 } from "@/components/icons/SocialIcons";
 import { GoogleIcon } from "@/components/icons/GoogleIcon";
@@ -43,29 +44,43 @@ export const Footer = () => {
             </a>
 
             <div className="flex gap-4">
+              {/* Facebook */}
               <a
-                href="#"
-                className="p-2 rounded-full bg-primary-foreground/10 hover:bg-secondary transition-colors"
+                href="https://www.facebook.com/profile.php?id=61588168291064"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2 rounded-full bg-primary-foreground/10 hover:bg-blue-600 transition-colors"
               >
                 <FacebookIcon className="w-5 h-5 fill-current" />
               </a>
+
+              {/* Instagram */}
               <a
-                href="#"
-                className="p-2 rounded-full bg-primary-foreground/10 hover:bg-secondary transition-colors"
+                href="https://www.instagram.com/sundarbanbengaltrip/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2 rounded-full bg-primary-foreground/10 hover:bg-pink-600 transition-colors"
               >
                 <InstagramIcon className="w-5 h-5 fill-current" />
               </a>
+
+              {/* Call Button */}
               <a
-                href="#"
-                className="p-2 rounded-full bg-primary-foreground/10 hover:bg-secondary transition-colors"
+                href="tel:+917074432628"
+                className="p-2 rounded-full bg-primary-foreground/10 hover:bg-green-600 transition-colors"
               >
-                <TwitterIcon className="w-5 h-5 fill-current" />
+                <PhoneIcon className="w-5 h-5 fill-current" />
               </a>
+              
+
+              {/* WhatsApp */}
               <a
-                href="#"
-                className="p-2 rounded-full bg-primary-foreground/10 hover:bg-secondary transition-colors"
+                href="https://wa.me/917074432628"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2 rounded-full bg-primary-foreground/10 hover:bg-green-500 transition-colors"
               >
-                <YoutubeIcon className="w-5 h-5 fill-current" />
+                <WhatsAppIcon className="w-5 h-5 fill-current" />
               </a>
             </div>
           </div>
@@ -141,7 +156,7 @@ export const Footer = () => {
               <li className="flex items-center gap-3">
                 <Phone className="w-5 h-5 text-secondary flex-shrink-0" />
                 <a
-                  href="tel:+919876543210"
+                  href="tel:+917074432628"
                   className="text-primary-foreground/80 hover:text-secondary transition-colors"
                 >
                   +917074432628
