@@ -11,10 +11,12 @@ import Link from "next/link";
 import { getPackages } from "../../../actions/package.actions";
 import { Button } from "@/components/ui/button";
 import { PackageRow } from "@/components/admin/PackageRow";
+import { cookies } from "next/headers";
 
 export const dynamic = "force-dynamic";
 
 export default async function PackageListingPage() {
+  await cookies();
   const { success, data: packages } = await getPackages();
 
   if (!success) return <div className="p-10">Failed to load packages.</div>;
