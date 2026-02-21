@@ -183,7 +183,7 @@ export const TourPackagesSection = () => {
                       </p>
                     </div>
                     <Button variant={pkg.isPopular ? "hero" : "nature"} asChild>
-                      <Link href={`/packages/${pkg.key}`}>Book Now</Link>
+                      <Link href={`/packages/${pkg.key}`}>View Package</Link>
                     </Button>
                   </div>
                 </div>

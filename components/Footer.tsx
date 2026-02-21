@@ -45,24 +45,24 @@ export const Footer = () => {
 
             <div className="flex gap-4">
               {/* Facebook */}
-              <a
+              {/* <a
                 href="https://www.facebook.com/profile.php?id=61588168291064"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-2 rounded-full bg-primary-foreground/10 hover:bg-blue-600 transition-colors"
               >
                 <FacebookIcon className="w-5 h-5 fill-current" />
-              </a>
+              </a> */}
 
               {/* Instagram */}
-              <a
+              {/* <a
                 href="https://www.instagram.com/sundarbanbengaltrip/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-2 rounded-full bg-primary-foreground/10 hover:bg-pink-600 transition-colors"
               >
                 <InstagramIcon className="w-5 h-5 fill-current" />
-              </a>
+              </a> */}
 
               {/* Call Button */}
               <a
@@ -71,7 +71,6 @@ export const Footer = () => {
               >
                 <PhoneIcon className="w-5 h-5 fill-current" />
               </a>
-              
 
               {/* WhatsApp */}
               <a
@@ -122,11 +121,10 @@ export const Footer = () => {
             </h4>
             <ul className="space-y-3">
               {[
-                "Day Trip Package",
-                "Weekend Getaway",
-                "Premium Safari",
-                "Photography Tour",
-                "Adventure Expedition",
+                "1 Day sundarban Tour",
+                "Sundarban 1 Night 2 Days Tour",
+                "Sundarban 2 Night 3 Days Tour",
+                "Customised Tour Package",
               ].map((item) => (
                 <li key={item}>
                   <Link

@@ -131,12 +131,12 @@ const PackageDetailsPage = ({
                 </div>
               </div>
 
-              {/* Highlights */}
-              <div data-aos="fade-up">
+              {/* Menu Details*/}
+              <div data-aos="fade-up ">
                 <h2 className="font-display text-2xl font-bold text-foreground mb-4">
-                  Highlights
+          Menu Details
                 </h2>
-                <div className="grid md:grid-cols-2 gap-3">
+                <div className="grid md:grid-cols-2 gap-3 border-l-4 border-primary pl-6">
                   {data.highlights.map((highlight, index) => (
                     <div key={index} className="flex items-center gap-3">
                       <Check className="w-5 h-5 text-secondary flex-shrink-0" />

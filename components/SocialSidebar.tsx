@@ -9,30 +9,30 @@ import { PhoneIcon } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 const socialLinks = [
+  // {
+  //   Icon: FacebookIcon,
+  //   href: "https://www.facebook.com/profile.php?id=61588168291064",
+  //   label: "Facebook",
+  //   bgColor: "bg-[hsl(221,44%,41%)]",
+  // },
+  // {
+  //   Icon: InstagramIcon,
+  //   href: "https://www.instagram.com/sundarbanbengaltrip/",
+  //   label: "Instagram",
+  //   bgColor:
+  //     "bg-gradient-to-br from-[hsl(280,100%,44%)] via-[hsl(350,100%,55%)] to-[hsl(28,95%,59%)]", // Instagram gradient
+  // },
   {
-    Icon: FacebookIcon,
-    href: "https://www.facebook.com/profile.php?id=61588168291064",
-    label: "Facebook",
-    bgColor: "bg-[hsl(221,44%,41%)]", 
+    Icon: PhoneIcon,
+    href: "tel:+919876543210",
+    label: "Call",
+    bgColor: "bg-green-600",
   },
-  {
-    Icon: InstagramIcon,
-    href: "https://www.instagram.com/sundarbanbengaltrip/",
-    label: "Instagram",
-    bgColor:
-      "bg-gradient-to-br from-[hsl(280,100%,44%)] via-[hsl(350,100%,55%)] to-[hsl(28,95%,59%)]", // Instagram gradient
-  },
-{
-  Icon: PhoneIcon, 
-  href: "tel:+919876543210", 
-  label: "Call",
-  bgColor: "bg-green-600",
-},
   {
     Icon: WhatsAppIcon,
-    href: "https://wa.me/919876543210",
+    href: "https://wa.me/917074432628",
     label: "WhatsApp",
-    bgColor: "bg-[hsl(142,70%,49%)]", 
+    bgColor: "bg-[hsl(142,70%,49%)]",
   },
 ];
 
