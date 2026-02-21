@@ -6,8 +6,6 @@ import { revalidatePath } from "next/cache";
 import { PackageValues } from "@/schemas/package.schema";
 import { and, desc, eq, ne, or, sql } from "drizzle-orm";
 
-export const revalidate = 0;
-
 export async function getPackageKeys() {
   try {
     const rawData = await db
