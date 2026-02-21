@@ -11,11 +11,12 @@ import { BookingValues } from "@/schemas/booking.schema";
 import { HomeSettingsValues } from "@/schemas/homeSettings.schema";
 import { count, desc, eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
-import { uploadImageFromBase64 } from "./imagekit.actions";
+import { sendBookingInquiry } from "./sendmail.action";
 
 export const createBooking = async (booking: BookingValues) => {
   try {
     await db.insert(bookings).values(booking);
+    sendBookingInquiry(booking);
     return { success: true, message: "Booking created successfully" };
   } catch (error) {
     console.error("Error creating booking:", error);

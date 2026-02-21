@@ -140,7 +140,7 @@ export default function HomeSettingsForm({
 
       if (fileId) {
         const res = await deleteFromImageKit(fileId);
-        if (!res.success) throw new Error();
+        if (!res.success) console.log("Cloud deletion failed");
       }
 
       setHeroPreview(null);

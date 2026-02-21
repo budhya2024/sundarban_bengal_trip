@@ -8,6 +8,7 @@ import { Star, Quote } from "lucide-react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import "swiper/css";
+import { cn } from "@/lib/utils";
 
 export const TestimonialsSection = ({
   data,
@@ -69,47 +70,57 @@ export const TestimonialsSection = ({
               1024: { slidesPerView: 3 },
             }}
           >
-            {data.map((testimonial, index) => (
-              <SwiperSlide key={index} className="!h-auto">
-                <div className="h-full flex flex-col bg-primary-foreground/10 backdrop-blur-md rounded-2xl p-8 border border-primary-foreground/20">
-                  <Quote className="w-10 h-10 text-secondary mb-4" />
-                  <p className="text-primary-foreground/90 mb-6 leading-relaxed">
-                    “{testimonial.review}”
-                  </p>
+            {data.map((testimonial, index) => {
+              return (
+                <SwiperSlide key={index} className="!h-auto">
+                  <div className="h-full flex flex-col bg-primary-foreground/10 backdrop-blur-md rounded-2xl p-8 border border-primary-foreground/20">
+                    <Quote className="w-10 h-10 text-secondary mb-4" />
+                    <p className="text-primary-foreground/90 mb-6 leading-relaxed">
+                      “{testimonial.review}”
+                    </p>
 
-                  <div className="mt-auto flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-full bg-secondary flex items-center justify-center">
-                      <span className="font-semibold text-secondary-foreground">
-                        {testimonial.name
-                          .split(" ")
-                          .map((word) => word[0])
-                          .join("")}
-                      </span>
-                    </div>
+                    <div className="mt-auto flex items-center gap-4">
+                      <div
+                        className={cn(
+                          "w-12 h-12 rounded-full bg-secondary flex items-center justify-center",
+                        )}
+                      >
+                        <span className="font-semibold text-secondary-foreground">
+                          {testimonial.name
+                            ? testimonial.name
+                                .split(" ")
+                                .slice(0, 2)
+                                .map((word) => word[0])
+                                .join("")
+                                .toUpperCase()
+                            : "ST"}
+                        </span>
+                      </div>
 
-                    <div>
-                      <h4 className="font-semibold text-primary-foreground">
-                        {testimonial.name}
-                      </h4>
-                      <p className="text-sm text-primary-foreground/60">
-                        {testimonial.place}
-                      </p>
-                    </div>
+                      <div>
+                        <h4 className="font-semibold text-primary-foreground">
+                          {testimonial.name}
+                        </h4>
+                        <p className="text-sm text-primary-foreground/60">
+                          {testimonial.place}
+                        </p>
+                      </div>
 
-                    <div className="ml-auto flex">
-                      {Array.from({ length: testimonial.rating }).map(
-                        (_, i) => (
-                          <Star
-                            key={i}
-                            className="w-4 h-4 text-secondary fill-current"
-                          />
-                        ),
-                      )}
+                      <div className="ml-auto flex">
+                        {Array.from({ length: testimonial.rating }).map(
+                          (_, i) => (
+                            <Star
+                              key={i}
+                              className="w-4 h-4 text-secondary fill-current"
+                            />
+                          ),
+                        )}
+                      </div>
                     </div>
                   </div>
-                </div>
-              </SwiperSlide>
-            ))}
+                </SwiperSlide>
+              );
+            })}
           </Swiper>
         )}
       </div>

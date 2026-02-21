@@ -150,13 +150,14 @@ export default function ContactAdminForm({ initialData }: ContactAdminProps) {
         setIsDeleting(true);
         const res = await deleteFromImageKit(fileId);
         if (!res.success) {
-          toast({
-            variant: "destructive",
-            title: "Error",
-            description: "Failed to delete from cloud.",
-          });
-          setIsDeleting(false);
-          return;
+          console.log("Cloud deletion failed");
+          //   toast({
+          //     variant: "destructive",
+          //     title: "Error",
+          //     description: "Failed to delete from cloud.",
+          //   });
+          //   setIsDeleting(false);
+          //   return;
         }
       }
 

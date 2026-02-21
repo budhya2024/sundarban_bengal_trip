@@ -11,6 +11,7 @@ import {
   ClipboardList,
   Users,
   Database,
+  Clipboard,
 } from "lucide-react";
 import { SidebarTrigger } from "./SidebarTrigger";
 
@@ -110,7 +111,7 @@ export default function AdminDashboard({ stats }: AdminDashboardProps) {
             label="Pending Inquiries"
             value={stats.totalBookings}
             icon={ClipboardList}
-            color="bg-amber-500"
+            color="bg-orange-500"
           />
           <StatCard
             label="Published Blogs"

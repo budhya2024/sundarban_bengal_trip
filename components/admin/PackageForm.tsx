@@ -277,7 +277,7 @@ export default function PackageForm({
       if (fileId) {
         setDeletingField(fieldName === "heroImage" ? "hero" : "package");
         const res = await deleteFromImageKit(fileId);
-        if (!res.success) throw new Error();
+        if (!res.success) console.log("Cloud deletion failed");
       }
 
       if (fieldName === "heroImage") setHeroPreview(null);
