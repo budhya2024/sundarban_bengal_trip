@@ -9,15 +9,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { getPackageKeys } from "@/app/actions/package.actions";
 
-/* ------------------ DATA ------------------ */
-
-const tourPackages = [
-  { name: "Day Trip Package", path: "/packages/day-trip-package" },
-  { name: "Weekend Getaway", path: "/packages/weekend-getaway" },
-  { name: "Premium Safari", path: "/packages/premium-safari" },
-  { name: "Adventure Expedition", path: "/packages/adventure-expedition" },
-];
-
 const navLinks = [
   { name: "Home", path: "/" },
   { name: "About Us", path: "/about" },
@@ -26,8 +17,6 @@ const navLinks = [
   { name: "Blog", path: "/blog" },
   { name: "Contact", path: "/contact" },
 ];
-
-/* ------------------ COMPONENT ------------------ */
 
 export const Navbar = () => {
   const pathname = usePathname();
@@ -143,6 +132,12 @@ export const Navbar = () => {
                               {pkg.name}
                             </Link>
                           ))}
+                          <Link
+                            href={`/contact`}
+                            className="block px-4 py-3 hover:bg-muted transition"
+                          >
+                            Plan Your Custom Trip
+                          </Link>
                         </div>
                       </motion.div>
                     )}
@@ -214,16 +209,23 @@ export const Navbar = () => {
                           exit={{ height: 0, opacity: 0 }}
                           className="overflow-hidden mt-4 ml-4 space-y-3"
                         >
-                          {tourPackages.map((pkg) => (
+                          {packageList.map((pkg) => (
                             <Link
-                              key={pkg.path}
-                              href={pkg.path}
+                              key={pkg.key}
+                              href={`/packages/${pkg.key}`}
                               onClick={() => setIsOpen(false)}
                               className="block text-base text-muted-foreground"
                             >
                               {pkg.name}
                             </Link>
                           ))}
+                          <Link
+                            href={`/contact`}
+                            onClick={() => setIsOpen(false)}
+                            className="block text-base text-muted-foreground"
+                          >
+                            Plan Your Custom Trip
+                          </Link>
                         </motion.div>
                       )}
                     </AnimatePresence>

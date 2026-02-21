@@ -275,7 +275,7 @@ export default function GalleryManager({
 
       if (fileId) {
         const cloudRes = await deleteFromImageKit(fileId);
-        if (!cloudRes.success) throw new Error("Cloud deletion failed");
+        if (!cloudRes.success) console.log("Cloud deletion failed");
       }
 
       const { success } = await deleteGalleryItem(deleteTarget.id);

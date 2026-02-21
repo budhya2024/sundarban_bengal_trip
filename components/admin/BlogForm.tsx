@@ -178,7 +178,7 @@ export default function BlogForm({ initialData }: { initialData?: BlogType }) {
       if (fileId) {
         setDeletingStatus(true);
         const res = await deleteFromImageKit(fileId);
-        if (!res.success) throw new Error();
+        if (!res.success) console.log("Cloud deletion failed");
       }
 
       setValue("image", "");

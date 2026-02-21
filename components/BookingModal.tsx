@@ -39,8 +39,8 @@ export const BookingModal = ({ packageName }: { packageName: string }) => {
       phone: "",
       date: "",
       guests: "1",
-      package: packageName, // Pre-filled package name
-      status: "pending", // Default status
+      package: packageName,
+      status: "pending",
     },
   });
 
@@ -96,7 +96,7 @@ export const BookingModal = ({ packageName }: { packageName: string }) => {
                     Full Name
                   </FormLabel>
                   <FormControl>
-                    <Input placeholder="Sibu..." {...field} />
+                    <Input placeholder="John Doe" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -114,7 +114,7 @@ export const BookingModal = ({ packageName }: { packageName: string }) => {
                       Email
                     </FormLabel>
                     <FormControl>
-                      <Input placeholder="sibu@example.com" {...field} />
+                      <Input placeholder="jhon.doe@example.com" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -130,7 +130,7 @@ export const BookingModal = ({ packageName }: { packageName: string }) => {
                       Phone
                     </FormLabel>
                     <FormControl>
-                      <Input placeholder="+91..." {...field} />
+                      <Input placeholder="9876543210" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
