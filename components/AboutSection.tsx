@@ -44,7 +44,7 @@ export const AboutSection = () => {
           >
             <div className="relative rounded-2xl overflow-hidden shadow-elevated">
               <img
-                src="/assets/bdb854c5503dc026fef98347e8dd89d1.gif"
+                src="/assets/house-boat.jpeg"
                 alt="Royal Bengal Tiger"
                 className="w-full h-auto object-contain "
               />
@@ -83,11 +83,11 @@ export const AboutSection = () => {
               Your Gateway to the Mystical Sundarbans
             </h2>
             <p className="text-muted-foreground leading-relaxed mb-6">
-              For over 15 years, Sundarban Bengal Trip has been the leading travel
-              agency specializing in expeditions to the magnificent Sundarbans.
-              Our passion for nature and commitment to sustainable tourism has
-              made us the preferred choice for wildlife enthusiasts and
-              adventure seekers.
+              For over 15 years, Sundarban Bengal Trip has been the leading
+              travel agency specializing in expeditions to the magnificent
+              Sundarbans. Our passion for nature and commitment to sustainable
+              tourism has made us the preferred choice for wildlife enthusiasts
+              and adventure seekers.
             </p>
             <p className="text-muted-foreground leading-relaxed mb-8">
               From thrilling tiger spotting safaris to peaceful bird watching

@@ -18,6 +18,7 @@ import { CTASection } from "@/components/CTASection";
 import { Footer } from "@/components/Footer";
 import { HomeSettingsValues } from "@/schemas/homeSettings.schema";
 import { getHomeSettings } from "@/app/actions/home.actions";
+import HotelSwiper from "@/components/HotelSwiper";
 
 const Index = () => {
   const [homeSetting, setHomeSetting] = useState<HomeSettingsValues | null>(
@@ -50,6 +51,7 @@ const Index = () => {
       <Navbar />
       <HeroSection />
       <BookingForm />
+      <HotelSwiper/>
       <AboutSection />
       <ExploreSundarbanSection />
       <TourPackagesSection />
