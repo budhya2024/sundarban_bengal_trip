@@ -214,10 +214,10 @@ export const Navbar = () => {
                           exit={{ height: 0, opacity: 0 }}
                           className="overflow-hidden mt-4 ml-4 space-y-3"
                         >
-                          {tourPackages.map((pkg) => (
+                          {packageList.map((pkg) => (
                             <Link
-                              key={pkg.path}
-                              href={pkg.path}
+                              key={pkg.key}
+                              href={`/packages/${pkg.key}`}
                               onClick={() => setIsOpen(false)}
                               className="block text-base text-muted-foreground"
                             >
