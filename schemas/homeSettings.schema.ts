@@ -12,7 +12,12 @@ export const HomeSettingsSchema = z.object({
       name: z.string().min(2, "Name is required"),
       place: z.string().min(2, "Location is required"),
       rating: z.coerce.number().min(1).max(5),
-      image: z.string().url("Enter a valid image URL").optional().nullable(),
+      image: z
+        .string()
+        .url("Enter a valid image URL")
+        .or(z.literal(""))
+        .optional()
+        .nullable(),
     }),
   ),
   faqs: z.array(

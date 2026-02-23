@@ -4,7 +4,7 @@ import { db } from "@/db";
 import { travelPackages } from "@/db/schema";
 import { revalidatePath } from "next/cache";
 import { PackageValues } from "@/schemas/package.schema";
-import { and, desc, eq, ne, or, sql } from "drizzle-orm";
+import { and, asc, desc, eq, ne, or, sql } from "drizzle-orm";
 
 export async function getPackageKeys() {
   try {
@@ -13,7 +13,32 @@ export async function getPackageKeys() {
         key: travelPackages.key,
         name: sql<string>`${travelPackages.data}->>'packageName'`,
       })
-      .from(travelPackages);
+      .from(travelPackages)
+      .orderBy(asc(travelPackages.updatedAt));
+    // .where(eq(travelPackages.isPopular, true));
+    return {
+      success: true,
+      data: rawData,
+    };
+  } catch (error) {
+    console.error("GET_PACKAGE_KEYS_ERROR:", error);
+    return {
+      success: false,
+      data: [],
+      error: "Failed to fetch package keys",
+    };
+  }
+}
+
+export async function getNavbarPackageKeys() {
+  try {
+    const rawData = await db
+      .select({
+        key: travelPackages.key,
+        name: sql<string>`${travelPackages.data}->>'packageName'`,
+      })
+      .from(travelPackages)
+      .orderBy();
     // .where(eq(travelPackages.isPopular, true));
     return {
       success: true,

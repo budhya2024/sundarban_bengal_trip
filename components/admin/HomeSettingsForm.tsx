@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useTransition, useState } from "react";
+import React, { useTransition, useState, useEffect } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { upload } from "@imagekit/next";
@@ -190,7 +190,13 @@ export default function HomeSettingsForm({
     }
   };
 
+  useEffect(() => {
+    console.log(form.formState.errors);
+  }, [form.formState.errors]);
+
   const onSubmit = async (values: HomeSettingsValues) => {
+    console.log(form.formState.errors);
+    console.log("ok");
     startTransition(async () => {
       const res = await updateHomeSettings(values);
       if (res.success) {
