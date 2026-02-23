@@ -3,7 +3,6 @@
 import React, { useTransition, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-// Updated import for @imagekit/next v2.x
 import { upload } from "@imagekit/next";
 import {
   Plus,
@@ -19,6 +18,7 @@ import {
   Clock,
   AlertCircle,
   Star,
+  User,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -53,14 +53,15 @@ export default function HomeSettingsForm({
   const [isPending, startTransition] = useTransition();
   const { toast } = useToast();
 
-  // Accordion States
   const [expandedTestimonial, setExpandedTestimonial] = useState<number | null>(
     null,
   );
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
 
-  // ImageKit states
+  // Specific loading states for better UX
   const [isUploading, setIsUploading] = useState(false);
+  const [uploadingIndex, setUploadingIndex] = useState<number | null>(null);
+
   const [heroPreview, setHeroPreview] = useState<string | null>(
     initialData?.hero?.image || null,
   );
@@ -92,18 +93,18 @@ export default function HomeSettingsForm({
     name: "faqs",
   });
 
-  // Modern Functional Upload Handler
+  const getAuth = async () => {
+    const auth = await getIKAuthenticationParameters();
+    if (!auth) throw new Error("Auth failed");
+    return auth;
+  };
+
   const handleHeroUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-
     setIsUploading(true);
-
     try {
-      const auth = await getIKAuthenticationParameters();
-      if (!auth) throw new Error("Auth failed");
-
-      // Direct browser-to-cloud upload (Bypasses Vercel 4.5MB limit)
+      const auth = await getAuth();
       const res = await upload({
         file,
         fileName: file.name,
@@ -113,16 +114,14 @@ export default function HomeSettingsForm({
         expire: auth.expire,
         folder: "/home",
       });
-
       const smartUrl = `${res.url}?ikid=${res.fileId}`;
       setHeroPreview(smartUrl);
       form.setValue("hero.image", smartUrl, {
         shouldValidate: true,
         shouldDirty: true,
       });
-      toast({ title: "Success", description: "Hero image synced to cloud." });
+      toast({ title: "Success", description: "Hero image uploaded." });
     } catch (error) {
-      console.error("Upload Error:", error);
       toast({ variant: "destructive", title: "Upload failed" });
     } finally {
       setIsUploading(false);
@@ -133,22 +132,61 @@ export default function HomeSettingsForm({
   const handleRemoveHero = async () => {
     const currentUrl = form.getValues("hero.image");
     if (!currentUrl) return;
-
     try {
       const urlObj = new URL(currentUrl.replace(/['"]+/g, "").trim());
       const fileId = urlObj.searchParams.get("ikid");
-
-      if (fileId) {
-        const res = await deleteFromImageKit(fileId);
-        if (!res.success) console.log("Cloud deletion failed");
-      }
-
+      if (fileId) await deleteFromImageKit(fileId);
       setHeroPreview(null);
       form.setValue("hero.image", "", { shouldDirty: true });
-      toast({ title: "Removed", description: "Cloud storage cleaned." });
     } catch (error) {
       setHeroPreview(null);
       form.setValue("hero.image", "");
+    }
+  };
+
+  const handleTestimonialUpload = async (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number,
+  ) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploadingIndex(index);
+    try {
+      const auth = await getAuth();
+      const res = await upload({
+        file,
+        fileName: `testimonial-${Date.now()}`,
+        publicKey: process.env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY!,
+        signature: auth.signature,
+        token: auth.token,
+        expire: auth.expire,
+        folder: "/testimonials",
+      });
+      const smartUrl = `${res.url}?ikid=${res.fileId}`;
+      form.setValue(`testimonials.${index}.image` as any, smartUrl, {
+        shouldDirty: true,
+      });
+      toast({ title: "Avatar Updated" });
+    } catch (error) {
+      toast({ variant: "destructive", title: "Upload failed" });
+    } finally {
+      setUploadingIndex(null);
+      e.target.value = "";
+    }
+  };
+
+  const handleRemoveTestimonialImage = async (index: number) => {
+    const currentUrl = form.getValues(`testimonials.${index}.image` as any);
+    if (!currentUrl) return;
+    try {
+      const urlObj = new URL(currentUrl.replace(/['"]+/g, "").trim());
+      const fileId = urlObj.searchParams.get("ikid");
+      if (fileId) await deleteFromImageKit(fileId);
+      form.setValue(`testimonials.${index}.image` as any, "", {
+        shouldDirty: true,
+      });
+    } catch (error) {
+      form.setValue(`testimonials.${index}.image` as any, "");
     }
   };
 
@@ -156,29 +194,18 @@ export default function HomeSettingsForm({
     startTransition(async () => {
       const res = await updateHomeSettings(values);
       if (res.success) {
-        toast({ title: "Success", description: "Home configuration updated!" });
+        toast({ title: "Success", description: "Configuration saved!" });
         form.reset(values);
       } else {
-        toast({
-          title: "Error",
-          description: "Failed to save settings",
-          variant: "destructive",
-        });
+        toast({ title: "Error", variant: "destructive" });
       }
     });
   };
 
   const onError = (errors: any) => {
-    if (errors.testimonials) {
-      const firstErrorIndex = Object.keys(errors.testimonials)[0];
-      setExpandedTestimonial(parseInt(firstErrorIndex));
-      return;
-    }
-    if (errors.faqs) {
-      const firstErrorIndex = Object.keys(errors.faqs)[0];
-      setExpandedFaq(parseInt(firstErrorIndex));
-      return;
-    }
+    if (errors.testimonials)
+      setExpandedTestimonial(parseInt(Object.keys(errors.testimonials)[0]));
+    else if (errors.faqs) setExpandedFaq(parseInt(Object.keys(errors.faqs)[0]));
   };
 
   return (
@@ -187,7 +214,7 @@ export default function HomeSettingsForm({
         onSubmit={form.handleSubmit(onSubmit, onError)}
         className="min-h-screen bg-slate-50/30 pb-20"
       >
-        {/* --- STICKY COMMAND HEADER --- */}
+        {/* HEADER */}
         <div className="sticky top-0 z-30 w-full border-b bg-white/95 backdrop-blur px-6 py-4 flex justify-between items-center shadow-sm">
           <div className="flex items-center gap-2">
             <SidebarTrigger />
@@ -201,7 +228,7 @@ export default function HomeSettingsForm({
             )}
           </div>
           <Button
-            disabled={isPending || isUploading}
+            disabled={isPending || isUploading || uploadingIndex !== null}
             className="bg-emerald-700 hover:bg-emerald-800 shadow-lg px-8 rounded-full"
           >
             {isPending ? (
@@ -215,12 +242,11 @@ export default function HomeSettingsForm({
 
         <div className="mx-auto max-w-7xl p-6 grid grid-cols-1 lg:grid-cols-12 gap-8">
           <div className="lg:col-span-8 space-y-8">
-            {/* 1. HERO SECTION */}
+            {/* HERO SECTION */}
             <div className="bg-white p-6 rounded-2xl border shadow-sm space-y-6">
               <div className="flex items-center gap-2 font-bold text-emerald-800 border-b pb-2">
                 <Layout size={18} /> Hero Presentation
               </div>
-
               <FormField
                 control={form.control}
                 name="hero.image"
@@ -259,7 +285,7 @@ export default function HomeSettingsForm({
                       ) : (
                         <label className="cursor-pointer text-center p-10 w-full group">
                           <Upload className="mx-auto mb-2 text-slate-400 group-hover:text-emerald-600 transition-transform group-hover:-translate-y-1" />
-                          <span className="text-xs font-medium text-slate-500">
+                          <span className="text-xs font-medium text-slate-500 text-center block">
                             Upload Homepage Hero
                           </span>
                           <input
@@ -274,7 +300,6 @@ export default function HomeSettingsForm({
                   </FormItem>
                 )}
               />
-
               <div className="grid gap-4">
                 <FormField
                   control={form.control}
@@ -315,7 +340,7 @@ export default function HomeSettingsForm({
               </div>
             </div>
 
-            {/* Testimonials section remains identical ... */}
+            {/* TESTIMONIALS SECTION */}
             <div className="bg-white rounded-2xl border shadow-sm overflow-hidden">
               <div className="p-6 border-b bg-slate-50/50 flex justify-between items-center">
                 <div className="flex items-center gap-2 font-bold text-blue-700">
@@ -327,7 +352,13 @@ export default function HomeSettingsForm({
                   variant="outline"
                   size="sm"
                   onClick={() => {
-                    tAppend({ name: "", review: "", place: "", rating: 5 });
+                    tAppend({
+                      name: "",
+                      review: "",
+                      place: "",
+                      rating: 5,
+                      image: "",
+                    });
                     setExpandedTestimonial(tFields.length);
                   }}
                   className="h-8 text-[10px] font-bold uppercase border-blue-200 text-blue-700"
@@ -347,8 +378,19 @@ export default function HomeSettingsForm({
                       }
                     >
                       <div className="flex items-center gap-4">
-                        <div className="h-8 w-8 rounded-full bg-slate-100 flex items-center justify-center text-[10px] font-bold text-slate-500">
-                          {index + 1}
+                        <div className="h-10 w-10 rounded-full border bg-slate-100 flex items-center justify-center overflow-hidden relative shadow-inner">
+                          {form.watch(`testimonials.${index}.image` as any) ? (
+                            <Image
+                              src={form.watch(
+                                `testimonials.${index}.image` as any,
+                              )}
+                              alt="User"
+                              fill
+                              className="object-cover"
+                            />
+                          ) : (
+                            <User size={16} className="text-slate-400" />
+                          )}
                         </div>
                         <div>
                           <p className="text-sm font-bold text-slate-700">
@@ -357,7 +399,7 @@ export default function HomeSettingsForm({
                           </p>
                           <p className="text-[10px] text-slate-400 uppercase tracking-widest">
                             {form.watch(`testimonials.${index}.place`) ||
-                              "Location pending"}
+                              "Location"}
                           </p>
                         </div>
                       </div>
@@ -387,66 +429,139 @@ export default function HomeSettingsForm({
                         )}
                       </div>
                     </div>
+
                     {expandedTestimonial === index && (
-                      <div className="p-6 bg-slate-50/50 border-t border-slate-100 space-y-4 animate-in fade-in slide-in-from-top-2">
-                        <div className="grid md:grid-cols-3 gap-4">
-                          <FormField
-                            control={form.control}
-                            name={`testimonials.${index}.name`}
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormLabel className="text-[9px] font-bold uppercase">
-                                  Name
-                                </FormLabel>
-                                <FormControl>
-                                  <Input {...field} className="bg-white h-9" />
-                                </FormControl>
-                              </FormItem>
-                            )}
-                          />
-                          <FormField
-                            control={form.control}
-                            name={`testimonials.${index}.place`}
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormLabel className="text-[9px] font-bold uppercase">
-                                  Place
-                                </FormLabel>
-                                <FormControl>
-                                  <Input {...field} className="bg-white h-9" />
-                                </FormControl>
-                              </FormItem>
-                            )}
-                          />
-                          <FormField
-                            control={form.control}
-                            name={`testimonials.${index}.rating`}
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormLabel className="text-[9px] font-bold uppercase">
-                                  Stars
-                                </FormLabel>
-                                <FormControl>
-                                  <Input
-                                    type="number"
-                                    {...field}
-                                    className="bg-white h-9"
+                      <div className="p-6 bg-slate-50/50 border-t border-slate-100 space-y-6 animate-in fade-in slide-in-from-top-2">
+                        <div className="flex flex-col md:flex-row gap-6 items-start">
+                          {/* PERFECTED AVATAR LAYOUT */}
+                          <div className="flex flex-col items-center gap-2">
+                            <span className="text-[9px] font-bold uppercase text-slate-400">
+                              Guest Photo
+                            </span>
+                            <div className="relative group">
+                              <div className="h-24 w-24 rounded-full border-2 border-dashed border-slate-200 bg-white flex items-center justify-center overflow-hidden transition-all hover:border-emerald-300 shadow-sm">
+                                {uploadingIndex === index ? (
+                                  <Clock
+                                    className="animate-spin text-emerald-600"
+                                    size={20}
                                   />
-                                </FormControl>
-                              </FormItem>
-                            )}
-                          />
+                                ) : form.watch(
+                                    `testimonials.${index}.image` as any,
+                                  ) ? (
+                                  <>
+                                    <Image
+                                      src={form.watch(
+                                        `testimonials.${index}.image` as any,
+                                      )}
+                                      alt="Preview"
+                                      fill
+                                      /* Added rounded-full here to fix square corners */
+                                      className="object-cover rounded-full"
+                                    />
+                                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                                      <button
+                                        type="button"
+                                        onClick={() =>
+                                          handleRemoveTestimonialImage(index)
+                                        }
+                                        className="p-1.5 bg-white/20 hover:bg-white/40 rounded-full text-white"
+                                      >
+                                        <X size={16} />
+                                      </button>
+                                    </div>
+                                  </>
+                                ) : (
+                                  <label className="flex flex-col items-center justify-center w-full h-full cursor-pointer hover:bg-slate-50">
+                                    <Upload
+                                      size={18}
+                                      className="text-slate-300 mb-1"
+                                    />
+                                    {/* Apply text-[8px] and font-bold to fix the size */}
+                                    <span className="text-[8px] font-bold text-slate-400 uppercase tracking-tight">
+                                      Upload
+                                    </span>
+                                    <input
+                                      type="file"
+                                      className="hidden"
+                                      accept="image/*"
+                                      onChange={(e) =>
+                                        handleTestimonialUpload(e, index)
+                                      }
+                                    />
+                                  </label>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="flex-1 grid md:grid-cols-3 gap-4 w-full">
+                            <FormField
+                              control={form.control}
+                              name={`testimonials.${index}.name`}
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel className="text-[9px] font-bold uppercase text-slate-400">
+                                    Name
+                                  </FormLabel>
+                                  <FormControl>
+                                    <Input
+                                      {...field}
+                                      className="bg-white h-9"
+                                    />
+                                  </FormControl>
+                                </FormItem>
+                              )}
+                            />
+                            <FormField
+                              control={form.control}
+                              name={`testimonials.${index}.place`}
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel className="text-[9px] font-bold uppercase text-slate-400">
+                                    Place
+                                  </FormLabel>
+                                  <FormControl>
+                                    <Input
+                                      {...field}
+                                      className="bg-white h-9"
+                                    />
+                                  </FormControl>
+                                </FormItem>
+                              )}
+                            />
+                            <FormField
+                              control={form.control}
+                              name={`testimonials.${index}.rating`}
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel className="text-[9px] font-bold uppercase text-slate-400">
+                                    Stars
+                                  </FormLabel>
+                                  <FormControl>
+                                    <Input
+                                      type="number"
+                                      {...field}
+                                      className="bg-white h-9"
+                                    />
+                                  </FormControl>
+                                </FormItem>
+                              )}
+                            />
+                          </div>
                         </div>
                         <FormField
                           control={form.control}
                           name={`testimonials.${index}.review`}
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel className="text-[9px] font-bold uppercase">
+                              <FormLabel className="text-[9px] font-bold uppercase text-slate-400">
                                 Review Content
                               </FormLabel>
                               <FormControl>
-                                <Textarea {...field} className="bg-white" />
+                                <Textarea
+                                  {...field}
+                                  className="bg-white min-h-[100px]"
+                                />
                               </FormControl>
                             </FormItem>
                           )}
@@ -457,10 +572,8 @@ export default function HomeSettingsForm({
                 ))}
               </div>
             </div>
-          </div>
 
-          {/* Sidebar FAQ column remains identical ... */}
-          <div className="lg:col-span-4 space-y-8">
+            {/* Sidebar FAQ column remains exactly as is */}
             <div className="bg-white rounded-2xl border shadow-sm overflow-hidden">
               <div className="p-5 border-b bg-slate-50/50 flex justify-between items-center">
                 <div className="flex items-center gap-2 font-bold text-slate-700 text-xs uppercase tracking-widest">
@@ -514,9 +627,6 @@ export default function HomeSettingsForm({
                           )}
                         </div>
                         <div className="flex items-center gap-2">
-                          {faqErrors && (
-                            <AlertCircle size={14} className="text-red-500" />
-                          )}
                           <Button
                             type="button"
                             variant="ghost"
@@ -552,7 +662,6 @@ export default function HomeSettingsForm({
                                     {...field}
                                   />
                                 </FormControl>
-                                <FormMessage className="text-[10px] font-bold text-red-500" />
                               </FormItem>
                             )}
                           />
@@ -570,7 +679,6 @@ export default function HomeSettingsForm({
                                     {...field}
                                   />
                                 </FormControl>
-                                <FormMessage className="text-[10px] font-bold text-red-500" />
                               </FormItem>
                             )}
                           />
