@@ -723,7 +723,7 @@ export default function PackageForm({
             {/* Highlights, Inclusions, Exclusions sections follow the same UI ... */}
             {[
               {
-                title: "Highlights",
+                title: "Menu",
                 color: "text-emerald-700",
                 name: "highlights",
                 fields: hFields,

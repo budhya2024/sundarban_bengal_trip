@@ -9,6 +9,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import "swiper/css";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 export const TestimonialsSection = ({
   data,
@@ -19,6 +20,7 @@ export const TestimonialsSection = ({
     name: string;
     place: string;
     rating: number;
+    image?: string | null;
   }[];
   loading: boolean;
 }) => {
@@ -80,21 +82,34 @@ export const TestimonialsSection = ({
                     </p>
 
                     <div className="mt-auto flex items-center gap-4">
+                      {/* Container for Avatar/Initials */}
                       <div
                         className={cn(
-                          "w-12 h-12 rounded-full bg-secondary flex items-center justify-center",
+                          "w-12 h-12 rounded-full flex items-center justify-center overflow-hidden shrink-0",
+                          !testimonial.image && "bg-secondary", // Keep secondary bg only if no image
                         )}
                       >
-                        <span className="font-semibold text-secondary-foreground">
-                          {testimonial.name
-                            ? testimonial.name
-                                .split(" ")
-                                .slice(0, 2)
-                                .map((word) => word[0])
-                                .join("")
-                                .toUpperCase()
-                            : "ST"}
-                        </span>
+                        {testimonial.image ? (
+                          <Image
+                            src={testimonial.image}
+                            alt={testimonial.name}
+                            width={48}
+                            height={48}
+                            className="w-full h-full object-cover"
+                            unoptimized
+                          />
+                        ) : (
+                          <span className="font-semibold text-secondary-foreground">
+                            {testimonial.name
+                              ? testimonial.name
+                                  .split(" ")
+                                  .slice(0, 2)
+                                  .map((word) => word[0])
+                                  .join("")
+                                  .toUpperCase()
+                              : "ST"}
+                          </span>
+                        )}
                       </div>
 
                       <div>
