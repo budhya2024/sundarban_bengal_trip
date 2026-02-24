@@ -97,7 +97,7 @@ const Packages = ({
                   </div>
 
                   {/* Features */}
-                  <div className="grid sm:grid-cols-2 gap-3 mb-6">
+                  {/* <div className="grid sm:grid-cols-2 gap-3 mb-6">
                     {pkg.highlights.map((feature) => (
                       <div
                         key={feature.value}
@@ -109,7 +109,7 @@ const Packages = ({
                         </span>
                       </div>
                     ))}
-                  </div>
+                  </div> */}
 
                   {/* Price & CTA */}
                   <div className="flex items-center justify-between pt-6 border-t border-border">

@@ -134,7 +134,7 @@ const PackageDetailsPage = ({
               {/* Menu Details*/}
               <div data-aos="fade-up ">
                 <h2 className="font-display text-2xl font-bold text-foreground mb-4">
-          Menu Details
+                  Menu Details
                 </h2>
                 <div className="grid md:grid-cols-2 gap-3 border-l-4 border-primary pl-6">
                   {data.highlights.map((highlight, index) => (
