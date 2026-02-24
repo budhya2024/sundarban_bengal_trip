@@ -24,7 +24,7 @@ const socialLinks = [
   // },
   {
     Icon: PhoneIcon,
-    href: "tel:+919876543210",
+    href: "tel:+917074432628",
     label: "Call",
     bgColor: "bg-green-600",
   },

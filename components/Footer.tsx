@@ -177,7 +177,10 @@ export const Footer = () => {
         <div className="mt-8 md:mt-12 pt-6 md:pt-8 border-t border-primary-foreground/20">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-primary-foreground/60 text-sm">
-              © 2024 Sundarban Bengal Trips. All rights reserved.
+              © {new Date().getFullYear()},  Sundarban Bengal Trips. All rights reserved.
+            </p>
+            <p className="text-primary-foreground/60 text-sm">
+              ISO 9001:2015 Certified Company
             </p>
             <div className="flex  gap-2 md:gap-6 text-sm">
               <Link

@@ -153,14 +153,14 @@ export const TourPackagesSection = () => {
                       <Clock className="w-4 h-4" />
                       {pkg.duration}
                     </div>
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    {/* <div className="flex items-center gap-2 text-sm text-muted-foreground">
                       <Users className="w-4 h-4" />
                       {pkg.groupSize} people
-                    </div>
+                    </div> */}
                   </div>
 
                   {/* Features */}
-                  <ul className="space-y-2 mb-6">
+                  {/* <ul className="space-y-2 mb-6">
                     {pkg.highlights.map((highlight) => (
                       <li
                         key={highlight.value}
@@ -170,7 +170,7 @@ export const TourPackagesSection = () => {
                         {highlight.value}
                       </li>
                     ))}
-                  </ul>
+                  </ul> */}
 
                   {/* Price & CTA */}
                   <div className="flex items-center justify-between pt-4 border-t border-border">
