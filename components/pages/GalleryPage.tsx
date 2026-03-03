@@ -119,7 +119,7 @@ const GalleryPage = ({
                     onClick={() =>
                       setVisibleCount((prev) => prev + ITEMS_PER_LOAD)
                     }
-                    className="px-8 py-3 rounded-full bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition"
+                    className="px-8 py-3 rounded-lg bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition"
                   >
                     Load More
                   </button>

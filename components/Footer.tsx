@@ -115,23 +115,37 @@ export const Footer = () => {
           </div>
 
           {/* Tour Packages */}
+          {/* Tour Packages */}
           <div>
             <h4 className="font-display text-lg font-semibold mb-6">
               Popular Tours
             </h4>
+
             <ul className="space-y-3">
               {[
-                "1 Day sundarban Tour",
-                "Sundarban 1 Night 2 Days Tour",
-                "Sundarban 2 Night 3 Days Tour",
-                "Customised Tour Package",
+                {
+                  name: "1 Day Sundarban Tour",
+                  link: "/packages/1-day-in-sundarban",
+                },
+                {
+                  name: "Sundarban 1 Night 2 Days Tour",
+                  link: "/packages/sundarban-1-night-2-days-tour",
+                },
+                {
+                  name: "Sundarban 2 Night 3 Days Tour",
+                  link: "/packages/sundarban-2-night-3-days-tour",
+                },
+                {
+                  name: "Customised Tour Package",
+                  link: "/contact",
+                },
               ].map((item) => (
-                <li key={item}>
+                <li key={item.name}>
                   <Link
-                    href="/packages"
+                    href={item.link}
                     className="text-primary-foreground/80 hover:text-secondary transition-colors"
                   >
-                    {item}
+                    {item.name}
                   </Link>
                 </li>
               ))}
@@ -177,7 +191,8 @@ export const Footer = () => {
         <div className="mt-8 md:mt-12 pt-6 md:pt-8 border-t border-primary-foreground/20">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-primary-foreground/60 text-sm">
-              © {new Date().getFullYear()},  Sundarban Bengal Trips. All rights reserved.
+              © {new Date().getFullYear()}, Sundarban Bengal Trips. All rights
+              reserved.
             </p>
             <p className="text-primary-foreground/60 text-sm">
               ISO 9001:2015 Certified Company
