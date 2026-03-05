@@ -90,10 +90,10 @@ const Packages = ({
                       <Clock className="w-5 h-5 text-primary" />
                       {pkg.duration}
                     </div>
-                    <div className="flex items-center gap-2 text-muted-foreground">
+                    {/* <div className="flex items-center gap-2 text-muted-foreground">
                       <Users className="w-5 h-5 text-primary" />
                       {pkg.groupSize} people
-                    </div>
+                    </div> */}
                   </div>
 
                   {/* Features */}

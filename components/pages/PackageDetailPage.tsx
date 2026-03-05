@@ -106,7 +106,7 @@ const PackageDetailsPage = ({
                     {data.duration}
                   </p>
                 </div>
-                <div className="bg-card p-4 rounded-xl text-center shadow-soft">
+                {/* <div className="bg-card p-4 rounded-xl text-center shadow-soft">
                   <Users className="w-6 h-6 text-secondary mx-auto mb-2" />
                   <span className="text-sm text-muted-foreground">
                     Group Size
@@ -114,7 +114,7 @@ const PackageDetailsPage = ({
                   <p className="font-semibold text-foreground">
                     {data.groupSize}
                   </p>
-                </div>
+                </div> */}
                 <div className="bg-card p-4 rounded-xl text-center shadow-soft">
                   <MapPin className="w-6 h-6 text-secondary mx-auto mb-2" />
                   <span className="text-sm text-muted-foreground">
@@ -235,7 +235,7 @@ const PackageDetailsPage = ({
                   <span className="text-muted-foreground">per person</span>
                 </div>
 
-                <div className="space-y-4 mb-6">
+                {/* <div className="space-y-4 mb-6">
                   <div className="flex items-center gap-3 text-muted-foreground">
                     <Calendar className="w-5 h-5 text-secondary" />
                     <span>Daily departures available</span>
@@ -244,7 +244,7 @@ const PackageDetailsPage = ({
                     <Users className="w-5 h-5 text-secondary" />
                     <span>{data.groupSize}</span>
                   </div>
-                </div>
+                </div> */}
 
                 <BookingModal packageName={data.packageName} />
                 <Button variant="outline" className="w-full" asChild>
