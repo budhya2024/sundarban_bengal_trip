@@ -38,7 +38,7 @@ export async function getNavbarPackageKeys() {
         name: sql<string>`${travelPackages.data}->>'packageName'`,
       })
       .from(travelPackages)
-      .orderBy();
+      .orderBy(asc(travelPackages.updatedAt));
     // .where(eq(travelPackages.isPopular, true));
     return {
       success: true,
