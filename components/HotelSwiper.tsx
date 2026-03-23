@@ -13,10 +13,10 @@ const hotels = [
   { id: 2, image: "/assets/hotel (2).jpeg" },
   { id: 3, image: "/assets/hotel (3).jpeg" },
   { id: 4, image: "/assets/hotel (4).jpeg" },
-  { id: 5, image: "/assets/hotel (5).jpeg" },
-  { id: 6, image: "/assets/hotel (6).jpeg" },
-  { id: 7, image: "/assets/hotel (7).jpeg" },
-  { id: 8, image: "/assets/hotel (8).jpeg" },
+  // { id: 5, image: "/assets/hotel (5).jpeg" },
+  // { id: 6, image: "/assets/hotel (6).jpeg" },
+  // { id: 7, image: "/assets/hotel (7).jpeg" },
+  // { id: 8, image: "/assets/hotel (8).jpeg" },
 ];
 
 export default function HotelSwiper() {
