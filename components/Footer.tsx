@@ -34,7 +34,7 @@ export const Footer = () => {
 
             {/* Google Review Button */}
             <a
-              href="https://g.page/r/YOUR_GOOGLE_REVIEW_LINK/review"
+              href="https://maps.app.goo.gl/BmREXPxvGBPRn7eT8?g_st=awb"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 bg-primary-foreground text-primary px-4 py-2 rounded-lg hover:bg-secondary hover:text-secondary-foreground transition-colors mb-4"
@@ -115,7 +115,6 @@ export const Footer = () => {
           </div>
 
           {/* Tour Packages */}
-          {/* Tour Packages */}
           <div>
             <h4 className="font-display text-lg font-semibold mb-6">
               Popular Tours
@@ -161,8 +160,7 @@ export const Footer = () => {
               <li className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-secondary mt-0.5 flex-shrink-0" />
                 <span className="text-primary-foreground/80">
-                  Dulki Purbo Para Road, Village & Post: Dulki, South 24
-                  Parganas, West Bengal – 743370, India
+                 5R82+296, Nath Para, Gosaba, Arampur, West Bengal 743370
                 </span>
               </li>
               <li className="flex items-center gap-3">
