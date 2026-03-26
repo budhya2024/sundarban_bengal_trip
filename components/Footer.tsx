@@ -209,10 +209,10 @@ export const Footer = () => {
                 Terms of Service
               </Link>
               <Link
-                href="/cancellation-policy"
+                href="/payment-policy"
                 className="text-primary-foreground/60 hover:text-secondary transition-colors"
               >
-                Cancellation Policy
+                Payment Policy
               </Link>
             </div>
           </div>
