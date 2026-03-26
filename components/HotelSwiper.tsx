@@ -9,19 +9,17 @@ import "swiper/css";
 import { Button } from "./ui/button";
 
 const hotels = [
-  { id: 1, image: "/assets/hotel (1).jpeg" },
-  { id: 2, image: "/assets/hotel (2).jpeg" },
-  { id: 3, image: "/assets/hotel (3).jpeg" },
-  { id: 4, image: "/assets/hotel (4).jpeg" },
-  // { id: 5, image: "/assets/hotel (5).jpeg" },
-  // { id: 6, image: "/assets/hotel (6).jpeg" },
-  // { id: 7, image: "/assets/hotel (7).jpeg" },
-  // { id: 8, image: "/assets/hotel (8).jpeg" },
+  { id: 1, image: "/assets/hotel (4).jpeg" },
+  { id: 2, image: "/assets/hotel (3).jpeg" },
+  { id: 3, image: "/assets/hotel (4).jpeg" },
+  { id: 4, image: "/assets/hotel (5).jpeg" },
+
+
 ];
 
 export default function HotelSwiper() {
   return (
-    <section className="py-10 md:py-20 bg-muted">
+    <section className="py-10 md:py-20 bg-muted mt-10">
       <div className="container mx-auto px-4">
         {/* Heading */}
         <div className="mb-8 text-center">

@@ -24,7 +24,7 @@ const DEFAULT_CONTACT_DATA = {
   phones: [{ value: "+917074432628" }, { value: "+91 87654 32109" }],
   emails: [
     { value: "sundarbanbengaltrip@gmail.com" },
-    { value: "bookings@sundarbantours.com" },
+    { value: "sundarbanbengaltrip@gmail.com" },
   ],
   address: "123 Forest Road, Canning, South 24 Parganas, WB - 743329",
   schedules: [

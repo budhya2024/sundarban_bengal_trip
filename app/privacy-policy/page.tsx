@@ -100,15 +100,15 @@ const PrivacyPolicy = () => {
               contact us at:
             </p>
             <p>
-              Email: privacy@sundarbantours.com
+              Email: sundarbanbengaltrip@gmail.com
               <br />
               Phone: +917074432628
               <br />
-              Address: 123 Forest Road, Canning, South 24 Parganas, West Bengal
+              Address: 5R82+296, Nath Para, Gosaba, Arampur, West Bengal 743370
             </p>
 
             <p className="text-sm text-muted-foreground mt-8">
-              Last updated: January 2024
+              Last updated: January 2026
             </p>
           </div>
         </div>
