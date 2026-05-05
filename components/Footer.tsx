@@ -160,7 +160,7 @@ export const Footer = () => {
               <li className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-secondary mt-0.5 flex-shrink-0" />
                 <span className="text-primary-foreground/80">
-                 5R82+296, Nath Para, Gosaba, Arampur, West Bengal 743370
+                  5R82+296, Nath Para, Gosaba, Arampur, West Bengal 743370
                 </span>
               </li>
               <li className="flex items-center gap-3">
@@ -188,12 +188,27 @@ export const Footer = () => {
         {/* Bottom Bar */}
         <div className="mt-8 md:mt-12 pt-6 md:pt-8 border-t border-primary-foreground/20">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-primary-foreground/60 text-sm">
-              © {new Date().getFullYear()}, Sundarban Bengal Trips. All rights
-              reserved.
-            </p>
-            <p className="text-primary-foreground/60 text-sm">
-              ISO 9001:2015 Certified Company
+            <div className="flex flex-col gap-1">
+              <p className="text-primary-foreground/60 text-sm">
+                © {new Date().getFullYear()}, Sundarban Bengal Trips. All rights
+                reserved.
+              </p>
+              <p className="text-primary-foreground/60 text-sm">
+                ISO 9001:2015 Certified Company
+              </p>
+            </div>
+
+            {/*  Added Powered By */}
+            <p className="text-primary-foreground text-sm">
+              Powered by{" "}
+              <a
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-secondary transition-colors"
+              >
+                Techshift Technology
+              </a>
             </p>
             <div className="flex  gap-2 md:gap-6 text-sm">
               <Link
