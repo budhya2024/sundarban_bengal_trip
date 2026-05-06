@@ -1,0 +1,12 @@
+# robots.txt for Sundarban Bengal Trip
+
+User-agent: *
+Allow: /
+
+# Block sensitive/private areas
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /private/
+
+# Sitemap
+Sitemap: https://sundarbanbengaltrip.com/sitemap.xml
