@@ -14,9 +14,9 @@ export const Footer = () => {
   return (
     <footer className="bg-primary text-primary-foreground">
       <div className="container mx-auto px-4 py-8 md:py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
           {/* Brand */}
-          <div>
+          <div className="lg:col-span-2">
             <Link href="/" className="flex items-center gap-2 mb-6">
               <Image
                 src="/assets/logo.png"
@@ -26,7 +26,7 @@ export const Footer = () => {
                 className="w-30 h-auto"
               />
             </Link>
-            <p className="text-primary-foreground/80 leading-relaxed mb-4">
+            <p className="text-primary-foreground/80 leading-relaxed mb-4 max-w-sm">
               Experience the magic of the world's largest mangrove forest.
               Witness the Royal Bengal Tiger in its natural habitat and explore
               the breathtaking biodiversity of the Sundarbans.
@@ -45,24 +45,24 @@ export const Footer = () => {
 
             <div className="flex gap-4">
               {/* Facebook */}
-              {/* <a
+              <a
                 href="https://www.facebook.com/profile.php?id=61588168291064"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-2 rounded-full bg-primary-foreground/10 hover:bg-blue-600 transition-colors"
               >
                 <FacebookIcon className="w-5 h-5 fill-current" />
-              </a> */}
+              </a>
 
               {/* Instagram */}
-              {/* <a
+              <a
                 href="https://www.instagram.com/sundarbanbengaltrip/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-2 rounded-full bg-primary-foreground/10 hover:bg-pink-600 transition-colors"
               >
                 <InstagramIcon className="w-5 h-5 fill-current" />
-              </a> */}
+              </a>
 
               {/* Call Button */}
               <a

@@ -9,19 +9,19 @@ import { PhoneIcon } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 const socialLinks = [
-  // {
-  //   Icon: FacebookIcon,
-  //   href: "https://www.facebook.com/profile.php?id=61588168291064",
-  //   label: "Facebook",
-  //   bgColor: "bg-[hsl(221,44%,41%)]",
-  // },
-  // {
-  //   Icon: InstagramIcon,
-  //   href: "https://www.instagram.com/sundarbanbengaltrip/",
-  //   label: "Instagram",
-  //   bgColor:
-  //     "bg-gradient-to-br from-[hsl(280,100%,44%)] via-[hsl(350,100%,55%)] to-[hsl(28,95%,59%)]", // Instagram gradient
-  // },
+  {
+    Icon: FacebookIcon,
+    href: "https://www.facebook.com/profile.php?id=61588168291064",
+    label: "Facebook",
+    bgColor: "bg-[hsl(221,44%,41%)]",
+  },
+  {
+    Icon: InstagramIcon,
+    href: "https://www.instagram.com/sundarbanbengaltrip/",
+    label: "Instagram",
+    bgColor:
+      "bg-gradient-to-br from-[hsl(280,100%,44%)] via-[hsl(350,100%,55%)] to-[hsl(28,95%,59%)]", // Instagram gradient
+  },
   {
     Icon: PhoneIcon,
     href: "tel:+917074432628",
