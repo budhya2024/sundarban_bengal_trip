@@ -1,59 +1,64 @@
-"use client";
-
-import { useEffect } from "react";
-import AOS from "aos";
-import "aos/dist/aos.css";
-
-import { Navbar } from "@/components/Navbar";
-import { BookingForm } from "@/components/BookingForm";
-import { Footer } from "@/components/Footer";
-
-import { SundarbanHeroSection } from "@/components/sundarban-tour-package-from-kolkata/HeroSection";
-import { IntroSection } from "@/components/sundarban-tour-package-from-kolkata/IntroSection";
-import { PackagesSection } from "@/components/sundarban-tour-package-from-kolkata/PackagesSection";
-import { ServicesSection } from "@/components/sundarban-tour-package-from-kolkata/ServicesSection";
-import { ExploreSection } from "@/components/sundarban-tour-package-from-kolkata/ExploreSection";
+import type { Metadata } from "next";
+import SundarbanTourPackageFromKolkata from "./SundarbanTourPackageFromKolkata";
 
 
-const SundarbanTourPackageFromKolkata = () => {
-  useEffect(() => {
-    AOS.init({
-      duration: 1000,
-      once: true,
-      easing: "ease-out-cubic",
-    });
-  }, []);
+export const metadata: Metadata = {
+  title:
+    "Sundarban Tour Package From Kolkata With Scenic Stay",
 
-  return (
-    <main className="min-h-screen bg-background font-sans selection:bg-primary/20 selection:text-primary">
-      <Navbar />
+  description:
+    "Book a Sundarban tour package from Kolkata for a relaxing wildlife adventure with boat rides, nature views, and memorable travel experiences.",
 
-      {/* Hero */}
-      <SundarbanHeroSection />
+  keywords: [
+    "Sundarban Tour Package From Kolkata",
+    "Sundarban Travel Package",
+    "Kolkata to Sundarban Tour",
+    "Sundarban Holiday Trip",
+  ],
 
-      {/* Booking Form */}
-      <div
-        className="relative z-20 container pb-12 lg:-mt-16 lg:pb-20"
-        data-aos="fade-up"
-        data-aos-delay="400"
-      >
-        <BookingForm />
-      </div>
+  alternates: {
+    canonical:
+      "https://yourdomain.com/sundarban-tour-package-from-kolkata",
+  },
 
-      {/* Intro — H1 content */}
-      <IntroSection />
+  openGraph: {
+    title:
+      "Sundarban Tour Package From Kolkata With Scenic Stay",
 
-      {/* H2 — Affordable Packages */}
-      <PackagesSection />
+    description:
+      "Enjoy a memorable Sundarban wildlife adventure with scenic boat rides, peaceful stays, and nature experiences.",
 
-      {/* H3 — Complete Services */}
-      <ServicesSection />
+    url:
+      "https://yourdomain.com/sundarban-tour-package-from-kolkata",
 
-      {/* H4 — Explore Wildlife */}
-      <ExploreSection />
-      <Footer />
-    </main>
-  );
+    siteName: "Sundarban Bengal Trip",
+
+    images: [
+      {
+        url: "/assets/sundarban-tour.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Sundarban Tour Package",
+      },
+    ],
+
+    locale: "en_IN",
+    type: "website",
+  },
+
+  twitter: {
+    card: "summary_large_image",
+
+    title:
+      "Sundarban Tour Package From Kolkata With Scenic Stay",
+
+    description:
+      "Book a relaxing Sundarban wildlife tour from Kolkata with scenic stays and boat rides.",
+
+    images: ["/assets/sundarban-tour.jpg"],
+  },
 };
 
-export default SundarbanTourPackageFromKolkata;
+export default function Page() {
+  return <SundarbanTourPackageFromKolkata />;
+}

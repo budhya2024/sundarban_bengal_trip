@@ -1,6 +1,7 @@
 "use client";
 
 import { Phone, Mail, MapPin } from "lucide-react";
+import Link from "next/link";
 
 export const IntroSection = () => {
   return (
@@ -12,9 +13,9 @@ export const IntroSection = () => {
             Are you looking for the most affordable and best Sundarban tour
             package from Kolkata? Then you had already visited the most
             professional and right place —{" "}
-            <strong className="text-primary font-bold">
+            <Link href="/." className="text-primary font-bold">
               Sundarban Bengal Trip
-            </strong>
+            </Link>
             . We will professionally and neatly plan your whole Sundarban trip
             from Kolkata offering a perfect mix of adventure, nature, wildlife,
             and other tourist destinations in Sundarban.

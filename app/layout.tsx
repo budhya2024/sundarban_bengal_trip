@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Script from "next/script";
 
 import "./globals.css";
+import "swiper/css";
+import "aos/dist/aos.css";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";

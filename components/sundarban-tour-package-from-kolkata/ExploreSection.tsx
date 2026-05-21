@@ -12,8 +12,7 @@ import Image from "next/image";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
-
-import "swiper/css";
+import Link from "next/link";
 
 const galleryImages = [
   {
@@ -49,7 +48,13 @@ export const ExploreSection = () => {
           </div>
 
           <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-white leading-[1.1] mb-4">
-            Explore The Untamed Beauty Of Sundarban
+            Explore The Untamed Beauty Of{" "}
+            <Link
+              href="https://en.wikipedia.org/wiki/Sundarbans"
+              target="/blank"
+            >
+              Sundarban
+            </Link>
           </h2>
 
           <p className="text-white/60 leading-relaxed max-w-3xl mx-auto">
@@ -61,11 +66,9 @@ export const ExploreSection = () => {
 
         {/* MAIN GRID FIX */}
         <div className="grid lg:grid-cols-2 gap-10 items-stretch">
-          
           {/* LEFT SIDE */}
           <div className="relative h-[420px] sm:h-[520px] lg:h-[600px]">
             <div className="h-full relative rounded-[2rem] overflow-hidden border border-white/10 bg-white/5 backdrop-blur-2xl shadow-[0_20px_60px_rgba(0,0,0,0.45)]">
-
               <Swiper
                 modules={[Autoplay, Pagination]}
                 autoplay={{
@@ -130,7 +133,6 @@ export const ExploreSection = () => {
           {/* RIGHT SIDE FIX */}
           <div className="h-[420px] sm:h-[520px] lg:h-[600px]">
             <div className="h-full bg-white/[0.04] backdrop-blur-2xl border border-white/10 rounded-3xl p-4 md:p-8 shadow-[0_20px_80px_rgba(0,0,0,0.4)] overflow-auto">
-
               <div className="space-y-8">
                 {/* Feature */}
                 <div className="flex gap-5">
@@ -144,7 +146,8 @@ export const ExploreSection = () => {
                     </h4>
                     <p className="text-white/60 leading-relaxed">
                       Visit Sajnekhali Watch Tower, Dobanki Canopy Walk,
-                      Sudhanyakhali, Pakhiralay, and stunning mangrove forest landscapes.
+                      Sudhanyakhali, Pakhiralay, and stunning mangrove forest
+                      landscapes.
                     </p>
                   </div>
                 </div>
@@ -161,7 +164,8 @@ export const ExploreSection = () => {
                     </h4>
                     <p className="text-white/60 leading-relaxed">
                       Witness crocodiles, spotted deer, exotic birds, and the
-                      majestic Royal Bengal Tiger while cruising through serene rivers.
+                      majestic Royal Bengal Tiger while cruising through serene
+                      rivers.
                     </p>
                   </div>
                 </div>
@@ -172,13 +176,12 @@ export const ExploreSection = () => {
                 <div>
                   <h4 className="text-xl font-bold text-white mb-5">
                     Book Your Premium
-                    <span className="block text-secondary">
-                      Sundarban Tour
-                    </span>
+                    <span className="block text-secondary">Sundarban Tour</span>
                   </h4>
 
                   <p className="text-white/60 leading-relaxed mb-8">
-                    Luxury stay, Bengali meals, guided safari, transport, and memories.
+                    Luxury stay, Bengali meals, guided safari, transport, and
+                    memories.
                   </p>
 
                   <div className="flex flex-col sm:flex-row gap-4">
@@ -190,7 +193,6 @@ export const ExploreSection = () => {
                         <Phone className="w-5 h-5" />
                         +91 70744 32628
                       </div>
-                      <ArrowRight className="w-5 h-5" />
                     </a>
 
                     <a
@@ -201,15 +203,12 @@ export const ExploreSection = () => {
                         <Mail className="w-5 h-5 text-secondary" />
                         Contact Us
                       </div>
-                      <ArrowRight className="w-5 h-5" />
                     </a>
                   </div>
                 </div>
-
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </section>

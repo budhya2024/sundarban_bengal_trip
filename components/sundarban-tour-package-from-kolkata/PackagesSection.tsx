@@ -17,7 +17,6 @@ export const PackagesSection = () => {
     <section className="py-8 md:py-16 bg-muted/20 border-y border-border/50 overflow-hidden">
       <div className="container mx-auto px-4">
         <div className="flex flex-col lg:flex-row gap-14 lg:gap-20 items-center">
-
           {/* Image Side */}
           <div className="lg:w-1/2 relative" data-aos="fade-right">
             <div className="relative h-[420px] md:h-[540px] w-full max-w-md mx-auto lg:mx-0 rounded-[2.5rem] overflow-hidden shadow-2xl border-8 border-background z-20">
@@ -39,8 +38,12 @@ export const PackagesSection = () => {
                   <CheckCircle2 className="w-7 h-7 text-secondary" />
                 </div>
                 <div>
-                  <p className="font-display font-bold text-2xl text-foreground leading-none">100%</p>
-                  <p className="text-sm font-medium text-muted-foreground">Satisfaction Rate</p>
+                  <p className="font-display font-bold text-2xl text-foreground leading-none">
+                    100%
+                  </p>
+                  <p className="text-sm font-medium text-muted-foreground">
+                    Satisfaction Rate
+                  </p>
                 </div>
               </div>
             </div>
@@ -53,18 +56,28 @@ export const PackagesSection = () => {
               <span>Affordable Packages</span>
             </div>
             <h2 className="font-display text-xl md:text-2xl lg:text-3xl font-bold text-foreground mb-7 leading-tight">
-              Book Affordable Sundarban Tour Packages from Kolkata for Family, Couples & Groups
+              Book Affordable Sundarban Tour Packages from Kolkata for Family,
+              Couples & Groups
             </h2>
             <p className="text-muted-foreground  leading-relaxed mb-5">
-              In our well-modified Sundarban tour package from Kolkata, we provide all types of ready-to-have services — Travelling, Hotels, Sightseeing, Fooding, and more. In our Sundarban Bengal Trip Tours & Guide agency you will receive both budget-friendly and luxury resort stays, with flexible tour options for our clients.
+              In our well-modified Sundarban tour package from Kolkata, we
+              provide all types of ready-to-have services — Travelling, Hotels,
+              Sightseeing, Fooding, and more. In our Sundarban Bengal Trip Tours
+              & Guide agency you will receive both budget-friendly and luxury
+              resort stays, with flexible tour options for our clients.
             </p>
             <p className="text-muted-foreground text-base  md:text-lg leading-relaxed mb-6 md:mb-10">
-              Moreover, you will also receive pickup and drop from any destination in Kolkata, journey fooding support, boat safari or boat-stay options, and many local sightseeing visits too.
+              Moreover, you will also receive pickup and drop from any
+              destination in Kolkata, journey fooding support, boat safari or
+              boat-stay options, and many local sightseeing visits too.
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2  gap-5">
               {services.map((item, i) => (
-                <div key={i} className="flex gap-3 items-start bg-white p-4 rounded-md">
+                <div
+                  key={i}
+                  className="flex gap-3 items-start bg-white p-4 rounded-md"
+                >
                   <div className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
                     <CheckCircle2 className="w-5 h-5 text-primary" />
                   </div>
@@ -76,7 +89,6 @@ export const PackagesSection = () => {
               ))}
             </div>
           </div>
-
         </div>
       </div>
     </section>
