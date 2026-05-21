@@ -87,7 +87,7 @@ export const BookingForm = () => {
 
   return (
     <section className="relative z-20 -mt-24 ">
-      <div className="container px-4">
+      <div className="container">
         <div
           data-aos="fade-up"
           data-aos-duration="600"
