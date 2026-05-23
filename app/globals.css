@@ -277,3 +277,8 @@ select:focus {
   outline: none;
 
 }
+
+::selection{
+  background-color:#f59e0b;
+  color: #ffff;
+}

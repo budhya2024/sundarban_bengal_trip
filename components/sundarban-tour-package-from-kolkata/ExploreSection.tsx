@@ -65,9 +65,9 @@ export const ExploreSection = () => {
         </div>
 
         {/* MAIN GRID FIX */}
-        <div className="grid lg:grid-cols-2 gap-10 items-stretch">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-10 items-stretch">
           {/* LEFT SIDE */}
-          <div className="relative h-[420px] sm:h-[520px] lg:h-[600px]">
+          <div className="relative w-full h-[400px] md:h-auto">
             <div className="h-full relative rounded-[2rem] overflow-hidden border border-white/10 bg-white/5 backdrop-blur-2xl shadow-[0_20px_60px_rgba(0,0,0,0.45)]">
               <Swiper
                 modules={[Autoplay, Pagination]}
@@ -131,7 +131,7 @@ export const ExploreSection = () => {
           </div>
 
           {/* RIGHT SIDE FIX */}
-          <div className="h-[420px] sm:h-[520px] lg:h-[600px]">
+          <div className="w-full">
             <div className="h-full bg-white/[0.04] backdrop-blur-2xl border border-white/10 rounded-3xl p-4 md:p-8 shadow-[0_20px_80px_rgba(0,0,0,0.4)] overflow-auto">
               <div className="space-y-8">
                 {/* Feature */}

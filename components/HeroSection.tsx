@@ -9,7 +9,7 @@ export const HeroSection = () => {
   }, []);
 
   return (
-    <section className="relative py-20 flex   overflow-hidden bg-primary ">
+    <section className="relative py-24 flex   overflow-hidden bg-primary ">
       {/* Background Video */}
 
       {/* Content */}

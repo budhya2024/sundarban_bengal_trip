@@ -18,7 +18,7 @@ export const PackagesSection = () => {
       <div className="container mx-auto px-4">
         <div className="flex flex-col lg:flex-row gap-14 lg:gap-20 items-center">
           {/* Image Side */}
-          <div className="lg:w-1/2 relative" data-aos="fade-right">
+          <div className=" w-full lg:w-1/2 relative" data-aos="fade-right">
             <div className="relative h-[420px] md:h-[540px] w-full max-w-md mx-auto lg:mx-0 rounded-[2.5rem] overflow-hidden shadow-2xl border-8 border-background z-20">
               <Image
                 src="/assets/tour-budget.jpg"
