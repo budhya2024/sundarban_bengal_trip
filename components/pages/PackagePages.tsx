@@ -36,7 +36,7 @@ const Packages = ({
       />
 
       {/* Packages */}
-      <section className="py-10 md:py-20 bg-background">
+      <section className="py-10 md:py-16bg-background">
         <div className="container mx-auto px-4">
           <div className="space-y-16">
             {packages.map((pkg, index) => (

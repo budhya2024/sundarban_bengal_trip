@@ -7,20 +7,20 @@ import Link from "next/link";
 
 export const SundarbanHeroSection = () => {
   return (
-    <section className="relative pt-10 pb-24 lg:pt-24 lg:pb-32 bg-primary overflow-hidden">
-     
-
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-8">
+    <section className="relative pt-16 pb-24 lg:pt-24 lg:pb-32 bg-primary overflow-hidden">
+      <div className="container  relative z-10">
+        <div className="flex flex-col lg:flex-row items-center gap-6 lg:gap-8">
+          
           {/* Left Content */}
           <div className="lg:w-[55%] pt-8">
+            
             {/* Badge */}
             <div
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur borde4 border-white text-white mb-6"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur border border-white/20 text-white mb-6"
               data-aos="fade-up"
             >
               <Star className="w-4 h-4 fill-secondary text-secondary" />
-              <span className="text-sm font-semibold  tracking-wide uppercase">
+              <span className="text-sm font-semibold tracking-wide uppercase">
                 Top Rated Tour Package
               </span>
             </div>
@@ -43,7 +43,7 @@ export const SundarbanHeroSection = () => {
 
             {/* Description */}
             <p
-              className="text-lg text-white/70 mb-8 max-w-xl leading-relaxed"
+              className="text-base md:text-lg text-white/70 mb-8 max-w-xl leading-relaxed"
               data-aos="fade-up"
               data-aos-delay="200"
             >
@@ -59,111 +59,89 @@ export const SundarbanHeroSection = () => {
               data-aos="fade-up"
               data-aos-delay="300"
             >
-               <Button variant="hero" size="xl" asChild>
-                          <Link href="/packages" className="group">
-                         Book now
-                            <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                          </Link>
-                        </Button>
-                        <Button variant="heroOutline" size="xl" asChild>
-                          <Link href="/contact">Plan Your Trip</Link>
-                        </Button>
+              <Button
+                variant="hero"
+                size="xl"
+                asChild
+                className="w-full md:w-auto"
+              >
+                <Link href="/packages" className="group">
+                  Book now
+                 
+                </Link>
+              </Button>
+
+              <Button
+                variant="heroOutline"
+                size="xl"
+                asChild
+                className="w-full md:w-auto"
+              >
+                <Link href="/contact">Plan Your Trip</Link>
+              </Button>
             </div>
           </div>
 
-      {/* Right Images Collage */}
-<div
-  className="lg:w-[45%] relative w-full mt-8 lg:mt-0"
-  data-aos="fade-left"
-  data-aos-delay="200"
->
+          {/* Right Images Collage - Desktop Only */}
+          <div
+            className="lg:w-[45%] relative w-full mt-8 lg:mt-0 hidden lg:block"
+            data-aos="fade-left"
+            data-aos-delay="200"
+          >
+            <div className="relative h-[600px]">
+              
+              {/* Main Image */}
+              <div className="absolute top-0 right-0 w-[80%] h-[70%] rounded-[2rem] overflow-hidden shadow-2xl border-4 border-white z-10">
+                <Image
+                  src="/assets/sundarban-package-tour-from-kolkata-with-hotel-sonar-bangla.webp"
+                  alt="Sundarban Nature"
+                  fill
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-black/20" />
+              </div>
 
-  {/* MOBILE / TABLET GRID */}
-  <div className="sm:hidden grid grid-cols-2 gap-3 h-[300px]">
-    
-    <div className="relative rounded-2xl overflow-hidden border-2 border-white">
-      <Image
-        src="/assets/hero-sundarban.jpg"
-        alt="Sundarban Nature"
-        fill
-        className="object-cover"
-      />
-    </div>
+              {/* Bottom Left */}
+              <div className="absolute bottom-4 left-0 w-[55%] h-[45%] rounded-[2rem] overflow-hidden shadow-2xl border-4 border-white z-20">
+                <Image
+                  src="/assets/tiger-photo.jpg"
+                  alt="Royal Bengal Tiger"
+                  fill
+                  className="object-cover"
+                />
+              </div>
 
-    <div className="relative rounded-2xl overflow-hidden border-2 border-white">
-      <Image
-        src="/assets/tiger-photo.jpg"
-        alt="Royal Bengal Tiger"
-        fill
-        className="object-cover"
-      />
-    </div>
+              {/* Bottom Right */}
+              <div className="absolute bottom-10 right-4 w-[40%] h-[35%] rounded-[2rem] overflow-hidden shadow-2xl border-4 border-white z-30">
+                <Image
+                  src="/assets/house-boat.jpeg"
+                  alt="Boat Safari"
+                  fill
+                  className="object-cover"
+                />
+              </div>
 
-    <div className="relative rounded-2xl overflow-hidden border-2 border-white col-span-2 h-[140px]">
-      <Image
-        src="/assets/gallery-boat.jpg"
-        alt="Boat Safari"
-        fill
-        className="object-cover"
-      />
-    </div>
+              {/* Floating Badge */}
+              <div className="absolute top-1/2 left-0 z-40 bg-white/10 backdrop-blur-xl p-4 rounded-2xl shadow-2xl border border-white animate-bounce-slow">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-secondary/20 flex items-center justify-center">
+                    <CheckCircle2 className="w-6 h-6 text-secondary" />
+                  </div>
 
-  </div>
+                  <div>
+                    <p className="text-xs font-bold text-white/60 uppercase">
+                      Trusted By
+                    </p>
+                    <p className="font-display font-bold text-white">
+                      10,000+ Tourists
+                    </p>
+                  </div>
+                </div>
+              </div>
 
-  {/* DESKTOP COLLAGE (YOUR ORIGINAL) */}
-  <div className="hidden sm:block relative h-[400px] sm:h-[500px] lg:h-[600px]">
+            </div>
+          </div>
 
-    {/* Main Image */}
-    <div className="absolute top-0 right-0 w-[80%] h-[70%] rounded-[2rem] overflow-hidden shadow-2xl border-4 border-white z-10">
-      <Image
-        src="/assets/hero-sundarban.jpg"
-        alt="Sundarban Nature"
-        fill
-        className="object-cover"
-      />
-      <div className="absolute inset-0 bg-black/20" />
-    </div>
-
-    {/* Bottom Left */}
-    <div className="absolute bottom-4 left-0 w-[55%] h-[45%] rounded-[2rem] overflow-hidden shadow-2xl border-4 border-white z-20">
-      <Image
-        src="/assets/tiger-photo.jpg"
-        alt="Royal Bengal Tiger"
-        fill
-        className="object-cover"
-      />
-    </div>
-
-    {/* Bottom Right */}
-    <div className="absolute bottom-10 right-4 w-[40%] h-[35%] rounded-[2rem] overflow-hidden shadow-2xl border-4 border-white z-30">
-      <Image
-        src="/assets/gallery-boat.jpg"
-        alt="Boat Safari"
-        fill
-        className="object-cover"
-      />
-    </div>
-
-    {/* Floating Badge */}
-    <div className="absolute top-1/2 left-0 z-40 bg-white/10 backdrop-blur-xl p-4 rounded-2xl shadow-2xl border border-white animate-bounce-slow">
-      <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-full bg-secondary/20 flex items-center justify-center">
-          <CheckCircle2 className="w-6 h-6 text-secondary" />
-        </div>
-
-        <div>
-          <p className="text-xs font-bold text-white/60 uppercase">
-            Trusted By
-          </p>
-          <p className="font-display font-bold text-white">
-            10,000+ Tourists
-          </p>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</div>
         </div>
       </div>
     </section>

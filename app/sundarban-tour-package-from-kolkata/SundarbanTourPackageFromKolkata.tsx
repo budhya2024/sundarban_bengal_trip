@@ -32,7 +32,7 @@ const SundarbanTourPackageFromKolkata = () => {
 
       {/* Booking Form */}
       <div
-        className="relative z-20 container pb-12 lg:-mt-16 lg:pb-20"
+        className="relative z-20  pb-12 mt-5 md:mt-0 lg:pb-20"
         data-aos="fade-up"
         data-aos-delay="400"
       >

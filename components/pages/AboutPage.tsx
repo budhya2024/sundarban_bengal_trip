@@ -77,7 +77,7 @@ const AboutPage = ({ data }: { data: AboutValues }) => {
       />
 
       {/* Story Section */}
-      <section className="py-10 md:py-20 bg-background">
+      <section className="py-10 md:py-16bg-background">
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div data-aos="fade-right">
@@ -132,7 +132,7 @@ const AboutPage = ({ data }: { data: AboutValues }) => {
       </section>
 
       {/* Mission & Vision */}
-      <section className="py-10 md:py-20 bg-muted">
+      <section className="py-10 md:py-16 bg-muted">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-8">
             <div
@@ -177,7 +177,7 @@ const AboutPage = ({ data }: { data: AboutValues }) => {
       </section>
 
       {/* Values */}
-      <section className="py-10 md:py-20 bg-background">
+      <section className="py-10 md:py-16bg-background">
         <div className="container mx-auto px-4">
           <div data-aos="fade-up" className="text-center mb-8 md:mb-16">
             <span className="text-secondary font-medium text-sm uppercase tracking-wider">
@@ -212,7 +212,7 @@ const AboutPage = ({ data }: { data: AboutValues }) => {
       </section>
 
       {/* Team */}
-      {/* <section className="py-10 md:py-20 bg-primary">
+      {/* <section className="py-10 md:py-16bg-primary">
         <div className="container mx-auto px-4">
           <div data-aos="fade-up" className="text-center mb-8 md:mb-16">
             <span className="text-secondary font-medium text-sm uppercase tracking-wider">

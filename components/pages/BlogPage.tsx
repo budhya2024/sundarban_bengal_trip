@@ -48,7 +48,7 @@ const Blog = ({
       {!featureBlog && blogs.length === 0 ? (
         <BlogEmptyState />
       ) : (
-        <section className="py-10 md:py-20 bg-background">
+        <section className="py-10 md:py-16bg-background">
           <div className="container mx-auto px-4">
             {/* Featured Post */}
             {featureBlog && (

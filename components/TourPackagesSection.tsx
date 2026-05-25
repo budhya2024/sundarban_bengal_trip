@@ -83,7 +83,7 @@ export const TourPackagesSection = () => {
   }, []);
 
   return (
-    <section className="py-10 md:py-20 ">
+    <section className="py-10 md:py-16">
       <div className="container mx-auto px-4">
         {/* Header */}
         <div

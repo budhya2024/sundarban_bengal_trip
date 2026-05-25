@@ -16,7 +16,7 @@ const loopHotels = [...hotels, ...hotels];
 
 export default function HotelSwiper() {
   return (
-    <section className="py-10 md:py-20 bg-muted mt-10 overflow-hidden">
+    <section className="py-10 md:py-16 bg-muted mt-10 overflow-hidden">
       <div className="container mx-auto px-4">
 
         {/* Heading */}

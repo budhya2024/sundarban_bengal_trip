@@ -39,7 +39,7 @@ const features = [
 
 export const ExploreSundarbanSection = () => {
   return (
-    <section className="py-10 md:py-20 bg-muted">
+    <section className="py-10 md:py-16 bg-muted">
       <div className="container mx-auto px-4">
         {/* Section Header */}
         <div className="text-center mb-12" data-aos="fade-up">

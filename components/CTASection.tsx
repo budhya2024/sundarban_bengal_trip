@@ -10,7 +10,7 @@ export const CTASection = () => {
   }, []);
 
   return (
-    <section className="relative py-10 md:py-20 overflow-hidden">
+    <section className="relative py-10 md:py-16overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0">
         <img

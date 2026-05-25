@@ -36,7 +36,7 @@ export const GallerySection = () => {
   }, []);
 
   return (
-    <section className="py-10 md:py-20 bg-muted">
+    <section className="py-10 md:py-16 bg-muted">
       <div className="container mx-auto px-4">
         {/* Header */}
         <div
