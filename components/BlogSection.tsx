@@ -62,12 +62,12 @@ export const BlogSection = () => {
 
   return (
     <section className="py-10 md:py-16 bg-muted">
-      <div className="container mx-auto px-4">
+      <div className="container">
         {/* Header */}
         <div
           data-aos="fade-up"
           data-aos-duration="600"
-          className="text-center mb-8 md:mb-16"
+          className="text-center mb-8 md:mb-12"
         >
           <span className="text-secondary font-medium text-sm uppercase tracking-wider">
             Blog

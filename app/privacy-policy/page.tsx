@@ -27,7 +27,7 @@ const PrivacyPolicy = () => {
       />
 
       <section className="py-10 md:py-16bg-background">
-        <div className="container mx-auto px-4 max-w-4xl">
+        <div className="container max-w-4xl">
           <div
             data-aos="fade-up"
             className="prose prose-lg max-w-none prose-headings:font-display prose-headings:text-foreground prose-p:text-muted-foreground"

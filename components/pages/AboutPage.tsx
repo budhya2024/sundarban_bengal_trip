@@ -78,7 +78,7 @@ const AboutPage = ({ data }: { data: AboutValues }) => {
 
       {/* Story Section */}
       <section className="py-10 md:py-16bg-background">
-        <div className="container mx-auto px-4">
+        <div className="container">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div data-aos="fade-right">
               <span className="text-secondary font-medium text-sm uppercase tracking-wider">
@@ -133,7 +133,7 @@ const AboutPage = ({ data }: { data: AboutValues }) => {
 
       {/* Mission & Vision */}
       <section className="py-10 md:py-16 bg-muted">
-        <div className="container mx-auto px-4">
+        <div className="container">
           <div className="grid md:grid-cols-2 gap-8">
             <div
               data-aos="fade-up"
@@ -178,8 +178,8 @@ const AboutPage = ({ data }: { data: AboutValues }) => {
 
       {/* Values */}
       <section className="py-10 md:py-16bg-background">
-        <div className="container mx-auto px-4">
-          <div data-aos="fade-up" className="text-center mb-8 md:mb-16">
+        <div className="container">
+          <div data-aos="fade-up" className="text-center mb-8 md:mb-12">
             <span className="text-secondary font-medium text-sm uppercase tracking-wider">
               Our Values
             </span>
@@ -213,8 +213,8 @@ const AboutPage = ({ data }: { data: AboutValues }) => {
 
       {/* Team */}
       {/* <section className="py-10 md:py-16bg-primary">
-        <div className="container mx-auto px-4">
-          <div data-aos="fade-up" className="text-center mb-8 md:mb-16">
+        <div className="container">
+          <div data-aos="fade-up" className="text-center mb-8 md:mb-12">
             <span className="text-secondary font-medium text-sm uppercase tracking-wider">
               Our Team
             </span>

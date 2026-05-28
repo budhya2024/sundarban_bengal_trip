@@ -22,7 +22,7 @@ export const CTASection = () => {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 container mx-auto px-4">
+      <div className="relative z-10 container">
         <div
           data-aos="fade-up"
           data-aos-duration="600"

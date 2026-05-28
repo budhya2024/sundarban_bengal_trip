@@ -101,7 +101,7 @@ export const BookingModal = ({ packageName }: { packageName: string }) => {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-5 pt-5"
+            className="space-y-5"
           >
             {/* Name */}
             <FormField

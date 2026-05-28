@@ -19,6 +19,7 @@ import { Footer } from "@/components/Footer";
 import { HomeSettingsValues } from "@/schemas/homeSettings.schema";
 import { getHomeSettings } from "@/app/actions/home.actions";
 import HotelSwiper from "@/components/HotelSwiper";
+import { HeroSlider } from "@/components/HeroSlider";
 
 const Index = () => {
   const [homeSetting, setHomeSetting] = useState<HomeSettingsValues | null>(
@@ -50,11 +51,12 @@ const Index = () => {
     <main className="min-h-screen">
       <Navbar />
       <HeroSection />
-      <BookingForm />
+     <TourPackagesSection />
+      {/* <BookingForm /> */}
       <HotelSwiper/>
       <AboutSection />
       <ExploreSundarbanSection />
-      <TourPackagesSection />
+    
       <GallerySection />
       <TestimonialsSection
         data={homeSetting?.testimonials || []}

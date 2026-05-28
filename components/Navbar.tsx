@@ -79,7 +79,7 @@ export const Navbar = () => {
           : "bg-transparent"
       }`}
     >
-      <div className="container mx-auto px-4">
+      <div className="container">
         <nav className="flex items-center justify-between h-20">
           {/* LOGO */}
           <Link href="/" className="z-50">

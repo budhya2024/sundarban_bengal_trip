@@ -95,7 +95,7 @@ const ContactPage = ({ data }: { data: ContactPageValues | null }) => {
 
       {/* Contact Cards */}
       <section className="py-16 bg-background -mt-16 relative z-10">
-        <div className="container mx-auto px-4">
+        <div className="container">
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {contactCards.map((card, index) => (
               <div
@@ -131,7 +131,7 @@ const ContactPage = ({ data }: { data: ContactPageValues | null }) => {
 
       {/* Contact Form & Map */}
       <section className="py-16 bg-muted">
-        <div className="container mx-auto px-4">
+        <div className="container">
           <div className="grid lg:grid-cols-5 gap-12">
             {/* Form */}
             <ContactUsForm />

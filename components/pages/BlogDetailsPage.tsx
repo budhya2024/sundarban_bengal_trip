@@ -59,7 +59,7 @@ const BlogDetails = ({
 
       {/* Article Content with Sidebar */}
       <section className="py-16 bg-background">
-        <div className="container mx-auto px-4">
+        <div className="container">
           <div className="grid lg:grid-cols-3 gap-12">
             {/* Main Content - Left Side */}
             <div className="lg:col-span-2">

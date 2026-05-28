@@ -3,59 +3,18 @@
 import { useEffect, useState } from "react";
 import AOS from "aos";
 import { Button } from "@/components/ui/button";
-import { Clock, Users, Star, Check } from "lucide-react";
+import {
+  Clock,
+  Star,
+  Hotel,
+  UtensilsCrossed,
+  CarTaxiFront,
+  MapPinned,
+  ArrowRight,
+} from "lucide-react";
 import Link from "next/link";
 import { PackageValues } from "@/schemas/package.schema";
 import { getPackages } from "@/app/actions/package.actions";
-
-const packages = [
-  {
-    name: "Explorer Day Trip",
-    image: "/assets/tour-budget.jpg",
-    duration: "1 Day",
-    groupSize: "10-15",
-    price: "₹2,499",
-    rating: 4.7,
-    features: [
-      "Guided boat safari",
-      "Wildlife spotting",
-      "Traditional lunch",
-      "Photography stops",
-    ],
-    popular: false,
-  },
-  {
-    name: "Premium Safari",
-    image: "/assets/tour-premium.jpg",
-    duration: "3 Days / 2 Nights",
-    groupSize: "6-8",
-    price: "₹12,999",
-    rating: 4.9,
-    features: [
-      "Luxury houseboat stay",
-      "Tiger territory exploration",
-      "All meals included",
-      "Professional naturalist",
-      "Night safari experience",
-    ],
-    popular: true,
-  },
-  {
-    name: "Adventure Expedition",
-    image: "/assets/tour-adventure.jpg",
-    duration: "2 Days / 1 Night",
-    groupSize: "8-12",
-    price: "₹6,999",
-    rating: 4.8,
-    features: [
-      "Camping experience",
-      "Multiple safari rides",
-      "Bird watching tour",
-      "Local village visit",
-    ],
-    popular: false,
-  },
-];
 
 interface PackageListValue extends PackageValues {
   key: string;
@@ -69,12 +28,16 @@ export const TourPackagesSection = () => {
   useEffect(() => {
     const fetchPackages = async () => {
       setLoading(true);
+
       const { data, success } = await getPackages(false, 3);
+
       if (success && data) {
         setPackages(data);
       }
+
       setLoading(false);
     };
+
     fetchPackages();
   }, []);
 
@@ -83,23 +46,21 @@ export const TourPackagesSection = () => {
   }, []);
 
   return (
-    <section className="py-10 md:py-16">
-      <div className="container mx-auto px-4">
+    <section className="py-8 md:py-16 overflow-hidden">
+      <div className="container">
         {/* Header */}
         <div
           data-aos="fade-up"
-          data-aos-duration="600"
-          className="text-center mb-8 md:mb-16"
+          className="text-center max-w-3xl mx-auto mb-10 md:mb-16"
         >
-          <span className="text-secondary font-medium text-sm uppercase tracking-wider">
-            Tour Packages
-          </span>
           <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mt-2 mb-4">
             Choose Your Perfect Adventure
           </h2>
+
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            From quick day trips to immersive multi-day expeditions, we have the
-            perfect package to match your schedule and budget.
+            Explore breathtaking destinations with premium stays, delicious
+            meals, seamless transfers, and unforgettable sightseeing
+            experiences.
           </p>
         </div>
 
@@ -112,79 +73,121 @@ export const TourPackagesSection = () => {
               <div
                 key={pkg.id}
                 data-aos="fade-up"
-                data-aos-delay={index * 100}
-                className={`relative bg-card rounded-2xl overflow-hidden shadow-soft hover:shadow-elevated transition-all duration-300 group ${
+                data-aos-delay={index * 120}
+                className={`group relative rounded-xl overflow-hidden bg-card border border-border/60 shadow-sm hover:shadow-lg transition-all duration-500 hover:-translate-y-2 ${
                   pkg.isPopular ? "ring-2 ring-secondary" : ""
                 }`}
               >
                 {/* Popular Badge */}
                 {pkg.isPopular && (
-                  <div className="absolute top-4 right-4 z-10 px-3 py-1 rounded-full bg-secondary text-secondary-foreground text-sm font-medium">
-                    Most Popular
+                  <div className="absolute top-4 left-4 z-20">
+                    <span className="px-4 py-1.5 rounded-full bg-secondary text-secondary-foreground text-xs font-semibold shadow-lg">
+                      Most Popular
+                    </span>
                   </div>
                 )}
 
                 {/* Image */}
-                <div className="relative h-56 overflow-hidden">
+                <div className="relative h-64 overflow-hidden">
                   <img
                     src={pkg.packageImage}
                     alt={pkg.packageName}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-primary/60 to-transparent" />
-                  <div className="absolute bottom-4 left-4 right-4 flex justify-between items-end">
-                    <h3 className="font-display text-xl font-bold text-primary-foreground">
+
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+
+                  {/* Rating */}
+                  <div className="absolute top-4 right-4 flex items-center gap-1 bg-white/15 backdrop-blur-md border border-white/20 px-3 py-1 rounded-full">
+                    <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
+                    <span className="text-white text-sm font-medium">
+                      {pkg.rating}
+                    </span>
+                  </div>
+
+                  {/* Package Name */}
+                  <div className="absolute bottom-5 left-5 right-5">
+                    <h3 className="text-white text-xl font-bold leading-snug">
                       {pkg.packageName}
                     </h3>
-                    <div className="flex items-center gap-1 text-secondary">
-                      <Star className="w-4 h-4 fill-current" />
-                      <span className="text-primary-foreground font-medium">
-                        {pkg.rating}
-                      </span>
+
+                    <div className="flex items-center gap-2 mt-2 text-white/90 text-sm">
+                      <Clock className="w-4 h-4" />
+                      <span>{pkg.duration}</span>
                     </div>
                   </div>
                 </div>
 
                 {/* Content */}
                 <div className="p-6">
-                  {/* Meta */}
-                  <div className="flex gap-4 mb-4">
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <Clock className="w-4 h-4" />
-                      {pkg.duration}
+                  {/* Features New UI */}
+                  <div className="flex flex-wrap gap-6 mb-6">
+                    <div className="flex items-center gap-2  rounded-full">
+                      <Hotel className="w-4 h-4 text-secondary" />
+                      <span className="text-sm font-medium text-foreground">
+                        Premium Hotel
+                      </span>
                     </div>
-                    {/* <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <Users className="w-4 h-4" />
-                      {pkg.groupSize} people
-                    </div> */}
+
+                    <div className="flex items-center gap-2  rounded-full">
+                      <UtensilsCrossed className="w-4 h-4 text-secondary" />
+                      <span className="text-sm font-medium text-foreground">
+                        All Meals
+                      </span>
+                    </div>
+
+                    <div className="flex items-center gap-2  rounded-full">
+                      <CarTaxiFront className="w-4 h-4 text-secondary" />
+                      <span className="text-sm font-medium text-foreground">
+                        Transfers
+                      </span>
+                    </div>
+
+                    <div className="flex items-center gap-2  rounded-full">
+                      <MapPinned className="w-4 h-4 text-secondary" />
+                      <span className="text-sm font-medium text-foreground">
+                        Sightseeing
+                      </span>
+                    </div>
                   </div>
 
-                  {/* Features */}
-                  {/* <ul className="space-y-2 mb-6">
-                    {pkg.highlights.map((highlight) => (
-                      <li
-                        key={highlight.value}
-                        className="flex items-center gap-2 text-sm text-muted-foreground"
-                      >
-                        <Check className="w-4 h-4 text-secondary flex-shrink-0" />
-                        {highlight.value}
-                      </li>
-                    ))}
-                  </ul> */}
-
-                  {/* Price & CTA */}
-                  <div className="flex items-center justify-between pt-4 border-t border-border">
+                  {/* Bottom */}
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-5">
+                    {/* Price */}
                     <div>
                       <span className="text-sm text-muted-foreground">
-                        Starting from
+                        Starting From
                       </span>
-                      <p className="font-display text-2xl font-bold text-foreground">
-                        {pkg.price}
-                      </p>
+
+                      <h4 className="text-3xl font-bold text-foreground flex items-center gap-1">
+                        ₹ {pkg.price}
+                      </h4>
                     </div>
-                    <Button variant={pkg.isPopular ? "hero" : "nature"} asChild>
-                      <Link href={`/packages/${pkg.key}`}>View Package</Link>
-                    </Button>
+
+                    {/* Buttons */}
+                    <div className="grid grid-cols-2 gap-3 w-full lg:w-auto">
+                      <Button
+                        variant="outline"
+                        className="rounded-xl h-11 font-medium"
+                        asChild
+                      >
+                        <Link href={`/packages/${pkg.key}`}>Details</Link>
+                      </Button>
+
+                      <Button
+                        variant={pkg.isPopular ? "hero" : "nature"}
+                        className="rounded-xl h-11 font-medium"
+                        asChild
+                      >
+                        <Link
+                          href={`/contact?package=${encodeURIComponent(
+                            pkg.packageName,
+                          )}`}
+                        >
+                          Book Now
+                        </Link>
+                      </Button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -192,14 +195,14 @@ export const TourPackagesSection = () => {
           )}
         </div>
 
-        {/* View All CTA */}
+        {/* View All */}
         {!loading && (
           <div
             data-aos="fade-up"
             data-aos-delay="300"
-            className="text-center mt-12"
+            className="text-center mt-14"
           >
-            <Button variant="outline" size="lg" asChild>
+            <Button size="lg" variant="outline" className=" px-8" asChild>
               <Link href="/packages">View All Packages</Link>
             </Button>
           </div>
@@ -215,34 +218,32 @@ export const PackageSkeleton = () => {
       {[1, 2, 3].map((i) => (
         <div
           key={i}
-          className="relative bg-card rounded-2xl overflow-hidden shadow-soft border border-slate-100 animate-pulse"
+          className="rounded-xl overflow-hidden border border-border animate-pulse"
         >
-          {/* Image Placeholder */}
-          <div className="relative h-56 bg-slate-200" />
+          <div className="h-64 bg-slate-200" />
 
-          {/* Content Placeholder */}
-          <div className="p-6 space-y-6">
-            {/* Meta Row */}
-            <div className="flex gap-4">
-              <div className="h-4 w-20 bg-slate-200 rounded" />
-              <div className="h-4 w-20 bg-slate-200 rounded" />
+          <div className="p-6">
+            <div className="h-6 w-2/3 bg-slate-200 rounded mb-3" />
+            <div className="h-4 w-24 bg-slate-100 rounded mb-6" />
+
+            <div className="grid grid-cols-2 gap-3 mb-6">
+              {[1, 2, 3, 4].map((item) => (
+                <div key={item} className="h-20 rounded-xl bg-slate-100" />
+              ))}
             </div>
 
-            {/* Features List */}
-            <div className="space-y-3">
-              <div className="h-3 w-full bg-slate-100 rounded" />
-              <div className="h-3 w-4/5 bg-slate-100 rounded" />
-              <div className="h-3 w-5/6 bg-slate-100 rounded" />
-            </div>
-
-            {/* Footer Row */}
-            <div className="flex items-center justify-between pt-4 border-t border-border">
-              <div className="space-y-2">
-                <div className="h-3 w-16 bg-slate-100 rounded" />
-                <div className="h-6 w-24 bg-slate-200 rounded" />
+            <div className="flex justify-between items-center mb-6">
+              <div>
+                <div className="h-3 w-20 bg-slate-100 rounded mb-2" />
+                <div className="h-8 w-28 bg-slate-200 rounded" />
               </div>
-              {/* Button Placeholder */}
-              <div className="h-10 w-28 bg-slate-200 rounded-lg" />
+
+              <div className="w-14 h-14 rounded-xl bg-slate-100" />
+            </div>
+
+            <div className="grid grid-cols-2 gap-3">
+              <div className="h-11 rounded-xl bg-slate-200" />
+              <div className="h-11 rounded-xl bg-slate-200" />
             </div>
           </div>
         </div>

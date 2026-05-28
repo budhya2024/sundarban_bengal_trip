@@ -37,7 +37,7 @@ const Packages = ({
 
       {/* Packages */}
       <section className="py-10 md:py-16bg-background">
-        <div className="container mx-auto px-4">
+        <div className="container">
           <div className="space-y-16">
             {packages.map((pkg, index) => (
               <div
@@ -142,7 +142,7 @@ const Packages = ({
 
       {/* Booking Info */}
       <section className="py-16 bg-muted">
-        <div className="container mx-auto px-4">
+        <div className="container">
           <div className="grid md:grid-cols-3 gap-8 text-center">
             <div data-aos="fade-up">
               <MapPin className="w-8 h-8 text-secondary mx-auto mb-4" />

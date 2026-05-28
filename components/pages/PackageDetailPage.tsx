@@ -60,7 +60,7 @@ const PackageDetailsPage = ({
       />
 
       <section className="py-16 bg-background">
-        <div className="container mx-auto px-4">
+        <div className="container">
           {/* Back Link */}
           <Link
             href="/packages"

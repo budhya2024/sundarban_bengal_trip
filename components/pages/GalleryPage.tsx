@@ -56,7 +56,7 @@ const GalleryPage = ({
       />
 
       <section className="py-10 md:py-16bg-background">
-        <div className="container mx-auto px-4">
+        <div className="container">
           {/* Category Filter */}
           {galleryItems.length > 0 && (
             <div

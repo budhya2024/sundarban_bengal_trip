@@ -15,7 +15,7 @@ const services = [
 export const PackagesSection = () => {
   return (
     <section className="py-8 md:py-16 bg-muted/20 border-y border-border/50 overflow-hidden">
-      <div className="container mx-auto px-4">
+      <div className="container">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-14 lg:gap-20 items-stretch">
           
           {/* Image Side */}

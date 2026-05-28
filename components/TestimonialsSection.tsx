@@ -38,12 +38,12 @@ export const TestimonialsSection = ({
       {/* Dark overlay */}
       <div className="absolute inset-0 bg-primary/90"></div>
 
-      <div className="relative z-10 container mx-auto px-4">
+      <div className="relative z-10 container">
         {/* Header */}
         <div
           data-aos="fade-up"
           data-aos-duration="600"
-          className="text-center mb-8 md:mb-16"
+          className="text-center mb-8 md:mb-12"
         >
           <span className="text-secondary font-medium text-sm uppercase tracking-wider">
             Testimonials

@@ -26,7 +26,7 @@ const PaymentPolicy = () => {
       />
 
       <section className="py-10 md:py-16bg-background">
-        <div className="container mx-auto px-4 max-w-4xl">
+        <div className="container max-w-4xl">
 
           {/*  NOTES CARD (NEW ADDED) */}
           <div

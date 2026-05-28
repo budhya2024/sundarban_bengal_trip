@@ -31,7 +31,7 @@ export const PageHeader = ({
       </div>
 
       {/* Content */}
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container relative z-10">
         <div
           data-aos="fade-up"
           data-aos-duration="600"

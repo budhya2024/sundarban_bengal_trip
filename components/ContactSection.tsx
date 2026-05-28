@@ -8,7 +8,7 @@ import Image from "next/image";
 export const ContactSection = () => {
   return (
     <section className=" bg-white pt-10 md:pt-20 ">
-      <div className="container mx-auto px-4">
+      <div className="container">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* LEFT CONTENT */}
           <div className="max-w-xl">

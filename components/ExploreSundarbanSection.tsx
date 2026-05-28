@@ -40,13 +40,13 @@ const features = [
 export const ExploreSundarbanSection = () => {
   return (
     <section className="py-10 md:py-16 bg-muted">
-      <div className="container mx-auto px-4">
+      <div className="container">
         {/* Section Header */}
         <div className="text-center mb-12" data-aos="fade-up">
           <span className="text-secondary font-medium text-sm uppercase tracking-wider">
             Your Gateway
           </span>
-          <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mt-2 mb-4">
+          <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mt-2 mb-4">
             Explore Sundarban from <span className="text-primary">Kolkata</span>
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">

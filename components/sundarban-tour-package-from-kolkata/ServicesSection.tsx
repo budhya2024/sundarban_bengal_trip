@@ -17,7 +17,7 @@ export const ServicesSection = () => {
       <div className="absolute inset-0 bg-black/70" />
 
       {/* Content */}
-      <div className="relative z-10 container mx-auto px-4">
+      <div className="relative z-10 container">
         <div className="max-w-4xl mx-auto text-center">
           {/* Badge */}
           <div

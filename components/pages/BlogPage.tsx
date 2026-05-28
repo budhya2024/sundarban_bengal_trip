@@ -49,7 +49,7 @@ const Blog = ({
         <BlogEmptyState />
       ) : (
         <section className="py-10 md:py-16bg-background">
-          <div className="container mx-auto px-4">
+          <div className="container">
             {/* Featured Post */}
             {featureBlog && (
               <div data-aos="fade-up" className="mb-8 md:mb-16">
