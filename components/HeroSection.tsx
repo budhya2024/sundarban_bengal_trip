@@ -16,30 +16,26 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 const slides = [
   {
     id: 1,
-    image:
-      "https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?q=80&w=2070&auto=format&fit=crop",
-    title: "Experience the Untamed Beauty of Sundarbans",
+    image: "/assets/house-boat.jpeg",
+    title: "Luxury Houseboat Cruises in the Sundarbans",
     description:
-      "Cruise through mystical mangrove forests, spot Royal Bengal Tigers, and enjoy unforgettable river adventures.",
+      "Sail through tranquil rivers and lush mangrove forests while enjoying a premium houseboat experience surrounded by nature.",
   },
   {
     id: 2,
-    image:
-      "https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=2070&auto=format&fit=crop",
-    title: "Luxury Wildlife Tours & River Cruises",
+    image: "/assets/sonarbanglahotel.jpg",
+    title: "Stay at Premium Riverside Resorts",
     description:
-      "Discover hidden islands, breathtaking sunsets, and premium stays crafted for unforgettable memories.",
+      "Relax in elegant accommodations with modern comfort, scenic river views, authentic Bengali cuisine, and warm hospitality.",
   },
   {
     id: 3,
-    image:
-      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2070&auto=format&fit=crop",
-    title: "Explore Nature Like Never Before",
+    image: "/assets/tiger-photo.jpg",
+    title: "Witness the Majestic Royal Bengal Tiger",
     description:
-      "Immerse yourself in the serene waterways and vibrant wildlife of the world's largest mangrove forest.",
+      "Embark on thrilling wildlife safaris and explore the untouched wilderness of the Sundarbans, home to rare and exotic species.",
   },
 ];
-
 export const HeroSection = () => {
   const [progress, setProgress] = useState(0);
 

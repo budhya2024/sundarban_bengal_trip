@@ -251,6 +251,8 @@ const PackageDetailsPage = ({
                   <Link href="/contact">Contact for Custom Tour</Link>
                 </Button>
               </div>
+
+              
             </div>
           </div>
         </div>
