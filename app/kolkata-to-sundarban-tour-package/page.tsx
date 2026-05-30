@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
-import React from "react";
-import SundarbanTourPackageFromKolkata from "@/app/sundarban-tour-package-from-kolkata/SundarbanTourPackageFromKolkata";
+import { Navbar } from "@/components/Navbar";
+import { Footer } from "@/components/Footer";
+import { PageHeader } from "@/components/PageHeader";
+import { PackageHero } from "@/components/kolkata-to-sundarban-tour-package/PackageHero";
+import { JourneyHighlights } from "@/components/kolkata-to-sundarban-tour-package/JourneyHighlights";
+import { BookingContact } from "@/components/kolkata-to-sundarban-tour-package/BookingContact";
 
 export const metadata: Metadata = {
   title: "Kolkata to Sundarban Tour Package | Best Sundarban Tour from Kolkata",
@@ -12,6 +16,11 @@ export const metadata: Metadata = {
     "Sundarban Travel Package",
     "Sundarban Boat Safari",
     "Sundarban Wildlife Tour",
+    "Sundarban Holiday Package",
+    "Sundarban Trip Booking",
+    "Sundarban Tourism",
+    "Weekend Tour Sundarban",
+    "Sundarban Tour Cost",
   ],
   alternates: {
     canonical:
@@ -46,5 +55,27 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  return <SundarbanTourPackageFromKolkata />;
+  return (
+    <>
+      <Navbar />
+      <main className="min-h-screen bg-background selection:bg-primary/20 selection:text-primary">
+        <PageHeader
+          title="Kolkata to Sundarban Tour Package"
+          subtitle="Going to the worlds mangrove forest is very exciting. Our Kolkata to Sundarban Tour Package is made to make your trip easy and fun from the start. We pick you up from Science City, Howrah or Sealdah wherever you want. The Kolkata to Sundarban Tour Package takes care of everything."
+          backgroundImage="/assets/house-boat.jpeg"
+        />
+
+        <PackageHero />
+
+        <section className="bg-muted">
+          <JourneyHighlights />
+        </section>
+
+        <section className="bg-background">
+          <BookingContact />
+        </section>
+      </main>
+      <Footer />
+    </>
+  );
 }

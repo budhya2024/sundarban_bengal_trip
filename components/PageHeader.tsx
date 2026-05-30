@@ -1,7 +1,5 @@
 "use client";
 
-import { useEffect } from "react";
-import AOS from "aos";
 import Link from "next/link";
 
 interface PageHeaderProps {
@@ -15,10 +13,6 @@ export const PageHeader = ({
   subtitle,
   backgroundImage,
 }: PageHeaderProps) => {
-  useEffect(() => {
-    AOS.refresh();
-  }, []);
-
   return (
     <section className="relative overflow-hidden min-h-[520px] flex items-center pt-32 pb-24">
       {/* Background Image */}
@@ -38,11 +32,7 @@ export const PageHeader = ({
 
       {/* Content */}
       <div className="container relative z-10">
-        <div
-          data-aos="fade-up"
-          data-aos-duration="700"
-          className="max-w-4xl"
-        >
+        <div className="max-w-4xl">
           {/* Breadcrumb */}
           <div className="flex items-center gap-3 text-white/90 mb-8 text-sm md:text-base font-medium">
             <Link
