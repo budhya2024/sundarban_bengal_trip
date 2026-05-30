@@ -132,17 +132,19 @@ const PackageDetailsPage = ({
               </div>
 
               {/* Menu Details*/}
-              <div data-aos="fade-up ">
+              <div data-aos="fade-up">
                 <h2 className="font-display text-2xl font-bold text-foreground mb-4">
                   Menu Details
                 </h2>
-                <div className="grid md:grid-cols-2 gap-3 border-l-4 border-primary pl-6">
+                <div className="space-y-3">
                   {data.highlights.map((highlight, index) => (
-                    <div key={index} className="flex items-center gap-3">
-                      <Check className="w-5 h-5 text-secondary flex-shrink-0" />
-                      <span className="text-muted-foreground">
+                    <div
+                      key={index}
+                      className="bg-card rounded-xl p-5 shadow-soft border-l-4 border-primary"
+                    >
+                      <p className="text-muted-foreground text-sm leading-relaxed">
                         {highlight.value}
-                      </span>
+                      </p>
                     </div>
                   ))}
                 </div>
