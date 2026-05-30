@@ -4,7 +4,7 @@ const items = [
   {
     title: "Pickup & Transfer",
     description:
-      "Convenient pickup from Science City, Howrah or Sealdah and comfortable transfers to the Godhkhali ferry ghat.",
+      "Convenient pickup from Science City, Howrah or Sealdah and comfortable Pickup & Drop to the Godhkhali ferry ghat.",
     image: "/assets/tourman.jpg",
     alt: "Pickup and transfer",
   },

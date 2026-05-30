@@ -12,7 +12,10 @@ import {
   FaUtensils,
   FaCarSide,
   FaMapLocationDot,
+  FaBed,
 } from "react-icons/fa6";
+import { GiHotMeal, GiWorld } from "react-icons/gi";
+import { PiBinocularsFill } from "react-icons/pi";
 
 import Link from "next/link";
 import { PackageValues } from "@/schemas/package.schema";
@@ -61,7 +64,7 @@ export const TourPackagesSection = () => {
 
           <p className="text-muted-foreground max-w-2xl mx-auto">
             Explore breathtaking destinations with premium stays, delicious
-            meals, seamless transfers, and unforgettable sightseeing
+            meals, seamless Pickup & Drop, and unforgettable sightseeing
             experiences.
           </p>
         </div>
@@ -101,7 +104,7 @@ export const TourPackagesSection = () => {
 
                   {/* Rating */}
                   <div className="absolute top-4 right-4 flex items-center gap-1 bg-white/15 backdrop-blur-md border border-white/20 px-3 py-1 rounded-full">
-                    <FaStar className="w-4 h-4 text-yellow-400" />
+                    <FaStar className="w-5 h-5 text-yellow-400" />
                     <span className="text-white text-sm font-medium">
                       {pkg.rating}
                     </span>
@@ -114,7 +117,7 @@ export const TourPackagesSection = () => {
                     </h3>
 
                     <div className="flex items-center gap-2 mt-2 text-white/90 text-sm">
-                      <FaClock className="w-4 h-4" />
+                      <FaClock className="w-5 h-5" />
                       <span>{pkg.duration}</span>
                     </div>
                   </div>
@@ -125,22 +128,24 @@ export const TourPackagesSection = () => {
                   {/* Features */}
                   <div className="flex flex-wrap gap-6 mb-6">
                     <div className="flex items-center gap-2">
-                      <FaHotel className="w-4 h-4 text-secondary" />
+                      <FaBed className="w-5 h-5 text-secondary" />
                       <span className="text-sm font-medium">Premium Hotel</span>
                     </div>
 
                     <div className="flex items-center gap-2">
-                      <FaUtensils className="w-4 h-4 text-secondary" />
+                      <GiHotMeal className="w-5 h-5 text-secondary" />
                       <span className="text-sm font-medium">All Meals</span>
                     </div>
 
                     <div className="flex items-center gap-2">
-                      <FaCarSide className="w-4 h-4 text-secondary" />
-                      <span className="text-sm font-medium">Transfers</span>
+                      <FaCarSide className="w-5 h-5 text-secondary" />
+                      <span className="text-sm font-medium">Pickup & Drop</span>
                     </div>
 
                     <div className="flex items-center gap-2">
-                      <FaMapLocationDot className="w-4 h-4 text-secondary" />
+                      <PiBinocularsFill className="w-5 h-5 text-secondary" />
+                      
+
                       <span className="text-sm font-medium">Sightseeing</span>
                     </div>
                   </div>

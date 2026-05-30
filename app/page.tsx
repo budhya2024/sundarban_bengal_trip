@@ -51,12 +51,12 @@ const Index = () => {
     <main className="min-h-screen">
       <Navbar />
       <HeroSection />
-     <TourPackagesSection />
+      <TourPackagesSection />
       {/* <BookingForm /> */}
-      <HotelSwiper/>
+      <HotelSwiper />
       <AboutSection />
       <ExploreSundarbanSection />
-    
+
       <GallerySection />
       <TestimonialsSection
         data={homeSetting?.testimonials || []}

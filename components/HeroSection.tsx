@@ -84,7 +84,7 @@ export const HeroSection = () => {
                     <h1
                       data-aos="fade-up"
                       data-aos-duration="700"
-                      className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6"
+                      className="text-3xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6"
                     >
                       {slide.title}
                     </h1>
@@ -93,7 +93,7 @@ export const HeroSection = () => {
                       data-aos="fade-up"
                       data-aos-delay="200"
                       data-aos-duration="700"
-                      className="text-lg md:text-xl text-white/90 leading-relaxed mb-8 max-w-2xl"
+                      className="text-base md:text-xl text-white/90 leading-relaxed mb-8 max-w-2xl"
                     >
                       {slide.description}
                     </p>
@@ -110,17 +110,10 @@ export const HeroSection = () => {
                         asChild
                         className="px-8"
                       >
-                        <Link href="/packages">Explore Tours</Link>
+                        <Link href="/packages">Plan Your Trip</Link>
                       </Button>
 
-                      <Button
-                        variant="heroOutline"
-                        size="xl"
-                        asChild
-                        className="px-8"
-                      >
-                        <Link href="/contact">Plan Your Trip</Link>
-                      </Button>
+                   
                     </div>
                   </div>
                 </div>
