@@ -202,7 +202,7 @@ export const Footer = () => {
             <p className="text-primary-foreground text-sm">
               Powered by{" "}
               <a
-                href="#"
+                href="https://www.facebook.com/profile.php?id=61557874367373"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-secondary transition-colors"

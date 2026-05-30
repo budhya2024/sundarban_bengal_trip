@@ -194,7 +194,7 @@ export const Navbar = () => {
                       onClick={() =>
                         setIsMobilePackagesOpen(!isMobilePackagesOpen)
                       }
-                      className="w-full flex items-center justify-between text-xl font-semibold"
+                      className="w-full flex items-center justify-between text-base font-semibold"
                     >
                       {link.name}
                       <ChevronDown
@@ -210,14 +210,14 @@ export const Navbar = () => {
                           initial={{ height: 0, opacity: 0 }}
                           animate={{ height: "auto", opacity: 1 }}
                           exit={{ height: 0, opacity: 0 }}
-                          className="overflow-hidden mt-4 ml-4 space-y-3"
+                          className="overflow-hidden mt-4  space-y-3"
                         >
                           {packageList.map((pkg) => (
                             <Link
                               key={pkg.key}
                               href={`/packages/${pkg.key}`}
                               onClick={() => setIsOpen(false)}
-                              className="block text-base text-muted-foreground"
+                              className="block text-base  text-foreground"
                             >
                               {pkg.name}
                             </Link>
@@ -225,7 +225,7 @@ export const Navbar = () => {
                           <Link
                             href={`/contact`}
                             onClick={() => setIsOpen(false)}
-                            className="block text-base text-muted-foreground"
+                            className="block text-base  text-foreground"
                           >
                             Plan Your Custom Trip
                           </Link>
@@ -238,7 +238,7 @@ export const Navbar = () => {
                     key={link.path}
                     href={link.path}
                     onClick={() => setIsOpen(false)}
-                    className="text-xl font-semibold"
+                    className="text-base font-semibold"
                   >
                     {link.name}
                   </Link>

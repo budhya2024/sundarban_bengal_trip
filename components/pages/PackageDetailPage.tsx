@@ -79,7 +79,7 @@ const PackageDetailsPage = ({
                 <h2 className="font-display text-2xl font-bold text-foreground mb-4">
                   Overview
                 </h2>
-                <p className="text-muted-foreground text-lg leading-relaxed">
+                <p className="text-muted-foreground text-base md:text-lg leading-relaxed">
                   {data.description}
                 </p>
               </div>
@@ -235,19 +235,19 @@ const PackageDetailsPage = ({
                   <span className="text-muted-foreground">per person</span>
                 </div>
 
-                {/* <div className="space-y-4 mb-6">
+                <div className="space-y-4 mb-6">
                   <div className="flex items-center gap-3 text-muted-foreground">
                     <Calendar className="w-5 h-5 text-secondary" />
                     <span>Daily departures available</span>
                   </div>
-                  <div className="flex items-center gap-3 text-muted-foreground">
+                  {/* <div className="flex items-center gap-3 text-muted-foreground">
                     <Users className="w-5 h-5 text-secondary" />
                     <span>{data.groupSize}</span>
-                  </div>
-                </div> */}
+                  </div> */}
+                </div>
 
                 <BookingModal packageName={data.packageName} />
-                <Button variant="outline" className="w-full" asChild>
+                <Button variant="outline" className="w-full mt-4" asChild >
                   <Link href="/contact">Contact for Custom Tour</Link>
                 </Button>
               </div>

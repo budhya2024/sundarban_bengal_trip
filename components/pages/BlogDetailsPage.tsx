@@ -76,11 +76,11 @@ const BlogDetails = ({
               {/* Blog Title */}
               <h1
                 data-aos="fade-up"
-                className="font-display text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-6"
+                className="font-display text-xl md:text-2xl lg:text-3xl font-bold text-foreground mb-6"
               >
                 {post.title}
               </h1>
-
+    
               {/* Author Info */}
               <div
                 data-aos="fade-up"

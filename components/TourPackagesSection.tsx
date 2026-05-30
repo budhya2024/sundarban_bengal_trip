@@ -3,15 +3,17 @@
 import { useEffect, useState } from "react";
 import AOS from "aos";
 import { Button } from "@/components/ui/button";
+import { BookingModal } from "@/components/BookingModal";
+
 import {
-  Clock,
-  Star,
-  Hotel,
-  UtensilsCrossed,
-  CarTaxiFront,
-  MapPinned,
-  ArrowRight,
-} from "lucide-react";
+  FaClock,
+  FaStar,
+  FaHotel,
+  FaUtensils,
+  FaCarSide,
+  FaMapLocationDot,
+} from "react-icons/fa6";
+
 import Link from "next/link";
 import { PackageValues } from "@/schemas/package.schema";
 import { getPackages } from "@/app/actions/package.actions";
@@ -99,7 +101,7 @@ export const TourPackagesSection = () => {
 
                   {/* Rating */}
                   <div className="absolute top-4 right-4 flex items-center gap-1 bg-white/15 backdrop-blur-md border border-white/20 px-3 py-1 rounded-full">
-                    <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
+                    <FaStar className="w-4 h-4 text-yellow-400" />
                     <span className="text-white text-sm font-medium">
                       {pkg.rating}
                     </span>
@@ -112,7 +114,7 @@ export const TourPackagesSection = () => {
                     </h3>
 
                     <div className="flex items-center gap-2 mt-2 text-white/90 text-sm">
-                      <Clock className="w-4 h-4" />
+                      <FaClock className="w-4 h-4" />
                       <span>{pkg.duration}</span>
                     </div>
                   </div>
@@ -120,34 +122,26 @@ export const TourPackagesSection = () => {
 
                 {/* Content */}
                 <div className="p-6">
-                  {/* Features New UI */}
+                  {/* Features */}
                   <div className="flex flex-wrap gap-6 mb-6">
-                    <div className="flex items-center gap-2  rounded-full">
-                      <Hotel className="w-4 h-4 text-secondary" />
-                      <span className="text-sm font-medium text-foreground">
-                        Premium Hotel
-                      </span>
+                    <div className="flex items-center gap-2">
+                      <FaHotel className="w-4 h-4 text-secondary" />
+                      <span className="text-sm font-medium">Premium Hotel</span>
                     </div>
 
-                    <div className="flex items-center gap-2  rounded-full">
-                      <UtensilsCrossed className="w-4 h-4 text-secondary" />
-                      <span className="text-sm font-medium text-foreground">
-                        All Meals
-                      </span>
+                    <div className="flex items-center gap-2">
+                      <FaUtensils className="w-4 h-4 text-secondary" />
+                      <span className="text-sm font-medium">All Meals</span>
                     </div>
 
-                    <div className="flex items-center gap-2  rounded-full">
-                      <CarTaxiFront className="w-4 h-4 text-secondary" />
-                      <span className="text-sm font-medium text-foreground">
-                        Transfers
-                      </span>
+                    <div className="flex items-center gap-2">
+                      <FaCarSide className="w-4 h-4 text-secondary" />
+                      <span className="text-sm font-medium">Transfers</span>
                     </div>
 
-                    <div className="flex items-center gap-2  rounded-full">
-                      <MapPinned className="w-4 h-4 text-secondary" />
-                      <span className="text-sm font-medium text-foreground">
-                        Sightseeing
-                      </span>
+                    <div className="flex items-center gap-2">
+                      <FaMapLocationDot className="w-4 h-4 text-secondary" />
+                      <span className="text-sm font-medium">Sightseeing</span>
                     </div>
                   </div>
 
@@ -159,34 +153,29 @@ export const TourPackagesSection = () => {
                         Starting From
                       </span>
 
-                      <h4 className="text-3xl font-bold text-foreground flex items-center gap-1">
+                      <h4 className="text-xl font-bold text-foreground">
                         ₹ {pkg.price}
                       </h4>
                     </div>
 
                     {/* Buttons */}
-                    <div className="grid grid-cols-2 gap-3 w-full lg:w-auto">
+                    <div className="flex gap-3 w-full lg:w-auto">
                       <Button
                         variant="outline"
-                        className="rounded-xl h-11 font-medium"
+                        className="text-base rounded-xl py-4 font-medium w-full lg:w-auto"
                         asChild
                       >
                         <Link href={`/packages/${pkg.key}`}>Details</Link>
                       </Button>
 
-                      <Button
-                        variant={pkg.isPopular ? "hero" : "nature"}
-                        className="rounded-xl h-11 font-medium"
-                        asChild
-                      >
-                        <Link
-                          href={`/contact?package=${encodeURIComponent(
-                            pkg.packageName,
-                          )}`}
-                        >
-                          Book Now
-                        </Link>
-                      </Button>
+                      <div className="w-full lg:w-auto">
+                        <BookingModal
+                          packageName={pkg.packageName}
+                          triggerLabel="Book Now"
+                          triggerVariant="outline"
+                          triggerClassName="text-base rounded-xl font-medium w-full lg:w-auto"
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -202,8 +191,8 @@ export const TourPackagesSection = () => {
             data-aos-delay="300"
             className="text-center mt-14"
           >
-            <Button size="lg" variant="outline" className=" px-8" asChild>
-              <Link href="/packages">View All Packages</Link>
+            <Button size="lg" variant="outline" className="px-8" asChild>
+              <Link href="/contact">Contact for Custom Tour</Link>
             </Button>
           </div>
         )}

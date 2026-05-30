@@ -80,12 +80,12 @@ export const BookingModal = ({ packageName }: { packageName: string }) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="hero" size="xl" className="w-full mb-4">
-          Book This Package
+        <Button variant="hero" size="lg" className="w-full">
+          Book Now
         </Button>
       </DialogTrigger>
 
-      <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto rounded-3xl p-8 border-none">
+      <DialogContent className="w-[95%] sm:max-w-[600px] max-h-[90vh] overflow-y-auto rounded-3xl p-6 md:p-8 border-none">
         {/* Header */}
         <DialogHeader className="space-y-3">
           <DialogTitle className="font-display text-2xl text-foreground">
@@ -99,10 +99,7 @@ export const BookingModal = ({ packageName }: { packageName: string }) => {
         </DialogHeader>
 
         <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-5"
-          >
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
             {/* Name */}
             <FormField
               control={form.control}
@@ -296,8 +293,8 @@ export const BookingModal = ({ packageName }: { packageName: string }) => {
                 </>
               ) : (
                 <>
-                  <Send className="w-5 h-5 mr-2" />
-                  Confirm Booking Inquiry
+                  <Send className="w-5 h-5 mr-1" />
+                  Confirm Booking 
                 </>
               )}
             </Button>
