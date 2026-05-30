@@ -38,7 +38,7 @@ export async function getNavbarPackageKeys() {
         name: sql<string>`${travelPackages.data}->>'packageName'`,
       })
       .from(travelPackages)
-      .orderBy(asc(travelPackages.updatedAt));
+      .orderBy(asc(travelPackages.createdAt));
     // .where(eq(travelPackages.isPopular, true));
     return {
       success: true,
@@ -110,7 +110,7 @@ export async function getPackages(onlyPopular = false, limit?: number) {
     }
 
     // 3. Add global ordering
-    query = query.orderBy(desc(travelPackages.updatedAt));
+    query = query.orderBy(asc(travelPackages.createdAt));
 
     // 4. Dynamically add limit if provided
     if (limit) {

@@ -7,10 +7,8 @@ import { usePathname } from "next/navigation";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import {
-  getNavbarPackageKeys,
-  getPackageKeys,
-} from "@/app/actions/package.actions";
+import { getNavbarPackageKeys } from "@/app/actions/package.actions";
+import { Skeleton } from "./ui/skeleton";
 
 const navLinks = [
   { name: "Home", path: "/" },
@@ -22,6 +20,7 @@ const navLinks = [
 ];
 
 export const Navbar = () => {
+  const [loading, setLoading] = useState(true);
   const pathname = usePathname();
   const [packageList, setPackageList] = useState<
     { key: string; name: string }[]
@@ -33,13 +32,16 @@ export const Navbar = () => {
   const [isMobilePackagesOpen, setIsMobilePackagesOpen] = useState(false);
 
   useEffect(() => {
-    const fetchPopularPackages = async () => {
-      const { data, success } = await getNavbarPackageKeys();
-      if (success) {
-        setPackageList(data);
-      }
-    };
-    fetchPopularPackages();
+    getNavbarPackageKeys()
+      .then(({ data, success }) => {
+        if (success) {
+          setPackageList(data);
+        }
+      })
+      .catch((err) => console.log(err))
+      .finally(() => {
+        setLoading(false);
+      });
   }, []);
 
   /* Scroll shadow */
@@ -126,21 +128,33 @@ export const Navbar = () => {
                         className="absolute top-full left-0 mt-2 w-64"
                       >
                         <div className="bg-card rounded-xl shadow-elevated overflow-hidden">
-                          {packageList.map((pkg) => (
-                            <Link
-                              key={pkg.key}
-                              href={`/packages/${pkg.key}`}
-                              className="block px-4 py-3 hover:bg-muted transition"
-                            >
-                              {pkg.name}
-                            </Link>
-                          ))}
-                          <Link
-                            href={`/contact`}
-                            className="block px-4 py-3 hover:bg-muted transition"
-                          >
-                            Plan Your Custom Trip
-                          </Link>
+                          {loading ? (
+                            <>
+                              {[...Array(5)].map((_, index) => (
+                                <div key={index} className="px-4 py-3">
+                                  <Skeleton className="h-4 w-full" />
+                                </div>
+                              ))}
+                            </>
+                          ) : (
+                            <>
+                              {packageList.map((pkg) => (
+                                <Link
+                                  key={pkg.key}
+                                  href={`/packages/${pkg.key}`}
+                                  className="block px-4 py-3 hover:bg-muted transition"
+                                >
+                                  {pkg.name}
+                                </Link>
+                              ))}
+                              <Link
+                                href={`/contact`}
+                                className="block px-4 py-3 hover:bg-muted transition"
+                              >
+                                Plan Your Custom Trip
+                              </Link>
+                            </>
+                          )}
                         </div>
                       </motion.div>
                     )}
@@ -212,23 +226,34 @@ export const Navbar = () => {
                           exit={{ height: 0, opacity: 0 }}
                           className="overflow-hidden mt-4  space-y-3"
                         >
-                          {packageList.map((pkg) => (
-                            <Link
-                              key={pkg.key}
-                              href={`/packages/${pkg.key}`}
-                              onClick={() => setIsOpen(false)}
-                              className="block text-base  text-foreground"
-                            >
-                              {pkg.name}
-                            </Link>
-                          ))}
-                          <Link
-                            href={`/contact`}
-                            onClick={() => setIsOpen(false)}
-                            className="block text-base  text-foreground"
-                          >
-                            Plan Your Custom Trip
-                          </Link>
+                          {loading ? (
+                            <>
+                              {[...Array(5)].map((_, index) => (
+                                <div key={index} className="px-4 py-3">
+                                  <Skeleton className="h-4 w-full" />
+                                </div>
+                              ))}
+                            </>
+                          ) : (
+                            <>
+                              {packageList.map((pkg) => (
+                                <Link
+                                  key={pkg.key}
+                                  href={`/packages/${pkg.key}`}
+                                  className="block px-4 py-3 hover:bg-muted transition"
+                                >
+                                  {pkg.name}
+                                </Link>
+                              ))}
+                              <Link
+                                href={`/contact`}
+                                onClick={() => setIsOpen(false)}
+                                className="block text-base text-muted-foreground"
+                              >
+                                Plan Your Custom Trip
+                              </Link>
+                            </>
+                          )}
                         </motion.div>
                       )}
                     </AnimatePresence>

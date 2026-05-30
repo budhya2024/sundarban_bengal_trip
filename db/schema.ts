@@ -59,7 +59,11 @@ export const travelPackages = pgTable("travel_packages", {
   category: text("category").notNull(),
   isPopular: boolean("is_popular").default(false).notNull(),
   data: jsonb("data").notNull(),
-  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at")
+    .defaultNow()
+    .$onUpdate(() => new Date())
+    .notNull(),
 });
 
 export type TravelPackage = typeof travelPackages.$inferSelect;

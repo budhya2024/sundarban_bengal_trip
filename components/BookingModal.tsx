@@ -23,7 +23,7 @@ import {
 } from "@/components/ui/form";
 
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { Button, ButtonProps } from "@/components/ui/button";
 
 import {
   Loader2,
@@ -39,7 +39,19 @@ import { BookingSchema, BookingValues } from "@/schemas/booking.schema";
 import { useToast } from "@/hooks/use-toast";
 import { createBooking } from "@/app/actions/home.actions";
 
-export const BookingModal = ({ packageName }: { packageName: string }) => {
+interface BookingModalProps {
+  packageName: string;
+  triggerLabel?: string;
+  triggerVariant?: ButtonProps["variant"];
+  triggerClassName?: string;
+}
+
+export const BookingModal = ({
+  packageName,
+  triggerLabel = "Book Now",
+  triggerVariant = "hero",
+  triggerClassName = "w-full",
+}: BookingModalProps) => {
   const [isPending, startTransition] = useTransition();
   const { toast } = useToast();
 
@@ -80,8 +92,8 @@ export const BookingModal = ({ packageName }: { packageName: string }) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="hero" size="lg" className="w-full">
-          Book Now
+        <Button variant={triggerVariant} size="lg" className={triggerClassName}>
+          {triggerLabel}
         </Button>
       </DialogTrigger>
 
