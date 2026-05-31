@@ -5,7 +5,7 @@ const items = [
     title: "Pickup & Transfer",
     description:
       "Convenient pickup from Science City, Howrah or Sealdah and comfortable Pickup & Drop to the Godhkhali ferry ghat.",
-    image: "/assets/tourman.jpg",
+    image: "/assets/hose-boat.webp",
     alt: "Pickup and transfer",
   },
   {
@@ -19,7 +19,7 @@ const items = [
     title: "Boat Safari & Wildlife",
     description:
       "Explore the mangrove creeks on guided boat safaris and experience Sundarban’s unique estuarine wildlife.",
-    image: "/assets/gallery-boat.jpg",
+    image: "/assets/houseboat.jpeg",
     alt: "Boat safari",
   },
 ];

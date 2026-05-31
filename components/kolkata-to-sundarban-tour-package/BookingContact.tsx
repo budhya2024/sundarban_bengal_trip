@@ -9,7 +9,7 @@ export const BookingContact = () => {
       <div className="container">
         <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] items-start">
           <div className="space-y-6">
-            <div className="font-display text-3xl md:text-4xl font-bold leading-tight text-foreground">
+            <div className="font-display text-2xl md:text-3xl font-bold leading-tight text-foreground">
               Travel from Kolkata to Sundarban by Train, Car & River Cruise with
               Local Sightseeing
             </div>

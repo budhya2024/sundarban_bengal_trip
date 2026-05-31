@@ -3,10 +3,10 @@ import { HighlightsGrid } from "./HighlightsGrid";
 
 export const JourneyHighlights = () => {
   return (
-    <section className="py-10 md:py-14 bg-muted">
+    <section className="py-10 md:py-16 bg-muted">
       <div className="container">
         <div className="space-y-6 text-left">
-          <h2 className="font-display text-3xl md:text-4xl font-bold leading-tight text-foreground max-w-5xl">
+          <h2 className="font-display text-2xl md:text-3xl font-bold leading-tight text-foreground max-w-5xl">
             Kolkata to Sundarban Tour Package with Pickup, Travel, Hotel Stay &
             Boat Safari Experience
           </h2>

@@ -2,7 +2,6 @@
 
 import { useEffect } from "react";
 import AOS from "aos";
-import "aos/dist/aos.css";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { PageHeader } from "@/components/PageHeader";
@@ -26,7 +25,7 @@ const PrivacyPolicy = () => {
         backgroundImage="/assets/hero-sundarban.jpg"
       />
 
-      <section className="py-10 md:py-16bg-background">
+      <section className="py-10 md:py-16 bg-background">
         <div className="container max-w-4xl">
           <div
             data-aos="fade-up"

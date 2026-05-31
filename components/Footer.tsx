@@ -12,9 +12,9 @@ import Image from "next/image";
 
 export const Footer = () => {
   return (
-    <footer className="bg-primary text-primary-foreground py-8 md:py-16" >
+    <footer className="bg-primary text-primary-foreground py-8 md:py-16">
       <div className="container ">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-5">
           {/* Brand */}
           <div className="lg:col-span-2">
             <Link href="/" className="flex items-center gap-2 mb-6">
@@ -184,9 +184,52 @@ export const Footer = () => {
             </ul>
           </div>
         </div>
+        <div className="mt-12 border-t border-primary-foreground/20 pt-8 flex flex-wrap  gap-2 text-sm">
+          <Link
+            href="/kolkata-to-sundarban-tour-package"
+            className="text-primary-foreground/80 hover:text-secondary transition-colors"
+          >
+            Kolkata to Sundarban Tour Package
+          </Link>
+
+          <span className="text-primary-foreground/40">|</span>
+
+          <Link
+            href="/cheap-sundarban-tour-package-from-kolkata"
+            className="text-primary-foreground/80 hover:text-secondary transition-colors"
+          >
+            Cheap Sundarban Tour Package From Kolkata
+          </Link>
+
+          <span className="text-primary-foreground/40">|</span>
+
+          <Link
+            href="/sundarban-tour-cost-from-kolkata"
+            className="text-primary-foreground/80 hover:text-secondary transition-colors"
+          >
+            Sundarban Tour Cost From Kolkata
+          </Link>
+
+          <span className="text-primary-foreground/40">|</span>
+
+          <Link
+            href="/sundarban-tour-package-from-kolkata"
+            className="text-primary-foreground/80 hover:text-secondary transition-colors"
+          >
+            Sundarban Tour Package From Kolkata
+          </Link>
+            <span className="text-primary-foreground/40">|</span>
+           <Link
+            href="/Sundarban 1 Night 2 Days Package from Kolkata"
+            className="text-primary-foreground/80 hover:text-secondary transition-colors"
+          >
+            Sundarban 1 Night 2 Days Package from Kolkata
+            
+          </Link>
+        </div>
 
         {/* Bottom Bar */}
-        <div className="mt-8 md:mt-12 pt-6 md:pt-8 border-t border-primary-foreground/20">
+        <div className="mt-8  pt-6 md:pt-8 border-t border-primary-foreground/20">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="flex flex-col gap-1">
               <p className="text-primary-foreground/60 text-sm">

@@ -5,21 +5,14 @@ import AOS from "aos";
 import { Button } from "@/components/ui/button";
 import { BookingModal } from "@/components/BookingModal";
 
-import {
-  FaClock,
-  FaStar,
-  FaHotel,
-  FaUtensils,
-  FaCarSide,
-  FaMapLocationDot,
-  FaBed,
-} from "react-icons/fa6";
-import { GiHotMeal, GiWorld } from "react-icons/gi";
+import { FaClock, FaStar, FaCarSide, FaBed } from "react-icons/fa6";
+import { GiHotMeal } from "react-icons/gi";
 import { PiBinocularsFill } from "react-icons/pi";
 
 import Link from "next/link";
 import { PackageValues } from "@/schemas/package.schema";
 import { getPackages } from "@/app/actions/package.actions";
+import router from "next/router";
 
 interface PackageListValue extends PackageValues {
   key: string;
@@ -70,7 +63,7 @@ export const TourPackagesSection = () => {
         </div>
 
         {/* Packages Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-4">
           {loading ? (
             <PackageSkeleton />
           ) : (
@@ -126,7 +119,7 @@ export const TourPackagesSection = () => {
                 {/* Content */}
                 <div className="p-6">
                   {/* Features */}
-                  <div className="flex flex-wrap gap-6 mb-6">
+                  <div className="flex flex-wrap gap-y-3 gap-x-6 mb-3 md:mb-6">
                     <div className="flex items-center gap-2">
                       <FaBed className="w-5 h-5 text-secondary" />
                       <span className="text-sm font-medium">Premium Hotel</span>
@@ -144,7 +137,6 @@ export const TourPackagesSection = () => {
 
                     <div className="flex items-center gap-2">
                       <PiBinocularsFill className="w-5 h-5 text-secondary" />
-                      
 
                       <span className="text-sm font-medium">Sightseeing</span>
                     </div>
@@ -167,10 +159,10 @@ export const TourPackagesSection = () => {
                     <div className="flex gap-3 w-full lg:w-auto">
                       <Button
                         variant="outline"
-                        className="text-base rounded-xl py-4 font-medium w-full lg:w-auto"
-                        asChild
+                        className="h-12 px-6 rounded-xl font-medium"
+                        onClick={() => router.push(`/packages/${pkg.key}`)}
                       >
-                        <Link href={`/packages/${pkg.key}`}>Details</Link>
+                        View Details
                       </Button>
 
                       <div className="w-full lg:w-auto">
@@ -194,7 +186,7 @@ export const TourPackagesSection = () => {
           <div
             data-aos="fade-up"
             data-aos-delay="300"
-            className="text-center mt-14"
+            className="text-center mt-6 md:mt-12"
           >
             <Button size="lg" variant="outline" className="px-8" asChild>
               <Link href="/contact">Contact for Custom Tour</Link>

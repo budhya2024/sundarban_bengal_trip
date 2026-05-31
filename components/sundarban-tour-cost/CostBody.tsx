@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { Mail, Phone } from "lucide-react";
 
 export const CostBody = () => {
   return (
@@ -6,7 +7,7 @@ export const CostBody = () => {
       <div className="container">
         <div className="grid gap-6 md:gap-8 lg:grid-cols-[1.2fr_0.8fr] items-start">
           <div>
-            <h2 className="text-lg md:text-xl xl:text-2xl font-semibold text-foreground">
+            <h2 className="text-lg md:text-xl xl:text-2xl font-semibold text-foreground mb-4">
               Sundarban Tour Cost from Kolkata – Complete Package Price Guide
               for Budget, Family & Luxury Travelers
             </h2>
@@ -30,15 +31,15 @@ export const CostBody = () => {
           </div>
           <div className="">
             <Image
-              src="/assets/mangrove.jpeg"
-              alt="Sundarban mangroves"
+              src="/assets/sundarban-lunch-menu.jpeg"
+              alt="Sundarban tour food"
               width={600}
               height={600}
               className="object-cover h-full w-full"
             />
           </div>
           <div>
-            <h2 className="text-lg md:text-xl xl:text-2xl font-semibold text-foreground">
+            <h2 className="text-lg md:text-xl xl:text-2xl font-semibold text-foreground mb-4">
               Sundarban Tour Cost from Kolkata with Hotel, Food, Boat Safari &
               Seasonal Price Breakdown
             </h2>
@@ -68,7 +69,7 @@ export const CostBody = () => {
           </div>
 
           <div>
-            <h2 className="text-lg md:text-xl xl:text-2xl font-semibold text-foreground">
+            <h2 className="text-lg md:text-xl xl:text-2xl font-semibold text-foreground mb-4">
               Budget vs Premium Sundarban Tour Price, Couple & Group Package
               Cost with Hidden Charges Details
             </h2>
@@ -101,7 +102,7 @@ export const CostBody = () => {
         </div>
       </div>
 
-      <div className="container mt-6 md:mt-10 t">
+      <div className="container mt-6 md:mt-10">
      <div className="ext-sm md:text-base text-foreground/80  bg-foreground/10 p-4" >
            <p className="">
           At Sundarban Bengal Trip, we guarantee absolute transparency with no
@@ -110,8 +111,16 @@ export const CostBody = () => {
           obligation-free quote tailored exactly to your group size and travel
           preferences.
         </p>
-        <p className="pt-2"> Contact Us: Mobile No: +91 70744 32628,
-          sundarbanbengaltrip@gmail.com</p>
+        <div className="pt-2  flex flex-wrap items-center gap-4">
+          <div className="flex items-center gap-2 text-foreground font-semibold">
+            <Phone className="w-4 h-4" />
+            <span>+91 70744 32628</span>
+          </div>
+          <div className="flex items-center gap-2 text-foreground font-semibold">
+            <Mail className="w-4 h-4" />
+            <span>sundarbanbengaltrip@gmail.com</span>
+          </div>
+        </div>
      </div>
       </div>
     </section>

@@ -26,7 +26,7 @@ const TermsAndConditions = () => {
         backgroundImage="/assets/hero-sundarban.jpg"
       />
 
-      <section className="py-10 md:py-16bg-background">
+      <section className="py-10 md:py-16 bg-background">
         <div className="container max-w-4xl">
           <div
             data-aos="fade-up"

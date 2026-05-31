@@ -82,7 +82,7 @@ const GalleryPage = ({
           {/* Grid */}
           {visibleImages.length > 0 ? (
             <>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid  grid-cols-2 md:grid-cols-2 xl:grid-cols-4 gap-3 md:gap-6">
                 {visibleImages.map((image, index) => (
                   <div
                     key={index}
@@ -101,9 +101,9 @@ const GalleryPage = ({
                       <p className="text-primary-foreground font-medium">
                         {image.title}
                       </p>
-                      <span className="text-primary-foreground/70 text-sm">
+                      {/* <span className="text-primary-foreground/70 text-sm">
                         {image.category}
-                      </span>
+                      </span> */}
                     </div>
                   </div>
                 ))}

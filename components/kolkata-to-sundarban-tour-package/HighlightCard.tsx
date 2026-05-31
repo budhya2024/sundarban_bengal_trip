@@ -9,7 +9,7 @@ type HighlightCardProps = {
 
 export const HighlightCard = ({ title, description, image, alt }: HighlightCardProps) => {
   return (
-    <article className="rounded-[1.5rem] border border-border/50 bg-card overflow-hidden shadow-lg">
+    <article className="rounded-xl border border-border/50 bg-card overflow-hidden shadow-lg">
       <div className="relative h-44 w-full">
         <Image src={image} alt={alt || title} fill className="object-cover" />
       </div>
