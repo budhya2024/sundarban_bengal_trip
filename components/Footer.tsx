@@ -220,7 +220,7 @@ export const Footer = () => {
           </Link>
             <span className="text-primary-foreground/40">|</span>
            <Link
-            href="/Sundarban 1 Night 2 Days Package from Kolkata"
+            href="/sundarban-1-night-2-days-package-from-kolkata"
             className="text-primary-foreground/80 hover:text-secondary transition-colors"
           >
             Sundarban 1 Night 2 Days Package from Kolkata

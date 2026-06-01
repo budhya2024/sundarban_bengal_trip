@@ -12,7 +12,7 @@ import { PiBinocularsFill } from "react-icons/pi";
 import Link from "next/link";
 import { PackageValues } from "@/schemas/package.schema";
 import { getPackages } from "@/app/actions/package.actions";
-import router from "next/router";
+import { useRouter } from "next/navigation";
 
 interface PackageListValue extends PackageValues {
   key: string;
@@ -22,6 +22,7 @@ interface PackageListValue extends PackageValues {
 export const TourPackagesSection = () => {
   const [packages, setPackages] = useState<PackageListValue[]>([]);
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchPackages = async () => {

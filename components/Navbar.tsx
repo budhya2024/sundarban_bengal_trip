@@ -198,9 +198,9 @@ export const Navbar = () => {
             animate={{ x: 0 }}
             exit={{ x: "-100%" }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 bg-background lg:hidden"
+            className="fixed inset-0 z-80 bg-background w-full lg:hidden  h-screen  overflow-y-auto"
           >
-            <div className="flex flex-col justify-start pt-28 pb-10 px-4 gap-6 h-full overflow-y-auto">
+            <div className="flex flex-col justify-start pt-28 pb-10 px-4 gap-6">
               {navLinks.map((link) =>
                 link.hasDropdown ? (
                   <div key={link.path}>
@@ -240,7 +240,7 @@ export const Navbar = () => {
                                 <Link
                                   key={pkg.key}
                                   href={`/packages/${pkg.key}`}
-                                  className="block px-4 py-3 hover:bg-muted transition"
+                                  className="block hover:bg-muted transition"
                                 >
                                   {pkg.name}
                                 </Link>
