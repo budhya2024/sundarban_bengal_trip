@@ -8,7 +8,7 @@ const hotels = [
   { id: 1, image: "/assets/hotel (4).jpeg" },
   { id: 2, image: "/assets/hotel (3).jpeg" },
   { id: 3, image: "/assets/hotel (4).jpeg" },
-  { id: 4, image: "/assets/hotel (5).jpeg" },
+   { id: 4, image: "/assets/sundarban-package-tour-from-kolkata-with-hotel-sonar-bangla.webp" },
 ];
 
 // duplicate for loop
@@ -56,7 +56,7 @@ export default function HotelSwiper() {
         {/* CTA */}
         <div className="text-center mt-12">
           <Button variant="outline" size="lg" asChild>
-            <Link href="/contact">Book Now</Link>
+            <Link href="/packages">Book Now</Link>
           </Button>
         </div>
 

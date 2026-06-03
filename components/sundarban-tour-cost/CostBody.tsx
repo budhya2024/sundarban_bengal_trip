@@ -103,7 +103,7 @@ export const CostBody = () => {
       </div>
 
       <div className="container mt-6 md:mt-10">
-     <div className="ext-sm md:text-base text-foreground/80  bg-foreground/10 p-4" >
+     <div className="text-sm md:text-base text-foreground/80  bg-foreground/10 p-4" >
            <p className="">
           At Sundarban Bengal Trip, we guarantee absolute transparency with no
           hidden surprises, allowing you to plan your holiday with complete

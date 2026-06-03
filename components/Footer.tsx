@@ -243,7 +243,7 @@ export const Footer = () => {
 
             {/*  Added Powered By */}
             <p className="text-primary-foreground text-sm">
-              Powered by{" "}
+              Developed by{" "}
               <a
                 href="https://www.facebook.com/profile.php?id=61557874367373"
                 target="_blank"

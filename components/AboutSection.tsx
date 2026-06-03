@@ -42,13 +42,13 @@ export const AboutSection = () => {
             data-aos-duration="800"
             className="relative"
           >
-            <div className="relative rounded-2xl overflow-hidden shadow-elevated">
+            <div className="relative rounded-xl overflow-hidden shadow-elevated">
               <img
-                src="/assets/house-boat.jpeg"
-                alt="Royal Bengal Tiger"
+                src="/assets/Sundarban-tour-booking.jpeg"
+                alt="sundarban tour booking"
                 className="w-full h-auto object-contain "
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-primary/40 to-transparent" />
+             
             </div>
             {/* Floating Card */}
             <div

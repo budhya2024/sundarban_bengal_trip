@@ -19,6 +19,7 @@ import { Footer } from "@/components/Footer";
 import { HomeSettingsValues } from "@/schemas/homeSettings.schema";
 import { getHomeSettings } from "@/app/actions/home.actions";
 import HotelSwiper from "@/components/HotelSwiper";
+import HotelMenu from "@/components/HotelMenu";
 import { HeroSlider } from "@/components/HeroSlider";
 
 const Index = () => {
@@ -53,11 +54,14 @@ const Index = () => {
       <HeroSection />
       <TourPackagesSection />
       {/* <BookingForm /> */}
-      <HotelSwiper />
+      <HotelMenu />
+   
+  
       <AboutSection />
       <ExploreSundarbanSection />
 
       <GallerySection />
+         <HotelSwiper />
       <TestimonialsSection
         data={homeSetting?.testimonials || []}
         loading={loading}
