@@ -123,24 +123,19 @@ export const HeroSection = () => {
         ))}
 
         {/* Right Side Navigation */}
-        <div className="absolute right-10 bottom-10 z-30 flex items-center gap-4">
-          
-          {/* Prev Button */}
-          <div className="hero-prev cursor-pointer">
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white hover:text-black transition-all duration-300">
-              <ChevronLeft size={20} />
-            </div>
-          </div>
+      {/* Prev Button - Left Side */}
+<div className="hero-prev hidden md:absolute left-5 top-1/2 -translate-y-1/2 z-30 cursor-pointer">
+  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white hover:text-black transition-all duration-300">
+    <ChevronLeft size={20} />
+  </div>
+</div>
 
-      
-
-          {/* Next Button */}
-          <div className="hero-next cursor-pointer">
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white hover:text-black transition-all duration-300">
-              <ChevronRight size={20} />
-            </div>
-          </div>
-        </div>
+{/* Next Button - Right Side */}
+<div className="hero-next hidden md:absolute right-5 top-1/2 -translate-y-1/2 z-30 cursor-pointer">
+  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white hover:text-black transition-all duration-300">
+    <ChevronRight size={20} />
+  </div>
+</div>
       </Swiper>
     </section>
   );
