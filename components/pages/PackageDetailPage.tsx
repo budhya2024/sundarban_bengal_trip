@@ -15,10 +15,12 @@ import {
   Calendar,
   Star,
   ArrowLeft,
+  Car,
 } from "lucide-react";
 import Link from "next/link";
 import { PackageValues } from "@/schemas/package.schema";
 import { BookingModal } from "../BookingModal";
+import { FaCarSide } from "react-icons/fa6";
 
 const PackageDetailsPage = ({
   data,
@@ -106,15 +108,17 @@ const PackageDetailsPage = ({
                     {data.duration}
                   </p>
                 </div>
-                {/* <div className="bg-card p-4 rounded-xl text-center shadow-soft">
-                  <Users className="w-6 h-6 text-secondary mx-auto mb-2" />
+                <div className="bg-card p-4 rounded-xl text-center shadow-soft">
+                <FaCarSide className="w-6 h-6 text-secondary mx-auto mb-2" />
                   <span className="text-sm text-muted-foreground">
-                    Group Size
+                   Pickup & Drop
                   </span>
                   <p className="font-semibold text-foreground">
-                    {data.groupSize}
+                    {/* {data.groupSize} */}
+                    kolkata to kolkata
+                    Caning to Caning
                   </p>
-                </div> */}
+                </div>
                 <div className="bg-card p-4 rounded-xl text-center shadow-soft">
                   <MapPin className="w-6 h-6 text-secondary mx-auto mb-2" />
                   <span className="text-sm text-muted-foreground">

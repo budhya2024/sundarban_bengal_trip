@@ -94,7 +94,7 @@ const ContactPage = ({ data }: { data: ContactPageValues | null }) => {
       />
 
       {/* Contact Cards */}
-      <section className="py-16 bg-background -mt-16 relative z-10">
+      <section className="py-10 md:py-16 bg-background -mt-16 relative z-10">
         <div className="container">
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {contactCards.map((card, index) => (
@@ -130,7 +130,7 @@ const ContactPage = ({ data }: { data: ContactPageValues | null }) => {
       </section>
 
       {/* Contact Form & Map */}
-      <section className="py-16 bg-muted">
+      <section className="py-10 md:py-16 bg-muted">
         <div className="container">
           <div className="grid lg:grid-cols-5 gap-12">
             {/* Form */}
@@ -143,7 +143,7 @@ const ContactPage = ({ data }: { data: ContactPageValues | null }) => {
                 className="rounded-3xl overflow-hidden h-[300px] shadow-elevated"
               >
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d471220.5631094339!2d88.26495045!3d21.9497277!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a02db8cb3ffbfb1%3A0x6e3e2d2b4e2f2b2b!2sSundarban%20National%20Park!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
+                  src="https://maps.google.com/maps?q=Sundarban%20National%20Park,%20West%20Bengal&t=&z=13&ie=UTF8&iwloc=&output=embed"
                   width="100%"
                   height="100%"
                   style={{ border: 0 }}

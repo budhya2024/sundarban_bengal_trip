@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://sundarbanbengaltrip.com"),
 
   title: {
-    default: "Sundarban Bengal Trip",
+    default: "Sundarban Tour Package only at ₹2499/-",
     template: "%s | Sundarban Bengal Trip",
   },
 
