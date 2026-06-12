@@ -8,6 +8,7 @@ import { Navigation, Autoplay, EffectFade } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/effect-fade";
+import "aos/dist/aos.css";
 
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -36,6 +37,7 @@ const slides = [
       "Embark on thrilling wildlife safaris and explore the untouched wilderness of the Sundarbans, home to rare and exotic species.",
   },
 ];
+
 export const HeroSection = () => {
   const [progress, setProgress] = useState(0);
 
@@ -62,7 +64,7 @@ export const HeroSection = () => {
         }}
         effect="fade"
         loop={true}
-        className="h-[100vh]"
+        className="h-screen"
       >
         {slides.map((slide) => (
           <SwiperSlide key={slide.id}>
@@ -70,51 +72,96 @@ export const HeroSection = () => {
               {/* Background Image */}
               <img
                 src={slide.image}
-                alt="Sundarban"
+                alt={slide.title}
                 className="absolute inset-0 h-full w-full object-cover"
               />
 
-              {/* Overlay */}
-              <div className="absolute inset-0 bg-black/60"></div>
+              {/* Dark Overlay */}
+              <div className="absolute inset-0 bg-black/70" />
 
               {/* Content */}
-              <div className="relative z-10 container h-full flex items-center">
-                <div className="grid lg:grid-cols-7 gap-10 items-center w-full">
-                  <div className="lg:col-span-4 text-white">
-                    <h1
-                      data-aos="fade-up"
-                      data-aos-duration="700"
-                      className="text-3xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6"
-                    >
-                      {slide.title}
-                    </h1>
+              <div className="relative z-10 container mx-auto h-full flex items-center px-4">
+                <div className="max-w-4xl text-white">
+                  <h1
+                    data-aos="fade-up"
+                    data-aos-duration="700"
+                    className="text-2xl sm:text-4xl xl:text-5xl lg:text-6xl font-bold leading-tight mb-6 aos-init aos-animate"
+                  >
+                    {slide.title}
+                  </h1>
 
-                    <p
-                      data-aos="fade-up"
-                      data-aos-delay="200"
-                      data-aos-duration="700"
-                      className="text-base md:text-xl text-white/90 leading-relaxed mb-8 max-w-2xl"
-                    >
-                      {slide.description}
-                    </p>
+                  <p
+                    data-aos="fade-up"
+                    data-aos-delay="150"
+                    data-aos-duration="700"
+                    className="text-base md:text-lg lg:text-xl text-white/90 leading-relaxed max-w-2xl mb-8"
+                  >
+                    {slide.description}
+                  </p>
 
-                    {/* Buttons */}
-                    <div
-                      data-aos="fade-up"
-                      data-aos-delay="300"
-                      className="flex flex-col sm:flex-row gap-4"
-                    >
-                      <Button
-                        variant="hero"
-                        size="xl"
-                        asChild
-                        className="px-8"
-                      >
-                        <Link href="/packages">Plan Your Trip</Link>
-                      </Button>
+                  
 
-                   
+                  {/* Stats */}
+                  <div
+                    data-aos="fade-up"
+                    data-aos-delay="300"
+                    className="grid grid-cols-2 lg:grid-cols-4 gap-2 lg:gap-10 mb-6 md:mb-10"
+                  >
+                    <div>
+                      <h3 className="text-xl lg:text-2xl font-bold">
+                        15+
+                      </h3>
+                      <p className="text-xs uppercase tracking-[0.2em] text-white/80 mt-1">
+                        Years Experience
+                      </p>
                     </div>
+
+                    <div>
+                      <h3 className="text-xl lg:text-2xl font-bold">
+                        10,000+
+                      </h3>
+                      <p className="text-xs uppercase tracking-[0.2em] text-white/80 mt-1">
+                        Tourists Served
+                      </p>
+                    </div>
+
+                    <div>
+                      <h3 className="text-xl lg:text-2xl font-bold">
+                        4.9★
+                      </h3>
+                      <p className="text-xs uppercase tracking-[0.2em] text-white/80 mt-1">
+                        Google Reviews
+                      </p>
+                    </div>
+
+                    <div>
+                      <h3 className="text-xl lg:text-2xl font-bold">
+                        ISO
+                      </h3>
+                      <p className="text-xs uppercase tracking-[0.2em] text-white/80 mt-1">
+                        9001:2015 Certified
+                      </p>
+                    </div>
+
+                
+                  </div>
+
+                  {/* CTA */}
+                  <div
+                    data-aos="fade-up"
+                    data-aos-delay="400"
+                    className="flex flex-wrap gap-4"
+                  >
+                    <Button
+                      variant="hero"
+                      size="xl"
+                      asChild
+                      className="px-8"
+                    >
+                      <Link href="/packages">
+                       view all packages
+                      </Link>
+                    </Button>
                   </div>
                 </div>
               </div>
@@ -122,20 +169,26 @@ export const HeroSection = () => {
           </SwiperSlide>
         ))}
 
-        {/* Right Side Navigation */}
-      {/* Prev Button - Left Side */}
-<div className="hero-prev hidden md:absolute left-5 top-1/2 -translate-y-1/2 z-30 cursor-pointer">
-  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white hover:text-black transition-all duration-300">
-    <ChevronLeft size={20} />
-  </div>
-</div>
+{/*   
+        <div className="hero-prev hidden md:flex absolute left-6 top-1/2 -translate-y-1/2 z-30 cursor-pointer">
+          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white hover:text-black transition-all duration-300">
+            <ChevronLeft size={20} />
+          </div>
+        </div>
 
-{/* Next Button - Right Side */}
-<div className="hero-next hidden md:absolute right-5 top-1/2 -translate-y-1/2 z-30 cursor-pointer">
-  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white hover:text-black transition-all duration-300">
-    <ChevronRight size={20} />
-  </div>
-</div>
+        <div className="hero-next hidden md:flex absolute right-6 top-1/2 -translate-y-1/2 z-30 cursor-pointer">
+          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white hover:text-black transition-all duration-300">
+            <ChevronRight size={20} />
+          </div>
+        </div>
+
+   
+        <div className="absolute bottom-0 left-0 w-full h-1 bg-white/10 z-30">
+          <div
+            className="h-full bg-white transition-all duration-100"
+            style={{ width: `${progress}%` }}
+          />
+        </div> */}
       </Swiper>
     </section>
   );
