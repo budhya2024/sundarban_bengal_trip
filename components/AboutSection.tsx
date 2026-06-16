@@ -79,20 +79,15 @@ export const AboutSection = () => {
             <span className="text-secondary font-medium text-sm uppercase tracking-wider">
               About Us
             </span>
-            <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mt-2 mb-6">
-              Your Gateway to the Mystical Sundarbans
+            <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mt-2 mb-6 ">
+           Why Travellers Choose Our Sundarban Travel Package
+
             </h2>
             <p className="text-muted-foreground leading-relaxed mb-6">
-              For over 15 years, Sundarban Bengal Trip has been the leading
-              travel agency specializing in expeditions to the magnificent
-              Sundarbans. Our passion for nature and commitment to sustainable
-              tourism has made us the preferred choice for wildlife enthusiasts
-              and adventure seekers.
+            Our expertly organised Sundarban trips are designed to immerse you safely into this UNESCO World Heritage site. For over 15 years Sundarban Bengal trip has been the first choice for wildlife enthusiastic and adventure seeker people. We take care of every detail—from securing required forest department permits and arranging local, naturalist guides to booking eco-friendly jungle resorts. 
             </p>
             <p className="text-muted-foreground leading-relaxed mb-8">
-              From thrilling tiger spotting safaris to peaceful bird watching
-              cruises, we craft personalized experiences that connect you with
-              the raw beauty of this UNESCO World Heritage Site.
+             Whether you are an wildlife photographer, a birdwatcher, or a traveler seeking deep tranquility,  Sundarban tour package from kolkata balance thrilling wilderness exploration with sustainable, responsible travel practices that support local island communities.
             </p>
 
             {/* Features Grid */}

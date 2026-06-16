@@ -21,9 +21,9 @@ export default function HotelSwiper() {
 
         {/* Heading */}
         <div className="mb-8 text-center">
-          <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mt-2 mb-4">
-            Sonar Bangla Hotel
-          </h2>
+          <h3 className="font-display text-3xl md:text-4xl font-bold text-foreground mt-2 mb-4">
+           Sundarban Sonar Bangla Hotel
+          </h3>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             Comfortable stays in the heart of Sundarban
           </p>

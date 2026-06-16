@@ -47,12 +47,12 @@ export const ExploreSundarbanSection = () => {
             Your Gateway
           </span>
           <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mt-2 mb-4">
-            Explore Sundarban from <span className="text-primary">Kolkata</span>
+          Comfortable Resorts, Boat Safari, Guided Jungle Tours
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Discover the world's largest mangrove forest, just a few hours away
-            from the City of Joy
+          <p className="text-muted-foreground max-w-4xl mx-auto">
+          Experience the Sundarbans in premium comfort. Relax in private, air-conditioned eco-resort cottages with river views. Experience the safari boat featuring village culture , guided by expert naturalists who track tigers, crocodiles, exotic birds watching, watchtowers and sunset cruise with Sundarban travel package.
           </p>
+       
         </div>
 
         <div className="grid lg:grid-cols-2 gap-6 md:gap-12 items-start">
@@ -83,19 +83,12 @@ export const ExploreSundarbanSection = () => {
             {/* Description */}
             <div className="bg-card p-6 rounded-xl shadow-soft lg:mb-8">
               <h3 className="font-display text-xl font-bold text-foreground mb-4">
-                Journey from Kolkata
+               Book Your Sundarban Tour From Kolkata Today
               </h3>
               <p className="text-muted-foreground mb-4">
-                Start your adventure from Kolkata with our comfortable transport
-                service. Drive through the picturesque countryside of South 24
-                Parganas, crossing rivers and villages, before reaching the
-                gateway to Sundarbans.
+              Need a break and want to experience the wild life far away from Kolkata! This is your only chance to breath in the fresh air of mangrove. Our Sundarban tour booking is going on. Book your seat now for a comfortable journey with Sundarban tour package from kolkata from the buzzling street of Kolkata to the mysterious land of Royal Bengal tigers.
               </p>
-              <p className="text-muted-foreground mb-6">
-                Our packages include pickup from Kolkata, all meals, boat
-                safari, forest permits, and experienced naturalist guides who
-                bring the wilderness to life.
-              </p>
+              
               <Button variant="hero" asChild>
                 <Link href="/packages">View Tour Packages</Link>
               </Button>

@@ -111,9 +111,9 @@ export const BookingForm = () => {
         >
           {/* Heading */}
           <div className="text-center mb-5 md:mb-10">
-            <h3 className="font-display text-2xl md:text-3xl font-bold text-foreground mt-2">
-              Plan Your Adventure
-            </h3>
+            <p className="font-display text-3xl md:text-4xl font-bold text-foreground mt-2 mb-4">
+              Sundarban tour package
+            </p>
 
             <p className="text-muted-foreground mt-3">
               Fill up the form and our travel expert will contact you shortly.

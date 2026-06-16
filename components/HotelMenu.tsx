@@ -59,7 +59,6 @@ export default function HotelMenu() {
   return (
     <section className="py-10 md:py-16 bg-white">
       <div className="container mx-auto px-4">
-
         {/* Heading */}
         <div className="text-center mb-10 md:mb-14">
           <span className="text-secondary font-medium text-sm uppercase tracking-wider">
@@ -71,13 +70,14 @@ export default function HotelMenu() {
           </h2>
 
           <p className="text-gray-600 max-w-2xl mx-auto">
-            Enjoy authentic Bengali cuisine with fresh seafood dishes.
+            Bengal Menu providing you authentic cuisines is an essential
+            service in Sundarban tour from Kolkata. We offer delicious meals
+            with the authenticity of Sundarban's core aroma.
           </p>
         </div>
 
         {/* Slider Wrapper */}
         <div className="relative">
-
           {/* Left Arrow */}
           <button
             onClick={() => swiperInstance?.slidePrev()}
@@ -110,7 +110,6 @@ export default function HotelMenu() {
             {menus.map((item) => (
               <SwiperSlide key={item.id}>
                 <div className="relative h-[260px] md:h-[420px] rounded-2xl overflow-hidden shadow-xl group">
-
                   <Image
                     src={item.image}
                     alt={item.name}
@@ -127,12 +126,10 @@ export default function HotelMenu() {
                       {item.name}
                     </h3>
                   </div>
-
                 </div>
               </SwiperSlide>
             ))}
           </Swiper>
-
         </div>
       </div>
     </section>

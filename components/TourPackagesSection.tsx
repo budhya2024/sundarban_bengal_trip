@@ -50,16 +50,14 @@ export const TourPackagesSection = () => {
         {/* Header */}
         <div
           data-aos="fade-up"
-          className="text-center max-w-3xl mx-auto mb-10 md:mb-16"
+          className="text-center max-w-4xl mx-auto mb-10 md:mb-16"
         >
-          <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mt-2 mb-4">
-            Choose Your Perfect Adventure
-          </h2>
+          <h1 className="font-display text-3xl md:text-4xl font-bold text-foreground mt-2 mb-4">
+            Choose Your Sundarban tour package from kolkata 
+          </h1>
 
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Explore breathtaking destinations with premium stays, delicious
-            meals, seamless Pickup & Drop, and unforgettable sightseeing
-            experiences.
+          <p className="text-muted-foreground max-w-4xl mx-auto">
+          Finding the perfect travel destination isn’t about picking the most popular spot on social media—it is about finding the place that matches your current energy, budget, and travel style. Experience the natural beauty of Sundarban with Kolkata to Sundarban tour package comfortable journey, delicious meals and extraordinary sightseeing.
           </p>
         </div>
 

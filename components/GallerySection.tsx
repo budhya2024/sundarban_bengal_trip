@@ -47,9 +47,9 @@ export const GallerySection = () => {
           <span className="text-secondary font-medium text-sm uppercase tracking-wider">
             Gallery
           </span>
-          <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mt-2 mb-4">
+          <h3 className="font-display text-3xl md:text-4xl font-bold text-foreground mt-2 mb-4">
             Moments from the Wild
-          </h2>
+          </h3>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             Explore the stunning wildlife and breathtaking landscapes captured
             by our travelers.

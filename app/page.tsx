@@ -21,6 +21,7 @@ import { getHomeSettings } from "@/app/actions/home.actions";
 import HotelSwiper from "@/components/HotelSwiper";
 import HotelMenu from "@/components/HotelMenu";
 import { HeroSlider } from "@/components/HeroSlider";
+import TravelExperience from "@/components/TravelExperience";
 
 const Index = () => {
   const [homeSetting, setHomeSetting] = useState<HomeSettingsValues | null>(
@@ -54,7 +55,7 @@ const Index = () => {
       <HeroSection />
           <BookingForm />
       <TourPackagesSection />
-  
+  <TravelExperience/>
       <HotelMenu />
       <AboutSection />
       <ExploreSundarbanSection />
