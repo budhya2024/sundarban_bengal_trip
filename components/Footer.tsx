@@ -236,23 +236,12 @@ export const Footer = () => {
                 © {new Date().getFullYear()}, Sundarban Bengal Trips. All rights
                 reserved.
               </p>
-              <p className="text-primary-foreground/60 text-sm">
-                ISO 9001:2015 Certified Company
-              </p>
+             
             </div>
 
-            {/*  Added Powered By */}
-            <p className="text-primary-foreground text-sm">
-              Developed by{" "}
-              <a
-                href="https://www.facebook.com/profile.php?id=61557874367373"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-secondary transition-colors"
-              >
-                Techshift Technology
-              </a>
-            </p>
+           <p className="text-primary-foreground/60 text-sm">
+                ISO 9001:2015 Certified Company
+              </p>
             <div className="flex  gap-2 md:gap-6 text-sm">
               <Link
                 href="/privacy-policy"
