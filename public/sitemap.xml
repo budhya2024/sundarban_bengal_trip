@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="https://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <url>
+    <loc>https://sundarbanbengaltrip.com/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <url>
+    <loc>https://sundarbanbengaltrip.com/about</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://sundarbanbengaltrip.com/gallery</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://sundarbanbengaltrip.com/contact</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://sundarbanbengaltrip.com/blog</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://sundarbanbengaltrip.com/packages/1-day-in-sundarban</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <url>
+    <loc>https://sundarbanbengaltrip.com/packages/sundarban-1-night-2-days-tour</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://sundarbanbengaltrip.com/packages/sundarban-2-night-3-days-tour</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://sundarbanbengaltrip.com/sundarban-tour-package-from-kolkata</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
+
+  <url>
+    <loc>https://sundarbanbengaltrip.com/kolkata-to-sundarban-tour-package</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.92</priority>
+  </url>
+
+  <url>
+    <loc>https://sundarbanbengaltrip.com/cheap-sundarban-tour-package-from-kolkata</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.92</priority>
+  </url>
+
+  <url>
+    <loc>https://sundarbanbengaltrip.com/sundarban-tour-cost-from-kolkata</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+
+  <url>
+    <loc>https://sundarbanbengaltrip.com/sundarban-1-night-2-days-package-from-kolkata</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.91</priority>
+  </url>
+
+</urlset>

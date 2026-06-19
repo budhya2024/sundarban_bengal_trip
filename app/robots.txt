@@ -1,12 +1,81 @@
-# robots.txt for Sundarban Bengal Trip
+# ==========================================================
+# Robots.txt for Sundarban Bengal Trip
+# Website: https://sundarbanbengaltrip.com
+# Purpose: SEO, Crawl Optimization & Index Management
+# Updated: 2026
+# ==========================================================
 
 User-agent: *
 Allow: /
 
-# Block sensitive/private areas
-Disallow: /admin/
-Disallow: /dashboard/
-Disallow: /private/
+# ----------------------------------------------------------
+# WordPress Core Restrictions
+# ----------------------------------------------------------
 
+Disallow: /wp-admin/
+Allow: /wp-admin/admin-ajax.php
+
+# ----------------------------------------------------------
+# Internal Search & Utility Pages
+# ----------------------------------------------------------
+
+Disallow: /?s=
+Disallow: /search/
+Disallow: /*?replytocom=
+Disallow: /*?orderby=
+Disallow: /*?filter=
+Disallow: /*?utm*
+Disallow: /*?fbclid=
+Disallow: /*?gclid=
+
+# ----------------------------------------------------------
+# Private / Temporary Files
+# ----------------------------------------------------------
+
+Disallow: /cgi-bin/
+Disallow: /tmp/
+Disallow: /backup/
+Disallow: /cache/
+
+# ----------------------------------------------------------
+# Allow Important Assets
+# ----------------------------------------------------------
+
+Allow: /*.css$
+Allow: /*.js$
+Allow: /*.jpg$
+Allow: /*.jpeg$
+Allow: /*.png$
+Allow: /*.webp$
+Allow: /*.svg$
+
+# ----------------------------------------------------------
+# Important Travel Pages
+# ----------------------------------------------------------
+
+Allow: /sundarban-tour-package-from-kolkata
+Allow: /kolkata-to-sundarban-tour-package
+Allow: /cheap-sundarban-tour-package-from-kolkata
+Allow: /sundarban-tour-cost-from-kolkata
+Allow: /sundarban-1-night-2-days-package-from-kolkata
+
+Allow: /packages/
+Allow: /blog/
+Allow: /gallery/
+Allow: /about/
+Allow: /contact/
+
+# ----------------------------------------------------------
 # Sitemap
+# ----------------------------------------------------------
+
 Sitemap: https://sundarbanbengaltrip.com/sitemap.xml
+
+# If Rank Math generates sitemap_index.xml use this instead:
+# Sitemap: https://sundarbanbengaltrip.com/sitemap_index.xml
+# Sitemap: https://sundarbanbengaltrip.com/sitemap.xml
+# Sitemap: https://sundarbanbengaltrip.com/page-sitemap.xml
+
+# ==========================================================
+# End Of File
+# ==========================================================

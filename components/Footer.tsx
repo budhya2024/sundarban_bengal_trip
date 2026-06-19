@@ -261,6 +261,12 @@ export const Footer = () => {
               >
                 Payment Policy
               </Link>
+              <Link
+                href="/sitemap"
+                className="text-primary-foreground/60 hover:text-secondary transition-colors"
+              >
+                Sitemap
+              </Link>
             </div>
           </div>
         </div>
