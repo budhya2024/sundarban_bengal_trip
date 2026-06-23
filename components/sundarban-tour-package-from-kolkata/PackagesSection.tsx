@@ -17,7 +17,7 @@ export const PackagesSection = () => {
     <section className="py-8 md:py-16 bg-muted/20 border-y border-border/50 overflow-hidden">
       <div className="container">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-14 lg:gap-20 items-stretch">
-          
+
           {/* Image Side */}
           <div
             className="w-full relative h-full"
@@ -39,10 +39,6 @@ export const PackagesSection = () => {
             data-aos="fade-left"
           >
             <div>
-              <div className="inline-flex items-center gap-2 text-primary font-bold uppercase tracking-wider mb-5 bg-primary/10 px-4 py-2 rounded-full text-sm">
-                <Star className="w-4 h-4" />
-                <span>Affordable Packages</span>
-              </div>
 
               <h2 className="font-display text-xl md:text-2xl lg:text-3xl font-bold text-foreground mb-7 leading-tight">
                 Book Affordable Sundarban Tour Packages from Kolkata for

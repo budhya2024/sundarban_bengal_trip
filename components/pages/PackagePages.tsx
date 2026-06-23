@@ -53,9 +53,8 @@ const Packages = ({
               >
                 {/* Image */}
                 <div
-                  className={`relative overflow-hidden ${
-                    index % 2 === 1 ? "lg:order-2" : ""
-                  }`}
+                  className={`relative overflow-hidden ${index % 2 === 1 ? "lg:order-2" : ""
+                    }`}
                 >
                   <Image
                     src={pkg.heroImage}
@@ -81,9 +80,8 @@ const Packages = ({
 
                 {/* Content */}
                 <div
-                  className={`p-4 md:p-6 flex flex-col justify-between ${
-                    index % 2 === 1 ? "lg:order-1" : ""
-                  }`}
+                  className={`p-4 md:p-6 flex flex-col justify-between ${index % 2 === 1 ? "lg:order-1" : ""
+                    }`}
                 >
                   <div>
                     {/* Rating */}
@@ -93,7 +91,7 @@ const Packages = ({
                     </div>
 
                     {/* Title */}
-                    <h2 className="font-display text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-4 capitalize leading-tight">
+                    <h2 className="font-display text-xl sm:text-lg md:text-xl xl:text-2xl  font-bold text-foreground mb-4 capitalize leading-tight">
                       {pkg.packageName}
                     </h2>
 
@@ -168,7 +166,7 @@ const Packages = ({
                           triggerClassName="text-base rounded-xl font-medium w-full lg:w-auto"
                         />
                       </div>
-                  
+
                     </div>
                   </div>
                 </div>

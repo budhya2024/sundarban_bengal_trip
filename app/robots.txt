@@ -55,6 +55,7 @@ Allow: /*.svg$
 
 Allow: /sundarban-tour-package-from-kolkata
 Allow: /kolkata-to-sundarban-tour-package
+Allow: /sundarban-tour-from-kolkata
 Allow: /cheap-sundarban-tour-package-from-kolkata
 Allow: /sundarban-tour-cost-from-kolkata
 Allow: /sundarban-1-night-2-days-package-from-kolkata

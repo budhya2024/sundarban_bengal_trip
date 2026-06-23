@@ -35,7 +35,7 @@ const PaymentPolicy = () => {
           >
             <div className="bg-gradient-to-b from-[#0f5a4a] to-[#062f28] text-white p-6 md:p-8">
 
-              <h2 className="text-center text-2xl md:text-3xl font-semibold mb-6">
+              <h2 className="text-center text-lg md:text-xl xl:text-2xl  font-semibold mb-6">
                 Notes
               </h2>
 

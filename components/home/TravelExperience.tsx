@@ -32,7 +32,7 @@ export default function TravelExperience() {
     <section className="py-10 md:py-16 bg-muted">
       <div className="container">
         <div className="space-y-6 text-left">
-          <h2 className="font-display text-2xl md:text-3xl font-bold leading-tight text-foreground max-w-5xl">
+          <h2 className="font-display text-lg md:text-xl xl:text-2xl  font-bold leading-tight text-foreground max-w-5xl">
             Explore the Beauty of Sundarban with Premium Travel Experience
           </h2>
 

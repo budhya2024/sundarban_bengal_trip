@@ -70,7 +70,7 @@ const Blog = ({
                     </div>
                   </div>
                   <div className="p-8 flex flex-col justify-center">
-                    <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-4 group-hover:text-primary transition-colors">
+                    <h2 className="font-display text-lg md:text-xl xl:text-2xl  font-bold text-foreground mb-4 group-hover:text-primary transition-colors">
                       {featureBlog.title}
                     </h2>
                     <p className="text-muted-foreground mb-6">

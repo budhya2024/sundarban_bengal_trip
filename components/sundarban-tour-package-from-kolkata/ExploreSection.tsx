@@ -42,10 +42,7 @@ export const ExploreSection = () => {
       <div className="container relative z-10">
         {/* Heading */}
         <div className="max-w-4xl mx-auto text-center mb-6 md:mb-12">
-          <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-xl text-white text-sm font-medium mb-6">
-            <Sparkles className="w-4 h-4 text-secondary" />
-            Premium Sundarban Experience
-          </div>
+
 
           <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-white leading-[1.1] mb-4">
             Explore The Untamed Beauty Of{" "}

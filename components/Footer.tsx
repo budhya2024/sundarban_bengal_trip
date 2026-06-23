@@ -218,13 +218,23 @@ export const Footer = () => {
           >
             Sundarban Tour Package From Kolkata
           </Link>
-            <span className="text-primary-foreground/40">|</span>
-           <Link
+
+          <span className="text-primary-foreground/40">|</span>
+          <Link
             href="/sundarban-1-night-2-days-package-from-kolkata"
             className="text-primary-foreground/80 hover:text-secondary transition-colors"
           >
             Sundarban 1 Night 2 Days Package from Kolkata
-            
+
+          </Link>
+
+          <span className="text-primary-foreground/40">|</span>
+
+          <Link
+            href="/sundarban-tour-from-kolkata"
+            className="text-primary-foreground/80 hover:text-secondary transition-colors"
+          >
+            Sundarban Tour from Kolkata
           </Link>
         </div>
 
@@ -236,12 +246,12 @@ export const Footer = () => {
                 © {new Date().getFullYear()}, Sundarban Bengal Trips. All rights
                 reserved.
               </p>
-             
+
             </div>
 
-           <p className="text-primary-foreground/60 text-sm">
-                ISO 9001:2015 Certified Company
-              </p>
+            <p className="text-primary-foreground/60 text-sm">
+              ISO 9001:2015 Certified Company
+            </p>
             <div className="flex  gap-2 md:gap-6 text-sm">
               <Link
                 href="/privacy-policy"

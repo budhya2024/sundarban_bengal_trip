@@ -19,14 +19,7 @@ export const ServicesSection = () => {
       {/* Content */}
       <div className="relative z-10 container">
         <div className="max-w-4xl mx-auto text-center">
-          {/* Badge */}
-          <div
-            className="inline-flex items-center gap-2 text-primary font-bold uppercase tracking-wider mb-5 bg-white backdrop-blur-md px-4 py-2 rounded-full text-sm border border-white/10"
-            data-aos="fade-up"
-          >
-            <Navigation className="w-4 h-4" />
-            <span>Complete Services</span>
-          </div>
+
 
           {/* Heading */}
           <h3

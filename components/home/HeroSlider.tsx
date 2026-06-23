@@ -175,7 +175,7 @@ export const HeroSlider = () => {
                         <div className="text-left">
                           <div className="flex items-center gap-2 text-secondary mb-1">
                             <MapPin className="w-4 h-4" />
-                            <span className="font-display text-2xl md:text-3xl font-bold">
+                            <span className="font-display text-lg md:text-xl xl:text-2xl  font-bold">
                               {slide.stats.count}
                             </span>
                           </div>
@@ -187,7 +187,7 @@ export const HeroSlider = () => {
                         <div className="text-left">
                           <div className="flex items-center gap-2 text-secondary mb-1">
                             <Users className="w-4 h-4" />
-                            <span className="font-display text-2xl md:text-3xl font-bold">
+                            <span className="font-display text-lg md:text-xl xl:text-2xl  font-bold">
                               50K+
                             </span>
                           </div>
@@ -199,7 +199,7 @@ export const HeroSlider = () => {
                         <div className="text-left">
                           <div className="flex items-center gap-2 text-secondary mb-1">
                             <Star className="w-4 h-4 fill-secondary" />
-                            <span className="font-display text-2xl md:text-3xl font-bold">
+                            <span className="font-display text-lg md:text-xl xl:text-2xl  font-bold">
                               4.9
                             </span>
                           </div>

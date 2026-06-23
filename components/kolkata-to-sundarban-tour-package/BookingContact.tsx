@@ -9,7 +9,7 @@ export const BookingContact = () => {
       <div className="container">
         <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] items-start">
           <div className="space-y-6">
-            <div className="font-display text-2xl md:text-3xl font-bold leading-tight text-foreground">
+            <div className="font-display text-lg md:text-xl xl:text-2xl  font-bold leading-tight text-foreground">
               Travel from Kolkata to Sundarban by Train, Car & River Cruise with
               Local Sightseeing
             </div>
@@ -35,7 +35,7 @@ export const BookingContact = () => {
                 us now
               </p>
               <p className="mt-3 text-sm text-muted-foreground flex flex-wrap gap-4 items-center">
-                
+
 
                 <a
                   href="tel:+917074432628"
@@ -44,12 +44,12 @@ export const BookingContact = () => {
                   <Phone className="inline-block w-4 h-4 mr-1 text-primary" />
                   +91 70744 32628
                 </a>
-              
+
                 <a
                   href="mailto:sundarbanbengaltrip@gmail.com"
                   className="text-muted-foreground font-semibold"
                 >
-                    <Mail className="inline-block w-4 h-4 mr-1 text-primary" />
+                  <Mail className="inline-block w-4 h-4 mr-1 text-primary" />
                   sundarbanbengaltrip@gmail.com
                 </a>
               </p>

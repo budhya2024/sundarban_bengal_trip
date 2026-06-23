@@ -24,11 +24,11 @@ export const PageHeader = ({
         />
 
         {/* Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/90 via-primary/75 to-primary/60" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/70 to-black/50" />
       </div>
 
       {/* Decorative Blur */}
-      <div className="absolute top-0 left-0 w-96 h-96 bg-secondary/20 blur-3xl rounded-full" />
+      <div className="absolute top-0 left-0 w-96 h-96 bg-white/5 blur-3xl rounded-full" />
 
       {/* Content */}
       <div className="container relative z-10">

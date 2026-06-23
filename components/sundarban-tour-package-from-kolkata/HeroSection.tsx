@@ -10,20 +10,11 @@ export const SundarbanHeroSection = () => {
     <section className="relative pt-16 pb-24 lg:pt-24 lg:pb-32 bg-primary overflow-hidden">
       <div className="container  relative z-10">
         <div className="flex flex-col lg:flex-row items-center gap-6 lg:gap-8">
-          
+
           {/* Left Content */}
           <div className="lg:w-[55%] pt-8">
-            
-            {/* Badge */}
-            <div
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur border border-white/20 text-white mb-6"
-              data-aos="fade-up"
-            >
-              <Star className="w-4 h-4 fill-secondary text-secondary" />
-              <span className="text-sm font-semibold tracking-wide uppercase">
-                Top Rated Tour Package
-              </span>
-            </div>
+
+
 
             {/* Heading */}
             <h1
@@ -32,10 +23,10 @@ export const SundarbanHeroSection = () => {
               data-aos-delay="100"
             >
               <span className="text-secondary block mb-3 text-4xl md:text-5xl lg:text-6xl leading-tight">
-                Sundarban Tour from Kolkata
+                Sundarban Tour Package from Kolkata
               </span>
 
-              <span className="text-2xl md:text-3xl font-medium text-white/80 leading-tight">
+              <span className="text-lg md:text-xl xl:text-2xl font-medium text-white/80 leading-tight">
                 Best Sundarban Package Tour with Hotel, Boat Safari & Food |
                 Sundarban Bengal Trip
               </span>
@@ -47,10 +38,10 @@ export const SundarbanHeroSection = () => {
               data-aos="fade-up"
               data-aos-delay="200"
             >
-              Experience the majestic Royal Bengal Tigers, thrilling boat
-              safaris, luxury resort stays, and authentic Bengali cuisine.
-              Enjoy a safe, comfortable, and unforgettable Sundarban adventure
-              with expert guides and premium hospitality.
+              Are you looking for the most affordable and best Sundarban tour
+              package from Kolkata? Sundarban Bengal Trip professionally plans
+              your whole trip — a perfect mix of adventure, nature, wildlife,
+              hotel stay, boat safari, and local food.
             </p>
 
             {/* Buttons */}
@@ -67,7 +58,7 @@ export const SundarbanHeroSection = () => {
               >
                 <Link href="/packages" className="group">
                   Book now
-                 
+
                 </Link>
               </Button>
 
@@ -89,7 +80,7 @@ export const SundarbanHeroSection = () => {
             data-aos-delay="200"
           >
             <div className="relative h-[600px]">
-              
+
               {/* Main Image */}
               <div className="absolute top-0 right-0 w-[80%] h-[70%] rounded-[2rem] overflow-hidden shadow-2xl border-4 border-white z-10">
                 <Image

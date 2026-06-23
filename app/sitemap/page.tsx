@@ -98,6 +98,11 @@ const SitemapPage = () => {
                   </Link>
                 </li>
                 <li>
+                  <Link href="/sundarban-tour-from-kolkata" className="text-primary hover:text-secondary font-semibold transition-colors duration-200">
+                    Sundarban Tour From Kolkata
+                  </Link>
+                </li>
+                <li>
                   <Link href="/cheap-sundarban-tour-package-from-kolkata" className="text-primary hover:text-secondary font-semibold transition-colors duration-200">
                     Cheap Sundarban Tour Package From Kolkata
                   </Link>

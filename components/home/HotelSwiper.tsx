@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "./ui/button";
+import { Button } from "@/components/ui/button";
 
 const hotels = [
   { id: 1, image: "/assets/hotel (4).jpeg" },
