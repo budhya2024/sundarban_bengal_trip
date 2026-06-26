@@ -35,7 +35,7 @@ export const FAQSection = ({
           <span className="text-secondary font-medium text-sm uppercase tracking-wider">
             FAQ
           </span>
-          <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mt-2 mb-4">
+          <h2 className="font-display text-xl md:text-3xl font-bold text-foreground mt-2 mb-4">
             Frequently Asked Questions
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">

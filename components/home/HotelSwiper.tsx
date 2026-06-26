@@ -8,7 +8,7 @@ const hotels = [
   { id: 1, image: "/assets/hotel (4).jpeg" },
   { id: 2, image: "/assets/hotel (3).jpeg" },
   { id: 3, image: "/assets/hotel (4).jpeg" },
-   { id: 4, image: "/assets/sundarban-package-tour-from-kolkata-with-hotel-sonar-bangla.webp" },
+  { id: 4, image: "/assets/sundarban-package-tour-from-kolkata-with-hotel-sonar-bangla.webp" },
 ];
 
 // duplicate for loop
@@ -21,8 +21,8 @@ export default function HotelSwiper() {
 
         {/* Heading */}
         <div className="mb-8 text-center">
-          <h3 className="font-display text-3xl md:text-4xl font-bold text-foreground mt-2 mb-4">
-           Sundarban Sonar Bangla Hotel
+          <h3 className="font-display text-xl md:text-3xl font-bold text-foreground mt-2 mb-4">
+            Sundarban Sonar Bangla Hotel
           </h3>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             Comfortable stays in the heart of Sundarban

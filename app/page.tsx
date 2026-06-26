@@ -22,6 +22,7 @@ import HotelSwiper from "@/components/home/HotelSwiper";
 import HotelMenu from "@/components/home/HotelMenu";
 import { HeroSlider } from "@/components/home/HeroSlider";
 import TravelExperience from "@/components/home/TravelExperience";
+import TrustSection from "@/components/home/TrustSection";
 
 const Index = () => {
   const [homeSetting, setHomeSetting] = useState<HomeSettingsValues | null>(
@@ -53,6 +54,7 @@ const Index = () => {
     <main className="min-h-screen">
       <Navbar />
       <HeroSection />
+      <TrustSection />
       <BookingForm />
       <TourPackagesSection />
       <TravelExperience />

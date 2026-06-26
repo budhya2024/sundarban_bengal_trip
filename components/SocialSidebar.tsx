@@ -41,7 +41,7 @@ export const SocialSidebar = () => {
 
   if (pathname?.includes("admin")) return null;
   return (
-    <div className="fixed right-1 md:right-2 top-1/2 -translate-y-1/2 z-40 scale-75 md:scale-100 flex flex-col gap-2">
+    <div className="hidden md:fixed right-1 md:right-2 top-1/2 -translate-y-1/2 z-40 scale-75 md:scale-100 flex flex-col gap-2">
       {socialLinks.map((social) => (
         <a
           key={social.label}

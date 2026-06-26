@@ -65,7 +65,7 @@ export default function HotelMenu() {
             Our Special Menu
           </span>
 
-          <h2 className="text-3xl md:text-4xl font-bold mt-2 mb-4">
+          <h2 className="text-3xl md:text-3xl font-bold mt-2 mb-4">
             Best Sundarban Menu
           </h2>
 

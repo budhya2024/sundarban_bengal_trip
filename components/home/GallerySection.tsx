@@ -47,7 +47,7 @@ export const GallerySection = () => {
           <span className="text-secondary font-medium text-sm uppercase tracking-wider">
             Gallery
           </span>
-          <h3 className="font-display text-3xl md:text-4xl font-bold text-foreground mt-2 mb-4">
+          <h3 className="font-display text-xl md:text-3xl font-bold text-foreground mt-2 mb-4">
             Moments from the Wild
           </h3>
           <p className="text-muted-foreground max-w-2xl mx-auto">
@@ -60,10 +60,10 @@ export const GallerySection = () => {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 auto-rows-[200px]">
           {loading
             ? // Loading Skeletons
-              MASONRY_LAYOUT.map((span, i) => (
-                <div
-                  key={i}
-                  className={`
+            MASONRY_LAYOUT.map((span, i) => (
+              <div
+                key={i}
+                className={`
         ${span} 
         rounded-xl 
         bg-slate-300/80 
@@ -71,37 +71,37 @@ export const GallerySection = () => {
         animate-pulse 
         relative overflow-hidden
       `}
-                >
-                  {/* Optional: Add a slight gradient shimmer for better visibility */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full animate-[shimmer_2s_infinite]" />
-                </div>
-              ))
+              >
+                {/* Optional: Add a slight gradient shimmer for better visibility */}
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full animate-[shimmer_2s_infinite]" />
+              </div>
+            ))
             : galleryImages.map((image, index) => {
-                // Dynamically assign the span class based on the index
-                const spanClass =
-                  MASONRY_LAYOUT[index] || "col-span-1 row-span-1";
+              // Dynamically assign the span class based on the index
+              const spanClass =
+                MASONRY_LAYOUT[index] || "col-span-1 row-span-1";
 
-                return (
-                  <div
-                    key={image.id}
-                    data-aos="fade-up"
-                    data-aos-delay={index * 100}
-                    className={`${spanClass} relative rounded-xl overflow-hidden group cursor-pointer`}
-                  >
-                    <img
-                      src={image.url}
-                      alt={image.title || "Sundarban Gallery"}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                    <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/40 transition-colors duration-300" />
-                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 text-center">
-                      <span className="text-primary-foreground font-medium text-lg">
-                        {image.title}
-                      </span>
-                    </div>
+              return (
+                <div
+                  key={image.id}
+                  data-aos="fade-up"
+                  data-aos-delay={index * 100}
+                  className={`${spanClass} relative rounded-xl overflow-hidden group cursor-pointer`}
+                >
+                  <img
+                    src={image.url}
+                    alt={image.title || "Sundarban Gallery"}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/40 transition-colors duration-300" />
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 text-center">
+                    <span className="text-primary-foreground font-medium text-lg">
+                      {image.title}
+                    </span>
                   </div>
-                );
-              })}
+                </div>
+              );
+            })}
         </div>
 
         {/* View All CTA */}

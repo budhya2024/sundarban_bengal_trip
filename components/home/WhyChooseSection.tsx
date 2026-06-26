@@ -87,7 +87,7 @@ export const AboutSection = () => {
             <span className="text-secondary font-medium text-sm uppercase tracking-wider">
               Why Choose Us
             </span>
-            <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mt-2 mb-6 ">
+            <h2 className="font-display text-3xl md:text-3xl font-bold text-foreground mt-2 mb-6 ">
               Why Travellers Choose Our Sundarban Travel Package
 
             </h2>
