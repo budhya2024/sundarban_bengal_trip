@@ -28,7 +28,7 @@ export const ContactSection = () => {
               and create unforgettable memories.
             </p>
 
-            <Button variant="hero" size="xl" asChild>
+            <Button variant="hero" size="lg" asChild>
               <Link href="/contact" className="group">
                 Get In Touch
                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />

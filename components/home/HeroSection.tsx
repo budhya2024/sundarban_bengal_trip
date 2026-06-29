@@ -31,7 +31,7 @@ const slides = [
     reviews: "700+ Google Reviews",
     price: "2,499",
     oldPrice: "2,799",
-    offer: "Save up to 300₹ Book Today!",
+    offer: "Save up to ₹300 Book Today!",
   },
   {
     id: 3,
@@ -69,7 +69,7 @@ export const HeroSection = () => {
         }}
         effect="fade"
         loop={true}
-        className="h-[60vh] md:h-[80vh]"
+        className="h-[500px] md:h-[80vh]"
       >
         {slides.map((slide) => (
           <SwiperSlide key={slide.id}>
@@ -85,8 +85,8 @@ export const HeroSection = () => {
               <div className="absolute inset-0 bg-black/70" />
 
               {/* Content */}
-              <div className="relative z-10 container mx-auto h-full flex items-center px-4">
-                <div className="max-w-4xl text-white">
+              <div className="relative z-10 container mx-auto h-full flex items-center px-4  ">
+                <div className="max-w-md text-white">
 
                   {/* Title */}
                   <h1
@@ -98,15 +98,15 @@ export const HeroSection = () => {
                   </h1>
 
                   {/* Rating */}
-                  <p className="flex gap-1.5 items-center mb-6 md:mb-8">
+                  <p className="flex gap-1.5 items-center mb-6 md:mb-8 text-sm md:text-lg ">
                     <Star size={15} className="fill-yellow-400 text-yellow-400" />
                     <strong className="text-yellow-400">{slide.rating}</strong>
-                    <span className="text-sm text-white/80">({slide.reviews})</span>
+                    <span className=" text-white/80">({slide.reviews})</span>
                   </p>
 
                   {/* Price block */}
                   <div>
-                    <p className="text-xs font-semibold uppercase tracking-wider text-white/70 mb-1">
+                    <p className="text-xs  md:text-sm font-medium uppercase tracking-wider text-white/70 mb-1">
                       Starting From
                     </p>
 
@@ -114,14 +114,14 @@ export const HeroSection = () => {
                       <span className="text-3xl md:text-4xl font-extrabold text-yellow-400">
                         ₹{slide.price}
                       </span>
-                      <span className="text-sm text-white/80 mb-0.5">/person</span>
+                      <span className="text-sm md:text-base text-white/80 mb-0.5">/person</span>
                     </div>
 
                     <div className="mt-2 flex items-center gap-2 flex-wrap">
-                      <span className="text-base text-white/60 line-through font-medium">
+                      <span className="text-base md:text-lg text-white/60 line-through font-medium">
                         ₹{slide.oldPrice}
                       </span>
-                      <span className="bg-red-700 flex items-center gap-1 rounded-[4px] px-2 py-1 text-xs font-semibold text-white">
+                      <span className="bg-red-700 flex items-center gap-1 rounded-[4px] px-2 py-1 text-xs md:text-sm font-semibold text-white">
                         <Tag size={12} />
                         {slide.offer}
                       </span>
@@ -129,7 +129,7 @@ export const HeroSection = () => {
 
                     <div className="mt-4 inline-flex items-center gap-1.5 rounded-sm bg-secondary px-3 py-2">
                       <Clock4 size={13} />
-                      <p className="text-xs md:text-sm font-semibold text-white">
+                      <p className="text-xs md:text-sm font-semibold text-white  tracking-wide">
                         Limited Time Deal
                       </p>
                     </div>

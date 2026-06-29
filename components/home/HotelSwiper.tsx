@@ -53,12 +53,7 @@ export default function HotelSwiper() {
           </div>
         </div>
 
-        {/* CTA */}
-        <div className="text-center mt-12">
-          <Button variant="outline" size="lg" asChild>
-            <Link href="/packages">Book Now</Link>
-          </Button>
-        </div>
+    
 
       </div>
 

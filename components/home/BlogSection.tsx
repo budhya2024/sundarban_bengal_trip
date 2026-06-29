@@ -133,7 +133,7 @@ export const BlogSection = () => {
           data-aos-delay="300"
           className="text-center mt-12"
         >
-          <Button variant="outline" size="lg" asChild>
+          <Button variant="hero" size="lg" asChild>
             <Link href="/blog">View All Articles</Link>
           </Button>
         </div>

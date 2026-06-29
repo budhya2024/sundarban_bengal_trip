@@ -26,21 +26,21 @@ export const CTASection = () => {
         <div
           data-aos="fade-up"
           data-aos-duration="600"
-          className="max-w-3xl mx-auto text-center"
+          className="max-w-2xl mx-auto text-center"
         >
-          <h2 className="font-display text-3xl md:text-5xl font-bold text-primary-foreground mb-6">
+          <h2 className="font-display text-xl md:text-3xl font-bold text-white mt-2 mb-4">
             Ready for Your Sundarban Adventure?
           </h2>
-          <p className="text-lg text-primary-foreground/80 mb-8 leading-relaxed">
+          <p className="text-base text-primary-foreground/80 mb-8 leading-relaxed">
             Book your journey today and experience the magic of the world's
             largest mangrove forest. Limited spots available for the peak
             season!
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button variant="hero" size="xl" asChild>
+            <Button variant="hero" size="lg" asChild>
               <Link href="/packages">Book Your Tour Now</Link>
             </Button>
-            <Button variant="heroOutline" size="xl" asChild>
+            <Button variant="heroOutline" size="lg" asChild>
               <Link href="/contact">Talk to an Expert</Link>
             </Button>
           </div>

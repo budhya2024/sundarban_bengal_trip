@@ -57,7 +57,12 @@ export const TourPackagesSection = () => {
           </h1>
 
           <p className="text-muted-foreground max-w-4xl mx-auto">
-            Finding the perfect travel destination isn’t about picking the most popular spot on social media—it is about finding the place that matches your current energy, budget, and travel style. Experience the natural beauty of Sundarban with Kolkata to Sundarban tour package comfortable journey, delicious meals and extraordinary sightseeing.
+            Finding the perfect travel destination isn’t about picking the most
+            popular spot on social media—it is about finding the place that
+            matches your current energy, budget, and travel style. Experience
+            the natural beauty of Sundarban with Kolkata to Sundarban tour
+            package comfortable journey, delicious meals and extraordinary
+            sightseeing.
           </p>
         </div>
 
@@ -71,8 +76,9 @@ export const TourPackagesSection = () => {
                 key={pkg.id}
                 data-aos="fade-up"
                 data-aos-delay={index * 120}
-                className={`group relative rounded-xl overflow-hidden bg-card border border-border/60 shadow-sm hover:shadow-lg transition-all duration-500 hover:-translate-y-2 ${pkg.isPopular ? "ring-2 ring-secondary" : ""
-                  }`}
+                className={`group relative rounded-xl overflow-hidden bg-card border border-border/60 shadow-sm hover:shadow-lg transition-all duration-500 hover:-translate-y-2 ${
+                  pkg.isPopular ? "ring-2 ring-secondary" : ""
+                }`}
               >
                 {/* Popular Badge */}
                 {pkg.isPopular && (
@@ -152,6 +158,13 @@ export const TourPackagesSection = () => {
                         ₹ {pkg.price}
                       </h4>
                     </div>
+                    <div className="w-full lg:w-auto">
+                      <BookingModal
+                        packageName={pkg.packageName}
+                        triggerLabel="Book Now"
+                        triggerClassName="text-base rounded-xl font-medium w-full lg:w-auto"
+                      />
+                    </div>
 
                     {/* Buttons */}
                     <div className="flex gap-3 w-full lg:w-auto">
@@ -162,15 +175,6 @@ export const TourPackagesSection = () => {
                       >
                         View Details
                       </Button>
-
-                      <div className="w-full lg:w-auto">
-                        <BookingModal
-                          packageName={pkg.packageName}
-                          triggerLabel="Book Now"
-                          triggerVariant="outline"
-                          triggerClassName="text-base rounded-xl font-medium w-full lg:w-auto"
-                        />
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -186,7 +190,7 @@ export const TourPackagesSection = () => {
             data-aos-delay="300"
             className="text-center mt-6 md:mt-12"
           >
-            <Button size="lg" variant="outline" className="px-8" asChild>
+            <Button size="lg" variant="hero" className="px-8" asChild>
               <Link href="/contact">Contact for Custom Tour</Link>
             </Button>
           </div>

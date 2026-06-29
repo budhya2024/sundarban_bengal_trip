@@ -93,8 +93,10 @@ export const GallerySection = () => {
                     alt={image.title || "Sundarban Gallery"}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/40 transition-colors duration-300" />
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 text-center">
+                  <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/70 transition-colors duration-300" />
+             
+         <div className="absolute inset-5 border border-secondary-2  scale-0 group-hover:scale-100 transition-all rounded-xl duration-300" />
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-400 p-4 text-center">
                     <span className="text-primary-foreground font-medium text-lg">
                       {image.title}
                     </span>
@@ -111,7 +113,7 @@ export const GallerySection = () => {
             data-aos-delay="300"
             className="text-center mt-12"
           >
-            <Button variant="outline" size="lg" asChild>
+            <Button variant="hero" size="lg" asChild>
               <Link href="/gallery">View Full Gallery</Link>
             </Button>
           </div>

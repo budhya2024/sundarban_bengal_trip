@@ -70,9 +70,9 @@ export default function HotelMenu() {
           </h2>
 
           <p className="text-gray-600 max-w-2xl mx-auto">
-            Bengal Menu providing you authentic cuisines is an essential
-            service in Sundarban tour from Kolkata. We offer delicious meals
-            with the authenticity of Sundarban's core aroma.
+            Bengal Menu providing you authentic cuisines is an essential service
+            in Sundarban tour from Kolkata. We offer delicious meals with the
+            authenticity of Sundarban's core aroma.
           </p>
         </div>
 
@@ -81,7 +81,7 @@ export default function HotelMenu() {
           {/* Left Arrow */}
           <button
             onClick={() => swiperInstance?.slidePrev()}
-            className="hidden md:flex absolute left-2 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white shadow-lg items-center justify-center hover:bg-amber-500 hover:text-white transition"
+            className="hidden md:flex absolute left-2 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white shadow-lg items-center justify-center hover:bg-secondary hover:text-white transition"
           >
             <ChevronLeft />
           </button>
@@ -89,7 +89,7 @@ export default function HotelMenu() {
           {/* Right Arrow */}
           <button
             onClick={() => swiperInstance?.slideNext()}
-            className="hidden md:flex absolute right-2 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white shadow-lg items-center justify-center hover:bg-amber-500 hover:text-white transition"
+            className="hidden md:flex absolute right-2 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white shadow-lg items-center justify-center hover:bg-secondary hover:text-white transition"
           >
             <ChevronRight />
           </button>
@@ -101,7 +101,7 @@ export default function HotelMenu() {
             loop={true}
             onSwiper={(swiper) => setSwiperInstance(swiper)}
             breakpoints={{
-              320: { slidesPerView: 1.2 },
+              320: { slidesPerView: 1.5 },
               640: { slidesPerView: 2.2 },
               1024: { slidesPerView: 3.2 },
               1280: { slidesPerView: 4.2 },
@@ -109,7 +109,7 @@ export default function HotelMenu() {
           >
             {menus.map((item) => (
               <SwiperSlide key={item.id}>
-                <div className="relative h-[260px] md:h-[420px] rounded-2xl overflow-hidden shadow-xl group">
+                <div className="relative h-[240px] md:h-[380px] rounded-2xl overflow-hidden shadow-xl group">
                   <Image
                     src={item.image}
                     alt={item.name}

@@ -347,24 +347,24 @@ export const BookingForm = () => {
                   className="w-full"
                   disabled={isPending}
                 >
-                  {isPending ? "Processing..." : "Plan My Trip"}
+                  {isPending ? "Processing..." : "Book Your Trip"}
                 </Button>
 
                 <div className="flex flex-wrap justify-center items-center gap-2 text-xs md:text-sm sm:gap-4 text-gray-700 font-medium">
-                  <div className="flex items-center gap-1 md:gap-2">
+                  {/* <div className="flex items-center gap-1 md:gap-2">
                     <FaLock className="text-slate-700" />
                     <span>No Payment Required</span>
-                  </div>
-                  <div className="hidden md:block h-4 w-px bg-gray-300" />
+                  </div> */}
+                  {/* <div className="hidden md:block h-4 w-px bg-gray-300" /> */}
                   <div className="flex items-center gap-1 md:gap-2">
                     <FaPhoneAlt className="text-slate-700" />
                     <span>Callback Within 15 Minutes</span>
                   </div>
-                  {/* <div className="hidden md:block h-4 w-px bg-gray-300" />
+                  <div className="hidden md:block h-4 w-px bg-gray-300" />
                   <div className="flex items-center gap-1 md:gap-2">
                     <FaWhatsapp className="text-green-500" />
                     <span>WhatsApp Support</span>
-                  </div> */}
+                  </div>
                 </div>
 
                 <div className="grid grid-cols-2 sm:grid-cols-4 text-xs md:text-sm gap-2 sm:gap-4 text-gray-700 font-medium rounded-md bg-[#f7f2d8] p-2 md:p-4">

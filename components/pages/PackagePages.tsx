@@ -166,7 +166,6 @@ const Packages = ({
                           triggerClassName="text-base rounded-xl font-medium w-full lg:w-auto"
                         />
                       </div>
-
                     </div>
                   </div>
                 </div>

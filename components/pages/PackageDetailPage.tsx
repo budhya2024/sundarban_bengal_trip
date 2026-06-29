@@ -115,8 +115,8 @@ const PackageDetailsPage = ({
                   </span>
                   <p className="font-semibold text-foreground">
                     {/* {data.groupSize} */}
-                    kolkata to kolkata
-                    Caning to Caning
+                    kolkata &
+                  Caning
                   </p>
                 </div>
                 <div className="bg-card p-4 rounded-xl text-center shadow-soft">
