@@ -23,7 +23,7 @@ export const Footer = () => {
                 alt="logo"
                 height={200}
                 width={200}
-                className="w-30 h-auto"
+                className="w-28 md:w-30 h-auto"
               />
             </Link>
             <p className="text-primary-foreground/80 leading-relaxed mb-4 max-w-sm">
@@ -252,7 +252,7 @@ export const Footer = () => {
             <p className="text-primary-foreground/60 text-sm">
               ISO 9001:2015 Certified Company
             </p>
-            <div className="flex  gap-2 md:gap-6 text-sm">
+            <div className="flex flex-wrap justify-center gap-2 md:gap-6 text-sm ">
               <Link
                 href="/privacy-policy"
                 className="text-primary-foreground/60 hover:text-secondary transition-colors"

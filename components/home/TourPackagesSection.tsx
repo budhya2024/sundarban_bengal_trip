@@ -147,9 +147,9 @@ export const TourPackagesSection = () => {
                   </div>
 
                   {/* Bottom */}
-                  <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-5">
+                  <div className="flex  lg:items-center lg:justify-between gap-5">
                     {/* Price */}
-                    <div>
+                    {/* <div>
                       <span className="text-sm text-muted-foreground">
                         Starting From
                       </span>
@@ -157,20 +157,20 @@ export const TourPackagesSection = () => {
                       <h4 className="text-xl font-bold text-foreground">
                         ₹ {pkg.price}
                       </h4>
-                    </div>
-                    <div className="w-full lg:w-auto">
+                    </div> */}
+                    <div className="w-full">
                       <BookingModal
                         packageName={pkg.packageName}
                         triggerLabel="Book Now"
-                        triggerClassName="text-base rounded-xl font-medium w-full lg:w-auto"
+                        triggerClassName="text-sm rounded-xl font-medium w-full"
                       />
                     </div>
 
                     {/* Buttons */}
-                    <div className="flex gap-3 w-full lg:w-auto">
+                    <div className=" w-full">
                       <Button
                         variant="outline"
-                        className="h-12 px-6 rounded-xl font-medium"
+                        className="h-12 px-6 rounded-xl font-medium w-full"
                         onClick={() => router.push(`/packages/${pkg.key}`)}
                       >
                         View Details
@@ -190,7 +190,7 @@ export const TourPackagesSection = () => {
             data-aos-delay="300"
             className="text-center mt-6 md:mt-12"
           >
-            <Button size="lg" variant="hero" className="px-8" asChild>
+            <Button size="sm" variant="hero" className="h-12 px-6" asChild>
               <Link href="/contact">Contact for Custom Tour</Link>
             </Button>
           </div>

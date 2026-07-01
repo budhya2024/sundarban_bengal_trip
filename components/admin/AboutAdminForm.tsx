@@ -197,7 +197,7 @@ export default function AboutAdminForm({
           <Button
             type="submit"
             disabled={isPending || !!uploadingField || !!deletingField}
-            className="bg-emerald-700 hover:bg-emerald-800 shadow-lg px-8 transition-all"
+            className="bg-emerald-700 hover:bg-emerald-800 text-white shadow-lg px-8 transition-all"
           >
             {isPending ? (
               <Clock className="mr-2 h-4 w-4 animate-spin" />

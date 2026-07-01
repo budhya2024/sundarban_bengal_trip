@@ -3,6 +3,7 @@
 import { db } from "@/db";
 import { newsletterSubscribers } from "@/db/schema";
 import { count, desc, eq } from "drizzle-orm";
+import { sendNewsletterWelcome } from "./sendmail.action";
 
 export async function subscribeAction(formData: FormData) {
   const email = formData.get("email") as string;
@@ -36,6 +37,12 @@ export async function subscribeAction(formData: FormData) {
 
     // Insert new record
     await db.insert(newsletterSubscribers).values({ email });
+
+    // Send welcome email to new subscriber
+    await sendNewsletterWelcome(email).catch((err) =>
+      console.error("📧 Newsletter welcome email failed:", err)
+    );
+
     return { success: true, message: "Thank you for subscribing!" };
   } catch (error) {
     return {

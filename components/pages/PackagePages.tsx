@@ -132,7 +132,7 @@ const Packages = ({
                   {/* Bottom */}
                   <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 md:gap-6 pt-4 md:pt-8 border-t border-border">
                     {/* Price */}
-                    <div>
+                    {/* <div>
                       <span className="text-sm text-muted-foreground">
                         Starting From
                       </span>
@@ -146,7 +146,7 @@ const Packages = ({
                           ₹ {pkg.price}
                         </h4>
                       </div>
-                    </div>
+                    </div> */}
 
                     {/* Buttons */}
                     <div className="grid grid-cols-2 gap-4 w-full lg:w-auto">

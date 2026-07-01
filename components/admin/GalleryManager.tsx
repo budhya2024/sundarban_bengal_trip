@@ -307,7 +307,7 @@ export default function GalleryManager({
           </div>
           <Button
             onClick={() => setIsUploadOpen(true)}
-            className="bg-emerald-700 hover:bg-emerald-800"
+            className="bg-emerald-700 hover:bg-emerald-800 text-white"
           >
             <Plus className="mr-2 h-4 w-4" /> Add Image
           </Button>
@@ -384,7 +384,7 @@ export default function GalleryManager({
       {/* Upload Modal */}
       {isUploadOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-          <div className="bg-white rounded-xl w-full max-w-lg shadow-2xl">
+          <div className="bg-white rounded-xl w-[360px] sm:w-[420px] max-w-lg shadow-2xl">
             <div className="flex items-center justify-between px-6 py-4 border-b">
               <h3 className="text-lg font-bold">Upload New Asset</h3>
               <button onClick={() => setIsUploadOpen(false)}>
@@ -498,7 +498,7 @@ export default function GalleryManager({
                 <Button
                   type="submit"
                   disabled={uploadingStatus || isPending}
-                  className="h-11 px-8 rounded-full font-bold bg-[#4a6741] hover:bg-[#3a5233]"
+                  className="h-11 px-8 rounded-full font-bold bg-[#4a6741] hover:bg-[#3a5233] text-white"
                 >
                   {isPending ? (
                     <Loader2 className="animate-spin" />

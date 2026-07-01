@@ -48,7 +48,7 @@ export const TestimonialsSection = ({
           <span className="text-secondary font-medium text-sm uppercase tracking-wider">
             Testimonials
           </span>
-          <h4 className="font-display text-3xl md:text-4xl font-bold text-primary-foreground mt-2 mb-4">
+          <h4 className="font-display text-2xl md:text-4xl font-bold text-primary-foreground mt-2 mb-4">
             What Our Travelers Say
           </h4>
           <p className="text-primary-foreground/70 max-w-2xl mx-auto">

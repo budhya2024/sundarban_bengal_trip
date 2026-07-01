@@ -309,3 +309,30 @@ select:focus {
   background: #d1fae5;
   border-radius: 6px;
 }
+
+
+  .shine {
+    position: absolute;
+    top: 0;
+    left: -80%;
+    width: 45%;
+    height: 100%;
+    background: linear-gradient(
+      120deg,
+      transparent,
+      rgba(255, 255, 255, 0.8),
+      transparent
+    );
+    transform: skewX(-25deg);
+    animation: shine 1.8s linear infinite;
+    pointer-events: none;
+  }
+
+  @keyframes shine {
+    0% {
+      left: -80%;
+    }
+    100% {
+      left: 150%;
+    }
+  }

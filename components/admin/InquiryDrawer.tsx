@@ -189,7 +189,7 @@ export function InquiryDrawer({ isOpen, onClose, inquiry }: any) {
               <Button
                 type="submit"
                 disabled={isPending}
-                className="w-full bg-emerald-700 hover:bg-emerald-800 h-12 rounded-xl font-bold gap-2 transition-all shadow-md"
+                className="w-full bg-emerald-700 hover:bg-emerald-800 text-white h-12 rounded-xl font-bold gap-2 transition-all shadow-md"
               >
                 {isPending ? (
                   <Clock className="h-4 w-4 animate-spin" />

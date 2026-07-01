@@ -9,6 +9,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { getNavbarPackageKeys } from "@/app/actions/package.actions";
 import { Skeleton } from "./ui/skeleton";
+import { FaPhoneAlt } from "react-icons/fa";
 
 const navLinks = [
   { name: "Home", path: "/" },
@@ -177,14 +178,38 @@ export const Navbar = () => {
           </div>
 
           {/* DESKTOP CTA */}
-          <div className="hidden lg:block">
-            <Button variant="hero" asChild>
-              <Link href="/packages">Book Now</Link>
-            </Button>
-          </div>
+        {/* DESKTOP CTA */}
+<div className="hidden lg:block">
+  <a
+    href="tel:+917074432628"
+    className="relative inline-flex items-center justify-center overflow-hidden bg-primary
+    
+    px-7 py-3 rounded-sm text-white font-medium 
+    transition-all duration-300"
+  >
+    {/* Shine Effect */}
+    <span
+      className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/50 to-transparent"
+      style={{
+        animation: "shine 2s linear infinite",
+        transform: "skewX(-25deg)",
+        width: "50%",
+      }}
+    />
+
+    <span className="relative z-10 flex flex-col">
+      <span className="flex gap-2 items-center ">
+       <FaPhoneAlt  />7074432628
+      </span>
+    </span>
+  </a>
+</div>
 
           {/* MOBILE TOGGLE */}
-          <button onClick={() => setIsOpen(!isOpen)} className="lg:hidden z-50">
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="lg:hidden z-50 h-10 w-10 rounded-full bg-white flex justify-center items-center"
+          >
             {isOpen ? <X size={26} /> : <Menu size={26} />}
           </button>
         </nav>
@@ -270,11 +295,7 @@ export const Navbar = () => {
                 ),
               )}
 
-              <Button variant="hero" size="xl" asChild className="mt-2">
-                <Link href="/packages" onClick={() => setIsOpen(false)}>
-                  Book Now
-                </Link>
-              </Button>
+           
             </div>
           </motion.div>
         )}

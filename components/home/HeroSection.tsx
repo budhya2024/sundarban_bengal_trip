@@ -69,7 +69,7 @@ export const HeroSection = () => {
         }}
         effect="fade"
         loop={true}
-        className="h-[500px] md:h-[80vh]"
+        className="h-[300px] md:h-[80vh]"
       >
         {slides.map((slide) => (
           <SwiperSlide key={slide.id}>
@@ -105,7 +105,7 @@ export const HeroSection = () => {
                   </p>
 
                   {/* Price block */}
-                  <div>
+                  {/* <div>
                     <p className="text-xs  md:text-sm font-medium uppercase tracking-wider text-white/70 mb-1">
                       Starting From
                     </p>
@@ -135,7 +135,7 @@ export const HeroSection = () => {
                     </div>
 
                 
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>

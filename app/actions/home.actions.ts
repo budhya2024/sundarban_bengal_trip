@@ -16,7 +16,8 @@ import { sendBookingInquiry } from "./sendmail.action";
 export const createBooking = async (booking: BookingValues) => {
   try {
     await db.insert(bookings).values(booking);
-    sendBookingInquiry(booking);
+    // Await so both admin + client confirmation emails are sent before returning
+    await sendBookingInquiry(booking);
     return { success: true, message: "Booking created successfully" };
   } catch (error) {
     console.error("Error creating booking:", error);

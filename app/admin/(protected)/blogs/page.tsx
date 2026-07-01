@@ -37,7 +37,7 @@ export default async function BlogList() {
             </div>
           </div>
           <Link href="/admin/blogs/new">
-            <Button className="bg-emerald-700 hover:bg-emerald-800 h-10 px-6 shadow-sm transition-all active:scale-95">
+            <Button className="bg-emerald-700 hover:bg-emerald-800 text-white h-10 px-6 shadow-sm transition-all active:scale-95">
               <Plus className="mr-2 h-4 w-4" /> Add New Post
             </Button>
           </Link>

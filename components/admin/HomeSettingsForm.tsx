@@ -235,7 +235,7 @@ export default function HomeSettingsForm({
           </div>
           <Button
             disabled={isPending || isUploading || uploadingIndex !== null}
-            className="bg-emerald-700 hover:bg-emerald-800 shadow-lg px-8 rounded-full"
+            className="bg-emerald-700 hover:bg-emerald-800 text-white shadow-lg px-8 rounded-full"
           >
             {isPending ? (
               <Clock className="mr-2 h-4 w-4 animate-spin" />

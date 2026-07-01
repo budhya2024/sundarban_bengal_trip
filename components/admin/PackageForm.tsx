@@ -330,7 +330,7 @@ export default function PackageForm({
           </div>
           <Button
             disabled={isPending || !!uploadingField}
-            className="bg-emerald-700 hover:bg-emerald-800 shadow-lg px-8 transition-all"
+            className="bg-emerald-700 hover:bg-emerald-800 text-white shadow-lg px-8 transition-all"
           >
             {isPending ? (
               <Clock className="mr-2 h-4 w-4 animate-spin" />

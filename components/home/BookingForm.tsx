@@ -15,16 +15,12 @@ import {
   FaShieldAlt,
   FaUsers,
   FaHeart,
+  FaUser,
+  FaEnvelope,
+  FaCalendarAlt,
+  FaBoxOpen,
+  FaCheckCircle,
 } from "react-icons/fa";
-import {
-  Calendar as CalendarIcon,
-  Users,
-  User,
-  Phone,
-  Mail,
-  Package,
-  CheckCircle2,
-} from "lucide-react";
 
 import {
   Form,
@@ -151,7 +147,7 @@ export const BookingForm = () => {
                   render={({ field }) => (
                     <FormItem>
                       <div className="relative">
-                        <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground z-10" />
+                        <FaUser className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground z-10" />
                         <FormControl>
                           <Input
                             placeholder="Enter your full name"
@@ -172,7 +168,7 @@ export const BookingForm = () => {
                   render={({ field }) => (
                     <FormItem>
                       <div className="relative">
-                        <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground z-10" />
+                        <FaEnvelope className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground z-10" />
                         <FormControl>
                           <Input
                             type="email"
@@ -194,7 +190,7 @@ export const BookingForm = () => {
                   render={({ field }) => (
                     <FormItem>
                       <div className="relative">
-                        <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground z-10" />
+                        <FaPhoneAlt className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground z-10" />
                         <FormControl>
                           <Input
                             type="tel"
@@ -224,7 +220,7 @@ export const BookingForm = () => {
                       render={({ field }) => (
                         <FormItem className="md:col-auto">
                           <div className="relative" ref={calRef}>
-                            <CalendarIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground pointer-events-none z-10" />
+                            <FaCalendarAlt className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground pointer-events-none z-10" />
 
                             {/* Trigger button — shows placeholder or selected date */}
                             <button
@@ -239,13 +235,13 @@ export const BookingForm = () => {
                             >
                               {field.value
                                 ? new Date(field.value).toLocaleDateString(
-                                    "en-IN",
-                                    {
-                                      day: "2-digit",
-                                      month: "short",
-                                      year: "numeric",
-                                    },
-                                  )
+                                  "en-IN",
+                                  {
+                                    day: "2-digit",
+                                    month: "short",
+                                    year: "numeric",
+                                  },
+                                )
                                 : "Select date"}
                             </button>
 
@@ -288,7 +284,7 @@ export const BookingForm = () => {
                       render={({ field }) => (
                         <FormItem className="md:col-auto">
                           <div className="relative">
-                            <Users className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground z-10" />
+                            <FaUsers className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground z-10" />
                             <FormControl>
                               <Input
                                 type="number"
@@ -313,7 +309,7 @@ export const BookingForm = () => {
                   render={({ field }) => (
                     <FormItem>
                       <div className="relative">
-                        <Package className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground z-20" />
+                        <FaBoxOpen className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground z-20" />
                         <Select
                           onValueChange={field.onChange}
                           defaultValue={field.value}
@@ -419,7 +415,7 @@ export const BookingForm = () => {
                   </div>
                 </div>
 
-                <div className="mx-auto flex w-fit items-center gap-2 md:gap-3 rounded-sm bg-[#003c2f] px-3 md:px-6 py-3 text-white">
+                <div className="mx-auto flex w-fit items-center gap-2 md:gap-3 rounded-xl bg-[#003c2f] px-3 md:px-6 py-3 text-white">
                   <FaUsers />
                   <span className="text-xs md:text-sm font-medium">
                     Trusted by Families, Couples & Groups Across India
@@ -433,31 +429,49 @@ export const BookingForm = () => {
 
       {/* Success Modal */}
       <Dialog open={isSuccessModalOpen} onOpenChange={setIsSuccessModalOpen}>
-        <DialogContent className="sm:max-w-md border-none rounded-3xl p-8 outline-none">
-          <div className="flex flex-col items-center text-center space-y-4">
-            <div className="bg-emerald-100 p-3 rounded-full animate-bounce">
-              <CheckCircle2 className="w-12 h-12 text-emerald-600" />
+        <DialogContent className="sm:max-w-md border-none rounded-3xl p-0 overflow-hidden shadow-2xl outline-none">
+          {/* Green gradient banner */}
+          <div className="relative bg-gradient-to-br from-[#064e3b] via-[#0b664a] to-[#047857] px-8 pt-12 pb-16 text-center overflow-hidden">
+            {/* Decorative rings */}
+            {/* <div className="absolute inset-0 pointer-events-none">
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 rounded-full border border-white/10" />
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-56 h-56 rounded-full border border-white/15" />
+            </div> */}
+
+            {/* Animated check icon */}
+            <div className="relative inline-flex items-center justify-center mb-5">
+              {/* Pulse ring */}
+              <span className="absolute inline-flex h-24 w-24 rounded-full bg-white/20 animate-ping" />
+              <span className="absolute inline-flex h-20 w-20 rounded-full bg-white/30" />
+              <div className="relative z-10 bg-white rounded-full p-4 shadow-xl">
+                <FaCheckCircle className="w-12 h-12 text-[#064e3b]" />
+              </div>
             </div>
+
             <DialogHeader>
-              <DialogTitle className="text-2xl font-display font-bold text-slate-900">
-                Adventure Awaits!
+              <DialogTitle className="text-white text-2xl font-bold mb-1 drop-shadow">
+                Booking Confirmed! 🎉
               </DialogTitle>
-              <DialogDescription className="text-slate-500 pt-2 leading-relaxed">
-                Thank you for choosing us for your Sundarban journey. Our travel
-                expert will contact you shortly.
+              <DialogDescription className="text-emerald-100 text-sm">
+                Your adventure to the Sundarbans is on its way
               </DialogDescription>
             </DialogHeader>
           </div>
-          <DialogFooter className="sm:justify-center mt-6">
-            <Button
-              type="button"
-              variant="outline"
-              className="rounded-full px-8 border-emerald-600 text-emerald-700 hover:bg-emerald-50 transition-all font-bold"
-              onClick={() => setIsSuccessModalOpen(false)}
-            >
-              Got it, Thanks!
-            </Button>
-          </DialogFooter>
+
+          {/* Body card overlapping the banner */}
+          <div className="relative -mt-8 mx-4 mb-6 bg-white rounded-2xl shadow-lg px-6 py-6 space-y-4">
+            {/* Info rows */}
+            <div className="space-y-3 text-sm">
+              <div className="flex items-start gap-2.5 text-slate-600">
+                <span className="mt-0.5 text-[#064e3b]"><FaCheckCircle className="w-4 h-4" /></span>
+                <span>Our travel expert will <strong>call you within 24 hours</strong> to finalise details.</span>
+              </div>
+              <div className="flex items-start gap-2.5 text-slate-600">
+                <span className="mt-0.5 text-[#064e3b]"><FaCheckCircle className="w-4 h-4" /></span>
+                <span>You can also reach us anytime on <strong>WhatsApp</strong>.</span>
+              </div>
+            </div>
+          </div>
         </DialogContent>
       </Dialog>
     </section>

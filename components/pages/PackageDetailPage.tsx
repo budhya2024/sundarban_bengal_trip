@@ -233,13 +233,13 @@ const PackageDetailsPage = ({
                 className="bg-card rounded-2xl p-6 shadow-elevated sticky top-24"
                 data-aos="fade-left"
               >
-                <div className="text-center mb-6">
+                {/* <div className="text-center mb-6">
                   <span className="text-muted-foreground">Starting from</span>
                   <div className="font-display text-4xl font-bold text-primary">
                     {data.price}
                   </div>
                   <span className="text-muted-foreground">per person</span>
-                </div>
+                </div> */}
 
                 <div className="space-y-4 mb-6">
                   <div className="flex items-center gap-3 text-muted-foreground">

@@ -209,7 +209,7 @@ export default function ContactAdminForm({ initialData }: ContactAdminProps) {
             <Button
               type="submit"
               disabled={isPending || isUploading || isDeleting}
-              className="bg-emerald-700 hover:bg-emerald-800 h-10 px-6 shadow-sm"
+              className="bg-emerald-700 hover:bg-emerald-800 text-white h-10 px-6 shadow-sm"
             >
               {isPending ? (
                 <Clock className="mr-2 h-4 w-4 animate-spin" />
