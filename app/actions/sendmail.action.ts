@@ -85,12 +85,21 @@ export const sendOtpMail = async (email: string, otp: string) => {
 // ─────────────────────────────────────────────────────────────────────────────
 export const sendBookingInquiry = async (data: BookingValues) => {
   // 1️⃣ Email to admin
-  return await sendBaseEmail({
+  await sendBaseEmail({
     to: process.env.SITE_OWNER_EMAIL || process.env.NODEMAILER_USER!,
     subject: `[New Booking] ${data.package} - ${data.name}`,
     html: getBookingEmailTemplate(data),
     replyTo: data.email,
     name: data.name,
+  });
+
+  // 2️⃣ Confirmation email to client
+  return await sendBaseEmail({
+    to: data.email,
+    subject: `Booking Request Received — Sundarban Bengal Trip 🎉`,
+    html: getBookingClientConfirmationTemplate(data),
+    replyTo: process.env.SITE_OWNER_EMAIL || process.env.NODEMAILER_USER!,
+    name: "Sundarban Bengal Trip",
   });
 };
 
@@ -308,75 +317,98 @@ function getBookingEmailTemplate(data: {
   package: string;
   status?: string;
 }) {
-  return emailWrapper(`
-    ${emailHeader("New Booking Request 🏕️", `From ${data.name} · Status: ${data.status || "Pending"}`)}
-    <div style="padding: 32px;">
-      <p style="color: #1e293b; font-size: 15px; margin: 0 0 8px 0; font-weight: 600;">Hello Admin,</p>
-      <p style="color: #475569; font-size: 15px; line-height: 1.6; margin: 0 0 28px 0;">
-        A new tour booking inquiry has been submitted. Please review the details below and follow up with the guest.
-      </p>
-
-      <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; margin-bottom: 24px;">
-        <div style="background: linear-gradient(135deg, #064e3b, #047857); padding: 12px 20px;">
-          <p style="color: #a7f3d0; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin: 0;">📦 Tour Package Details</p>
+  return `
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>New Booking Inquiry - Sundarban Bengal Trip</title>
+    </head>
+    <body style="margin: 0; padding: 0; background-color: #f1f5f9; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+      <div style="max-width: 620px; margin: 32px auto; background-color: #ffffff; border-radius: 16px; overflow: hidden; border: 1px solid #e2e8f0; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+        
+        <!-- Header -->
+        <div style="background-color: #064e3b; padding: 40px 32px; text-align: center;">
+          <div style="margin-bottom: 16px;">
+            <span style="display: inline-block; background-color: #d97706; color: #ffffff; font-size: 11px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; padding: 6px 16px; border-radius: 20px;">
+              Pending Request
+            </span>
+          </div>
+          <h1 style="color: #ffffff; margin: 0 0 8px 0; font-size: 28px; font-weight: 700; line-height: 1.3; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">New Booking Inquiry</h1>
+          <p style="color: #a7f3d0; margin: 0; font-size: 14px; font-weight: 500; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">Sundarban Bengal Trip</p>
         </div>
-        <table style="width: 100%; border-collapse: collapse;">
-          <tr>
-            <td style="padding: 14px 20px; color: #64748b; font-size: 13px; width: 140px; border-bottom: 1px solid #f1f5f9; font-weight: 600;">Selected Package</td>
-            <td style="padding: 14px 20px; color: #064e3b; font-size: 14px; border-bottom: 1px solid #f1f5f9; font-weight: 700;">${data.package}</td>
-          </tr>
-          <tr>
-            <td style="padding: 14px 20px; color: #64748b; font-size: 13px; border-bottom: 1px solid #f1f5f9; font-weight: 600;">Travel Date</td>
-            <td style="padding: 14px 20px; color: #1e293b; font-size: 14px; border-bottom: 1px solid #f1f5f9; font-weight: 600;">${data.date}</td>
-          </tr>
-          <tr>
-            <td style="padding: 14px 20px; color: #64748b; font-size: 13px; border-bottom: 1px solid #f1f5f9; font-weight: 600;">Number of Guests</td>
-            <td style="padding: 14px 20px; color: #1e293b; font-size: 14px; border-bottom: 1px solid #f1f5f9; font-weight: 600;">${data.guests} Person(s)</td>
-          </tr>
-          <tr>
-            <td style="padding: 14px 20px; color: #64748b; font-size: 13px; font-weight: 600;">Status</td>
-            <td style="padding: 14px 20px;">
-              <span style="display: inline-block; background-color: #fef3c7; color: #92400e; font-size: 12px; font-weight: 700; padding: 3px 12px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px;">${data.status || "Pending"}</span>
-            </td>
-          </tr>
-        </table>
-      </div>
 
-      <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; margin-bottom: 28px;">
-        <div style="background: linear-gradient(135deg, #064e3b, #047857); padding: 12px 20px;">
-          <p style="color: #a7f3d0; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin: 0;">👤 Guest Information</p>
+        <!-- Body -->
+        <div style="padding: 40px 32px;">
+          <p style="color: #1e293b; font-size: 16px; margin: 0 0 16px 0; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">Hello Admin,</p>
+          <p style="color: #475569; font-size: 15px; line-height: 1.6; margin: 0 0 24px 0; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+            A new guest has requested a booking. Here are the tour details:
+          </p>
+
+          <!-- Details Card -->
+          <div style="border: 1px solid #f1f5f9; background-color: #f8fafc; border-radius: 12px; padding: 12px 24px; margin-bottom: 32px;">
+            <table style="width: 100%; border-collapse: collapse;">
+              <tr>
+                <td style="padding: 16px 0; font-size: 13px; color: #64748b; border-bottom: 1px solid #e2e8f0; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">Selected Package</td>
+                <td style="padding: 16px 0; font-size: 14px; font-weight: 700; color: #064e3b; text-align: right; border-bottom: 1px solid #e2e8f0; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">${data.package}</td>
+              </tr>
+              <tr>
+                <td style="padding: 16px 0; font-size: 13px; color: #64748b; border-bottom: 1px solid #e2e8f0; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">Travel Date</td>
+                <td style="padding: 16px 0; font-size: 14px; font-weight: 700; color: #1e293b; text-align: right; border-bottom: 1px solid #e2e8f0; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">${data.date}</td>
+              </tr>
+              <tr>
+                <td style="padding: 16px 0; font-size: 13px; color: #64748b; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">Number of Guests</td>
+                <td style="padding: 16px 0; font-size: 14px; font-weight: 700; color: #1e293b; text-align: right; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">${data.guests} Person(s)</td>
+              </tr>
+            </table>
+          </div>
+
+          <!-- Guest Details Section -->
+          <div style="margin-bottom: 32px;">
+            <h3 style="font-size: 14px; color: #1e293b; margin: 0 0 16px 0; text-transform: uppercase; border-bottom: 2px solid #064e3b; display: inline-block; padding-bottom: 4px; letter-spacing: 0.5px; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-weight: 700;">Guest Details</h3>
+            <table style="width: 100%; border-collapse: collapse;">
+              <tr>
+                <td style="padding: 10px 0; font-size: 14px; color: #64748b; width: 80px; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">Name:</td>
+                <td style="padding: 10px 0; font-size: 14px; font-weight: 600; color: #1e293b; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">${data.name}</td>
+              </tr>
+              <tr>
+                <td style="padding: 10px 0; font-size: 14px; color: #64748b; width: 80px; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">Phone:</td>
+                <td style="padding: 10px 0; font-size: 14px; font-weight: 600; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+                  <a href="tel:${data.phone}" style="color: #064e3b; text-decoration: none;">${data.phone}</a>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding: 10px 0; font-size: 14px; color: #64748b; width: 80px; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">Email:</td>
+                <td style="padding: 10px 0; font-size: 14px; font-weight: 600; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+                  <a href="mailto:${data.email}" style="color: #064e3b; text-decoration: none;">${data.email}</a>
+                </td>
+              </tr>
+            </table>
+          </div>
+
+          <!-- Action Button -->
+          <div style="text-align: center; margin: 32px 0 16px 0;">
+            <a href="https://sundarbanbengaltrip.com/admin/inquiry" style="display: inline-block; background-color: #064e3b; color: #ffffff; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 700; font-size: 14px; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+              Manage Booking
+            </a>
+          </div>
         </div>
-        <table style="width: 100%; border-collapse: collapse;">
-          <tr>
-            <td style="padding: 14px 20px; color: #64748b; font-size: 13px; width: 80px; border-bottom: 1px solid #f1f5f9; font-weight: 600;">Name</td>
-            <td style="padding: 14px 20px; color: #1e293b; font-size: 14px; border-bottom: 1px solid #f1f5f9; font-weight: 600;">${data.name}</td>
-          </tr>
-          <tr>
-            <td style="padding: 14px 20px; color: #64748b; font-size: 13px; border-bottom: 1px solid #f1f5f9; font-weight: 600;">Phone</td>
-            <td style="padding: 14px 20px; border-bottom: 1px solid #f1f5f9;">
-              <a href="tel:${data.phone}" style="color: #064e3b; font-size: 14px; text-decoration: none; font-weight: 600;">${data.phone}</a>
-            </td>
-          </tr>
-          <tr>
-            <td style="padding: 14px 20px; color: #64748b; font-size: 13px; font-weight: 600;">Email</td>
-            <td style="padding: 14px 20px;">
-              <a href="mailto:${data.email}" style="color: #064e3b; font-size: 14px; text-decoration: none; font-weight: 600;">${data.email}</a>
-            </td>
-          </tr>
-        </table>
-      </div>
 
-      <div style="text-align: center;">
-        <a href="https://sundarbanbengaltrip.com/admin/inquiry" style="display: inline-block; background: linear-gradient(135deg, #064e3b, #047857); color: #ffffff; padding: 14px 36px; text-decoration: none; border-radius: 8px; font-weight: 700; font-size: 14px; letter-spacing: 0.5px; margin-right: 10px;">
-          Manage Booking →
-        </a>
-        <a href="mailto:${data.email}" style="display: inline-block; background-color: #f1f5f9; color: #064e3b; padding: 14px 36px; text-decoration: none; border-radius: 8px; font-weight: 700; font-size: 14px; border: 2px solid #064e3b;">
-          Reply to Guest
-        </a>
+        <!-- Footer -->
+        <div style="background-color: #f8fafc; border-top: 1px solid #e2e8f0; padding: 24px 32px; text-align: center;">
+          <p style="margin: 0 0 6px 0; color: #94a3b8; font-size: 11px; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+            This is an automated notification from the Sundarban Bengal Trip booking engine.
+          </p>
+          <p style="margin: 0; color: #94a3b8; font-size: 11px; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+            © 2026 Sundarban Bengal Trip. All Rights Reserved.
+          </p>
+        </div>
+
       </div>
-    </div>
-    ${emailFooter()}
-  `);
+    </body>
+    </html>
+  `;
 }
 
 // ─── Client: Booking Confirmation Template ────────────────────────────────────

@@ -86,7 +86,7 @@ export const Footer = () => {
 
           {/* Quick Links */}
           <div>
-            <h4 className="font-display text-lg font-semibold mb-6">
+            <h4 className=" text-lg font-semibold mb-6">
               Quick Links
             </h4>
             <ul className="space-y-3">
@@ -116,7 +116,7 @@ export const Footer = () => {
 
           {/* Tour Packages */}
           <div>
-            <h4 className="font-display text-lg font-semibold mb-6">
+            <h4 className=" text-lg font-semibold mb-6">
               Popular Tours
             </h4>
 
@@ -153,7 +153,7 @@ export const Footer = () => {
 
           {/* Contact Info */}
           <div>
-            <h4 className="font-display text-lg font-semibold mb-6">
+            <h4 className=" text-lg font-semibold mb-6">
               Contact Us
             </h4>
             <ul className="space-y-4">

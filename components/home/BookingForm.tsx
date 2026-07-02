@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useTransition, useRef } from "react";
 import AOS from "aos";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
@@ -129,7 +129,7 @@ export const BookingForm = () => {
         >
           {/* Heading */}
           <div className="text-center mb-5 md:mb-10">
-            <p className="font-display text-xl md:text-3xl font-bold text-foreground mt-2 mb-2 md:mb-4">
+            <p className="font-display ttext-2xl md:text-4xl font-bold text-foreground mt-2 mb-2 md:mb-4">
               Sundarban tour package
             </p>
             <p className="text-muted-foreground text-sm md:text-base">
@@ -247,7 +247,7 @@ export const BookingForm = () => {
 
                             {/* Calendar popover */}
                             {calOpen && (
-                              <div className="absolute z-50 mt-1 left-0 shadow-lg rounded-xl overflow-hidden border border-border bg-card">
+                              <div className="absolute z-50 bottom-full mb-2 left-0 shadow-lg rounded-xl overflow-hidden border border-border bg-card">
                                 <Calendar
                                   minDate={today}
                                   value={
@@ -347,11 +347,6 @@ export const BookingForm = () => {
                 </Button>
 
                 <div className="flex flex-wrap justify-center items-center gap-2 text-xs md:text-sm sm:gap-4 text-gray-700 font-medium">
-                  {/* <div className="flex items-center gap-1 md:gap-2">
-                    <FaLock className="text-slate-700" />
-                    <span>No Payment Required</span>
-                  </div> */}
-                  {/* <div className="hidden md:block h-4 w-px bg-gray-300" /> */}
                   <div className="flex items-center gap-1 md:gap-2">
                     <FaPhoneAlt className="text-slate-700" />
                     <span>Callback Within 15 Minutes</span>
@@ -401,7 +396,7 @@ export const BookingForm = () => {
                     </div>
                   </div>
 
-                  {/* New Card */}
+                  {/* Travelers */}
                   <div className="flex items-center gap-2 md:gap-3">
                     <FaUsers className="text-[#003c2f] text-2xl" />
                     <div className="text-left">
@@ -418,7 +413,7 @@ export const BookingForm = () => {
                 <div className="mx-auto flex w-fit items-center gap-2 md:gap-3 rounded-xl bg-[#003c2f] px-3 md:px-6 py-3 text-white">
                   <FaUsers />
                   <span className="text-xs md:text-sm font-medium">
-                    Trusted by Families, Couples & Groups Across India
+                    Trusted by Families, Couples &amp; Groups Across India
                   </span>
                 </div>
               </div>
@@ -432,12 +427,6 @@ export const BookingForm = () => {
         <DialogContent className="sm:max-w-md border-none rounded-3xl p-0 overflow-hidden shadow-2xl outline-none">
           {/* Green gradient banner */}
           <div className="relative bg-gradient-to-br from-[#064e3b] via-[#0b664a] to-[#047857] px-8 pt-12 pb-16 text-center overflow-hidden">
-            {/* Decorative rings */}
-            {/* <div className="absolute inset-0 pointer-events-none">
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 rounded-full border border-white/10" />
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-56 h-56 rounded-full border border-white/15" />
-            </div> */}
-
             {/* Animated check icon */}
             <div className="relative inline-flex items-center justify-center mb-5">
               {/* Pulse ring */}
@@ -462,6 +451,10 @@ export const BookingForm = () => {
           <div className="relative -mt-8 mx-4 mb-6 bg-white rounded-2xl shadow-lg px-6 py-6 space-y-4">
             {/* Info rows */}
             <div className="space-y-3 text-sm">
+              <div className="flex items-start gap-2.5 text-slate-600">
+                <span className="mt-0.5 text-[#064e3b]"><FaCheckCircle className="w-4 h-4" /></span>
+                <span>A <strong>confirmation email</strong> has been sent to your inbox.</span>
+              </div>
               <div className="flex items-start gap-2.5 text-slate-600">
                 <span className="mt-0.5 text-[#064e3b]"><FaCheckCircle className="w-4 h-4" /></span>
                 <span>Our travel expert will <strong>call you within 24 hours</strong> to finalise details.</span>

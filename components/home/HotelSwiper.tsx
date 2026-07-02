@@ -21,7 +21,7 @@ export default function HotelSwiper() {
 
         {/* Heading */}
         <div className="mb-8 text-center">
-          <h3 className="font-display text-2xl md:text-3xl font-bold text-foreground mt-2 mb-4">
+          <h3 className="font-display text-3xl md:text-4xl font-bold text-foreground mt-2 mb-4">
             Sundarban Sonar Bangla Hotel
           </h3>
           <p className="text-muted-foreground max-w-2xl mx-auto">
@@ -53,7 +53,7 @@ export default function HotelSwiper() {
           </div>
         </div>
 
-    
+
 
       </div>
 

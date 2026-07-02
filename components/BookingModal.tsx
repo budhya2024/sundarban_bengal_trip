@@ -1,8 +1,10 @@
 "use client";
 
-import React, { useTransition, useState } from "react";
+import React, { useTransition, useState, useRef, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
 import {
   FaSpinner,
   FaPaperPlane,
@@ -56,7 +58,23 @@ export const BookingModal = ({
   const [isPending, startTransition] = useTransition();
   const [bookingOpen, setBookingOpen] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [calOpen, setCalOpen] = useState(false);
+  const calRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  // Close calendar when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (calRef.current && !calRef.current.contains(e.target as Node)) {
+        setCalOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   const form = useForm<BookingValues>({
     resolver: zodResolver(BookingSchema),
@@ -74,8 +92,8 @@ export const BookingModal = ({
   const handleOpenChange = (open: boolean) => {
     setBookingOpen(open);
     if (!open) {
-      // Reset success state and form when closed
       setIsSuccess(false);
+      setCalOpen(false);
       form.reset();
     }
   };
@@ -104,23 +122,25 @@ export const BookingModal = ({
         </Button>
       </DialogTrigger>
 
-      <DialogContent className={`w-[95%] sm:max-w-[550px] max-h-[90vh] overflow-y-auto rounded-3xl  transition-all duration-300 ${isSuccess ? "p-0 overflow-hidden shadow-2xl" : "p-6 md:p-8"}`}>
+      <DialogContent
+        className={`w-[95%] sm:max-w-[540px]  sm:w-full max-h-[90vh] overflow-y-auto rounded-3xl transition-all duration-300 ${isSuccess ? "pt-10 px-0 pb-0 overflow-hidden shadow-2xl" : "p-6 md:p-8"
+          }`}
+      >
         {!isSuccess ? (
           <>
             {/* Header */}
-            <DialogHeader className="space-y-3">
+            <DialogHeader className="space-y-1.5 mb-4">
               <DialogTitle className="font-display text-2xl text-foreground">
                 Secure Your Slot
               </DialogTitle>
-
               <DialogDescription className="text-muted-foreground leading-relaxed">
                 You are booking for{" "}
-                <span className="font-semibold text-primary">{packageName}</span>
+                <span className="font-semibold text-[#064e3b]">{packageName}</span>. Fill in your details and our travel expert will confirm your booking within 24 hours.
               </DialogDescription>
             </DialogHeader>
 
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 mt-2">
                 {/* Name */}
                 <FormField
                   control={form.control}
@@ -130,24 +150,16 @@ export const BookingModal = ({
                       <FormLabel className="text-xs font-semibold uppercase text-muted-foreground">
                         Full Name
                       </FormLabel>
-
                       <FormControl>
                         <div className="relative">
                           <FaUser className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-
                           <Input
                             placeholder="Enter your full name"
                             {...field}
-                            className="
-                              pl-12 h-12 rounded-sm
-                              focus-visible:ring-0
-                              focus-visible:ring-offset-0
-                              shadow-none
-                            "
+                            className="pl-12 h-12 rounded-sm focus-visible:ring-0 focus-visible:ring-offset-0 shadow-none"
                           />
                         </div>
                       </FormControl>
-
                       <FormMessage />
                     </FormItem>
                   )}
@@ -164,25 +176,17 @@ export const BookingModal = ({
                         <FormLabel className="text-xs font-semibold uppercase text-muted-foreground">
                           Email
                         </FormLabel>
-
                         <FormControl>
                           <div className="relative">
                             <FaEnvelope className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-
                             <Input
                               type="email"
-                              placeholder="Enter your email"
+                              placeholder="Your email"
                               {...field}
-                              className="
-                                pl-12 h-12 rounded-sm
-                                focus-visible:ring-0
-                                focus-visible:ring-offset-0
-                                shadow-none
-                              "
+                              className="pl-12 h-12 rounded-sm focus-visible:ring-0 focus-visible:ring-offset-0 shadow-none"
                             />
                           </div>
                         </FormControl>
-
                         <FormMessage />
                       </FormItem>
                     )}
@@ -197,33 +201,25 @@ export const BookingModal = ({
                         <FormLabel className="text-xs font-semibold uppercase text-muted-foreground">
                           Phone Number
                         </FormLabel>
-
                         <FormControl>
                           <div className="relative">
                             <FaPhoneAlt className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-
                             <Input
-                              placeholder="Enter your phone number"
+                              placeholder="Your phone number"
                               {...field}
-                              className="
-                                pl-12 h-12 rounded-sm
-                                focus-visible:ring-0
-                                focus-visible:ring-offset-0
-                                shadow-none
-                              "
+                              className="pl-12 h-12 rounded-sm focus-visible:ring-0 focus-visible:ring-offset-0 shadow-none"
                             />
                           </div>
                         </FormControl>
-
                         <FormMessage />
                       </FormItem>
                     )}
                   />
                 </div>
 
-                {/* Date + Guests */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {/* Travel Date */}
+                {/* Date + Guests — always side by side */}
+                <div className="grid grid-cols-2 gap-3">
+                  {/* Travel Date — React Calendar */}
                   <FormField
                     control={form.control}
                     name="date"
@@ -232,31 +228,50 @@ export const BookingModal = ({
                         <FormLabel className="text-xs font-semibold uppercase text-muted-foreground">
                           Travel Date
                         </FormLabel>
-
                         <FormControl>
-                          <div className="relative">
+                          <div className="relative" ref={calRef}>
                             <FaCalendarAlt className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none z-10" />
 
-                            <Input
-                              type="date"
-                              {...field}
-                              className="
-                                pl-12 pr-4 h-12 rounded-sm
-                                focus-visible:ring-0
-                                focus-visible:ring-offset-0
-                                shadow-none
-                                appearance-none
-                                [&::-webkit-calendar-picker-indicator]:opacity-0
-                                [&::-webkit-calendar-picker-indicator]:absolute
-                                [&::-webkit-calendar-picker-indicator]:right-0
-                                [&::-webkit-calendar-picker-indicator]:w-full
-                                [&::-webkit-calendar-picker-indicator]:h-full
-                                [&::-webkit-calendar-picker-indicator]:cursor-pointer
-                              "
-                            />
+                            {/* Trigger button */}
+                            <button
+                              type="button"
+                              onClick={() => setCalOpen((o) => !o)}
+                              className={`
+                                w-full h-12 pl-12 pr-4 text-left
+                                border border-input rounded-sm bg-background
+                                text-sm focus:outline-none focus:ring-0
+                                ${field.value ? "text-foreground" : "text-muted-foreground"}
+                              `}
+                            >
+                              {field.value
+                                ? new Date(field.value).toLocaleDateString("en-IN", {
+                                  day: "2-digit",
+                                  month: "short",
+                                  year: "numeric",
+                                })
+                                : "travel date"}
+                            </button>
+
+                            {/* Calendar popover — opens upward */}
+                            {calOpen && (
+                              <div className="absolute z-50 bottom-full mb-2 left-0 shadow-xl rounded-xl overflow-hidden border border-border bg-card">
+                                <Calendar
+                                  minDate={today}
+                                  value={field.value ? new Date(field.value) : null}
+                                  onChange={(val) => {
+                                    if (val instanceof Date) {
+                                      const yyyy = val.getFullYear();
+                                      const mm = String(val.getMonth() + 1).padStart(2, "0");
+                                      const dd = String(val.getDate()).padStart(2, "0");
+                                      field.onChange(`${yyyy}-${mm}-${dd}`);
+                                    }
+                                    setCalOpen(false);
+                                  }}
+                                />
+                              </div>
+                            )}
                           </div>
                         </FormControl>
-
                         <FormMessage />
                       </FormItem>
                     )}
@@ -271,41 +286,45 @@ export const BookingModal = ({
                         <FormLabel className="text-xs font-semibold uppercase text-muted-foreground">
                           Guests
                         </FormLabel>
-
                         <FormControl>
                           <div className="relative">
                             <FaUsers className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-
                             <Input
                               type="number"
                               min="1"
                               placeholder="Number of guests"
                               {...field}
-                              className="
-                                pl-12 h-12 rounded-sm
-                                focus-visible:ring-0
-                                focus-visible:ring-offset-0
-                                shadow-none
-                              "
+                              className="pl-12 h-12 rounded-sm focus-visible:ring-0 focus-visible:ring-offset-0 shadow-none"
                             />
                           </div>
                         </FormControl>
-
                         <FormMessage />
                       </FormItem>
                     )}
                   />
                 </div>
 
+                {/* Trust row */}
+                <div className="flex flex-wrap justify-center gap-x-4 gap-y-1 text-xs text-muted-foreground pt-1">
+                  <span className="flex items-center gap-1">
+                    <FaCheckCircle className="text-emerald-600 w-3 h-3" />
+                    No payment required
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <FaCheckCircle className="text-emerald-600 w-3 h-3" />
+                    Callback within 24 hours
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <FaCheckCircle className="text-emerald-600 w-3 h-3" />
+                    WhatsApp support
+                  </span>
+                </div>
+
                 {/* Submit Button */}
                 <Button
                   type="submit"
                   disabled={isPending}
-                  className="
-                    w-full h-12 rounded-sm text-base text-white font-semibold
-                    bg-[#064e3b] hover:bg-[#003c2f]
-                    transition-all duration-300
-                  "
+                  className="w-full h-12 rounded-sm text-base text-white font-semibold bg-[#064e3b] hover:bg-[#003c2f] transition-all duration-300"
                 >
                   {isPending ? (
                     <>
@@ -324,21 +343,14 @@ export const BookingModal = ({
           </>
         ) : (
           <>
-            {/* Green gradient banner using website colors */}
+            {/* Success — Green gradient banner */}
             <div className="relative bg-gradient-to-br from-[#064e3b] via-[#0b664a] to-[#047857] px-8 pt-12 pb-16 text-center overflow-hidden">
-              {/* Decorative rings */}
-              {/* <div className="absolute inset-0 pointer-events-none">
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 rounded-full border border-white/10" />
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-56 h-56 rounded-full border border-white/15" />
-              </div> */}
-
               {/* Animated check icon */}
               <div className="relative inline-flex items-center justify-center mb-5">
-                {/* Pulse ring */}
                 <span className="absolute inline-flex h-24 w-24 rounded-full bg-white/20 animate-ping" />
                 <span className="absolute inline-flex h-20 w-20 rounded-full bg-white/30" />
                 <div className="relative z-10 bg-white rounded-full p-4 shadow-xl">
-                  <FaCheckCircle className="w-12 h-12 text-[#064e3b] animate-[scale-in_0.4s_ease-out]" />
+                  <FaCheckCircle className="w-12 h-12 text-[#064e3b]" />
                 </div>
               </div>
 
@@ -362,12 +374,29 @@ export const BookingModal = ({
               {/* Info rows */}
               <div className="space-y-3 text-sm">
                 <div className="flex items-start gap-2.5 text-slate-600">
-                  <span className="mt-0.5 text-[#064e3b]"><FaCheckCircle className="w-4 h-4" /></span>
-                  <span>Our travel expert will <strong>call you within 24 hours</strong> to finalise details.</span>
+                  <span className="mt-0.5 text-[#064e3b]">
+                    <FaCheckCircle className="w-4 h-4" />
+                  </span>
+                  <span>
+                    A <strong>confirmation email</strong> has been sent to your inbox.
+                  </span>
                 </div>
                 <div className="flex items-start gap-2.5 text-slate-600">
-                  <span className="mt-0.5 text-[#064e3b]"><FaCheckCircle className="w-4 h-4" /></span>
-                  <span>You can reach us anytime on <strong>WhatsApp</strong>.</span>
+                  <span className="mt-0.5 text-[#064e3b]">
+                    <FaCheckCircle className="w-4 h-4" />
+                  </span>
+                  <span>
+                    Our travel expert will{" "}
+                    <strong>call you within 24 hours</strong> to finalise details.
+                  </span>
+                </div>
+                <div className="flex items-start gap-2.5 text-slate-600">
+                  <span className="mt-0.5 text-[#064e3b]">
+                    <FaCheckCircle className="w-4 h-4" />
+                  </span>
+                  <span>
+                    You can reach us anytime on <strong>WhatsApp</strong>.
+                  </span>
                 </div>
               </div>
             </div>

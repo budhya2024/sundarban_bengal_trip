@@ -46,7 +46,7 @@ export const ExploreSundarbanSection = () => {
           <span className="text-secondary font-medium text-sm uppercase tracking-wider">
             Your Gateway
           </span>
-          <h2 className="font-display text-xl md:text-3xl font-bold text-foreground mt-2 mb-4">
+          <h2 className="font-display text-2xl md:text-4xl font-bold text-foreground mt-2 mb-4">
             Comfortable Resorts, Boat Safari, Guided Jungle Tours
           </h2>
           <p className="text-muted-foreground max-w-4xl mx-auto">
@@ -69,7 +69,7 @@ export const ExploreSundarbanSection = () => {
                     <feature.icon className="w-6 h-6 text-primary" />
                   </div>
                   <div>
-                    <h3 className="font-display font-semibold text-foreground mb-1">
+                    <h3 className=" font-semibold text-foreground mb-1">
                       {feature.title}
                     </h3>
                     <p className="text-sm text-muted-foreground">

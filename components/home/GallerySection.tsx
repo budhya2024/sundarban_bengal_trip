@@ -47,7 +47,7 @@ export const GallerySection = () => {
           <span className="text-secondary font-medium text-sm uppercase tracking-wider">
             Gallery
           </span>
-          <h3 className="font-display text-xl md:text-3xl font-bold text-foreground mt-2 mb-4">
+          <h3 className="font-display text-2xl md:text-4xl font-bold text-foreground mt-2 mb-4">
             Moments from the Wild
           </h3>
           <p className="text-muted-foreground max-w-2xl mx-auto">
@@ -94,8 +94,8 @@ export const GallerySection = () => {
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/70 transition-colors duration-300" />
-             
-         <div className="absolute inset-5 border border-secondary-2  scale-0 group-hover:scale-100 transition-all rounded-xl duration-300" />
+
+                  <div className="absolute inset-5 border border-secondary-2  scale-0 group-hover:scale-100 transition-all rounded-xl duration-300" />
                   <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-400 p-4 text-center">
                     <span className="text-primary-foreground font-medium text-lg">
                       {image.title}

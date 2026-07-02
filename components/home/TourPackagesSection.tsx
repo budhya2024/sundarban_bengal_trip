@@ -52,7 +52,7 @@ export const TourPackagesSection = () => {
           data-aos="fade-up"
           className="text-center max-w-4xl mx-auto mb-10 md:mb-16"
         >
-          <h1 className="font-display text-xl md:text-3xl font-bold text-foreground mt-2 mb-4">
+          <h1 className="font-display text-2xl md:text-4xl font-bold text-foreground mt-2 mb-4">
             Choose Your Sundarban tour package from kolkata
           </h1>
 
@@ -76,9 +76,8 @@ export const TourPackagesSection = () => {
                 key={pkg.id}
                 data-aos="fade-up"
                 data-aos-delay={index * 120}
-                className={`group relative rounded-xl overflow-hidden bg-card border border-border/60 shadow-sm hover:shadow-lg transition-all duration-500 hover:-translate-y-2 ${
-                  pkg.isPopular ? "ring-2 ring-secondary" : ""
-                }`}
+                className={`group relative rounded-xl overflow-hidden bg-card border border-border/60 shadow-sm hover:shadow-lg transition-all duration-500 hover:-translate-y-2 ${pkg.isPopular ? "ring-2 ring-secondary" : ""
+                  }`}
               >
                 {/* Popular Badge */}
                 {pkg.isPopular && (
