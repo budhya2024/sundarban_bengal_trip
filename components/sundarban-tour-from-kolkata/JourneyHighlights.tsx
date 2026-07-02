@@ -10,7 +10,7 @@ export const JourneyHighlights = () => {
             Book Affordable Sundarban Tour Packages from Kolkata for Family, Couples & Groups
           </h2>
 
-          <div className="space-y-4 text-sm md:text-base text-muted-foreground leading-relaxed">
+          <div className="space-y-4 text-base text-muted-foreground leading-relaxed">
             <p>
               In our well modified{" "}
               <Link href="/packages" className="font-bold text-secondary">

@@ -36,10 +36,10 @@ export default function TravelExperience() {
             Explore the Beauty of Sundarban with Premium Travel Experience
           </h2>
 
-          <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
+          <p className="text-base text-muted-foreground leading-relaxed">
             The true transition into the wild begins the moment you leave the restless streets of Kolkata. The journey from the city to the Sundarbans is beautiful—watching towering buildings slowly melt away into endless paddy fields, little muddy huts and quiet village life as you head deep into the South 24 Parganas.
           </p>
-          <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
+          <p className="text-base text-muted-foreground leading-relaxed">
             Experience the journey starting with a premium vehicle pick up from Kolkata , transporting you directly to the Mangrove forests with the Safari boats experience, luxury resort and premium cuisines on board with Sundarban tour package from kolkata.
           </p>
         </div>

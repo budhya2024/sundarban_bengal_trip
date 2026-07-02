@@ -128,7 +128,7 @@ export default function Sundarban1Night() {
             </div>
           </div>
         </div>
-        <div className="text-sm md:text-base text-foreground/80  bg-foreground/10 p-4 mt-6">
+        <div className="text-base text-foreground/80  bg-foreground/10 p-4 mt-6">
           <p>
             Book your Sundarban 1 Night 2 Days Package from Kolkata now. This is
             a way to have a fun trip to Sundarban.

@@ -54,7 +54,7 @@ import { useToast } from "@/hooks/use-toast";
 
 // Shared input className — keeps placeholder color consistent across all fields
 const INPUT_CLS = `
-  pl-12 h-12  text-sm md:text-base
+  pl-12 h-12  text-base
   focus-visible:ring-0 focus-visible:ring-offset-0
   shadow-none
   
@@ -129,10 +129,10 @@ export const BookingForm = () => {
         >
           {/* Heading */}
           <div className="text-center mb-5 md:mb-10">
-            <p className="font-display ttext-2xl md:text-4xl font-bold text-foreground mt-2 mb-2 md:mb-4">
+            <p className="font-display tttext-2xl md:text-3xl font-bold text-foreground mt-2 mb-2 md:mb-4">
               Sundarban tour package
             </p>
-            <p className="text-muted-foreground text-sm md:text-base">
+            <p className="text-muted-foreground text-base">
               Fill up the form and our travel expert will contact you shortly.
             </p>
           </div>

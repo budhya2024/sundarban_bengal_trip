@@ -96,7 +96,7 @@ const Packages = ({
                     </h2>
 
                     {/* Description */}
-                    <p className="text-muted-foreground  text-sm md:text-base leading-relaxed mb-4 md:mb-8 ">
+                    <p className="text-muted-foreground  text-base leading-relaxed mb-4 md:mb-8 ">
                       {pkg.description}
                     </p>
 
@@ -142,7 +142,7 @@ const Packages = ({
                           ₹ {pkg.originalPrice}
                         </span>
 
-                        <h4 className="text-2xl md:text-4xl font-bold text-foreground">
+                        <h4 className="ttext-2xl md:text-3xl font-bold text-foreground">
                           ₹ {pkg.price}
                         </h4>
                       </div>

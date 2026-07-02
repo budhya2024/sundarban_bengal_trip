@@ -83,7 +83,7 @@ const Blog = ({
                       </div>
                       <div className="flex items-center gap-2">
                         <Calendar className="w-4 h-4" />
-                        {featureBlog.createdAt.toDateString()}
+                        {new Date(featureBlog.createdAt).toDateString()}
                       </div>
                       <div className="flex items-center gap-2">
                         <Clock className="w-4 h-4" />
@@ -121,7 +121,7 @@ const Blog = ({
                     <div className="flex items-center gap-4 text-sm text-muted-foreground mb-3">
                       <div className="flex items-center gap-1">
                         <Calendar className="w-4 h-4" />
-                        {post.createdAt.toDateString()}
+                        {new Date(post.createdAt).toDateString()}
                       </div>
                       <div className="flex items-center gap-1">
                         <Clock className="w-4 h-4" />
@@ -130,7 +130,7 @@ const Blog = ({
                           : "0 min"}
                       </div>
                     </div>
-                    <h3 className="font-display text-xl font-semibold text-foreground mb-3 group-hover:text-primary transition-colors line-clamp-2">
+                    <h3 className="text-lg font-semibold text-foreground mb-3 group-hover:text-primary transition-colors line-clamp-2">
                       {post.title}
                     </h3>
                     <p className="text-muted-foreground text-sm mb-4 line-clamp-2">

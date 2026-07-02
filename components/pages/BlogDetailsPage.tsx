@@ -97,7 +97,7 @@ const BlogDetails = ({
                     <div className="flex items-center gap-3 text-sm">
                       <span className="flex items-center gap-1">
                         <Calendar className="w-3 h-3" />
-                        {post.createdAt.toDateString()}
+                        {new Date(post.createdAt).toDateString()}
                       </span>
                       <span className="flex items-center gap-1">
                         <Clock className="w-3 h-3" />

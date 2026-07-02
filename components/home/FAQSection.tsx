@@ -35,7 +35,7 @@ export const FAQSection = ({
           <span className="text-secondary font-medium text-sm uppercase tracking-wider">
             FAQ
           </span>
-          <h2 className="font-display text-2xl md:text-4xl font-bold text-foreground mt-2 mb-4">
+          <h2 className="font-display ttext-2xl md:text-3xl font-bold text-foreground mt-2 mb-4">
             Frequently Asked Questions
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
@@ -61,10 +61,10 @@ export const FAQSection = ({
                   value={`item-${index}`}
                   className="bg-card rounded-xl px-6 border border-border shadow-soft"
                 >
-                  <AccordionTrigger className="text-left font-display text-lg font-semibold text-foreground hover:no-underline py-5">
+                  <AccordionTrigger className="text-left  text-lg font-semibold text-foreground hover:no-underline py-5">
                     {faq.question}
                   </AccordionTrigger>
-                  <AccordionContent className="text-muted-foreground pb-5 leading-relaxed">
+                  <AccordionContent className="text-muted-foreground pb-5 leading-relaxed text-base">
                     {faq.answer}
                   </AccordionContent>
                 </AccordionItem>

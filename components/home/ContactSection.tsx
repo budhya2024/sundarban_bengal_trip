@@ -16,7 +16,7 @@ export const ContactSection = () => {
               Contact Us
             </span>
 
-            <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mt-3 mb-6">
+            <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mt-3 mb-6">
               Let’s Plan Your Perfect Sundarban Adventure
             </h2>
 

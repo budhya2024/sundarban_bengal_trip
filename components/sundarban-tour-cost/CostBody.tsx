@@ -103,25 +103,25 @@ export const CostBody = () => {
       </div>
 
       <div className="container mt-6 md:mt-10">
-     <div className="text-sm md:text-base text-foreground/80  bg-foreground/10 p-4" >
-           <p className="">
-          At Sundarban Bengal Trip, we guarantee absolute transparency with no
-          hidden surprises, allowing you to plan your holiday with complete
-          peace of mind. Contact our team today to get a customized,
-          obligation-free quote tailored exactly to your group size and travel
-          preferences.
-        </p>
-        <div className="pt-2  flex flex-wrap items-center gap-4">
-          <div className="flex items-center gap-2 text-foreground font-semibold">
-            <Phone className="w-4 h-4" />
-            <span>+91 70744 32628</span>
-          </div>
-          <div className="flex items-center gap-2 text-foreground font-semibold">
-            <Mail className="w-4 h-4" />
-            <span>sundarbanbengaltrip@gmail.com</span>
+        <div className="text-base text-foreground/80  bg-foreground/10 p-4" >
+          <p className="">
+            At Sundarban Bengal Trip, we guarantee absolute transparency with no
+            hidden surprises, allowing you to plan your holiday with complete
+            peace of mind. Contact our team today to get a customized,
+            obligation-free quote tailored exactly to your group size and travel
+            preferences.
+          </p>
+          <div className="pt-2  flex flex-wrap items-center gap-4">
+            <div className="flex items-center gap-2 text-foreground font-semibold">
+              <Phone className="w-4 h-4" />
+              <span>+91 70744 32628</span>
+            </div>
+            <div className="flex items-center gap-2 text-foreground font-semibold">
+              <Mail className="w-4 h-4" />
+              <span>sundarbanbengaltrip@gmail.com</span>
+            </div>
           </div>
         </div>
-     </div>
       </div>
     </section>
   );

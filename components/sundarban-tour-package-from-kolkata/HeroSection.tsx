@@ -18,7 +18,7 @@ export const SundarbanHeroSection = () => {
 
             {/* Heading */}
             <h1
-              className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 leading-[1.3]"
+              className="font-display text-2xl md:text-3xl lg:text-5xl font-bold text-white mb-6 leading-[1.3]"
               data-aos="fade-up"
               data-aos-delay="100"
             >

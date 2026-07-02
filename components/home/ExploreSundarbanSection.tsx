@@ -46,7 +46,7 @@ export const ExploreSundarbanSection = () => {
           <span className="text-secondary font-medium text-sm uppercase tracking-wider">
             Your Gateway
           </span>
-          <h2 className="font-display text-2xl md:text-4xl font-bold text-foreground mt-2 mb-4">
+          <h2 className="font-display ttext-2xl md:text-3xl font-bold text-foreground mt-2 mb-4">
             Comfortable Resorts, Boat Safari, Guided Jungle Tours
           </h2>
           <p className="text-muted-foreground max-w-4xl mx-auto">

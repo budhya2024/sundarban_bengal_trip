@@ -84,7 +84,7 @@ const AboutPage = ({ data }: { data: AboutValues }) => {
               <span className="text-secondary font-medium text-sm uppercase tracking-wider">
                 Our Story
               </span>
-              <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mt-2 mb-6">
+              <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mt-2 mb-6">
                 {data.storyTitle || "A Journey Born from Passion"}
               </h2>
               <div className="space-y-4 text-muted-foreground">
@@ -183,7 +183,7 @@ const AboutPage = ({ data }: { data: AboutValues }) => {
             <span className="text-secondary font-medium text-sm uppercase tracking-wider">
               Our Values
             </span>
-            <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mt-2">
+            <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mt-2">
               What Drives Us
             </h2>
           </div>
@@ -218,7 +218,7 @@ const AboutPage = ({ data }: { data: AboutValues }) => {
             <span className="text-secondary font-medium text-sm uppercase tracking-wider">
               Our Team
             </span>
-            <h2 className="font-display text-3xl md:text-4xl font-bold text-primary-foreground mt-2">
+            <h2 className="font-display text-2xl md:text-3xl font-bold text-primary-foreground mt-2">
               Meet the Experts
             </h2>
           </div>

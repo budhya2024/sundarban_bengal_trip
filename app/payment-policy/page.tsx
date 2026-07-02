@@ -39,7 +39,7 @@ const PaymentPolicy = () => {
                 Notes
               </h2>
 
-              <ul className="space-y-4 text-sm md:text-base leading-6">
+              <ul className="space-y-4 text-base leading-6">
 
                 <li className="flex gap-3">
                   <span>🔔</span>

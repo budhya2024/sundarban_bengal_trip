@@ -34,7 +34,7 @@ export const PageHeader = ({
       <div className="container relative z-10">
         <div className="max-w-4xl">
           {/* Breadcrumb */}
-          <div className="flex items-center gap-3 text-white/90 mb-8 text-sm md:text-base font-medium">
+          <div className="flex items-center gap-3 text-white/90 mb-8 text-base font-medium">
             <Link
               href="/"
               className="hover:text-secondary transition-colors"
@@ -48,7 +48,7 @@ export const PageHeader = ({
           </div>
 
           {/* Title */}
-          <h1 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight mb-8 max-w-5xl">
+          <h1 className="font-display text-2xl md:text-3xl lg:text-5xl font-bold text-white leading-tight mb-8 max-w-5xl">
             {title}
           </h1>
 

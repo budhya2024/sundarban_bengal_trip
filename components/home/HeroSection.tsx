@@ -111,10 +111,10 @@ export const HeroSection = () => {
                     </p>
 
                     <div className="flex items-baseline gap-1.5 mt-1 md:mt-3">
-                      <span className="text-3xl md:text-4xl font-extrabold text-yellow-400">
+                      <span className="text-2xl md:text-3xl font-extrabold text-yellow-400">
                         ₹{slide.price}
                       </span>
-                      <span className="text-sm md:text-base text-white/80 mb-0.5">/person</span>
+                      <span className="text-base text-white/80 mb-0.5">/person</span>
                     </div>
 
                     <div className="mt-2 flex items-center gap-2 flex-wrap">
@@ -144,7 +144,7 @@ export const HeroSection = () => {
 
       </Swiper>
 
-    
+
     </section>
   );
 };

@@ -14,7 +14,7 @@ export const PackageHero = () => {
               Kolkata to the Mangrove Paradise
             </h1>
 
-            <div className="space-y-4 text-sm md:text-base leading-relaxed text-foreground">
+            <div className="space-y-4 text-base leading-relaxed text-foreground">
               <p>
                 Going to the worlds mangrove forest is very exciting. Our
                 Kolkata to Sundarban Tour Package is made to make your trip easy

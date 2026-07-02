@@ -254,7 +254,7 @@ export const HeroSlider = () => {
                               </span>
                             </div>
                             <div>
-                              <p className="font-semibold text-foreground text-sm md:text-base">
+                              <p className="font-semibold text-foreground text-base">
                                 Wildlife Spotlight
                               </p>
                               <p className="text-xs md:text-sm text-muted-foreground">

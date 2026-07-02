@@ -12,7 +12,14 @@ type Props = {
 // --- DYNAMIC SEO GENERATION ---
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const { data: post } = await getBlogBySlug(slug);
+  const decodedSlug = decodeURIComponent(slug);
+  const encodedSlug = encodeURIComponent(decodedSlug);
+
+  let { data: post } = await getBlogBySlug(decodedSlug);
+  if (!post) {
+    const res = await getBlogBySlug(encodedSlug);
+    post = res.data;
+  }
 
   if (!post) {
     return {
@@ -62,11 +69,24 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 const page = async ({ params }: Props) => {
   const { slug } = await params;
+  const decodedSlug = decodeURIComponent(slug);
+  const encodedSlug = encodeURIComponent(decodedSlug);
 
-  const [{ data: post }, { data: latestPosts }] = await Promise.all([
-    getBlogBySlug(slug),
-    getLatestLimitedPublishedBlogs(slug, 5),
-  ]);
+  // Next.js might decode the slug automatically, but the DB might have it URL-encoded.
+  // We try fetching with the decoded slug first, and if not found, we try the encoded slug.
+  let { data: post } = await getBlogBySlug(decodedSlug);
+  let resolvedSlug = decodedSlug;
+
+  if (!post) {
+    const res = await getBlogBySlug(encodedSlug);
+    post = res.data;
+    resolvedSlug = encodedSlug;
+  }
+
+  const { data: latestPosts } = await getLatestLimitedPublishedBlogs(
+    resolvedSlug,
+    5,
+  );
 
   if (!post) {
     return (

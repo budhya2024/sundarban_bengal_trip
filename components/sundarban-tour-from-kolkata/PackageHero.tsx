@@ -12,7 +12,7 @@ export const PackageHero = () => {
               Sundarban Tour from Kolkata – Best Sundarban Package Tour with Hotel, Boat Safari & Food | Sundarban Bengal Trip
             </h1>
 
-            <div className="space-y-4 text-sm md:text-base leading-relaxed text-muted-foreground">
+            <div className="space-y-4 text-base leading-relaxed text-muted-foreground">
               <p>
                 Are you looking for the most affordable and best Sundarban tour package from Kolkata? Then you had already visited the most professional and right place - Sundarban Bengal Trip. We will professionally and neatly plan your whole Sundarban trip from Kolkata in which we will offer a mix of adventure, nature, wildlife, and other tourist destinations in Sundarban.
               </p>

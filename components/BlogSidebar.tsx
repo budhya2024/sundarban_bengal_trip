@@ -54,7 +54,7 @@ export const BlogSidebar = ({ latestPosts }: BlogSidebarProps) => {
                 </h4>
                 <div className="flex items-center gap-1 text-xs text-muted-foreground mt-2">
                   <Calendar className="w-3 h-3" />
-                  {post.createdAt.toDateString()}
+                  {new Date(post.createdAt).toDateString()}
                 </div>
               </div>
             </Link>

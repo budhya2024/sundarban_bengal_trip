@@ -11,7 +11,7 @@ export const JourneyHighlights = () => {
             Boat Safari Experience
           </h2>
 
-          <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
+          <p className="text-base text-muted-foreground leading-relaxed">
             As part of this comprehensive Kolkata to{" "}
             <Link href="/packages" className="font-bold  text-secondary">Sundarban Tour Package</Link>, your road travel smoothly
             transitions into a captivating river cruise. We want you to feel

@@ -39,7 +39,7 @@ export const PopularPackagesSection = ({
           <span className="text-secondary font-medium text-sm uppercase tracking-wider">
             Explore More
           </span>
-          <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mt-2">
+          <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mt-2">
             Popular Packages
           </h2>
         </div>
