@@ -422,7 +422,7 @@ function getBookingClientConfirmationTemplate(data: {
   status?: string;
 }) {
   return emailWrapper(`
-    ${emailHeader("Booking Request Received! 🎉", "Your adventure to the Sundarbans is just a step away")}
+    ${emailHeader("Booking Request Received!", "Your adventure to the Sundarbans is just a step away")}
     <div style="padding: 32px;">
       <p style="color: #1e293b; font-size: 16px; margin: 0 0 16px 0; font-weight: 600;">Dear ${data.name},</p>
       <p style="color: #475569; font-size: 15px; line-height: 1.7; margin: 0 0 24px 0;">
@@ -430,7 +430,7 @@ function getBookingClientConfirmationTemplate(data: {
       </p>
 
       <div style="background: linear-gradient(135deg, #f0fdf4, #dcfce7); border: 1px solid #bbf7d0; border-radius: 14px; padding: 24px; margin-bottom: 28px;">
-        <p style="margin: 0 0 16px 0; color: #064e3b; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px;">📋 Your Booking Summary</p>
+        <p style="margin: 0 0 16px 0; color: #064e3b; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px;">Your Booking Summary</p>
         <table style="width: 100%; border-collapse: collapse;">
           <tr>
             <td style="padding: 9px 0; color: #64748b; font-size: 13px; width: 130px; font-weight: 600; border-bottom: 1px solid #bbf7d0;">Package</td>
