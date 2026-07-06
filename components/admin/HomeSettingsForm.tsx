@@ -235,12 +235,12 @@ export default function HomeSettingsForm({
           </div>
           <Button
             disabled={isPending || isUploading || uploadingIndex !== null}
-            className="bg-emerald-700 hover:bg-emerald-800 text-white shadow-lg px-8 rounded-full"
+            className="bg-emerald-700 hover:bg-emerald-800 text-white shadow-lg px-8 rounded-sm"
           >
             {isPending ? (
               <Clock className="mr-2 h-4 w-4 animate-spin" />
             ) : (
-              <Save className="mr-2 h-4 w-4" />
+              <Save className="h-4 w-4" />
             )}
             {isPending ? "Syncing..." : "Save Settings"}
           </Button>
@@ -452,8 +452,8 @@ export default function HomeSettingsForm({
                                     size={20}
                                   />
                                 ) : form.watch(
-                                    `testimonials.${index}.image` as any,
-                                  ) ? (
+                                  `testimonials.${index}.image` as any,
+                                ) ? (
                                   <>
                                     <Image
                                       src={form.watch(

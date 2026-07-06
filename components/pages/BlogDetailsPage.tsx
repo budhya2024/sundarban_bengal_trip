@@ -80,7 +80,7 @@ const BlogDetails = ({
               >
                 {post.title}
               </h1>
-    
+
               {/* Author Info */}
               <div
                 data-aos="fade-up"

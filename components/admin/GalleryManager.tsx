@@ -348,7 +348,7 @@ export default function GalleryManager({
           {filteredImages.map((img) => (
             <div
               key={img.id}
-              className="group relative bg-white rounded-xl shadow-sm border overflow-hidden"
+              className="group relative bg-white rounded-sm shadow-sm border overflow-hidden"
             >
               <div className="relative aspect-[4/3] w-full">
                 <Image
@@ -384,7 +384,7 @@ export default function GalleryManager({
       {/* Upload Modal */}
       {isUploadOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-          <div className="bg-white rounded-xl w-[360px] sm:w-[420px] max-w-lg shadow-2xl">
+          <div className="bg-white rounded-sm w-[360px] sm:w-[420px] max-w-lg shadow-2xl">
             <div className="flex items-center justify-between px-6 py-4 border-b">
               <h3 className="text-lg font-bold">Upload New Asset</h3>
               <button onClick={() => setIsUploadOpen(false)}>
@@ -416,7 +416,7 @@ export default function GalleryManager({
                       !uploadingStatus && fileInputRef.current?.click()
                     }
                     className={clsx(
-                      "border-2 border-dashed rounded-xl h-44 flex flex-col items-center justify-center cursor-pointer",
+                      "border-2 border-dashed rounded-sm h-44 flex flex-col items-center justify-center cursor-pointer",
                       errors.url
                         ? "border-red-300 bg-red-50"
                         : "border-gray-300 bg-gray-50",
@@ -437,7 +437,7 @@ export default function GalleryManager({
                     )}
                   </div>
                 ) : (
-                  <div className="relative h-44 w-full rounded-xl overflow-hidden ring-4 ring-green-50">
+                  <div className="relative h-44 w-full rounded-sm overflow-hidden ring-4 ring-green-50">
                     <Image
                       src={previewUrl}
                       alt="Preview"
@@ -464,7 +464,7 @@ export default function GalleryManager({
                 <input
                   {...register("title")}
                   placeholder="Title..."
-                  className="w-full px-4 py-2.5 rounded-lg border outline-none text-sm focus:border-[#4a6741]"
+                  className="w-full px-4 py-2.5 rounded-sm border outline-none text-sm focus:border-primary"
                 />
                 {errors.title && (
                   <p className="text-red-500 text-[10px]">
@@ -498,7 +498,7 @@ export default function GalleryManager({
                 <Button
                   type="submit"
                   disabled={uploadingStatus || isPending}
-                  className="h-11 px-8 rounded-full font-bold bg-[#4a6741] hover:bg-[#3a5233] text-white"
+                  className="h-11 px-8 rounded-sm font-bold bg-primary hover:bg-primary/90 text-white"
                 >
                   {isPending ? (
                     <Loader2 className="animate-spin" />
@@ -533,7 +533,7 @@ export default function GalleryManager({
 
       {deleteTarget && (
         <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/50">
-          <div className="bg-white rounded-xl w-full max-w-sm p-6 shadow-2xl">
+          <div className="bg-white rounded-sm w-full max-w-sm p-6 shadow-2xl">
             <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
               <AlertTriangle className="text-red-600" /> Delete Asset?
             </h3>

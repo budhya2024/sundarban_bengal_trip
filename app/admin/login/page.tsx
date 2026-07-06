@@ -145,7 +145,7 @@ export default function AdminLoginPage() {
                   defaultValue={view === "forgot_reset" ? resetEmail : ""}
                   readOnly={view === "forgot_reset"}
                   placeholder="admin@sundarban.com"
-                  className="pl-10 h-12 rounded-xl border-slate-200"
+                  className="pl-10 h-12 rounded-sm border-slate-200"
                   required
                 />
               </div>
@@ -162,7 +162,7 @@ export default function AdminLoginPage() {
                   type="text"
                   maxLength={6}
                   placeholder="000000"
-                  className="h-12 rounded-xl text-center tracking-[1em] font-bold border-emerald-200"
+                  className="h-12 rounded-sm text-center tracking-[1em] font-bold border-emerald-200"
                   required
                 />
               </div>
@@ -194,7 +194,7 @@ export default function AdminLoginPage() {
                     name="password"
                     type="password"
                     placeholder="••••••••"
-                    className="pl-10 h-12 rounded-xl border-slate-200"
+                    className="pl-10 h-12 rounded-sm border-slate-200"
                     required
                   />
                 </div>
@@ -202,7 +202,7 @@ export default function AdminLoginPage() {
             )}
 
             {error && (
-              <div className="bg-red-50 border border-red-100 text-red-600 px-4 py-3 rounded-xl text-sm font-medium">
+              <div className="bg-red-50 border border-red-100 text-red-600 px-4 py-3 rounded-sm text-sm font-medium">
                 {error}
               </div>
             )}
@@ -210,11 +210,10 @@ export default function AdminLoginPage() {
             <Button
               type="submit"
               disabled={isPending}
-              className={`w-full h-12 rounded-xl text-lg font-bold shadow-lg transition-all active:scale-[0.98] ${
-                isSetupMode || view !== "auth"
-                  ? "bg-[#C58940] hover:bg-[#B37A36]"
-                  : "bg-[#2D4A39] hover:bg-[#1f3327]"
-              }`}
+              className={`w-full h-12 rounded-sm text-white text-base font-bold shadow-lg transition-all active:scale-[0.98] ${isSetupMode || view !== "auth"
+                ? "bg-[#C58940] hover:bg-[#B37A36]"
+                : "bg-[#2D4A39] hover:bg-[#1f3327]"
+                }`}
             >
               {isPending ? (
                 <Loader2 className="w-5 h-5 animate-spin" />

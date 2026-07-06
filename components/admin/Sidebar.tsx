@@ -159,7 +159,7 @@ const NavContent = memo(({ mobile = false }: { mobile?: boolean }) => {
               <Link
                 href={item.href}
                 className={cn(
-                  "flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 group",
+                  "flex items-center text-sm  tracking-wide gap-3 px-4 py-3 rounded-lg transition-all duration-200 group",
                   isActive
                     ? "bg-secondary text-primary font-semibold shadow-lg"
                     : "text-primary-foreground/80 hover:bg-primary-foreground/10 hover:text-primary-foreground",

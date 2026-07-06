@@ -27,7 +27,7 @@ export function PageCard({
   lastUpdated,
 }: PageCardProps) {
   return (
-    <Card className="hover:shadow-elevated transition-shadow duration-200 border-primary/20">
+    <Card className="hover:shadow-elevated transition-shadow duration-200">
       <CardHeader>
         <div className="flex items-start justify-between">
           <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
@@ -44,7 +44,7 @@ export function PageCard({
               Updated: {lastUpdated}
             </p>
           )}
-          <Button asChild variant="default" size="sm" className="ml-auto">
+          <Button asChild variant="default" size="sm" className="ml-auto rounded-sm text-white">
             <Link href={href}>Edit Content</Link>
           </Button>
         </div>
