@@ -19,6 +19,7 @@ import {
   AlertCircle,
   CalendarDays,
   Image as ImageIcon,
+  Utensils,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -169,6 +170,9 @@ const emptyState: PackageValues = {
   ],
   inclusions: [{ value: "" }],
   exclusions: [{ value: "" }],
+  menu: [
+    { dayTitle: "Day 1", breakfast: "", lunch: "", eveningSnacks: "", dinner: "" },
+  ],
 };
 
 export default function PackageForm({
@@ -198,7 +202,23 @@ export default function PackageForm({
 
   const form = useForm<PackageValues>({
     resolver: zodResolver(PackageSchema),
-    defaultValues: initialData || emptyState,
+    defaultValues: initialData
+      ? {
+          ...emptyState,
+          ...initialData,
+          menu: initialData.menu && initialData.menu.length > 0
+            ? initialData.menu
+            : [
+                {
+                  dayTitle: "Day 1",
+                  breakfast: "",
+                  lunch: "",
+                  eveningSnacks: "",
+                  dinner: "",
+                },
+              ],
+        }
+      : emptyState,
     mode: "onTouched",
   });
 
@@ -222,6 +242,11 @@ export default function PackageForm({
     append: eAppend,
     remove: eRemove,
   } = useFieldArray({ control: form.control, name: "exclusions" });
+  const {
+    fields: menuFields,
+    append: menuAppend,
+    remove: menuRemove,
+  } = useFieldArray({ control: form.control, name: "menu" });
 
   // --- MODERN FUNCTIONAL UPLOAD ---
   const handleFileUpload = async (
@@ -667,6 +692,146 @@ export default function PackageForm({
                 </Button>
               </div>
             </div>
+
+            {/* --- MENU MANAGEMENT SECTION --- */}
+            <div className="bg-white p-6 rounded-2xl border shadow-sm space-y-6">
+              <div className="flex items-center gap-2 font-bold text-emerald-700 border-b pb-2">
+                <Utensils size={18} /> Menu Management (By Day)
+              </div>
+              <div className="space-y-8">
+                {menuFields.map((field, index) => (
+                  <div
+                    key={field.id}
+                    className="p-6 border rounded-2xl bg-slate-50/40 relative group transition-colors border-slate-200"
+                  >
+                    <div className="flex items-center gap-4 mb-4">
+                      <FormField
+                        control={form.control}
+                        name={`menu.${index}.dayTitle`}
+                        render={({ field }) => (
+                          <FormItem className="flex-1">
+                            <FormLabel className="text-[10px] font-black uppercase text-slate-400 italic">
+                              Day Header (e.g. Day 1)
+                            </FormLabel>
+                            <FormControl>
+                              <Input
+                                className="bg-white font-bold h-10"
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="icon"
+                        className="mt-5 text-red-500 hover:bg-red-50"
+                        onClick={() => menuRemove(index)}
+                      >
+                        <Trash2 size={16} />
+                      </Button>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <FormField
+                        control={form.control}
+                        name={`menu.${index}.breakfast`}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-[10px] font-bold uppercase text-slate-400">
+                              Breakfast
+                            </FormLabel>
+                            <FormControl>
+                              <Input
+                                className="bg-white h-10"
+                                placeholder="e.g. Luchi, Alur Dom, Sweet, Tea"
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name={`menu.${index}.lunch`}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-[10px] font-bold uppercase text-slate-400">
+                              Lunch
+                            </FormLabel>
+                            <FormControl>
+                              <Input
+                                className="bg-white h-10"
+                                placeholder="e.g. Rice, Dal, Bhaja, Fish/Mutton, Chutney"
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name={`menu.${index}.eveningSnacks`}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-[10px] font-bold uppercase text-slate-400">
+                              Evening Snacks
+                            </FormLabel>
+                            <FormControl>
+                              <Input
+                                className="bg-white h-10"
+                                placeholder="e.g. Chicken Pakora, Tea/Coffee"
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name={`menu.${index}.dinner`}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-[10px] font-bold uppercase text-slate-400">
+                              Dinner
+                            </FormLabel>
+                            <FormControl>
+                              <Input
+                                className="bg-white h-10"
+                                placeholder="e.g. Fried Rice, Chilli Chicken or Roti, Chicken Kasha"
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                  </div>
+                ))}
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="w-full border-dashed h-12 border-slate-300 text-slate-500"
+                  onClick={() =>
+                    menuAppend({
+                      dayTitle: `Day ${menuFields.length + 1}`,
+                      breakfast: "",
+                      lunch: "",
+                      eveningSnacks: "",
+                      dinner: "",
+                    })
+                  }
+                >
+                  <Plus className="mr-2 h-4 w-4" /> Add Menu Day
+                </Button>
+              </div>
+            </div>
           </div>
 
           {/* --- RIGHT COLUMN (Stats, Highlights, Inclusions, etc.) remain identical ... */}
@@ -722,14 +887,6 @@ export default function PackageForm({
 
             {/* Highlights, Inclusions, Exclusions sections follow the same UI ... */}
             {[
-              {
-                title: "Menu",
-                color: "text-emerald-700",
-                name: "highlights",
-                fields: hFields,
-                append: hAppend,
-                remove: hRemove,
-              },
               {
                 title: "Inclusions",
                 color: "text-blue-700",

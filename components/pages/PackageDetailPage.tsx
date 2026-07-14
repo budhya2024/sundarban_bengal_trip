@@ -16,11 +16,16 @@ import {
   Star,
   ArrowLeft,
   Car,
+  Coffee,
+  CupSoda,
+  Moon,
+  Utensils,
 } from "lucide-react";
 import Link from "next/link";
 import { PackageValues } from "@/schemas/package.schema";
 import { BookingModal } from "../BookingModal";
 import { FaCarSide } from "react-icons/fa6";
+import { cn } from "@/lib/utils";
 
 const PackageDetailsPage = ({
   data,
@@ -109,14 +114,13 @@ const PackageDetailsPage = ({
                   </p>
                 </div>
                 <div className="bg-card p-4 rounded-xl text-center shadow-soft">
-                <FaCarSide className="w-6 h-6 text-secondary mx-auto mb-2" />
+                  <FaCarSide className="w-6 h-6 text-secondary mx-auto mb-2" />
                   <span className="text-sm text-muted-foreground">
-                   Pickup & Drop
+                    Pickup & Drop
                   </span>
                   <p className="font-semibold text-foreground">
                     {/* {data.groupSize} */}
-                    kolkata &
-                  Caning
+                    kolkata & Caning
                   </p>
                 </div>
                 <div className="bg-card p-4 rounded-xl text-center shadow-soft">
@@ -136,22 +140,49 @@ const PackageDetailsPage = ({
               </div>
 
               {/* Menu Details*/}
-              <div data-aos="fade-up">
-                <h2 className="font-display text-2xl font-bold text-foreground mb-4">
+              {/* Menu Details*/}
+              <div data-aos="fade-up" className="space-y-8">
+                <h2 className="font-display text-2xl font-bold text-foreground">
                   Menu Details
                 </h2>
-                <div className="space-y-3">
-                  {data.highlights.map((highlight, index) => (
-                    <div
-                      key={index}
-                      className="bg-card rounded-xl p-5 shadow-soft border-l-4 border-primary"
-                    >
-                      <p className="text-muted-foreground text-sm leading-relaxed">
-                        {highlight.value}
-                      </p>
-                    </div>
-                  ))}
-                </div>
+                {data.menu && data.menu.length > 0 ? (
+                  <div className="space-y-8">
+                    {data.menu.map((dayMenu, index) => (
+                      <div
+                        key={index}
+                        className="border-l-4 border-primary pl-6"
+                      >
+                        <h3 className="font-display text-xl font-bold text-foreground mb-4">
+                          {dayMenu.dayTitle}
+                        </h3>
+                        
+                        <div className="space-y-4">
+                          {[
+                            { label: "Breakfast", value: dayMenu.breakfast },
+                            { label: "Lunch", value: dayMenu.lunch },
+                            { label: "Evening Snacks", value: dayMenu.eveningSnacks },
+                            { label: "Dinner", value: dayMenu.dinner },
+                          ]
+                            .filter((meal) => meal.value)
+                            .map((meal, mealIdx) => (
+                              <div key={mealIdx} className="space-y-1">
+                                <span className="text-sm font-semibold text-secondary">
+                                  {meal.label}
+                                </span>
+                                <p className="text-muted-foreground leading-relaxed">
+                                  {meal.value}
+                                </p>
+                              </div>
+                            ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-muted-foreground italic text-sm">
+                    No structured menu details available.
+                  </p>
+                )}
               </div>
 
               {/* Tour Timeline */}
@@ -253,12 +284,10 @@ const PackageDetailsPage = ({
                 </div>
 
                 <BookingModal packageName={data.packageName} />
-                <Button variant="outline" className="w-full mt-4" asChild >
+                <Button variant="outline" className="w-full mt-4" asChild>
                   <Link href="/contact">Contact for Custom Tour</Link>
                 </Button>
               </div>
-
-              
             </div>
           </div>
         </div>
