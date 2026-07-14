@@ -438,16 +438,16 @@ function getBookingClientConfirmationTemplate(data: {
           </tr>
           <tr>
             <td style="padding: 9px 0; color: #64748b; font-size: 13px; font-weight: 600; border-bottom: 1px solid #bbf7d0;">Travel Date</td>
-            <td style="padding: 9px 0; color: #1e293b; font-size: 14px; font-weight: 600; border-bottom: 1px solid #bbf7d0;">📅 ${data.date}</td>
+            <td style="padding: 9px 0; color: #1e293b; font-size: 14px; font-weight: 600; border-bottom: 1px solid #bbf7d0;"> ${data.date}</td>
           </tr>
           <tr>
             <td style="padding: 9px 0; color: #64748b; font-size: 13px; font-weight: 600; border-bottom: 1px solid #bbf7d0;">Guests</td>
-            <td style="padding: 9px 0; color: #1e293b; font-size: 14px; font-weight: 600; border-bottom: 1px solid #bbf7d0;">👥 ${data.guests} Person(s)</td>
+            <td style="padding: 9px 0; color: #1e293b; font-size: 14px; font-weight: 600; border-bottom: 1px solid #bbf7d0;"> ${data.guests} Person(s)</td>
           </tr>
           <tr>
             <td style="padding: 9px 0; color: #64748b; font-size: 13px; font-weight: 600;">Status</td>
             <td style="padding: 9px 0;">
-              <span style="display: inline-block; background-color: #fef3c7; color: #92400e; font-size: 11px; font-weight: 700; padding: 3px 12px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px;">⏳ Under Review</span>
+              <span style="display: inline-block; background-color: #fef3c7; color: #92400e; font-size: 11px; font-weight: 700; padding: 3px 12px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px;"> Under Review</span>
             </td>
           </tr>
         </table>
@@ -460,28 +460,22 @@ function getBookingClientConfirmationTemplate(data: {
         <div style="padding: 20px 24px; background-color: #fafafa;">
           <table style="width: 100%; border-collapse: collapse;">
             <tr>
-              <td style="padding: 8px 0; vertical-align: top; width: 30px; color: #064e3b; font-size: 18px;">①</td>
+              <td style="padding: 8px 0; vertical-align: top; width: 30px; color: #064e3b; font-size: 18px;">1</td>
               <td style="padding: 8px 0; color: #475569; font-size: 14px; line-height: 1.5;">Our travel expert will call you to confirm availability and discuss your requirements.</td>
             </tr>
             <tr>
-              <td style="padding: 8px 0; vertical-align: top; color: #064e3b; font-size: 18px;">②</td>
+              <td style="padding: 8px 0; vertical-align: top; color: #064e3b; font-size: 18px;">2</td>
               <td style="padding: 8px 0; color: #475569; font-size: 14px; line-height: 1.5;">We'll send you a detailed itinerary and pricing breakdown tailored to your group.</td>
             </tr>
             <tr>
-              <td style="padding: 8px 0; vertical-align: top; color: #064e3b; font-size: 18px;">③</td>
+              <td style="padding: 8px 0; vertical-align: top; color: #064e3b; font-size: 18px;">3</td>
               <td style="padding: 8px 0; color: #475569; font-size: 14px; line-height: 1.5;">Upon payment confirmation, your booking will be officially secured. 🎉</td>
             </tr>
           </table>
         </div>
       </div>
 
-      <div style="background: linear-gradient(135deg, #064e3b, #065f46); border-radius: 12px; padding: 24px; text-align: center; margin-bottom: 24px;">
-        <p style="color: #a7f3d0; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 8px 0;">Need to reach us?</p>
-        <p style="color: #ffffff; font-size: 22px; font-weight: 800; margin: 0 0 4px 0;">
-          <a href="https://sundarbanbengaltrip.com" style="color: #ffffff; text-decoration: none;">sundarbanbengaltrip.com</a>
-        </p>
-        <p style="color: #6ee7b7; font-size: 14px; margin: 0;">📧 ${process.env.NODEMAILER_USER || "info@sundarbanbengaltrip.com"}</p>
-      </div>
+
 
       <p style="color: #64748b; font-size: 14px; line-height: 1.6; margin: 0; text-align: center;">
         We look forward to making your Sundarban adventure unforgettable!<br><br>
