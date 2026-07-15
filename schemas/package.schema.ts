@@ -23,7 +23,7 @@ export const PackageSchema = z.object({
   // Section 3: Highlights (Multiple Items)
   highlights: z
     .array(z.object({ value: z.string().min(1, "Highlight cannot be empty") }))
-    .min(1),
+    .optional(),
 
   // Section 4: Tour Timeline (Nested Multiple Items)
   timeline: z
@@ -50,6 +50,19 @@ export const PackageSchema = z.object({
   exclusions: z.array(
     z.object({ value: z.string().min(1, "Exclusion cannot be empty") }),
   ),
+
+  // Section 6: Food Menu Details
+  menu: z
+    .array(
+      z.object({
+        dayTitle: z.string().min(1, "Day title is required"),
+        breakfast: z.string().default(""),
+        lunch: z.string().default(""),
+        eveningSnacks: z.string().default(""),
+        dinner: z.string().default(""),
+      })
+    )
+    .default([]),
 });
 
 export type PackageValues = z.infer<typeof PackageSchema>;
