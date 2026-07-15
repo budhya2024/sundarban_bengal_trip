@@ -19,6 +19,11 @@ export const blogs = pgTable("blog", {
   published: boolean("published").default(false).notNull(),
   isFeatured: boolean("is_featured").default(false).notNull(),
   author: text("author").notNull(),
+  metaTitle: text("meta_title"),
+  metaDescription: text("meta_description"),
+  keywords: text("keywords"),
+  hashtags: text("hashtags"),
+  category: text("category"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at")
     .defaultNow()

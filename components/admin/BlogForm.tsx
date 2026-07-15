@@ -8,6 +8,7 @@ import * as z from "zod";
 import { upload } from "@imagekit/next";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
+import LinkExtension from "@tiptap/extension-link";
 import {
   Bold,
   Italic,
@@ -22,6 +23,11 @@ import {
   ImageIcon,
   AlertCircle,
   Trash2,
+  Heading1,
+  Heading2,
+  Heading3,
+  Link2,
+  Link2Off,
 } from "lucide-react";
 import Link from "next/link";
 import clsx from "clsx";
@@ -43,12 +49,35 @@ const blogSchema = z.object({
   content: z.string().min(20, "Minimum 20 characters required"),
   author: z.string().min(2, "Minimum 2 characters required"),
   published: z.boolean().default(false),
+  slug: z.string().optional().or(z.literal("")),
+  category: z.string().optional().or(z.literal("")),
+  hashtags: z.string().optional().or(z.literal("")),
+  metaTitle: z.string().optional().or(z.literal("")),
+  metaDescription: z.string().optional().or(z.literal("")),
+  keywords: z.string().optional().or(z.literal("")),
 });
 
 const MenuBar = ({ editor }: { editor: any }) => {
   if (!editor) return null;
+
+  const setLink = () => {
+    const previousUrl = editor.getAttributes("link").href;
+    const url = window.prompt("URL link address:", previousUrl);
+
+    if (url === null) {
+      return;
+    }
+
+    if (url === "") {
+      editor.chain().focus().extendMarkRange("link").unsetLink().run();
+      return;
+    }
+
+    editor.chain().focus().extendMarkRange("link").setLink({ href: url }).run();
+  };
+
   return (
-    <div className="border-b border-gray-200 bg-gray-50 px-2 py-1 flex gap-1 rounded-t-lg">
+    <div className="sticky top-[69px] z-20 border-b border-gray-200 bg-gray-50 px-2 py-1 flex flex-wrap gap-1 rounded-t-lg">
       <button
         type="button"
         onClick={() => editor.chain().focus().toggleBold().run()}
@@ -100,6 +129,57 @@ const MenuBar = ({ editor }: { editor: any }) => {
       >
         <Quote size={16} />
       </button>
+      <div className="w-px h-5 bg-gray-300 mx-1 self-center" />
+      <button
+        type="button"
+        onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
+        className={clsx("p-1.5 rounded hover:bg-gray-200 transition-colors", {
+          "bg-gray-200 text-black font-bold": editor.isActive("heading", { level: 1 }),
+          "text-gray-500": !editor.isActive("heading", { level: 1 }),
+        })}
+      >
+        <Heading1 size={16} />
+      </button>
+      <button
+        type="button"
+        onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
+        className={clsx("p-1.5 rounded hover:bg-gray-200 transition-colors", {
+          "bg-gray-200 text-black font-bold": editor.isActive("heading", { level: 2 }),
+          "text-gray-500": !editor.isActive("heading", { level: 2 }),
+        })}
+      >
+        <Heading2 size={16} />
+      </button>
+      <button
+        type="button"
+        onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
+        className={clsx("p-1.5 rounded hover:bg-gray-200 transition-colors", {
+          "bg-gray-200 text-black font-bold": editor.isActive("heading", { level: 3 }),
+          "text-gray-500": !editor.isActive("heading", { level: 3 }),
+        })}
+      >
+        <Heading3 size={16} />
+      </button>
+      <div className="w-px h-5 bg-gray-300 mx-1 self-center" />
+      <button
+        type="button"
+        onClick={setLink}
+        className={clsx("p-1.5 rounded hover:bg-gray-200 transition-colors", {
+          "bg-gray-200 text-black": editor.isActive("link"),
+          "text-gray-500": !editor.isActive("link"),
+        })}
+      >
+        <Link2 size={16} />
+      </button>
+      {editor.isActive("link") && (
+        <button
+          type="button"
+          onClick={() => editor.chain().focus().unsetLink().run()}
+          className="p-1.5 rounded hover:bg-gray-200 text-red-500 transition-colors"
+        >
+          <Link2Off size={16} />
+        </button>
+      )}
     </div>
   );
 };
@@ -122,14 +202,35 @@ export default function BlogForm({ initialData }: { initialData?: BlogType }) {
     formState: { errors },
   } = useForm<BlogType>({
     resolver: zodResolver(blogSchema),
-    defaultValues: initialData || {
-      title: "",
-      description: "",
-      image: "",
-      content: "",
-      author: "",
-      published: false,
-    },
+    defaultValues: initialData
+      ? {
+          title: initialData.title || "",
+          description: initialData.description || "",
+          image: initialData.image || "",
+          content: initialData.content || "",
+          author: initialData.author || "",
+          published: initialData.published ?? false,
+          slug: initialData.slug || "",
+          category: initialData.category || "",
+          hashtags: initialData.hashtags || "",
+          metaTitle: initialData.metaTitle || "",
+          metaDescription: initialData.metaDescription || "",
+          keywords: initialData.keywords || "",
+        }
+      : {
+          title: "",
+          description: "",
+          image: "",
+          content: "",
+          author: "",
+          published: false,
+          slug: "",
+          category: "",
+          hashtags: "",
+          metaTitle: "",
+          metaDescription: "",
+          keywords: "",
+        },
   });
 
   const currentImage = watch("image");
@@ -245,7 +346,7 @@ export default function BlogForm({ initialData }: { initialData?: BlogType }) {
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 items-start">
         <div className="lg:col-span-3 space-y-4">
           <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200 grid grid-cols-1 md:grid-cols-12 gap-4">
-            <div className="md:col-span-7">
+            <div className="md:col-span-6">
               <label className="text-xs font-bold text-gray-500 uppercase tracking-wider block mb-1">
                 Title
               </label>
@@ -273,7 +374,7 @@ export default function BlogForm({ initialData }: { initialData?: BlogType }) {
                 </p>
               )}
             </div>
-            <div className="md:col-span-2">
+            <div className="md:col-span-3">
               <label className="text-xs font-bold text-gray-500 uppercase tracking-wider block mb-1">
                 Status
               </label>
@@ -292,6 +393,29 @@ export default function BlogForm({ initialData }: { initialData?: BlogType }) {
                 )}
               />
             </div>
+            <div className="md:col-span-12">
+              <label className="text-xs font-bold text-gray-500 uppercase tracking-wider block mb-1">
+                Permalink (Custom URL Slug)
+              </label>
+              <input
+                {...register("slug")}
+                placeholder="e.g. travel-tips-for-sundarban-trip (leave blank to auto-generate)"
+                className="w-full px-3 py-2 text-sm rounded-md border border-gray-300 focus:ring-1 focus:ring-[#4a6741] outline-none"
+              />
+              {initialData?.slug && (
+                <div className="mt-1.5 flex items-center gap-1 text-xs text-gray-500">
+                  <span className="font-semibold">Live URL:</span>
+                  <a
+                    href={`/blog/${initialData.slug}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[#4a6741] hover:underline font-mono"
+                  >
+                    /blog/{initialData.slug}
+                  </a>
+                </div>
+              )}
+            </div>
           </div>
 
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 flex flex-col min-h-[500px]">
@@ -300,7 +424,15 @@ export default function BlogForm({ initialData }: { initialData?: BlogType }) {
               control={control}
               render={({ field }) => {
                 const editor = useEditor({
-                  extensions: [StarterKit],
+                  extensions: [
+                    StarterKit,
+                    LinkExtension.configure({
+                      openOnClick: false,
+                      HTMLAttributes: {
+                        class: "text-primary underline cursor-pointer",
+                      },
+                    }),
+                  ],
                   immediatelyRender: false,
                   content: field.value,
                   onUpdate: ({ editor }) => field.onChange(editor.getHTML()),
@@ -389,6 +521,63 @@ export default function BlogForm({ initialData }: { initialData?: BlogType }) {
               rows={6}
               className="w-full px-3 py-2 text-sm rounded-md border border-gray-300 focus:ring-1 focus:ring-[#4a6741] outline-none resize-none"
             />
+          </div>
+
+          <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200 space-y-4">
+            <h3 className="text-xs font-bold text-[#1a472a] uppercase tracking-wider border-b pb-1.5">
+              SEO & Metadata Settings
+            </h3>
+            <div>
+              <label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider block mb-1">
+                Category
+              </label>
+              <input
+                {...register("category")}
+                placeholder="e.g. Tour Guide"
+                className="w-full px-3 py-1.5 text-xs rounded-md border border-gray-300 focus:ring-1 focus:ring-[#4a6741] outline-none"
+              />
+            </div>
+            <div>
+              <label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider block mb-1">
+                Hashtags / Tags
+              </label>
+              <input
+                {...register("hashtags")}
+                placeholder="e.g. sundarban, travel, adventure"
+                className="w-full px-3 py-1.5 text-xs rounded-md border border-gray-300 focus:ring-1 focus:ring-[#4a6741] outline-none"
+              />
+            </div>
+            <div className="border-t pt-3">
+              <label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider block mb-1">
+                SEO Title
+              </label>
+              <input
+                {...register("metaTitle")}
+                placeholder="Meta title for Google"
+                className="w-full px-3 py-1.5 text-xs rounded-md border border-gray-300 focus:ring-1 focus:ring-[#4a6741] outline-none"
+              />
+            </div>
+            <div>
+              <label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider block mb-1">
+                SEO Description
+              </label>
+              <textarea
+                {...register("metaDescription")}
+                placeholder="Meta description for search results"
+                rows={3}
+                className="w-full px-3 py-1.5 text-xs rounded-md border border-gray-300 focus:ring-1 focus:ring-[#4a6741] outline-none resize-none"
+              />
+            </div>
+            <div>
+              <label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider block mb-1">
+                SEO Keywords
+              </label>
+              <input
+                {...register("keywords")}
+                placeholder="sundarban tour, travel tips"
+                className="w-full px-3 py-1.5 text-xs rounded-md border border-gray-300 focus:ring-1 focus:ring-[#4a6741] outline-none"
+              />
+            </div>
           </div>
         </div>
       </div>

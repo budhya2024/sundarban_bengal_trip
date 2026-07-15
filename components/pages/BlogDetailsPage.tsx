@@ -1,6 +1,6 @@
 "use client";
 
-import { use, useEffect } from "react";
+import { use, useEffect, useState } from "react";
 import AOS from "aos";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
@@ -27,7 +27,18 @@ const BlogDetails = ({
   latestPosts?: BlogType[];
 }) => {
   useEffect(() => {
-    AOS.refresh();
+    AOS.init({
+      duration: 800,
+      once: true,
+      easing: "ease-out-cubic",
+    });
+  }, []);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      AOS.refresh();
+    }, 150); // Give DOM a brief window to parse dynamic html content
+    return () => clearTimeout(timer);
   }, [post?.id]);
 
   if (!post) {
@@ -46,6 +57,30 @@ const BlogDetails = ({
       </main>
     );
   }
+
+  const toc: { id: string; text: string; level: string }[] = [];
+  if (post.content) {
+    const headingRegex = /<h([1-3])[^>]*>(.*?)<\/h\1>/gi;
+    const matches = Array.from(post.content.matchAll(headingRegex));
+    matches.forEach((match, index) => {
+      const level = `h${match[1]}`;
+      const text = match[2].replace(/<\/?[^>]+(>|$)/g, "").trim();
+      toc.push({ id: `heading-${index}`, text, level });
+    });
+  }
+
+  const injectHeadingIds = (html: string | null | undefined) => {
+    if (!html) return "";
+    let index = 0;
+    return html.replace(/<h([1-3])([^>]*)>/gi, (match, level, attrs) => {
+      if (/id=/i.test(attrs)) {
+        return match;
+      }
+      const injected = `<h${level}${attrs} id="heading-${index}">`;
+      index++;
+      return injected;
+    });
+  };
 
   return (
     <main className="min-h-screen">
@@ -92,7 +127,7 @@ const BlogDetails = ({
                   </div>
                   <div>
                     <span className="font-medium text-foreground">
-                      {post.author}
+                       {post.author}
                     </span>
                     <div className="flex items-center gap-3 text-sm">
                       <span className="flex items-center gap-1">
@@ -109,6 +144,33 @@ const BlogDetails = ({
                   </div>
                 </div>
               </div>
+
+              {/* Category & Tags */}
+              {(post.category || post.hashtags) && (
+                <div
+                  data-aos="fade-up"
+                  className="flex flex-wrap gap-2 items-center mb-6 -mt-4"
+                >
+                  {post.category && (
+                    <span className="px-3 py-1 bg-primary/10 text-primary text-xs font-semibold rounded-full">
+                      {post.category}
+                    </span>
+                  )}
+                  {post.hashtags &&
+                    post.hashtags
+                      .split(",")
+                      .map((tag) => tag.trim())
+                      .filter((tag) => tag.length > 0)
+                      .map((tag, tagIndex) => (
+                        <span
+                          key={tagIndex}
+                          className="px-3 py-1 bg-[#4a6741]/10 text-[#4a6741] text-xs font-semibold rounded-full"
+                        >
+                          #{tag.startsWith("#") ? tag.slice(1) : tag}
+                        </span>
+                      ))}
+                </div>
+              )}
 
               {/* Featured Image */}
               <div
@@ -130,11 +192,56 @@ const BlogDetails = ({
                 {post.description}
               </p>
 
+              {/* Table of Contents */}
+              {toc.length > 0 && (
+                <div
+                  data-aos="fade-up"
+                  className="bg-slate-50 border border-slate-200/60 rounded-2xl p-6 mb-8 shadow-sm"
+                >
+                  <h3 className="font-display text-base font-bold text-foreground mb-4">
+                    Table of Contents
+                  </h3>
+                  <nav className="space-y-2">
+                    {toc.map((item) => (
+                      <a
+                        key={item.id}
+                        href={`#${item.id}`}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          const el = document.getElementById(item.id);
+                          if (el) {
+                            const offset = 100; // Account for height of sticky navbar
+                            const elementPosition = el.getBoundingClientRect().top;
+                            const offsetPosition = elementPosition + window.scrollY - offset;
+                            window.scrollTo({
+                              top: offsetPosition,
+                              behavior: "smooth",
+                            });
+                          }
+                        }}
+                        className={`block text-sm transition-colors hover:text-[#4a6741] ${
+                          item.level === "h1"
+                            ? "font-bold text-foreground pl-0"
+                            : item.level === "h2"
+                            ? "font-semibold text-foreground/80 pl-4"
+                            : "text-muted-foreground pl-8"
+                        }`}
+                      >
+                        • {item.text}
+                      </a>
+                    ))}
+                  </nav>
+                </div>
+              )}
+
               {/* Content */}
               <div
+                id="blog-content"
                 data-aos="fade-up"
                 className="prose prose-lg max-w-none prose-headings:font-display prose-headings:text-foreground prose-p:text-muted-foreground prose-a:text-primary prose-strong:text-foreground prose-ul:text-muted-foreground"
-                dangerouslySetInnerHTML={{ __html: post.content }}
+                dangerouslySetInnerHTML={{
+                  __html: injectHeadingIds(post.content),
+                }}
               />
 
               {/* Share */}

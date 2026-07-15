@@ -282,13 +282,18 @@ const BlogRows = ({ blogs }: { blogs: BlogType[] }) => {
                     </button>
 
                     {/* 2. View Public */}
-                    {/* <button className="group flex w-full items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
+                    <a
+                      href={`/blog/${blog.slug}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group flex w-full items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                    >
                       <Eye
                         size={16}
                         className="mr-3 text-gray-400 group-hover:text-gray-600"
                       />
                       View Live
-                    </button> */}
+                    </a>
 
                     {/* 3. Edit */}
                     <Link
