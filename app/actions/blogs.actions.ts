@@ -45,7 +45,9 @@ export const getBlogById = async (id: string) => {
 
 export const createBlog = async (newBlog: NewBlogType) => {
   try {
-    const slug = newBlog.title.toLowerCase().replace(/\s+/g, "-");
+    const slug = (newBlog.slug && newBlog.slug.trim())
+      ? newBlog.slug.toLowerCase().trim().replace(/[^\w\s-]/g, "").replace(/\s+/g, "-").replace(/-+/g, "-")
+      : newBlog.title.toLowerCase().trim().replace(/[^\w\s-]/g, "").replace(/\s+/g, "-").replace(/-+/g, "-");
     const data = await db
       .insert(BlogModel)
       .values({ ...newBlog, slug })
@@ -59,7 +61,9 @@ export const createBlog = async (newBlog: NewBlogType) => {
 
 export const updateBlog = async (id: string, newBlog: NewBlogType) => {
   try {
-    const slug = newBlog.title.toLowerCase().replace(/\s+/g, "-");
+    const slug = (newBlog.slug && newBlog.slug.trim())
+      ? newBlog.slug.toLowerCase().trim().replace(/[^\w\s-]/g, "").replace(/\s+/g, "-").replace(/-+/g, "-")
+      : newBlog.title.toLowerCase().trim().replace(/[^\w\s-]/g, "").replace(/\s+/g, "-").replace(/-+/g, "-");
     const data = await db
       .update(BlogModel)
       .set({ ...newBlog, slug })

@@ -28,8 +28,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   const siteName = "Sundarban Adventures";
-  const title = `${post.title} | ${siteName}`;
+  const title = post.metaTitle || `${post.title} | ${siteName}`;
   const description =
+    post.metaDescription ||
     post.description ||
     "Read our latest stories and travel guides from the heart of the Sundarbans.";
   const url = `https://www.sundarbanbengaltourism.com/blog/${slug}`;
@@ -37,6 +38,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title,
     description,
+    keywords: post.keywords || undefined,
     alternates: {
       canonical: url,
     },
