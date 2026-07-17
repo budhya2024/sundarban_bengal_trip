@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Script from "next/script";
+import { IBM_Plex_Sans } from "next/font/google";
 
 import "./globals.css";
 import "swiper/css";
@@ -12,6 +13,7 @@ import { ScrollToTop } from "@/components/ScrollToTop";
 import { SocialSidebar } from "@/components/SocialSidebar";
 import { ScrollToTopButton } from "@/components/ScrollToTopButton";
 import TanstackProvider from "@/components/TanstackProvider";
+import { CustomCursor } from "@/components/CustomCursor";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://sundarbanbengaltrip.com"),
@@ -100,6 +102,12 @@ export const metadata: Metadata = {
     apple: "/favicon.ico",
   },
 };
+
+const ibmPlexSans = IBM_Plex_Sans({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-ibm-plex-sans",
+});
 
 export default function RootLayout({
   children,
@@ -273,7 +281,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="antialiased">
+      <body className={`${ibmPlexSans.variable} antialiased`}>
         {/* Local Business + Travel Agency Schema */}
         <Script
           id="travel-agency-schema"
@@ -387,6 +395,8 @@ export default function RootLayout({
 
         <TanstackProvider>
           <TooltipProvider>
+            <CustomCursor />
+
             <Sonner />
 
             <ScrollToTop />

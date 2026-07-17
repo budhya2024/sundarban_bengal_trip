@@ -72,7 +72,7 @@ export const BlogSection = () => {
           <span className="text-secondary font-medium text-sm uppercase tracking-wider">
             Blog
           </span>
-          <h2 className="font-display ttext-2xl md:text-3xl font-bold text-foreground mt-2 mb-4">
+          <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mt-2 mb-4">
             Travel Stories & Tips
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
@@ -110,7 +110,7 @@ export const BlogSection = () => {
                     <Calendar className="w-4 h-4" />
                     {format(post.createdAt, "MMM dd, yyyy")}
                   </div>
-                  <h3 className=" text-xl font-semibold text-foreground mb-3 group-hover:text-primary transition-colors line-clamp-2">
+                  <h3 className="text-base md:text-lg font-semibold text-foreground mb-3 group-hover:text-primary transition-colors line-clamp-1">
                     {post.title}
                   </h3>
                   <p

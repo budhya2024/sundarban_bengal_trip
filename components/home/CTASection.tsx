@@ -28,7 +28,7 @@ export const CTASection = () => {
           data-aos-duration="600"
           className="max-w-2xl mx-auto text-center"
         >
-          <h2 className="font-display tttext-2xl md:text-3xl font-bold text-white mt-2 mb-4">
+          <h2 className="font-display text-2xl md:text-3xl font-bold text-white mt-2 mb-4">
             Ready for Your Sundarban Adventure?
           </h2>
           <p className="text-base text-primary-foreground/80 mb-8 leading-relaxed">

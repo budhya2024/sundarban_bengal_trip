@@ -47,7 +47,7 @@ export const GallerySection = () => {
           <span className="text-secondary font-medium text-sm uppercase tracking-wider">
             Gallery
           </span>
-          <h3 className="font-display ttext-2xl md:text-3xl font-bold text-foreground mt-2 mb-4">
+          <h3 className="font-display text-2xl md:text-3xl font-bold text-foreground mt-2 mb-4">
             Moments from the Wild
           </h3>
           <p className="text-muted-foreground max-w-2xl mx-auto">

@@ -129,7 +129,7 @@ export const BookingForm = () => {
         >
           {/* Heading */}
           <div className="text-center mb-5 md:mb-10">
-            <p className="font-display tttext-2xl md:text-3xl font-bold text-foreground mt-2 mb-2 md:mb-4">
+            <p className="font-display text-2xl md:text-3xl font-bold text-foreground mt-2 mb-2 md:mb-4">
               Sundarban tour package
             </p>
             <p className="text-muted-foreground text-base">

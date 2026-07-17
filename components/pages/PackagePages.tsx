@@ -142,7 +142,7 @@ const Packages = ({
                           ₹ {pkg.originalPrice}
                         </span>
 
-                        <h4 className="ttext-2xl md:text-3xl font-bold text-foreground">
+                        <h4 className="text-2xl md:text-3xl font-bold text-foreground">
                           ₹ {pkg.price}
                         </h4>
                       </div>

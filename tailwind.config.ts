@@ -78,8 +78,8 @@ export default {
         },
       },
       fontFamily: {
-        display: ["Playfair Display", "serif"],
-        sans: ["Source Sans 3", "sans-serif"],
+        display: ["var(--font-ibm-plex-sans)", "sans-serif"],
+        sans: ["var(--font-ibm-plex-sans)", "sans-serif"],
       },
       borderRadius: {
         lg: "var(--radius)",

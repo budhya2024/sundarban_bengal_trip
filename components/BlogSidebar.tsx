@@ -49,7 +49,7 @@ export const BlogSidebar = ({ latestPosts }: BlogSidebarProps) => {
                 />
               </div>
               <div className="flex-1 min-w-0">
-                <h4 className="font-medium text-foreground group-hover:text-primary transition-colors line-clamp-2 text-sm">
+                <h4 className="font-semibold text-foreground group-hover:text-primary transition-colors   line-clamp-2 text-sm">
                   {post.title}
                 </h4>
                 <div className="flex items-center gap-1 text-xs text-muted-foreground mt-2">

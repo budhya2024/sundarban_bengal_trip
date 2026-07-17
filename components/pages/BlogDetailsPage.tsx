@@ -127,7 +127,7 @@ const BlogDetails = ({
                   </div>
                   <div>
                     <span className="font-medium text-foreground">
-                       {post.author}
+                      {post.author}
                     </span>
                     <div className="flex items-center gap-3 text-sm">
                       <span className="flex items-center gap-1">
@@ -152,7 +152,7 @@ const BlogDetails = ({
                   className="flex flex-wrap gap-2 items-center mb-6 -mt-4"
                 >
                   {post.category && (
-                    <span className="px-3 py-1 bg-primary/10 text-primary text-xs font-semibold rounded-full">
+                    <span className="px-3 py-1 bg-primary/10 text-primary text-sm tracking-wide font-normal rounded-sm">
                       {post.category}
                     </span>
                   )}
@@ -164,7 +164,7 @@ const BlogDetails = ({
                       .map((tag, tagIndex) => (
                         <span
                           key={tagIndex}
-                          className="px-3 py-1 bg-[#4a6741]/10 text-[#4a6741] text-xs font-semibold rounded-full"
+                          className="px-3 py-1 bg-primary text-primary-foreground text-sm tracking-wide font-normal rounded-sm"
                         >
                           #{tag.startsWith("#") ? tag.slice(1) : tag}
                         </span>
@@ -196,9 +196,9 @@ const BlogDetails = ({
               {toc.length > 0 && (
                 <div
                   data-aos="fade-up"
-                  className="bg-slate-50 border border-slate-200/60 rounded-2xl p-6 mb-8 shadow-sm"
+                  className="bg-white border border-slate-200/60  p-6 mb-8"
                 >
-                  <h3 className="font-display text-base font-bold text-foreground mb-4">
+                  <h3 className="font-display text-xl md:text-2xl md: font-bold text-foreground mb-4">
                     Table of Contents
                   </h3>
                   <nav className="space-y-2">
@@ -211,8 +211,10 @@ const BlogDetails = ({
                           const el = document.getElementById(item.id);
                           if (el) {
                             const offset = 100; // Account for height of sticky navbar
-                            const elementPosition = el.getBoundingClientRect().top;
-                            const offsetPosition = elementPosition + window.scrollY - offset;
+                            const elementPosition =
+                              el.getBoundingClientRect().top;
+                            const offsetPosition =
+                              elementPosition + window.scrollY - offset;
                             window.scrollTo({
                               top: offsetPosition,
                               behavior: "smooth",
@@ -223,8 +225,8 @@ const BlogDetails = ({
                           item.level === "h1"
                             ? "font-bold text-foreground pl-0"
                             : item.level === "h2"
-                            ? "font-semibold text-foreground/80 pl-4"
-                            : "text-muted-foreground pl-8"
+                              ? "font-semibold text-foreground/80 pl-4"
+                              : "text-muted-foreground pl-8"
                         }`}
                       >
                         • {item.text}

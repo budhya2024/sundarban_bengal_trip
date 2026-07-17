@@ -52,7 +52,7 @@ export const TourPackagesSection = () => {
           data-aos="fade-up"
           className="text-center max-w-4xl mx-auto mb-10 md:mb-16"
         >
-          <h1 className="font-display ttext-2xl md:text-3xl font-bold text-foreground mt-2 mb-4">
+          <h1 className="font-display text-2xl md:text-3xl font-bold text-foreground mt-2 mb-4">
             Choose Your Sundarban tour package from kolkata
           </h1>
 
