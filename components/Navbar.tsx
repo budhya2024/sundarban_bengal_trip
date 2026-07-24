@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X, ChevronDown, ChevronRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { getNavbarPackageKeys } from "@/app/actions/package.actions";
@@ -178,32 +178,31 @@ export const Navbar = () => {
           </div>
 
           {/* DESKTOP CTA */}
-        {/* DESKTOP CTA */}
-<div className="hidden lg:block">
-  <a
-    href="tel:+917074432628"
-    className="relative inline-flex items-center justify-center overflow-hidden bg-primary
-    
-    px-7 py-3 rounded-sm text-white font-medium 
-    transition-all duration-300"
-  >
-    {/* Shine Effect */}
-    <span
-      className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/50 to-transparent"
-      style={{
-        animation: "shine 2s linear infinite",
-        transform: "skewX(-25deg)",
-        width: "50%",
-      }}
-    />
+          <div className="hidden lg:block">
+            <a
+              href="tel:+917074432628"
+              className="relative inline-flex items-center justify-center overflow-hidden bg-primary
+              
+              px-7 py-3 rounded-sm text-white font-medium 
+              transition-all duration-300"
+            >
+              {/* Shine Effect */}
+              <span
+                className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/50 to-transparent"
+                style={{
+                  animation: "shine 2s linear infinite",
+                  transform: "skewX(-25deg)",
+                  width: "50%",
+                }}
+              />
 
-    <span className="relative z-10 flex flex-col">
-      <span className="flex gap-2 items-center ">
-       <FaPhoneAlt  />7074432628
-      </span>
-    </span>
-  </a>
-</div>
+              <span className="relative z-10 flex flex-col">
+                <span className="flex gap-2 items-center ">
+                 <FaPhoneAlt  />7074432628
+                </span>
+              </span>
+            </a>
+          </div>
 
           {/* MOBILE TOGGLE */}
           <button
@@ -223,22 +222,22 @@ export const Navbar = () => {
             animate={{ x: 0 }}
             exit={{ x: "-100%" }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-80 bg-background w-full lg:hidden  h-screen  overflow-y-auto"
+            className="fixed inset-0 z-80 bg-background w-full lg:hidden h-screen overflow-y-auto"
           >
-            <div className="flex flex-col justify-start pt-28 pb-10 px-4 gap-6">
+            <div className="flex flex-col justify-start pt-28 pb-10 px-6 gap-5">
               {navLinks.map((link) =>
                 link.hasDropdown ? (
-                  <div key={link.path}>
+                  <div key={link.path} className="border-b border-border/50 pb-4">
                     <button
                       onClick={() =>
                         setIsMobilePackagesOpen(!isMobilePackagesOpen)
                       }
-                      className="w-full flex items-center justify-between text-base font-semibold"
+                      className="w-full flex items-center justify-between text-base font-semibold text-foreground/90 hover:text-primary transition"
                     >
-                      {link.name}
+                      <span>{link.name}</span>
                       <ChevronDown
-                        className={`transition ${
-                          isMobilePackagesOpen ? "rotate-180" : ""
+                        className={`w-5 h-5 transition-transform duration-200 ${
+                          isMobilePackagesOpen ? "rotate-180 text-primary" : "text-muted-foreground"
                         }`}
                       />
                     </button>
@@ -249,7 +248,7 @@ export const Navbar = () => {
                           initial={{ height: 0, opacity: 0 }}
                           animate={{ height: "auto", opacity: 1 }}
                           exit={{ height: 0, opacity: 0 }}
-                          className="overflow-hidden mt-4  space-y-3"
+                          className="overflow-hidden mt-4 space-y-2"
                         >
                           {loading ? (
                             <>
@@ -265,17 +264,20 @@ export const Navbar = () => {
                                 <Link
                                   key={pkg.key}
                                   href={`/packages/${pkg.key}`}
-                                  className="block hover:bg-muted transition"
+                                  onClick={() => setIsOpen(false)}
+                                  className="flex items-center justify-between text-sm text-muted-foreground hover:text-primary py-2.5 pl-4 border-l border-border/60 transition"
                                 >
-                                  {pkg.name}
+                                  <span>{pkg.name}</span>
+                                  <ChevronRight className="w-4 h-4 text-muted-foreground/55" />
                                 </Link>
                               ))}
                               <Link
                                 href={`/contact`}
                                 onClick={() => setIsOpen(false)}
-                                className="block text-base text-muted-foreground"
+                                className="flex items-center justify-between text-sm text-muted-foreground hover:text-primary py-2.5 pl-4 border-l border-border/60 transition"
                               >
-                                Plan Your Custom Trip
+                                <span>Plan Your Custom Trip</span>
+                                <ChevronRight className="w-4 h-4 text-muted-foreground/55" />
                               </Link>
                             </>
                           )}
@@ -288,14 +290,13 @@ export const Navbar = () => {
                     key={link.path}
                     href={link.path}
                     onClick={() => setIsOpen(false)}
-                    className="text-base font-semibold"
+                    className="flex items-center justify-between text-base font-semibold text-foreground/90 hover:text-primary border-b border-border/50 pb-4 transition"
                   >
-                    {link.name}
+                    <span>{link.name}</span>
+                    <ChevronRight className="w-5 h-5 text-muted-foreground hover:text-primary transition" />
                   </Link>
                 ),
               )}
-
-           
             </div>
           </motion.div>
         )}

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Mail, Phone } from "lucide-react";
+import { Mail, Phone, Calendar, Train, Hotel, Compass, Users, AlertTriangle } from "lucide-react";
 
 export const CostBody = () => {
   return (
@@ -98,6 +98,148 @@ export const CostBody = () => {
               height={600}
               className="object-cover h-full w-full"
             />
+          </div>
+
+          {/* Section 1: Hidden Factors */}
+          <div className="col-span-full border-t border-border/50 pt-10 md:pt-16">
+            <h2 className="text-lg md:text-xl xl:text-2xl font-semibold text-foreground mb-4">
+              Hidden Factors That Can Increase Your Sundarban Tour Cost
+            </h2>
+            <p className="text-muted-foreground mb-8 max-w-3xl">
+              While the packages you book may look highly budget-friendly, unexpected hidden fees and customization upgrades can quickly increase your total trip budget. Be aware of these key factors:
+            </p>
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="p-5 rounded-xl border border-border/30 bg-card hover:shadow-md transition duration-200">
+                <div className="w-10 h-10 rounded-lg bg-red-500/10 flex items-center justify-center text-red-500 mb-3">
+                  <Calendar className="w-5 h-5" />
+                </div>
+                <h3 className="font-semibold text-foreground mb-1">Peak Travel Season</h3>
+                <p className="text-sm text-muted-foreground">
+                  Prices rise significantly from October to March due to ideal weather conditions and heavy tourist rushes.
+                </p>
+              </div>
+
+              <div className="p-5 rounded-xl border border-border/30 bg-card hover:shadow-md transition duration-200">
+                <div className="w-10 h-10 rounded-lg bg-red-500/10 flex items-center justify-center text-red-500 mb-3">
+                  <Train className="w-5 h-5" />
+                </div>
+                <h3 className="font-semibold text-foreground mb-1">Transportation & Pickup Location</h3>
+                <p className="text-sm text-muted-foreground">
+                  Upgrading to private AC vehicles or choosing custom pickup points outside standard Kolkata locations adds to the cost.
+                </p>
+              </div>
+
+              <div className="p-5 rounded-xl border border-border/30 bg-card hover:shadow-md transition duration-200">
+                <div className="w-10 h-10 rounded-lg bg-red-500/10 flex items-center justify-center text-red-500 mb-3">
+                  <Hotel className="w-5 h-5" />
+                </div>
+                <h3 className="font-semibold text-foreground mb-1">Hotel & Resort Category</h3>
+                <p className="text-sm text-muted-foreground">
+                  Switching from basic non-AC cottages or home-stays to premium luxury eco-resorts with AC packages raises costs.
+                </p>
+              </div>
+
+              <div className="p-5 rounded-xl border border-border/30 bg-card hover:shadow-md transition duration-200">
+                <div className="w-10 h-10 rounded-lg bg-red-500/10 flex items-center justify-center text-red-500 mb-3">
+                  <Compass className="w-5 h-5" />
+                </div>
+                <h3 className="font-semibold text-foreground mb-1">Private Boat Safari</h3>
+                <p className="text-sm text-muted-foreground">
+                  Renting a private boat for exclusive safaris is far costlier than booking a seat on standard shared group cruise safaris.
+                </p>
+              </div>
+
+              <div className="p-5 rounded-xl border border-border/30 bg-card hover:shadow-md transition duration-200">
+                <div className="w-10 h-10 rounded-lg bg-red-500/10 flex items-center justify-center text-red-500 mb-3">
+                  <Users className="w-5 h-5" />
+                </div>
+                <h3 className="font-semibold text-foreground mb-1">Group Size Impact</h3>
+                <p className="text-sm text-muted-foreground">
+                  Smaller groups and couples bear higher per-head costs for transport, guide fees, and boat rentals compared to larger groups.
+                </p>
+              </div>
+
+              <div className="p-5 rounded-xl border border-border/30 bg-card hover:shadow-md transition duration-200">
+                <div className="w-10 h-10 rounded-lg bg-red-500/10 flex items-center justify-center text-red-500 mb-3">
+                  <AlertTriangle className="w-5 h-5" />
+                </div>
+                <h3 className="font-semibold text-foreground mb-1">Forest Permits & Activity Fees</h3>
+                <p className="text-sm text-muted-foreground">
+                  Forest department entry permits, mandatory local guide fees, camera charges, and optional cultural shows are often excluded in cheap packages.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Section 2: How to Save Money */}
+          <div className="col-span-full border-t border-border/50 pt-10 md:pt-16">
+            <h2 className="text-lg md:text-xl xl:text-2xl font-semibold text-foreground mb-4">
+              How to Save Money Without Compromising Your Sundarban Experience
+            </h2>
+            <p className="text-muted-foreground mb-8 max-w-3xl">
+              You can experience a wonderful Sundarban mangrove safari and delta journey without stretching your wallet by making a few smart planning decisions:
+            </p>
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="p-5 rounded-xl border border-border/30 bg-card hover:shadow-md transition duration-200">
+                <div className="w-10 h-10 rounded-lg bg-green-500/10 flex items-center justify-center text-green-600 mb-3">
+                  <Calendar className="w-5 h-5" />
+                </div>
+                <h3 className="font-semibold text-foreground mb-1">Advance Booking</h3>
+                <p className="text-sm text-muted-foreground">
+                  Secure your dates and bookings early to capture early-bird discounts and lock in standard pricing before seasonal hikes.
+                </p>
+              </div>
+
+              <div className="p-5 rounded-xl border border-border/30 bg-card hover:shadow-md transition duration-200">
+                <div className="w-10 h-10 rounded-lg bg-green-500/10 flex items-center justify-center text-green-600 mb-3">
+                  <Users className="w-5 h-5" />
+                </div>
+                <h3 className="font-semibold text-foreground mb-1">Group & Shared Bookings</h3>
+                <p className="text-sm text-muted-foreground">
+                  Booking in a group or opting for shared packages distributes boat rental and forest permit fees across more travelers.
+                </p>
+              </div>
+
+              <div className="p-5 rounded-xl border border-border/30 bg-card hover:shadow-md transition duration-200">
+                <div className="w-10 h-10 rounded-lg bg-green-500/10 flex items-center justify-center text-green-600 mb-3">
+                  <Calendar className="w-5 h-5" />
+                </div>
+                <h3 className="font-semibold text-foreground mb-1">Weekday Travel</h3>
+                <p className="text-sm text-muted-foreground">
+                  Plan your tour during weekdays to enjoy lower resort tariffs and quieter, less crowded watchtower visits.
+                </p>
+              </div>
+
+              <div className="p-5 rounded-xl border border-border/30 bg-card hover:shadow-md transition duration-200">
+                <div className="w-10 h-10 rounded-lg bg-green-500/10 flex items-center justify-center text-green-600 mb-3">
+                  <Compass className="w-5 h-5" />
+                </div>
+                <h3 className="font-semibold text-foreground mb-1">Off-Season & Monsoon Trips</h3>
+                <p className="text-sm text-muted-foreground">
+                  Travel during summer or monsoon months to access beautiful green vistas, lower rates, and exclusive resort offers.
+                </p>
+              </div>
+
+              <div className="p-5 rounded-xl border border-border/30 bg-card hover:shadow-md transition duration-200">
+                <div className="w-10 h-10 rounded-lg bg-green-500/10 flex items-center justify-center text-green-600 mb-3">
+                  <Train className="w-5 h-5" />
+                </div>
+                <h3 className="font-semibold text-foreground mb-1">Opt for Local Transport</h3>
+                <p className="text-sm text-muted-foreground">
+                  Use local trains or buses from Kolkata to Canning or Godhkhali to dramatically cut down transit costs compared to private cabs.
+                </p>
+              </div>
+
+              <div className="p-5 rounded-xl border border-border/30 bg-card hover:shadow-md transition duration-200">
+                <div className="w-10 h-10 rounded-lg bg-green-500/10 flex items-center justify-center text-green-600 mb-3">
+                  <Hotel className="w-5 h-5" />
+                </div>
+                <h3 className="font-semibold text-foreground mb-1">Cozy Eco Homestays</h3>
+                <p className="text-sm text-muted-foreground">
+                  Choose clean, local eco-cottages or traditional village homestays over premium resorts for an authentic, budget-friendly experience.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>

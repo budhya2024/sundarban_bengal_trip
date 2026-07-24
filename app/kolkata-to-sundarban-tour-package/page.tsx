@@ -5,6 +5,7 @@ import { PageHeader } from "@/components/PageHeader";
 import { PackageHero } from "@/components/kolkata-to-sundarban-tour-package/PackageHero";
 import { JourneyHighlights } from "@/components/kolkata-to-sundarban-tour-package/JourneyHighlights";
 import { BookingContact } from "@/components/kolkata-to-sundarban-tour-package/BookingContact";
+import { Car, Train, Bus, Users, Plane, MapPin, Clock } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Kolkata to Sundarban Tour Package | Best Sundarban Tour from Kolkata",
@@ -73,7 +74,7 @@ export default function Page() {
                 "description": "Book affordable Kolkata to Sundarban tour packages with transport, meals, boat safari, resort stay and guided jungle exploration.",
                 "inLanguage": "en-IN",
                 "isPartOf": {
-                  "@id": "https://sundarbanbengaltrip.com/#website"
+                   "@id": "https://sundarbanbengaltrip.com/#website"
                 },
                 "about": {
                   "@id": "https://sundarbanbengaltrip.com/#organization"
@@ -217,6 +218,129 @@ export default function Page() {
 
         <section className="bg-muted">
           <JourneyHighlights />
+        </section>
+
+        {/* Transportation Options Section */}
+        <section className="py-10 md:py-16 bg-background">
+          <div className="container">
+            <div className="space-y-6">
+              <h2 className="text-lg md:text-xl xl:text-2xl font-semibold text-foreground">
+                Transportation Options from Kolkata to Sundarban
+              </h2>
+              <p className="text-muted-foreground max-w-3xl text-sm md:text-base">
+                Getting to Godhkhali Ghat (the gateway to the Sundarbans) from Kolkata can be done in several ways. Choose the transport option that best fits your budget and convenience:
+              </p>
+
+              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                <div className="p-5 rounded-xl border border-border/30 bg-card hover:shadow-md transition duration-200">
+                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-3">
+                    <Car className="w-5 h-5" />
+                  </div>
+                  <h3 className="font-semibold text-foreground mb-1">Private Car / Cab</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Offers maximum luxury and doorstep pickup straight to Godhkhali Ghat. It is the fastest route but comes with premium pricing.
+                  </p>
+                </div>
+
+                <div className="p-5 rounded-xl border border-border/30 bg-card hover:shadow-md transition duration-200">
+                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-3">
+                    <Train className="w-5 h-5" />
+                  </div>
+                  <h3 className="font-semibold text-foreground mb-1">Local Train</h3>
+                  <p className="text-sm text-muted-foreground">
+                    A highly budget-friendly way. Board a train from Sealdah to Canning, then hire a local auto or shared toto to reach Godhkhali Ghat.
+                  </p>
+                </div>
+
+                <div className="p-5 rounded-xl border border-border/30 bg-card hover:shadow-md transition duration-200">
+                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-3">
+                    <Bus className="w-5 h-5" />
+                  </div>
+                  <h3 className="font-semibold text-foreground mb-1">Public Bus</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Budget-conscious travellers can easily board buses heading towards Basanti or Godhkhali directly from Esplanade or Science City.
+                  </p>
+                </div>
+
+                <div className="p-5 rounded-xl border border-border/30 bg-card hover:shadow-md transition duration-200">
+                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-3">
+                    <Users className="w-5 h-5" />
+                  </div>
+                  <h3 className="font-semibold text-foreground mb-1">Shared Agency Van</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Pre-booked AC/Non-AC travel vans organized by the agency. Offers comfortable journeys at highly optimized shared rates.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Estimated Travel Time Section */}
+        <section className="py-10 md:py-16 bg-muted">
+          <div className="container">
+            <div className="space-y-6">
+              <h2 className="text-lg md:text-xl xl:text-2xl font-semibold text-foreground">
+                Estimated Travel Time from Different Parts of Kolkata
+              </h2>
+              <p className="text-muted-foreground max-w-3xl text-sm md:text-base">
+                All land transit routes from Kolkata lead to Godhkhali Ghat (approx. 85–100 km), where your mangrove boat safari begins. Here is the estimated travel time from key hubs:
+              </p>
+
+              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                <div className="flex gap-4 p-5 rounded-xl border border-border/30 bg-card shadow-sm hover:shadow-md transition duration-200">
+                  <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-secondary/10 flex items-center justify-center text-secondary">
+                    <Plane className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-foreground mb-1">Kolkata Airport (CCU)</h3>
+                    <p className="text-sm text-muted-foreground">
+                      <strong>3.5 to 4 Hours</strong><br />
+                      Best traveled via the Eastern Metropolitan Bypass and Basanti Highway.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex gap-4 p-5 rounded-xl border border-border/30 bg-card shadow-sm hover:shadow-md transition duration-200">
+                  <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-secondary/10 flex items-center justify-center text-secondary">
+                    <Train className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-foreground mb-1">Howrah Station</h3>
+                    <p className="text-sm text-muted-foreground">
+                      <strong>3.5 to 4 Hours</strong><br />
+                      Routes navigate through the Maa Flyover and connect to the highway.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex gap-4 p-5 rounded-xl border border-border/30 bg-card shadow-sm hover:shadow-md transition duration-200">
+                  <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-secondary/10 flex items-center justify-center text-secondary">
+                    <Train className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-foreground mb-1">Sealdah Station</h3>
+                    <p className="text-sm text-muted-foreground">
+                      <strong>3 to 3.5 Hours</strong> by road, or 1.5 hours by Canning local train + 1 hour road transfer.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex gap-4 p-5 rounded-xl border border-border/30 bg-card shadow-sm hover:shadow-md transition duration-200">
+                  <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-secondary/10 flex items-center justify-center text-secondary">
+                    <MapPin className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-foreground mb-1">Salt Lake & New Town</h3>
+                    <p className="text-sm text-muted-foreground">
+                      <strong>3 to 3.5 Hours</strong><br />
+                      Enjoys swift direct access via the EM Bypass and Basanti Highway.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </section>
 
         <section className="bg-background">
