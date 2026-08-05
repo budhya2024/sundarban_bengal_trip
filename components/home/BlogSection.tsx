@@ -8,32 +8,6 @@ import { BlogType } from "@/db/schema";
 import { getAllBlogs, getLimitedBlogs } from "@/app/actions/blogs.actions";
 import { format } from "date-fns";
 
-const blogPosts = [
-  {
-    slug: "best-time-to-visit-sundarbans",
-    title: "Best Time to Visit Sundarbans: A Complete Guide",
-    excerpt:
-      "Discover the ideal seasons for tiger spotting, bird watching, and exploring the mangrove forests...",
-    image: "/assets/gallery-tiger.jpg",
-    date: "Jan 15, 2024",
-  },
-  {
-    slug: "traditional-boat-safari",
-    title: "Traditional Boat Safari: What to Expect",
-    excerpt:
-      "Everything you need to know about the iconic wooden boat safaris through the winding waterways...",
-    image: "/assets/gallery-boat.jpg",
-    date: "Jan 10, 2024",
-  },
-  {
-    slug: "bird-watching-sundarbans",
-    title: "Bird Watching in Sundarbans: Species to Spot",
-    excerpt:
-      "From Kingfishers to White-bellied Sea Eagles, discover the diverse avian life of the Sundarbans...",
-    image: "/assets/gallery-bird.jpg",
-    date: "Jan 5, 2024",
-  },
-];
 
 export const BlogSection = () => {
   const [blogs, setBlogs] = useState<BlogType[]>([]);
@@ -98,7 +72,7 @@ export const BlogSection = () => {
                 {/* Image */}
                 <div className="relative h-48 overflow-hidden">
                   <img
-                    src={post.image || "/assets/gallery-tiger.jpg"}
+                    src={post.image || "/assets/sundarban-tiger.jpeg"}
                     alt={post.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />

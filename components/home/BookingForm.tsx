@@ -61,7 +61,7 @@ const INPUT_CLS = `
   placeholder:text-muted-foreground
 `;
 
-export const BookingForm = () => {
+export const BookingForm = ({ isModal = false }: { isModal?: boolean }) => {
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
   const [packages, setPackages] = useState<{ key: string; name: string }[]>([]);
@@ -119,23 +119,16 @@ export const BookingForm = () => {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
-  return (
-    <section className="relative z-20">
-      <div className="container">
-        <div
-          data-aos="fade-up"
-          data-aos-duration="600"
-          className="bg-card rounded-2xl border border-gray-300 shadow-elevated p-3 sm:p-5 md:p-10"
-        >
-          {/* Heading */}
-          <div className="text-center mb-5 md:mb-10">
-            <p className="font-display text-2xl md:text-3xl font-bold text-foreground mt-2 mb-2 md:mb-4">
-              Sundarban tour package
-            </p>
-            <p className="text-muted-foreground text-base">
-              Fill up the form and our travel expert will contact you shortly.
-            </p>
-          </div>
+  const FormContent = (
+    <>
+      <div className="text-center mb-5 md:mb-10">
+        <p className="font-display text-2xl md:text-3xl font-bold text-foreground mt-2 mb-2 md:mb-4">
+          Sundarban tour package
+        </p>
+        <p className="text-muted-foreground text-base">
+          Fill up the form and our travel expert will contact you shortly.
+        </p>
+      </div>
 
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -419,54 +412,72 @@ export const BookingForm = () => {
               </div>
             </form>
           </Form>
+    </>
+  );
+
+  const ModalComponent = (
+    <Dialog open={isSuccessModalOpen} onOpenChange={setIsSuccessModalOpen}>
+      <DialogContent className="sm:max-w-md border-none rounded-3xl p-0 overflow-hidden shadow-2xl outline-none">
+        {/* Green gradient banner */}
+        <div className="relative bg-gradient-to-br from-[#064e3b] via-[#0b664a] to-[#047857] px-8 pt-12 pb-16 text-center overflow-hidden">
+          <div className="relative inline-flex items-center justify-center mb-5">
+            <span className="absolute inline-flex h-24 w-24 rounded-full bg-white/20 animate-ping" />
+            <span className="absolute inline-flex h-20 w-20 rounded-full bg-white/30" />
+            <div className="relative z-10 bg-white rounded-full p-4 shadow-xl">
+              <FaCheckCircle className="w-12 h-12 text-[#064e3b]" />
+            </div>
+          </div>
+          <DialogHeader>
+            <DialogTitle className="text-white text-2xl font-bold mb-1 drop-shadow">
+              Booking Confirmed! 🎉
+            </DialogTitle>
+            <DialogDescription className="text-emerald-100 text-sm">
+              Your adventure to the Sundarbans is on its way
+            </DialogDescription>
+          </DialogHeader>
+        </div>
+        {/* Body card overlapping the banner */}
+        <div className="relative -mt-8 mx-4 mb-6 bg-white rounded-2xl shadow-lg px-6 py-6 space-y-4">
+          <div className="space-y-3 text-sm">
+            <div className="flex items-start gap-2.5 text-slate-600">
+              <span className="mt-0.5 text-[#064e3b]"><FaCheckCircle className="w-4 h-4" /></span>
+              <span>A <strong>confirmation email</strong> has been sent to your inbox.</span>
+            </div>
+            <div className="flex items-start gap-2.5 text-slate-600">
+              <span className="mt-0.5 text-[#064e3b]"><FaCheckCircle className="w-4 h-4" /></span>
+              <span>Our travel expert will <strong>call you within 24 hours</strong> to finalise details.</span>
+            </div>
+            <div className="flex items-start gap-2.5 text-slate-600">
+              <span className="mt-0.5 text-[#064e3b]"><FaCheckCircle className="w-4 h-4" /></span>
+              <span>You can also reach us anytime on <strong>WhatsApp</strong>.</span>
+            </div>
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+
+  if (isModal) {
+    return (
+      <div className="p-4 sm:p-6 md:p-8 bg-card w-full h-full max-h-[85vh] overflow-y-auto">
+        {FormContent}
+        {ModalComponent}
+      </div>
+    );
+  }
+
+  return (
+    <section className="relative z-20">
+      <div className="container">
+        <div
+          data-aos="fade-up"
+          data-aos-duration="600"
+          className="bg-card rounded-2xl border border-gray-300 shadow-elevated p-3 sm:p-5 md:p-10"
+        >
+          {FormContent}
         </div>
       </div>
-
-      {/* Success Modal */}
-      <Dialog open={isSuccessModalOpen} onOpenChange={setIsSuccessModalOpen}>
-        <DialogContent className="sm:max-w-md border-none rounded-3xl p-0 overflow-hidden shadow-2xl outline-none">
-          {/* Green gradient banner */}
-          <div className="relative bg-gradient-to-br from-[#064e3b] via-[#0b664a] to-[#047857] px-8 pt-12 pb-16 text-center overflow-hidden">
-            {/* Animated check icon */}
-            <div className="relative inline-flex items-center justify-center mb-5">
-              {/* Pulse ring */}
-              <span className="absolute inline-flex h-24 w-24 rounded-full bg-white/20 animate-ping" />
-              <span className="absolute inline-flex h-20 w-20 rounded-full bg-white/30" />
-              <div className="relative z-10 bg-white rounded-full p-4 shadow-xl">
-                <FaCheckCircle className="w-12 h-12 text-[#064e3b]" />
-              </div>
-            </div>
-
-            <DialogHeader>
-              <DialogTitle className="text-white text-2xl font-bold mb-1 drop-shadow">
-                Booking Confirmed! 🎉
-              </DialogTitle>
-              <DialogDescription className="text-emerald-100 text-sm">
-                Your adventure to the Sundarbans is on its way
-              </DialogDescription>
-            </DialogHeader>
-          </div>
-
-          {/* Body card overlapping the banner */}
-          <div className="relative -mt-8 mx-4 mb-6 bg-white rounded-2xl shadow-lg px-6 py-6 space-y-4">
-            {/* Info rows */}
-            <div className="space-y-3 text-sm">
-              <div className="flex items-start gap-2.5 text-slate-600">
-                <span className="mt-0.5 text-[#064e3b]"><FaCheckCircle className="w-4 h-4" /></span>
-                <span>A <strong>confirmation email</strong> has been sent to your inbox.</span>
-              </div>
-              <div className="flex items-start gap-2.5 text-slate-600">
-                <span className="mt-0.5 text-[#064e3b]"><FaCheckCircle className="w-4 h-4" /></span>
-                <span>Our travel expert will <strong>call you within 24 hours</strong> to finalise details.</span>
-              </div>
-              <div className="flex items-start gap-2.5 text-slate-600">
-                <span className="mt-0.5 text-[#064e3b]"><FaCheckCircle className="w-4 h-4" /></span>
-                <span>You can also reach us anytime on <strong>WhatsApp</strong>.</span>
-              </div>
-            </div>
-          </div>
-        </DialogContent>
-      </Dialog>
+      {ModalComponent}
     </section>
   );
 };

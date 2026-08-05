@@ -7,8 +7,7 @@ import { Footer } from "@/components/Footer";
 import { PageHeader } from "@/components/PageHeader";
 import { BlogSidebar } from "@/components/BlogSidebar";
 import { Button } from "@/components/ui/button";
-import { Calendar, User, Clock, ArrowLeft, Share2 } from "lucide-react";
-import { FacebookIcon, TwitterIcon } from "@/components/icons/SocialIcons";
+import { Calendar, User, Clock, ArrowLeft, } from "lucide-react";
 import Link from "next/link";
 import { BlogType } from "@/db/schema";
 import dynamic from "next/dynamic";
@@ -221,13 +220,12 @@ const BlogDetails = ({
                             });
                           }
                         }}
-                        className={`block text-sm transition-colors hover:text-[#4a6741] ${
-                          item.level === "h1"
-                            ? "font-bold text-foreground pl-0"
-                            : item.level === "h2"
-                              ? "font-semibold text-foreground/80 pl-4"
-                              : "text-muted-foreground pl-8"
-                        }`}
+                        className={`block text-sm transition-colors hover:text-[#4a6741] ${item.level === "h1"
+                          ? "font-bold text-foreground pl-0"
+                          : item.level === "h2"
+                            ? "font-semibold text-foreground/80 pl-4"
+                            : "text-muted-foreground pl-8"
+                          }`}
                       >
                         • {item.text}
                       </a>
@@ -240,7 +238,7 @@ const BlogDetails = ({
               <div
                 id="blog-content"
                 data-aos="fade-up"
-                className="prose prose-lg max-w-none prose-headings:font-display prose-headings:text-foreground prose-p:text-muted-foreground prose-a:text-primary prose-strong:text-foreground prose-ul:text-muted-foreground"
+                className="prose prose-lg max-w-none prose-headings:font-display prose-headings:text-slate-800 prose-headings:text-xl md:prose-headings:text-[24px] prose-headings:font-semibold prose-headings:mt-8 prose-headings:mb-4 prose-p:text-slate-600 prose-p:leading-relaxed prose-a:text-primary prose-a:no-underline hover:prose-a:underline prose-strong:text-slate-900 prose-strong:font-semibold prose-ul:text-slate-600 prose-li:marker:text-primary prose-img:rounded-xl prose-img:shadow-md prose-blockquote:border-l-4 prose-blockquote:border-primary prose-blockquote:bg-slate-50 prose-blockquote:p-4 prose-blockquote:rounded-r-lg prose-blockquote:italic prose-blockquote:text-slate-700"
                 dangerouslySetInnerHTML={{
                   __html: injectHeadingIds(post.content),
                 }}

@@ -10,7 +10,7 @@ import { blogs } from "./db/schema";
 
 async function main() {
   const b = await db.select().from(blogs);
-  console.log("DB Slugs:", b.map(x => x.slug));
+  console.log("DB Blogs:", b.map(x => ({ slug: x.slug, image: x.image })));
   process.exit(0);
 }
 main();

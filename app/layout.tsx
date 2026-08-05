@@ -14,6 +14,7 @@ import { SocialSidebar } from "@/components/SocialSidebar";
 import { ScrollToTopButton } from "@/components/ScrollToTopButton";
 import TanstackProvider from "@/components/TanstackProvider";
 import { CustomCursor } from "@/components/CustomCursor";
+import { GlobalBookingModal } from "@/components/GlobalBookingModal";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://sundarbanbengaltrip.com"),
@@ -404,6 +405,8 @@ export default function RootLayout({
             <SocialSidebar />
 
             <ScrollToTopButton />
+
+            <GlobalBookingModal />
 
             {children}
           </TooltipProvider>

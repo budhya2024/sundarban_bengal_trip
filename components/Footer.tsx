@@ -23,7 +23,7 @@ export const Footer = () => {
                 alt="logo"
                 height={200}
                 width={200}
-                className="w-28 md:w-30 h-auto"
+                className="w-28 md:w-36 h-auto"
               />
             </Link>
             <p className="text-primary-foreground/80 leading-relaxed mb-4 max-w-sm">

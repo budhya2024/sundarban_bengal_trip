@@ -47,6 +47,9 @@ interface BookingModalProps {
   triggerLabel?: string;
   triggerVariant?: ButtonProps["variant"];
   triggerClassName?: string;
+  isOpen?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  hideTrigger?: boolean;
 }
 
 export const BookingModal = ({
@@ -54,9 +57,14 @@ export const BookingModal = ({
   triggerLabel = "Book Now",
   triggerVariant = "hero",
   triggerClassName = "w-full",
+  isOpen,
+  onOpenChange,
+  hideTrigger = false,
 }: BookingModalProps) => {
   const [isPending, startTransition] = useTransition();
-  const [bookingOpen, setBookingOpen] = useState(false);
+  const [internalBookingOpen, setInternalBookingOpen] = useState(false);
+  
+  const bookingOpen = isOpen !== undefined ? isOpen : internalBookingOpen;
   const [isSuccess, setIsSuccess] = useState(false);
   const [calOpen, setCalOpen] = useState(false);
   const calRef = useRef<HTMLDivElement>(null);
@@ -90,7 +98,8 @@ export const BookingModal = ({
   });
 
   const handleOpenChange = (open: boolean) => {
-    setBookingOpen(open);
+    if (onOpenChange) onOpenChange(open);
+    if (isOpen === undefined) setInternalBookingOpen(open);
     if (!open) {
       setIsSuccess(false);
       setCalOpen(false);
@@ -116,11 +125,13 @@ export const BookingModal = ({
 
   return (
     <Dialog open={bookingOpen} onOpenChange={handleOpenChange}>
-      <DialogTrigger asChild>
-        <Button variant={triggerVariant} size="lg" className={triggerClassName}>
-          {triggerLabel}
-        </Button>
-      </DialogTrigger>
+      {!hideTrigger && (
+        <DialogTrigger asChild>
+          <Button variant={triggerVariant} size="lg" className={triggerClassName}>
+            {triggerLabel}
+          </Button>
+        </DialogTrigger>
+      )}
 
       <DialogContent
         className={`w-[95%] sm:max-w-[540px]  sm:w-full max-h-[90vh] overflow-y-auto rounded-3xl transition-all duration-300 ${isSuccess ? "pt-10 px-0 pb-0 overflow-hidden shadow-2xl" : "p-6 md:p-8"
@@ -131,7 +142,7 @@ export const BookingModal = ({
             {/* Header */}
             <DialogHeader className="space-y-1.5 mb-4">
               <DialogTitle className="font-display text-2xl text-foreground">
-                Secure Your Slot
+                Book Your Trip
               </DialogTitle>
               <DialogDescription className="text-muted-foreground leading-relaxed">
                 You are booking for{" "}
