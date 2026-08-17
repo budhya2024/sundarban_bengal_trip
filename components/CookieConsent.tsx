@@ -1,12 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 const STORAGE_KEY = "sbt_cookie_consent";
 
 export const CookieConsent = () => {
   const pathname = usePathname();
+  const router = useRouter();
   const [visible, setVisible] = useState(false);
   const [entering, setEntering] = useState(false);
 
@@ -19,22 +20,32 @@ export const CookieConsent = () => {
     if (!saved) {
       const t = setTimeout(() => {
         setVisible(true);
-        setTimeout(() => setEntering(true), 10);
-      }, 1500);
+        setTimeout(() => setEntering(true), 50);
+      }, 1200);
       return () => clearTimeout(t);
     }
   }, [isAdmin]);
 
-  const dismiss = () => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify({ accepted: true, timestamp: Date.now() }));
+  const handleAcceptAll = () => {
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify({ accepted: true, rejected: false, timestamp: Date.now() })
+    );
     setEntering(false);
     setTimeout(() => setVisible(false), 400);
   };
 
-  const decline = () => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify({ accepted: false, timestamp: Date.now() }));
+  const handleRejectAll = () => {
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify({ accepted: false, rejected: true, timestamp: Date.now() })
+    );
     setEntering(false);
     setTimeout(() => setVisible(false), 400);
+  };
+
+  const handleCustomize = () => {
+    router.push("/privacy-policy");
   };
 
   if (isAdmin || !visible) return null;
@@ -42,45 +53,53 @@ export const CookieConsent = () => {
   return (
     <div
       role="region"
-      aria-label="Cookie notice"
+      aria-label="Cookie privacy notice"
       className={`
-        fixed bottom-0 left-0 right-0 z-[999]
-        transition-transform duration-500 ease-out
-        ${entering ? "translate-y-0" : "translate-y-full"}
+        fixed bottom-4 left-4 sm:bottom-6 sm:left-6 z-[9999]
+        max-w-[480px] w-[calc(100%-2rem)]
+        transition-all duration-500 ease-out
+        ${entering ? "translate-y-0 opacity-100 scale-100" : "translate-y-8 opacity-0 scale-95"}
       `}
     >
-      <div
-        className="px-6 py-4 flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-6"
-        style={{ background: "hsl(150 45% 18%)" }}
-      >
-        {/* Text */}
-        <p className="text-white/80 text-sm leading-relaxed flex-1">
-          🍪 We use cookies to improve your experience on our site. By continuing to browse, you agree to our{" "}
-          <a
-            href="/privacy-policy"
-            className="text-amber-300 hover:text-amber-200 underline underline-offset-2 transition-colors"
-          >
-            Privacy Policy
-          </a>
-          .
+      <div className="bg-white rounded-2xl p-6 sm:p-7 shadow-[0_15px_50px_rgba(0,0,0,0.18)] border border-gray-100">
+        {/* Title */}
+        <h2 className="text-xl sm:text-2xl font-bold text-primary mb-2.5 tracking-tight font-sans">
+          We value your privacy
+        </h2>
+
+        {/* Description */}
+        <p className="text-[#4a4a4a] text-sm sm:text-[0.92rem] leading-relaxed mb-6 font-normal">
+          We use cookies to enhance your browsing experience, serve personalized
+          ads or content, and analyze our traffic. By clicking &quot;Accept All&quot;,
+          you consent to our use of cookies.
         </p>
 
-        {/* Actions — plain text links, no buttons */}
-        <div className="flex items-center gap-5 shrink-0">
+        {/* Action Buttons */}
+        <div className="grid grid-cols-3 gap-2.5 sm:gap-3">
           <button
-            onClick={decline}
-            className="text-white/50 hover:text-white/80 text-sm transition-colors"
+            type="button"
+            onClick={handleCustomize}
+            className="w-full border-2 border-primary bg-white text-primary hover:bg-primary hover:text-white font-semibold text-xs sm:text-sm py-2.5 px-2 sm:px-3 rounded-sm transition-all duration-200 active:scale-[0.98] text-center"
           >
-            Decline
+            Customize
           </button>
           <button
-            onClick={dismiss}
-            className="text-amber-300 hover:text-amber-200 text-sm font-semibold transition-colors"
+            type="button"
+            onClick={handleRejectAll}
+            className="w-full border-2 border-primary bg-white text-primary hover:bg-gray-100 font-semibold text-xs sm:text-sm py-2.5 px-2 sm:px-3 rounded-sm transition-all duration-200 active:scale-[0.98] text-center"
           >
-            Got it, Accept
+            Reject All
+          </button>
+          <button
+            type="button"
+            onClick={handleAcceptAll}
+            className="w-full border-2 border-primary hover:border-secondary bg-primary text-white hover:bg-secondary font-semibold text-xs sm:text-sm py-2.5 px-2 sm:px-3 rounded-sm transition-all duration-200 active:scale-[0.98] text-center shadow-sm"
+          >
+            Accept All
           </button>
         </div>
       </div>
     </div>
   );
 };
+

@@ -79,7 +79,7 @@ const PackageDetailsPage = ({
             Back to All Packages
           </Link>
 
-          <div className="grid lg:grid-cols-3 gap-12">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
             {/* Main Content */}
             <div className="lg:col-span-2 space-y-10">
               {/* Overview */}
@@ -257,21 +257,6 @@ const PackageDetailsPage = ({
                   </ul>
                 </div>
               </div>
-
-
-
-              {/* Package-specific sections for 1 night 2 days tour */}
-              {data.key === "sundarban-1-night-2-days-tour" && (
-                <div className="space-y-10 border-t border-border/50 pt-10">
-
-                </div>
-              )}
-
-              {/* Package-specific sections for 1 Day Tour */}
-              {(data.key === "1-day-in-sundarban" || data.key === "sundarban-1-day-tour") && (
-                <div className="space-y-10 border-t border-border/50 pt-10">
-                </div>
-              )}
             </div>
 
             {/* Sidebar - Booking Card */}

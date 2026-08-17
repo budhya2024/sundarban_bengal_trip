@@ -45,7 +45,7 @@ export const TourGallerySlider = () => {
         >
           {GALLERY_IMAGES.map((img, idx) => (
             <SwiperSlide key={idx}>
-              <div className="relative w-full h-80">
+              <div className="relative w-full h-56 sm:h-72 md:h-80">
                 <Image
                   src={img.src}
                   alt={img.caption}
@@ -57,24 +57,24 @@ export const TourGallerySlider = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-transparent to-transparent" />
                 {/* Caption pill */}
                 <div className="absolute bottom-0 left-0 right-0 p-4">
-                  <h1 className="inline-block text-white text-sm font-medium ">
+                  <span className="inline-block text-white text-sm font-medium">
                     {img.caption}
-                  </h1>
+                  </span>
                 </div>
               </div>
             </SwiperSlide>
           ))}
         </Swiper>
 
-        {/* Prev / Next — visible on hover */}
+        {/* Prev / Next — visible on touch & desktop hover */}
         <button
-          className="gallery-prev absolute left-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white/40"
+          className="gallery-prev absolute left-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 text-white flex items-center justify-center opacity-80 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity hover:bg-white/40 cursor-pointer"
           aria-label="Previous photo"
         >
           <ChevronLeft className="w-4 h-4" />
         </button>
         <button
-          className="gallery-next absolute right-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white/40"
+          className="gallery-next absolute right-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 text-white flex items-center justify-center opacity-80 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity hover:bg-white/40 cursor-pointer"
           aria-label="Next photo"
         >
           <ChevronRight className="w-4 h-4" />
