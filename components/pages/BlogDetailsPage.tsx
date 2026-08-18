@@ -7,7 +7,7 @@ import { Footer } from "@/components/Footer";
 import { PageHeader } from "@/components/PageHeader";
 import { BlogSidebar } from "@/components/BlogSidebar";
 import { Button } from "@/components/ui/button";
-import { Calendar, User, Clock, ArrowLeft, } from "lucide-react";
+import { Calendar, User, Clock, ArrowLeft, Tag } from "lucide-react";
 import Link from "next/link";
 import { BlogType } from "@/db/schema";
 import dynamic from "next/dynamic";
@@ -88,7 +88,7 @@ const BlogDetails = ({
       <PageHeader
         title="Travel Blog"
         subtitle="Stories, tips, and insights from our Sundarban adventures"
-        backgroundImage={post.image || "/assets/placeholder.svg"}
+        backgroundImage="/assets/tiger-photo.jpg"
       />
 
       {/* Article Content with Sidebar */}
@@ -144,42 +144,27 @@ const BlogDetails = ({
                 </div>
               </div>
 
-              {/* Category & Tags */}
-              {(post.category || post.hashtags) && (
+              {/* Category */}
+              {post.category && (
                 <div
                   data-aos="fade-up"
                   className="flex flex-wrap gap-2 items-center mb-6 -mt-4"
                 >
-                  {post.category && (
-                    <span className="px-3 py-1 bg-primary/10 text-primary text-sm tracking-wide font-normal rounded-sm">
-                      {post.category}
-                    </span>
-                  )}
-                  {post.hashtags &&
-                    post.hashtags
-                      .split(",")
-                      .map((tag) => tag.trim())
-                      .filter((tag) => tag.length > 0)
-                      .map((tag, tagIndex) => (
-                        <span
-                          key={tagIndex}
-                          className="px-3 py-1 bg-primary text-primary-foreground text-sm tracking-wide font-normal rounded-sm"
-                        >
-                          #{tag.startsWith("#") ? tag.slice(1) : tag}
-                        </span>
-                      ))}
+                  <span className="px-3 py-1 bg-primary/10 text-primary text-sm font-medium tracking-wide rounded-[4px]">
+                    {post.category}
+                  </span>
                 </div>
               )}
 
               {/* Featured Image */}
               <div
                 data-aos="fade-up"
-                className="relative mb-10 rounded-2xl overflow-hidden shadow-elevated"
+                className="relative mb-10 rounded-xl overflow-hidden shadow-elevated"
               >
                 <img
                   src={post.image || "/assets/placeholder.svg"}
                   alt={post.title}
-                  className="w-full h-[400px] object-cover"
+                  className="w-full h-aito object-cover"
                 />
               </div>
 
@@ -195,7 +180,7 @@ const BlogDetails = ({
               {toc.length > 0 && (
                 <div
                   data-aos="fade-up"
-                  className="bg-white border border-slate-200/60  p-6 mb-8"
+                  className="bg-white border rounded-sm border-slate-200/60  p-6 mb-8"
                 >
                   <h3 className="font-display text-xl md:text-2xl md: font-bold text-foreground mb-4">
                     Table of Contents
@@ -221,9 +206,9 @@ const BlogDetails = ({
                           }
                         }}
                         className={`block text-sm transition-colors hover:text-[#4a6741] ${item.level === "h1"
-                          ? "font-bold text-foreground pl-0"
+                          ? "font-medium text-foreground pl-0"
                           : item.level === "h2"
-                            ? "font-semibold text-foreground/80 pl-4"
+                            ? "font-medium text-foreground/80 pl-4"
                             : "text-muted-foreground pl-8"
                           }`}
                       >
@@ -244,10 +229,38 @@ const BlogDetails = ({
                 }}
               />
 
+              {/* Hashtags at the bottom of the article */}
+              {post.hashtags && post.hashtags.trim().length > 0 && (
+                <div
+                  data-aos="fade-up"
+                  className="mt-10"
+                >
+                  <div className="flex items-center gap-2 flex-wrap">
+
+                    {post.hashtags
+                      .split(",")
+                      .map((tag) => tag.trim())
+                      .filter((tag) => tag.length > 0)
+                      .map((tag, tagIndex) => {
+                        const cleanTag = tag.startsWith("#") ? tag.slice(1) : tag;
+                        return (
+                          <Link
+                            key={tagIndex}
+                            href={`/blog?tag=${encodeURIComponent(cleanTag.toLowerCase())}`}
+                            className="inline-flex items-center px-3 py-1 bg-primary/10 hover:bg-primary text-primary hover:text-primary-foreground text-xs md:text-sm font-medium rounded-[4px] transition-all duration-200 "
+                          >
+                            #{cleanTag}
+                          </Link>
+                        );
+                      })}
+                  </div>
+                </div>
+              )}
+
               {/* Share */}
               <div
                 data-aos="fade-up"
-                className="mt-12 pt-8 border-t border-border"
+                className="mt-8 pt-6 border-t border-border"
               >
                 <ShareButtons title={post.title} />
               </div>

@@ -30,9 +30,9 @@ export const TestimonialsSection = ({
 
   return (
     <section
-      className="relative py-10 md:py-16bg-fixed bg-center bg-cover"
+      className="relative py-10 md:py-16 bg-fixed bg-center bg-cover"
       style={{
-        backgroundImage: "url('assets/tiger-photo.jpg')",
+        backgroundImage: "url('/assets/tiger-photo.jpg')",
       }}
     >
       {/* Dark overlay */}

@@ -21,20 +21,16 @@ const DEFAULT_CONTACT_DATA = {
   heroSubtitle:
     "Have questions about our tours? We're here to help you plan the perfect Sundarban adventure.",
   heroImage: "/assets/hero-sundarban.jpg",
-  phones: [{ value: "+917074432628" }, { value: "+91 87654 32109" }],
-  emails: [
-    { value: "sundarbanbengaltrip@gmail.com" },
-    { value: "sundarbanbengaltrip@gmail.com" },
-  ],
-  address: "123 Forest Road, Canning, South 24 Parganas, WB - 743329",
+  phones: [{ value: "7074432628" }],
+  emails: [{ value: "sundarbanbengaltrip@gmail.com" }],
+  address: "5R82+296, Nath Para, Gosaba, Arampur, West Bengal 743370",
   schedules: [
-    { value: "Mon - Sat: 9:00 AM - 6:00 PM" },
-    { value: "Sunday: 10:00 AM - 4:00 PM" },
+    { value: "Mon - Sun: 8:00 AM - 10:00 PM" },
   ],
   sidebarHeadline: "Need Immediate Help?",
   sidebarDescription:
     "Our travel experts are available to assist you with booking and itinerary customization.",
-  whatsappNumber: "9876543210",
+  whatsappNumber: "7074432628",
 };
 
 const ContactPage = ({ data }: { data: ContactPageValues | null }) => {
@@ -143,14 +139,14 @@ const ContactPage = ({ data }: { data: ContactPageValues | null }) => {
                 className="rounded-3xl overflow-hidden h-[300px] shadow-elevated"
               >
                 <iframe
-                  src="https://maps.google.com/maps?q=Sundarban%20National%20Park,%20West%20Bengal&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                  src="https://maps.google.com/maps?q=Sundarban%20Bengal%20Trip,%20Gosaba,%20Arampur,%20West%20Bengal%20743370&t=&z=15&ie=UTF8&iwloc=&output=embed"
                   width="100%"
                   height="100%"
                   style={{ border: 0 }}
                   allowFullScreen
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
-                  title="Sundarban Location"
+                  title="Sundarban Bengal Trip Location"
                 />
               </div>
 

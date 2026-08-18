@@ -4,12 +4,12 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Menu, X, ChevronDown, ChevronRight } from "lucide-react";
+import { Menu, X, ChevronDown, ChevronRight, PhoneCallIcon } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { getNavbarPackageKeys } from "@/app/actions/package.actions";
 import { Skeleton } from "./ui/skeleton";
-import { FaPhoneAlt } from "react-icons/fa";
+import { FaPhoneAlt, FaPhoneSquareAlt } from "react-icons/fa";
 
 const navLinks = [
   { name: "Home", path: "/" },
@@ -76,11 +76,10 @@ export const Navbar = () => {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? "bg-background/95 backdrop-blur-md shadow-soft"
-          : "bg-transparent"
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
+        ? "bg-background/95 backdrop-blur-md shadow-soft"
+        : "bg-transparent"
+        }`}
     >
       <div className="container">
         <nav className="flex items-center justify-between h-20">
@@ -106,17 +105,15 @@ export const Navbar = () => {
                   onMouseLeave={() => setIsDropdownOpen(false)}
                 >
                   <button
-                    className={`flex items-center gap-1 font-medium transition ${
-                      isScrolled
-                        ? "text-foreground hover:text-secondary"
-                        : "text-white hover:text-white/80"
-                    }`}
+                    className={`flex items-center gap-1 font-medium transition ${isScrolled
+                      ? "text-foreground hover:text-secondary"
+                      : "text-white hover:text-white/80"
+                      }`}
                   >
                     {link.name}
                     <ChevronDown
-                      className={`w-4 h-4 transition ${
-                        isDropdownOpen ? "rotate-180" : ""
-                      }`}
+                      className={`w-4 h-4 transition ${isDropdownOpen ? "rotate-180" : ""
+                        }`}
                     />
                   </button>
 
@@ -165,11 +162,10 @@ export const Navbar = () => {
                 <Link
                   key={link.path}
                   href={link.path}
-                  className={`font-medium transition ${
-                    isScrolled
-                      ? "text-foreground hover:text-secondary"
-                      : "text-white hover:text-white/80"
-                  }`}
+                  className={`font-medium transition ${isScrolled
+                    ? "text-foreground hover:text-secondary"
+                    : "text-white hover:text-white/80"
+                    }`}
                 >
                   {link.name}
                 </Link>
@@ -183,7 +179,7 @@ export const Navbar = () => {
               href="tel:+917074432628"
               className="relative inline-flex items-center justify-center overflow-hidden bg-primary
               
-              px-7 py-3 rounded-sm text-white font-medium 
+              px-7 py-3 rounded-full text-white font-medium 
               transition-all duration-300"
             >
               {/* Shine Effect */}
@@ -198,7 +194,7 @@ export const Navbar = () => {
 
               <span className="relative z-10 flex flex-col">
                 <span className="flex gap-2 items-center ">
-                 <FaPhoneAlt  />7074432628
+                  <PhoneCallIcon size={18} />7074432628
                 </span>
               </span>
             </a>
@@ -236,9 +232,8 @@ export const Navbar = () => {
                     >
                       <span>{link.name}</span>
                       <ChevronDown
-                        className={`w-5 h-5 transition-transform duration-200 ${
-                          isMobilePackagesOpen ? "rotate-180 text-primary" : "text-muted-foreground"
-                        }`}
+                        className={`w-5 h-5 transition-transform duration-200 ${isMobilePackagesOpen ? "rotate-180 text-primary" : "text-muted-foreground"
+                          }`}
                       />
                     </button>
 

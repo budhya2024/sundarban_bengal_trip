@@ -56,20 +56,16 @@ export function CustomCursor() {
       }
     };
 
-    const handleMouseDown = () => setClicked(true);
-    const handleMouseUp = () => setClicked(false);
+
 
     window.addEventListener("mouseover", handleMouseOver);
-    window.addEventListener("mousedown", handleMouseDown);
-    window.addEventListener("mouseup", handleMouseUp);
 
     return () => {
       window.removeEventListener("mousemove", moveCursor);
       document.removeEventListener("mouseleave", handleMouseLeave);
       document.removeEventListener("mouseenter", handleMouseEnter);
       window.removeEventListener("mouseover", handleMouseOver);
-      window.removeEventListener("mousedown", handleMouseDown);
-      window.removeEventListener("mouseup", handleMouseUp);
+
     };
   }, [cursorX, cursorY, isVisible]);
 
@@ -77,35 +73,17 @@ export function CustomCursor() {
 
   return (
     <>
-      {/* Outer circle following mouse with spring lag */}
-      <motion.div
-        className="fixed top-0 left-0 w-8 h-8 rounded-full border border-amber/80 pointer-events-none z-[99999] hidden md:block"
-        style={{
-          x: cursorXSpring,
-          y: cursorYSpring,
-          translateX: "-50%",
-          translateY: "-50%",
-        }}
-        animate={{
-          scale: hovered ? 1.6 : clicked ? 0.75 : 1,
-          backgroundColor: hovered ? "rgba(245, 158, 11, 0.15)" : "rgba(245, 158, 11, 0)",
-          borderColor: hovered ? "rgb(245, 158, 11)" : "rgba(245, 158, 11, 0.8)",
-        }}
-        transition={{ type: "tween", duration: 0.15 }}
-      />
+
       {/* Inner dot directly under cursor */}
       <motion.div
-        className="fixed top-0 left-0 w-2.5 h-2.5 rounded-full bg-amber pointer-events-none z-[99999] hidden md:block"
+        className="fixed top-0 left-0 w-3.5 h-3.5 rounded-full bg-amber pointer-events-none z-[99999] hidden md:block"
         style={{
           x: cursorX,
           y: cursorY,
           translateX: "-50%",
           translateY: "-50%",
         }}
-        animate={{
-          scale: hovered ? 0.4 : clicked ? 1.4 : 1,
-          backgroundColor: hovered ? "rgb(245, 158, 11)" : "rgb(245, 158, 11)",
-        }}
+
         transition={{ type: "tween", duration: 0.1 }}
       />
     </>
