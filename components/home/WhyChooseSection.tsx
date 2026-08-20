@@ -1,6 +1,5 @@
-"use client";
-
 import { useEffect } from "react";
+import Image from "next/image";
 import AOS from "aos";
 import {
   FaBed,
@@ -71,15 +70,17 @@ export const AboutSection = () => {
             data-aos-duration="800"
             className="relative"
           >
-            <div className="relative  overflow-hidden ">
-              <img
+            <div className="relative overflow-hidden rounded-xl h-[280px] md:h-[360px]">
+              <Image
                 src="/assets/Sundarban-tour-booking.jpeg"
                 alt="sundarban tour booking"
-                className="w-full h-[280px] md:h-[360px]  object-cover "
+                fill
+                sizes="(max-width: 768px) 100vw, 50vw"
+                quality={100}
+                className="object-cover"
+                loading="lazy"
               />
-
             </div>
-
           </div>
 
           {/* Content */}

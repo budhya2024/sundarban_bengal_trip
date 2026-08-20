@@ -104,9 +104,9 @@ const row2Hotels = [
   },
 ];
 
-// Duplicated arrays for seamless continuous looping
-const loopRow1 = [...row1Hotels, ...row1Hotels, ...row1Hotels];
-const loopRow2 = [...row2Hotels, ...row2Hotels, ...row2Hotels];
+// Duplicated arrays for seamless continuous looping (2x is sufficient with 50% translateX)
+const loopRow1 = [...row1Hotels, ...row1Hotels];
+const loopRow2 = [...row2Hotels, ...row2Hotels];
 
 export default function HotelSwiper() {
   return (
@@ -143,6 +143,7 @@ export default function HotelSwiper() {
                     fill
                     sizes="(max-width: 768px) 288px, 384px"
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    loading="lazy"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
                     <span className="text-white text-sm font-medium tracking-wide">
@@ -170,6 +171,7 @@ export default function HotelSwiper() {
                     fill
                     sizes="(max-width: 768px) 288px, 384px"
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    loading="lazy"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
                     <span className="text-white text-sm font-medium tracking-wide">
@@ -190,13 +192,13 @@ export default function HotelSwiper() {
             transform: translateX(0);
           }
           100% {
-            transform: translateX(-33.333%);
+            transform: translateX(-50%);
           }
         }
 
         @keyframes scrollRight {
           0% {
-            transform: translateX(-33.333%);
+            transform: translateX(-50%);
           }
           100% {
             transform: translateX(0);
@@ -206,7 +208,7 @@ export default function HotelSwiper() {
         .animate-scroll-left {
           display: flex;
           width: max-content;
-          animation: scrollLeft 55s linear infinite;
+          animation: scrollLeft 45s linear infinite;
         }
 
         .animate-scroll-left:hover {
@@ -216,7 +218,7 @@ export default function HotelSwiper() {
         .animate-scroll-right {
           display: flex;
           width: max-content;
-          animation: scrollRight 55s linear infinite;
+          animation: scrollRight 45s linear infinite;
         }
 
         .animate-scroll-right:hover {

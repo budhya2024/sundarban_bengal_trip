@@ -9,6 +9,7 @@ import "swiper/css/effect-fade";
 import "aos/dist/aos.css";
 
 import Link from "next/link";
+import Image from "next/image";
 import { ChevronLeft, ChevronRight, Clock4, Star, Tag } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -71,14 +72,19 @@ export const HeroSection = () => {
         loop={true}
         className="h-[300px] md:h-[80vh]"
       >
-        {slides.map((slide) => (
+        {slides.map((slide, index) => (
           <SwiperSlide key={slide.id}>
             <div className="relative h-full w-full">
               {/* Background Image */}
-              <img
+              <Image
                 src={slide.image}
                 alt={slide.title}
-                className="absolute inset-0 h-full w-full object-cover"
+                fill
+                priority={index === 0}
+                loading={index === 0 ? "eager" : "lazy"}
+                quality={100}
+                sizes="100vw"
+                className="object-cover"
               />
 
               {/* Dark Overlay */}

@@ -1,6 +1,5 @@
-"use client";
-
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import AOS from "aos";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -88,10 +87,14 @@ export const GallerySection = () => {
                   data-aos-delay={index * 100}
                   className={`${spanClass} relative rounded-xl overflow-hidden group cursor-pointer`}
                 >
-                  <img
+                  <Image
                     src={image.url}
                     alt={image.title || "Sundarban Gallery"}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    fill
+                    sizes="(max-width: 768px) 50vw, 25vw"
+                    quality={100}
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    loading="lazy"
                   />
                   <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/70 transition-colors duration-300" />
 

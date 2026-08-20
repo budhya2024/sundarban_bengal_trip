@@ -1,5 +1,5 @@
-"use client";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import AOS from "aos";
 import { Button } from "@/components/ui/button";
 import { Calendar, ArrowRight } from "lucide-react";
@@ -71,10 +71,14 @@ export const BlogSection = () => {
               >
                 {/* Image */}
                 <div className="relative h-48 overflow-hidden">
-                  <img
+                  <Image
                     src={post.image || "/assets/sundarban-tiger.jpeg"}
                     alt={post.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    quality={100}
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    loading="lazy"
                   />
                 </div>
 

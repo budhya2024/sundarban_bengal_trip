@@ -87,9 +87,10 @@ export const Navbar = () => {
           <Link href="/" className="z-50">
             <Image
               src="/assets/logo.png"
-              width={200}
-              height={200}
+              width={160}
+              height={50}
               alt="Logo"
+              priority
               className="w-[120px] md:w-40 h-auto"
             />
           </Link>

@@ -109,6 +109,8 @@ const ibmPlexSans = IBM_Plex_Sans({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
   variable: "--font-ibm-plex-sans",
+  display: "swap",
+  preload: true,
 });
 
 export default function RootLayout({
@@ -119,6 +121,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        <link rel="preconnect" href="https://ik.imagekit.io" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://ik.imagekit.io" />
         {/* Google Knowledge Graph + Organization Schema */}
         <script
           type="application/ld+json"
@@ -377,11 +383,11 @@ export default function RootLayout({
 
         {/* Google Analytics */}
         <Script
-          async
+          strategy="afterInteractive"
           src="https://www.googletagmanager.com/gtag/js?id=G-LL3C2G6HG8"
         />
 
-        <Script id="google-analytics">
+        <Script id="google-analytics" strategy="afterInteractive">
           {`
             window.dataLayer = window.dataLayer || [];
 

@@ -1,5 +1,5 @@
-"use client";
 import { useEffect } from "react";
+import Image from "next/image";
 import AOS from "aos";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -10,13 +10,17 @@ export const CTASection = () => {
   }, []);
 
   return (
-    <section className="relative py-10 md:py-16overflow-hidden">
+    <section className="relative py-10 md:py-16 overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0">
-        <img
-          src={"/assets/gallery-sunset.jpg"}
+        <Image
+          src="/assets/gallery-sunset.jpg"
           alt="Sundarban Sunset"
-          className="w-full h-full object-cover"
+          fill
+          sizes="100vw"
+          quality={100}
+          className="object-cover"
+          loading="lazy"
         />
         <div className="absolute inset-0 bg-black/70" />
       </div>

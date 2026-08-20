@@ -1,5 +1,4 @@
-"use client";
-
+import Image from "next/image";
 import { UsersRound } from "lucide-react";
 import {
   FaBus,
@@ -70,22 +69,31 @@ export default function TrustSection() {
 
         {/* Avatars */}
         <div className="flex -space-x-3">
-          <img
+          <Image
             src="https://i.pravatar.cc/100?img=11"
             alt="Traveler"
+            width={40}
+            height={40}
             className="h-10 w-10 rounded-full border-2 border-white object-cover"
+            loading="lazy"
           />
 
-          <img
+          <Image
             src="https://i.pravatar.cc/100?img=47"
             alt="Traveler"
+            width={40}
+            height={40}
             className="h-10 w-10 rounded-full border-2 border-white object-cover"
+            loading="lazy"
           />
 
-          <img
+          <Image
             src="https://i.pravatar.cc/100?img=68"
             alt="Traveler"
+            width={40}
+            height={40}
             className="h-10 w-10 rounded-full border-2 border-white object-cover"
+            loading="lazy"
           />
 
           {/* Badge */}

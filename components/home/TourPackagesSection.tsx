@@ -10,6 +10,7 @@ import { GiHotMeal } from "react-icons/gi";
 import { PiBinocularsFill } from "react-icons/pi";
 
 import Link from "next/link";
+import Image from "next/image";
 import { PackageValues } from "@/schemas/package.schema";
 import { getPackages } from "@/app/actions/package.actions";
 import { useRouter } from "next/navigation";
@@ -90,10 +91,14 @@ export const TourPackagesSection = () => {
 
                 {/* Image */}
                 <div className="relative h-64 overflow-hidden">
-                  <img
+                  <Image
                     src={pkg.packageImage}
                     alt={pkg.packageName}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    quality={100}
+                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                    loading="lazy"
                   />
 
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
