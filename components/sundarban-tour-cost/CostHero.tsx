@@ -5,7 +5,7 @@ export const CostHero = () => {
     <section className="relative min-h-[520px] overflow-hidden">
       <div className="absolute inset-0">
         <Image
-          src="/assets/howrah-bridge-howrah-west-bengal-city-1-hero"
+          src="/assets/howrah-bridge-howrah-west-bengal-city-1-hero.jpeg"
           alt="Sundarban Tour Cost from Kolkata"
           fill
           className="object-cover"

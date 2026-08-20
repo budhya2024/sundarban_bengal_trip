@@ -3,21 +3,105 @@
 import Image from "next/image";
 
 const row1Hotels = [
-  { id: 1, image: "/assets/sonarbanglahotel.jpg", title: "Luxury Resort View" },
-  { id: 2, image: "/assets/hotel (1).jpeg", title: "Premium Rooms" },
-  { id: 3, image: "/assets/hotel (2).jpeg", title: "Scenic Surroundings" },
-  { id: 4, image: "/assets/hotel (3).jpeg", title: "Comfortable Interiors" },
-  { id: 5, image: "/assets/hotel (4).jpeg", title: "Riverfront Ambiance" },
-  { id: 6, image: "/assets/sundarban-package-tour-from-kolkata-with-hotel-sonar-bangla.webp", title: "Sonar Bangla Stay" },
+  {
+    id: 1,
+    image: "/assets/sonarbanglahotel.jpg",
+    title: "Hotel Sonar Bangla Resort",
+    alt: "Hotel Sonar Bangla Sundarban luxury resort front view and landscaped gardens",
+  },
+  {
+    id: 2,
+    image: "/assets/sonar-bangla-hotel-cottage.webp",
+    title: "Premium Resort Cottages",
+    alt: "Hotel Sonar Bangla Sundarban premium cottage accommodation and modern architecture",
+  },
+  {
+    id: 3,
+    image: "/assets/sonar-bangla-hotel-balcony.webp",
+    title: "Riverfront Balcony View",
+    alt: "Hotel Sonar Bangla Sundarban scenic riverfront balcony view overlooking mangroves",
+  },
+  {
+    id: 4,
+    image: "/assets/sonar-bangla-hotel-grounds.jpg",
+    title: "Grand Resort Grounds",
+    alt: "Hotel Sonar Bangla Sundarban luxury resort exterior campus and pathways",
+  },
+  {
+    id: 5,
+    image: "/assets/sonar-bangla-hotel-pool.jpg",
+    title: "Pool & Courtyard",
+    alt: "Hotel Sonar Bangla Sundarban swimming pool area and relaxed open courtyard",
+  },
+  {
+    id: 6,
+    image: "/assets/hotel-room-1.jpeg",
+    title: "Deluxe AC Rooms",
+    alt: "Hotel Sonar Bangla Sundarban deluxe AC room with comfortable bedding and interior",
+  },
+  {
+    id: 7,
+    image: "/assets/hotel-garden.jpeg",
+    title: "Scenic Greenery",
+    alt: "Sundarban Sonar Bangla hotel lush green lawns and natural surroundings",
+  },
+  {
+    id: 8,
+    image: "/assets/sundarban-package-tour-from-kolkata-with-hotel-sonar-bangla.webp",
+    title: "Sonar Bangla Tour Stay",
+    alt: "Sundarban package tour from Kolkata with Hotel Sonar Bangla luxury stay",
+  },
 ];
 
 const row2Hotels = [
-  { id: 7, image: "/assets/hotel (5).jpeg", title: "Deluxe Suite" },
-  { id: 8, image: "/assets/hotel (6).jpeg", title: "Lush Gardens" },
-  { id: 9, image: "/assets/hotel (7).jpeg", title: "Spacious Lounge" },
-  { id: 10, image: "/assets/hotel (8).jpeg", title: "Modern Amenities" },
-  { id: 11, image: "/assets/hotel.jpeg", title: "Relaxing Stays" },
-  { id: 12, image: "/assets/sonarbanglahotel.jpg", title: "Hotel Sonar Bangla" },
+  {
+    id: 9,
+    image: "/assets/sonar-bangla-hotel-suite.jpg",
+    title: "River View Suites",
+    alt: "Hotel Sonar Bangla Sundarban river view luxury resort rooms",
+  },
+  {
+    id: 10,
+    image: "/assets/sonar-bangla-hotel-ambience.jpg",
+    title: "Eco Resort Ambience",
+    alt: "Hotel Sonar Bangla Sundarban eco-friendly resort ambiance and serene atmosphere",
+  },
+  {
+    id: 11,
+    image: "/assets/sonar-bangla-hotel-deluxe.jpg",
+    title: "Executive Deluxe Stay",
+    alt: "Hotel Sonar Bangla Sundarban executive deluxe accommodations and hospitality",
+  },
+  {
+    id: 12,
+    image: "/assets/sonar-bangla-hotel-dining.jpeg",
+    title: "Dining & Restaurant",
+    alt: "Hotel Sonar Bangla Sundarban dining area serving delicious Bengali tour meals",
+  },
+  {
+    id: 13,
+    image: "/assets/hotel-bedroom.jpeg",
+    title: "Comfortable Bedroom Suite",
+    alt: "Hotel Sonar Bangla Sundarban premium bedroom interior with modern amenities",
+  },
+  {
+    id: 14,
+    image: "/assets/hotel-lounge.jpeg",
+    title: "Spacious Guest Lounge",
+    alt: "Sundarban luxury hotel lounge area for family and group travelers",
+  },
+  {
+    id: 15,
+    image: "/assets/hotel-modern-room.jpeg",
+    title: "Modern Hospitality",
+    alt: "Sundarban Hotel Sonar Bangla premium room stay with clean attached washroom",
+  },
+  {
+    id: 16,
+    image: "/assets/hotel.jpeg",
+    title: "Peaceful Resort Stay",
+    alt: "Best luxury hotel in Sundarban for family weekend tours and holiday stays",
+  },
 ];
 
 // Duplicated arrays for seamless continuous looping
@@ -52,10 +136,10 @@ export default function HotelSwiper() {
                 key={`r1-${index}`}
                 className="flex-shrink-0 w-72 sm:w-80 md:w-96 group"
               >
-                <div className="relative h-44 sm:h-56 md:h-64 w-full rounded-2xl overflow-hidden shadow-sm hover:shadow-elevated border border-border/60 transition-all duration-300 bg-card">
+                <div className="relative h-44 sm:h-56 md:h-64 w-full rounded-sm overflow-hidden shadow-sm hover:shadow-elevated border border-border/60 transition-all duration-300 bg-card">
                   <Image
                     src={hotel.image}
-                    alt={hotel.title}
+                    alt={hotel.alt}
                     fill
                     sizes="(max-width: 768px) 288px, 384px"
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
@@ -79,10 +163,10 @@ export default function HotelSwiper() {
                 key={`r2-${index}`}
                 className="flex-shrink-0 w-72 sm:w-80 md:w-96 group"
               >
-                <div className="relative h-44 sm:h-56 md:h-64 w-full rounded-2xl overflow-hidden shadow-sm hover:shadow-elevated border border-border/60 transition-all duration-300 bg-card">
+                <div className="relative h-44 sm:h-56 md:h-64 w-full rounded-sm overflow-hidden shadow-sm hover:shadow-elevated border border-border/60 transition-all duration-300 bg-card">
                   <Image
                     src={hotel.image}
-                    alt={hotel.title}
+                    alt={hotel.alt}
                     fill
                     sizes="(max-width: 768px) 288px, 384px"
                     className="object-cover group-hover:scale-105 transition-transform duration-500"

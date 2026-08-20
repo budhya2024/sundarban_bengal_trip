@@ -5,7 +5,7 @@ const items = [
     title: "Family & Couples Tour",
     description:
       "Specially curated, safe, and comfortable travel packages designed for families and romantic couple getaways.",
-    image: "/assets/Couples & Groups.jpeg",
+    image: "/assets/couples-and-groups.jpeg",
     alt: "Sundarban Family & Couples Tour",
   },
   {

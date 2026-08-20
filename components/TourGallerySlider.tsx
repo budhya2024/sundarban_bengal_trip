@@ -20,11 +20,11 @@ const GALLERY_IMAGES = [
   { src: "/assets/Sundarban-tour-booking.jpeg", caption: "Book Your Sundarban Adventure" },
   { src: "/assets/sundarban-tour-cost.jpeg", caption: "Affordable Sundarban Packages" },
   { src: "/assets/bestsundarbantourpackage.jpeg", caption: "Best Sundarban Tour Package" },
-  { src: "/assets/hotel (1).jpeg", caption: "Resort Accommodation" },
-  { src: "/assets/hotel (3).jpeg", caption: "Comfortable Stay at the Resort" },
-  { src: "/assets/hotel (5).jpeg", caption: "Beautiful Resort View" },
+  { src: "/assets/hotel-room-1.jpeg", caption: "Resort Accommodation" },
+  { src: "/assets/hotel-bedroom.jpeg", caption: "Comfortable Stay at the Resort" },
+  { src: "/assets/sonar-bangla-hotel-cottage.webp", caption: "Beautiful Resort View" },
   { src: "/assets/sundarban-lunch-menu.jpeg", caption: "Freshly Prepared Tour Meals" },
-  { src: "/assets/Couples & Groups.jpeg", caption: "Couples & Group Tours Available" },
+  { src: "/assets/couples-and-groups.jpeg", caption: "Couples & Group Tours Available" },
 ];
 
 export const TourGallerySlider = () => {

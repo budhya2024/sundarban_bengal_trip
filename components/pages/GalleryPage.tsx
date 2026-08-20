@@ -39,9 +39,9 @@ const GalleryPage = ({
     selectedCategory.toLowerCase() === "all"
       ? galleryItems
       : galleryItems.filter(
-          (img) =>
-            img.category.toLowerCase() === selectedCategory.toLowerCase(),
-        );
+        (img) =>
+          img.category.toLowerCase() === selectedCategory.toLowerCase(),
+      );
 
   const visibleImages = filteredImages.slice(0, visibleCount);
 
@@ -67,11 +67,10 @@ const GalleryPage = ({
                 <button
                   key={category}
                   onClick={() => setSelectedCategory(category)}
-                  className={`px-6 py-2 rounded-full font-medium transition-all capitalize ${
-                    selectedCategory === category
-                      ? "bg-primary text-primary-foreground"
-                      : "bg-muted text-muted-foreground hover:bg-primary/10"
-                  }`}
+                  className={`px-6 py-2 rounded-full font-medium transition-all capitalize ${selectedCategory === category
+                    ? "bg-primary text-primary-foreground"
+                    : "bg-muted text-muted-foreground hover:bg-primary/10"
+                    }`}
                 >
                   {category}
                 </button>
@@ -82,13 +81,13 @@ const GalleryPage = ({
           {/* Grid */}
           {visibleImages.length > 0 ? (
             <>
-              <div className="grid  grid-cols-2 md:grid-cols-2 xl:grid-cols-4 gap-3 md:gap-6">
+              <div className="grid  grid-cols-2 md:grid-cols-2 xl:grid-cols-4 gap-2 md:gap-4">
                 {visibleImages.map((image, index) => (
                   <div
                     key={index}
                     data-aos="fade-up"
                     data-aos-delay={index * 50}
-                    className="relative aspect-[4/3] rounded-xl overflow-hidden group cursor-pointer"
+                    className="relative aspect-[4/3] rounded-sm  overflow-hidden group cursor-pointer"
                     onClick={() => setLightboxImage(image.url)}
                   >
                     <img
@@ -119,7 +118,7 @@ const GalleryPage = ({
                     onClick={() =>
                       setVisibleCount((prev) => prev + ITEMS_PER_LOAD)
                     }
-                    className="px-8 py-3 rounded-lg bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition"
+                    className="px-8 py-3 rounded-sm bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition"
                   >
                     Load More
                   </button>

@@ -19,18 +19,18 @@ const slides = [
     highlight: "Royal Bengal Tiger",
     description:
       "Witness the awe-inspiring Royal Bengal Tiger in its natural habitat. The Sundarbans is home to the largest population of these magnificent creatures.",
-    image: "/assets/gallery-tiger.jp",
+    image: "/assets/tiger-photo.jpg",
     stats: { count: "400+", label: "Tigers in Wild" },
   },
   {
     id: 2,
-    badge: "Ancient Predator",
+    badge: "Mangrove Safari",
     title: "Encounter the Mighty",
-    highlight: "Saltwater Crocodile",
+    highlight: "Sundarban Delta",
     description:
-      "Spot the powerful saltwater crocodile basking along the riverbanks. These ancient reptiles have ruled these waters for millions of years.",
-    image: "/assets/gallery-crocodile.jpg",
-    stats: { count: "2000+", label: "Crocodiles" },
+      "Cruise through the world's largest mangrove delta, exploring mysterious creeks, winding rivers, and rich wild ecosystems.",
+    image: "/assets/mangrove.jpeg",
+    stats: { count: "10,000+", label: "Sq Km Area" },
   },
   {
     id: 3,
@@ -49,7 +49,7 @@ const slides = [
     highlight: "Exotic Birds",
     description:
       "The Sundarbans hosts over 300 species of birds. From kingfishers to white-bellied sea eagles, every turn reveals a new winged wonder.",
-    image: "/assets/2f29fc56f3eac69861f9fc597d5fa775.gif",
+    image: "/assets/gallery-bird.jpg",
     stats: { count: "300+", label: "Bird Species" },
   },
 ];
