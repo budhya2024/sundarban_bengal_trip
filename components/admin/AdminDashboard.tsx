@@ -171,7 +171,7 @@ function StatCard({ label, value, icon: Icon, color, isStatus }: any) {
     <div className="bg-white border border-slate-100 rounded-2xl p-6 shadow-sm hover:shadow-md transition-all group">
       <div className="flex flex-col gap-4">
         <div
-          className={`w-10 h-10 rounded-xl flex items-center justify-center text-white shadow-lg ${color} transition-transform group-hover:scale-110`}
+          className={`w-10 h-10 rounded-xl flex items-center justify-center text-white shadow-lg ${color} transition-transform group-hover:scale-105`}
         >
           <Icon className="w-5 h-5" />
         </div>

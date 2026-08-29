@@ -101,7 +101,7 @@ const ContactPage = ({ data }: { data: ContactPageValues | null }) => {
                 className="bg-card rounded-2xl p-6 shadow-elevated hover:shadow-glow transition-all duration-300 border border-border group"
               >
                 <div
-                  className={`w-14 h-14 rounded-xl ${card.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}
+                  className={`w-14 h-14 rounded-xl ${card.color} flex items-center justify-center mb-4 group-hover:scale-105 transition-transform duration-300`}
                 >
                   <card.icon className="w-7 h-7 text-primary-foreground" />
                 </div>

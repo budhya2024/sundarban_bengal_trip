@@ -45,7 +45,7 @@ export const BlogSidebar = ({ latestPosts }: BlogSidebarProps) => {
                 <img
                   src={post.image || "/assets/placeholder.svg"}
                   alt={post.title}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
               </div>
               <div className="flex-1 min-w-0">

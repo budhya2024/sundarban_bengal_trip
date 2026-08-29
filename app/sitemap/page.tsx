@@ -117,6 +117,26 @@ const SitemapPage = () => {
                     Sundarban 1 Night 2 Days Package From Kolkata
                   </Link>
                 </li>
+                <li>
+                  <Link href="/sundarban-west-bengal-tourism" className="text-primary hover:text-secondary font-semibold transition-colors duration-200">
+                    Sundarban West Bengal Tourism
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/places-to-visit-in-sundarban" className="text-primary hover:text-secondary font-semibold transition-colors duration-200">
+                    Places to Visit in Sundarban
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/sundarban-national-park-tour" className="text-primary hover:text-secondary font-semibold transition-colors duration-200">
+                    Sundarban National Park Tour
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/best-sundarban-tour-in-2026" className="text-primary hover:text-secondary font-semibold transition-colors duration-200">
+                    Best Sundarban Tour in 2026
+                  </Link>
+                </li>
               </ul>
             </div>
           </div>

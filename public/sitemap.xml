@@ -86,4 +86,28 @@
     <priority>0.91</priority>
   </url>
 
+  <url>
+    <loc>https://sundarbanbengaltrip.com/sundarban-west-bengal-tourism</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
+
+  <url>
+    <loc>https://sundarbanbengaltrip.com/places-to-visit-in-sundarban</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
+
+  <url>
+    <loc>https://sundarbanbengaltrip.com/sundarban-national-park-tour</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
+
+  <url>
+    <loc>https://sundarbanbengaltrip.com/best-sundarban-tour-in-2026</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
+
 </urlset>

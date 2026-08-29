@@ -236,6 +236,42 @@ export const Footer = () => {
           >
             Sundarban Tour from Kolkata
           </Link>
+
+          <span className="text-primary-foreground/40">|</span>
+
+          <Link
+            href="/sundarban-west-bengal-tourism"
+            className="text-primary-foreground/80 hover:text-secondary transition-colors"
+          >
+            Sundarban West Bengal Tourism
+          </Link>
+
+          <span className="text-primary-foreground/40">|</span>
+
+          <Link
+            href="/places-to-visit-in-sundarban"
+            className="text-primary-foreground/80 hover:text-secondary transition-colors"
+          >
+            Places to Visit in Sundarban
+          </Link>
+
+          <span className="text-primary-foreground/40">|</span>
+
+          <Link
+            href="/sundarban-national-park-tour"
+            className="text-primary-foreground/80 hover:text-secondary transition-colors"
+          >
+            Sundarban National Park Tour
+          </Link>
+
+          <span className="text-primary-foreground/40">|</span>
+
+          <Link
+            href="/best-sundarban-tour-in-2026"
+            className="text-primary-foreground/80 hover:text-secondary transition-colors"
+          >
+            Best Sundarban Tour in 2026
+          </Link>
         </div>
 
         {/* Bottom Bar */}
