@@ -1,4 +1,4 @@
-import { TreePine, Phone, Mail, MapPin, PhoneIcon } from "lucide-react";
+import { TreePine, Phone, Mail, MapPin, PhoneIcon, Handshake, ExternalLink } from "lucide-react";
 import {
   FacebookIcon,
   InstagramIcon,
@@ -272,6 +272,47 @@ export const Footer = () => {
           >
             Best Sundarban Tour in 2026
           </Link>
+        </div>
+
+        {/* Our Partner Section */}
+        <div className="mt-8 pt-8 border-t border-primary-foreground/20">
+          <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-5 sm:gap-6 p-5 sm:p-6 bg-primary-foreground/5 border border-primary-foreground/15 backdrop-blur-sm">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6">
+              {/* Partner Logo */}
+              <div className="bg-white/95 p-2 sm:p-2.5 border border-white/20 shrink-0 flex items-center justify-center shadow-sm">
+                <Image
+                  src="/assets/sundarban-bengal-tourism-logo.png"
+                  alt="Sundarban Bengal Tourism Logo"
+                  width={150}
+                  height={50}
+                  className="h-8 sm:h-10 w-auto object-contain"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <div className="flex items-center gap-2 text-secondary font-semibold text-xs md:text-sm uppercase tracking-widest">
+                  <Handshake className="w-4 h-4" />
+                  <span>Our Partner</span>
+                </div>
+                <h4 className="text-base md:text-lg font-semibold text-primary-foreground">
+                  Sundarban Bengal Tourism
+                </h4>
+                <p className="text-xs md:text-sm text-primary-foreground/75 leading-relaxed">
+                  Our trusted travel &amp; hospitality partner for premium Sundarban tours, hotel stays &amp; river boat safaris.
+                </p>
+              </div>
+            </div>
+
+            <a
+              href="https://www.sundarbanbengaltourism.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-primary-foreground/10 hover:bg-secondary hover:text-secondary-foreground text-primary-foreground font-semibold text-sm transition-all duration-300 border border-primary-foreground/20 hover:border-transparent group shrink-0 w-full sm:w-auto justify-center"
+            >
+              <span>Visit Website</span>
+              <ExternalLink className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </a>
+          </div>
         </div>
 
         {/* Bottom Bar */}

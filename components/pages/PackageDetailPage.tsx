@@ -9,6 +9,7 @@ import { PopularPackagesSection } from "@/components/PopularPackagesSection";
 import { Button } from "@/components/ui/button";
 import {
   Check,
+  X,
   Clock,
   Users,
   MapPin,
@@ -20,6 +21,8 @@ import {
   CupSoda,
   Moon,
   Utensils,
+  Info,
+  ShieldCheck,
 } from "lucide-react";
 import Link from "next/link";
 import { PackageValues } from "@/schemas/package.schema";
@@ -220,41 +223,171 @@ const PackageDetailsPage = ({
                 </div>
               </div>
 
-              {/* Includes/Excludes */}
-              <div data-aos="fade-up" className="grid md:grid-cols-2 gap-8">
-                <div>
-                  <h3 className="font-display text-xl font-bold text-foreground mb-4">
-                    What's Included
-                  </h3>
-                  <ul className="space-y-2">
+              {/* What's Included */}
+              <div data-aos="fade-up">
+                <h3 className="font-display text-xl font-bold text-foreground mb-4">
+                  What's Included
+                </h3>
+                <div className="bg-card border border-border p-6 shadow-soft">
+                  <ul className="space-y-3">
                     {data.inclusions.map((item, index) => (
                       <li
                         key={index}
-                        className="flex items-center gap-2 text-muted-foreground"
+                        className="flex items-start gap-2.5 text-sm md:text-base text-muted-foreground"
                       >
-                        <Check className="w-4 h-4 text-primary" />
-                        {item.value}
+                        <Check className="w-4 h-4 md:w-5 md:h-5 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
+                        <span className="leading-relaxed">{item.value}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
-                <div>
-                  <h3 className="font-display text-xl font-bold text-foreground mb-4">
-                    What's Not Included
-                  </h3>
-                  <ul className="space-y-2">
+              </div>
+
+              {/* What's Not Included */}
+              <div data-aos="fade-up">
+                <h3 className="font-display text-xl font-bold text-foreground mb-4">
+                  What's Not Included
+                </h3>
+                <div className="bg-card border border-border p-6 shadow-soft">
+                  <ul className="space-y-3">
                     {data.exclusions.map((item, index) => (
                       <li
                         key={index}
-                        className="flex items-center gap-2 text-muted-foreground"
+                        className="flex items-start gap-2.5 text-sm md:text-base text-muted-foreground"
                       >
-                        <span className="w-4 h-4 flex items-center justify-center text-destructive">
-                          ×
-                        </span>
-                        {item.value}
+                        <X className="w-4 h-4 md:w-5 md:h-5 text-red-500 shrink-0 mt-0.5" />
+                        <span className="leading-relaxed">{item.value}</span>
                       </li>
                     ))}
                   </ul>
+                </div>
+              </div>
+
+              {/* Things to Carry */}
+              <div data-aos="fade-up">
+                <h3 className="font-display text-xl font-bold text-foreground mb-4">
+                  Things to Carry
+                </h3>
+                <div className="bg-card border border-border p-6 shadow-soft space-y-4">
+                  <ul className="space-y-3">
+                    {[
+                      "Specific Medicine If You Need.",
+                      "Must carry valid id proof during travel",
+                      "Foreigners must carry their original passport",
+                      "Camera / binoculars if you want to view distant animal & landscape",
+                      "Light baggage that is easy to carry",
+                      "Comfortable footwear",
+                      "Carry sunglasses / hat cap / sun tan lotions to avoid sun-burn",
+                      "Preferably Carry Cash As Possibility of Accessing ATM Is tough.",
+                    ].map((item, index) => (
+                      <li
+                        key={index}
+                        className="flex items-start gap-2.5 text-sm md:text-base text-muted-foreground"
+                      >
+                        <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2 shrink-0" />
+                        <span className="leading-relaxed">{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <div className="border-t border-border/60 pt-3.5 flex items-start gap-2.5 text-xs md:text-sm text-muted-foreground">
+                    <Info className="w-4 h-4 text-secondary shrink-0 mt-0.5" />
+                    <span>
+                      <strong className="text-foreground font-medium">Important ATM Notice:</strong> Only SBI ATM Is Available At Gosaba. Please carry sufficient cash for local expenses.
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Child Policy */}
+              <div data-aos="fade-up" className="space-y-4">
+                <h3 className="font-display text-xl font-bold text-foreground">
+                  Child Policy
+                </h3>
+                <div className="grid md:grid-cols-3 gap-4">
+                  {/* Card 1: Below 5 Years - Green */}
+                  <div className="bg-card border-2 border-green-600 p-5 shadow-soft">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-sm md:text-base font-semibold text-green-600">
+                        Below 5 Years
+                      </span>
+                      <span className="text-sm md:text-base font-bold text-green-600">
+                        Free
+                      </span>
+                    </div>
+                    <h4 className="text-base md:text-lg font-bold text-foreground mb-1.5">
+                      Complimentary Stay
+                    </h4>
+                    <p className="text-sm  text-muted-foreground leading-relaxed">
+                      Free of charge when sharing bed and seating with parents.
+                    </p>
+                  </div>
+
+                  {/* Card 2: 5 to 8 Years - Orange */}
+                  <div className="bg-card border-2 border-orange-500 p-5 shadow-soft">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-sm md:text-base font-semibold text-orange-500">
+                        5 to 8 Years
+                      </span>
+                      <span className="text-sm md:text-base font-bold text-orange-500">
+                        50% Charge
+                      </span>
+                    </div>
+                    <h4 className="text-base md:text-lg font-bold text-foreground mb-1.5">
+                      Half Package Cost
+                    </h4>
+                    <p className="text-sm  text-muted-foreground leading-relaxed">
+                      Charged at 50% rate with dedicated seat and meals included.
+                    </p>
+                  </div>
+
+                  {/* Card 3: 9+ Years - Red */}
+                  <div className="bg-card border-2 border-red-500 p-5 shadow-soft">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-sm md:text-base font-semibold text-red-500">
+                        9+ Years
+                      </span>
+                      <span className="text-sm md:text-base font-bold text-red-500">
+                        Full Charge
+                      </span>
+                    </div>
+                    <h4 className="text-base md:text-lg font-bold text-foreground mb-1.5">
+                      Full Adult Rate
+                    </h4>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      Considered as adult guest with separate bed and full services.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="bg-muted/40 px-4 py-2.5 border border-border text-xs md:text-sm text-muted-foreground flex items-center gap-2">
+                  <ShieldCheck className="w-4 h-4 text-primary shrink-0" />
+                  <span>
+                    Please carry valid age proof (Birth Certificate or Aadhaar Card) for children during the tour.
+                  </span>
+                </div>
+              </div>
+
+              {/* Important Note */}
+              <div data-aos="fade-up">
+                <h3 className="font-display text-xl font-bold text-foreground mb-4">
+                  Important Note
+                </h3>
+                <div className="bg-card border border-border p-6 shadow-soft space-y-3">
+                  {[
+                    "Itinerary / tour timings may be changed depending on the weather conditions.",
+                    "Food menu may be changed due to availability.",
+                    "Hotel / rooms may be changed due to availability / technical issues.",
+                    "Vehicle / boat may vary due to weather conditions / technical issues concerning the safety of our guests.",
+                  ].map((note, index) => (
+                    <div
+                      key={index}
+                      className="flex items-start gap-3 text-sm md:text-base text-muted-foreground"
+                    >
+                      <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2 shrink-0" />
+                      <span className="leading-relaxed">{note}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
