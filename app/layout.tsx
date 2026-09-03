@@ -133,7 +133,7 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@graph": [
                 {
-                  "@type": "Organization",
+                  "@type": ["TravelAgency", "Organization"],
                   "@id": "https://sundarbanbengaltrip.com/#organization",
                   "name": "Sundarban Bengal Trip",
                   "alternateName": [
@@ -144,67 +144,15 @@ export default function RootLayout({
                   "url": "https://sundarbanbengaltrip.com/",
                   "logo": {
                     "@type": "ImageObject",
-                    "url": "https://sundarbanbengaltrip.com/assets/logo.png"
+                    "@id": "https://sundarbanbengaltrip.com/#logo",
+                    "url": "https://sundarbanbengaltrip.com/logo.png",
+                    "caption": "Sundarban Bengal Trip Logo"
                   },
-                  "image": "https://sundarbanbengaltrip.com/assets/og-image.png",
+                  "image": "https://sundarbanbengaltrip.com/og-image.jpg",
                   "description": "Sundarban Bengal Trip is a trusted travel agency in West Bengal offering affordable Sundarban tour packages from Kolkata including boat safari, resort stay, jungle exploration and guided tours.",
                   "email": "sundarbanbengaltrip@gmail.com",
                   "telephone": "+91-7074432628",
                   "foundingDate": "2024",
-                  "priceRange": "₹₹",
-                  "founder": {
-                    "@type": "Person",
-                    "name": "Sundarban Bengal Trip Team"
-                  },
-                  "knowsAbout": [
-                    "Sundarban Tour",
-                    "Sundarban Tour Package",
-                    "Sundarban Boat Safari",
-                    "Sundarban Jungle Tour",
-                    "Sundarban Tour From Kolkata"
-                  ],
-                  "keywords": [
-                    "Sundarban Tour",
-                    "Sundarban Tour Package",
-                    "Sundarban Travel Agency",
-                    "Sundarban Package From Kolkata"
-                  ],
-                  "areaServed": {
-                    "@type": "State",
-                    "name": "West Bengal"
-                  },
-                  "address": {
-                    "@type": "PostalAddress",
-                    "streetAddress": "Nath Para, Gosaba",
-                    "addressLocality": "South 24 Parganas",
-                    "addressRegion": "West Bengal",
-                    "postalCode": "743370",
-                    "addressCountry": "IN"
-                  },
-                  "contactPoint": {
-                    "@type": "ContactPoint",
-                    "telephone": "+91-7074432628",
-                    "contactType": "customer support",
-                    "areaServed": "IN",
-                    "availableLanguage": [
-                      "English",
-                      "Bengali",
-                      "Hindi"
-                    ]
-                  },
-                  "sameAs": [
-                    "https://www.instagram.com/sundarbanbengaltrip/",
-                    "https://www.facebook.com/profile.php?id=61588168291064"
-                  ]
-                },
-                {
-                  "@type": "TravelAgency",
-                  "@id": "https://sundarbanbengaltrip.com/#travelagency",
-                  "name": "Sundarban Bengal Trip",
-                  "url": "https://sundarbanbengaltrip.com/",
-                  "telephone": "+91-7074432628",
-                  "email": "sundarbanbengaltrip@gmail.com",
-                  "image": "https://sundarbanbengaltrip.com/assets/og-image.png",
                   "priceRange": "₹₹",
                   "address": {
                     "@type": "PostalAddress",
@@ -216,8 +164,8 @@ export default function RootLayout({
                   },
                   "geo": {
                     "@type": "GeoCoordinates",
-                    "latitude": "22.1650",
-                    "longitude": "88.8080"
+                    "latitude": 22.165,
+                    "longitude": 88.808
                   },
                   "openingHoursSpecification": [
                     {
@@ -234,6 +182,20 @@ export default function RootLayout({
                       "opens": "08:00",
                       "closes": "22:00"
                     }
+                  ],
+                  "contactPoint": {
+                    "@type": "ContactPoint",
+                    "telephone": "+91-7074432628",
+                    "contactType": "customer service",
+                    "areaServed": "IN",
+                    "availableLanguage": ["English", "Bengali", "Hindi"]
+                  },
+                  "knowsAbout": [
+                    "Sundarban Tour",
+                    "Sundarban Tour Package",
+                    "Sundarban Boat Safari",
+                    "Sundarban Jungle Tour",
+                    "Sundarban Tour From Kolkata"
                   ],
                   "sameAs": [
                     "https://www.instagram.com/sundarbanbengaltrip/",
