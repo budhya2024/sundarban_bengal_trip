@@ -37,7 +37,7 @@ export default async function PackageListingPage() {
         </div>
         <Button
           asChild
-          className="bg-emerald-700 hover:bg-emerald-800 text-white rounded-lg h-9 shadow-sm"
+          className="bg-emerald-700 hover:bg-emerald-800 text-white rounded-[4px] h-9 shadow-sm"
         >
           <Link href="/admin/package/new">
             <Plus className="mr-2 h-4 w-4" /> Add New Package

@@ -202,7 +202,7 @@ export function PackageRow({ pkg }: { pkg: any }) {
                 <button
                   onClick={() => setShowDeleteModal(false)}
                   disabled={isDeleting}
-                  className="px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 text-sm font-medium transition-colors disabled:opacity-50"
+                  className="px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-[4px] hover:bg-gray-50 text-sm font-medium transition-colors disabled:opacity-50"
                 >
                   Cancel
                 </button>
@@ -210,7 +210,7 @@ export function PackageRow({ pkg }: { pkg: any }) {
                 <button
                   onClick={handleDeleteConfirm}
                   disabled={isDeleting}
-                  className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 text-sm font-medium transition-colors flex items-center gap-2 shadow-sm disabled:opacity-70"
+                  className="px-4 py-2 bg-red-600 text-white rounded-[4px] hover:bg-red-700 text-sm font-medium transition-colors flex items-center gap-2 shadow-sm disabled:opacity-70"
                 >
                   {isDeleting ? (
                     <Loader2 className="animate-spin" size={16} />

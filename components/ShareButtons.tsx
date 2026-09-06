@@ -64,7 +64,7 @@ export default function ShareButtons({ title }: { title?: string }) {
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`Share on ${social.label}`}
-            className={`w-10 h-10 flex items-center justify-center text-white transition-all rounded-full hover:scale-110 active:scale-90 duration-300 ${social.bgColor} shadow-sm`}
+            className={`w-10 h-10 flex items-center justify-center text-white transition-all rounded-[4px] hover:scale-110 active:scale-90 duration-300 ${social.bgColor} shadow-sm`}
           >
             <social.Icon className="w-4 h-4" />
           </a>
@@ -73,7 +73,7 @@ export default function ShareButtons({ title }: { title?: string }) {
         <button
           onClick={copyToClipboard}
           aria-label="Copy Link"
-          className="w-10 h-10 flex items-center justify-center bg-slate-100 text-slate-600 transition-all rounded-full hover:bg-emerald-600 hover:text-white hover:scale-110 active:scale-90 duration-300 border border-slate-200"
+          className="w-10 h-10 flex items-center justify-center bg-slate-100 text-slate-600 transition-all rounded-[4px] hover:bg-emerald-600 hover:text-white hover:scale-110 active:scale-90 duration-300 border border-slate-200"
         >
           <Link2 className="w-4 h-4" />
         </button>

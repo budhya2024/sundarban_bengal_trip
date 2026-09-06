@@ -262,7 +262,7 @@ export default function ContactAdminForm({ initialData }: ContactAdminProps) {
                         <button
                           type="button"
                           onClick={handleRemoveImage}
-                          className="absolute top-2 right-2 p-1 bg-red-500 text-white rounded-full hover:bg-red-600 transition-colors"
+                          className="absolute top-2 right-2 p-1 bg-red-500 text-white rounded-[4px] hover:bg-red-600 transition-colors"
                         >
                           <X size={16} />
                         </button>

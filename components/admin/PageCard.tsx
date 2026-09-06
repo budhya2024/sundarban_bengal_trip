@@ -44,7 +44,7 @@ export function PageCard({
               Updated: {lastUpdated}
             </p>
           )}
-          <Button asChild variant="default" size="sm" className="ml-auto rounded-sm text-white">
+          <Button asChild variant="default" size="sm" className="ml-auto rounded-[4px] text-white">
             <Link href={href}>Edit Content</Link>
           </Button>
         </div>

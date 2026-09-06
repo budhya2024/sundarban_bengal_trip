@@ -249,7 +249,7 @@ export const BookingModal = ({
                               onClick={() => setCalOpen((o) => !o)}
                               className={`
                                 w-full h-12 pl-12 pr-4 text-left
-                                border border-input rounded-sm bg-background
+                                border border-input rounded-[4px] bg-background
                                 text-sm focus:outline-none focus:ring-0
                                 ${field.value ? "text-foreground" : "text-muted-foreground"}
                               `}

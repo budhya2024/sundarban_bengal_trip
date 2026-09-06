@@ -43,7 +43,7 @@ export const PackageHero = () => {
               >
                 <Link
                   href="/packages"
-                  className="group inline-flex w-full items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold"
+                  className="group inline-flex w-full items-center justify-center gap-2 rounded-[4px] px-5 py-3 text-sm font-semibold"
                 >
                   Book Your Kolkata to Sundarban Tour
                 </Link>

@@ -128,7 +128,7 @@ function DayActivities({
             type="button"
             variant="ghost"
             size="icon"
-            className="absolute -top-2 -right-2 h-7 w-7 rounded-full bg-white border border-red-100 text-red-500 opacity-0 group-hover/event:opacity-100 transition-opacity shadow-sm hover:bg-red-50"
+            className="absolute -top-2 -right-2 h-7 w-7 rounded-[4px] bg-white border border-red-100 text-red-500 opacity-0 group-hover/event:opacity-100 transition-opacity shadow-sm hover:bg-red-50"
             onClick={() => remove(index)}
           >
             <Trash2 size={12} />
@@ -410,7 +410,7 @@ export default function PackageForm({
                             type="button"
                             variant="destructive"
                             size="icon"
-                            className="absolute top-2 right-2 h-8 w-8 rounded-full"
+                            className="absolute top-2 right-2 h-8 w-8 rounded-[4px]"
                             onClick={() => handleRemoveImage("heroImage")}
                           >
                             <X size={14} />
@@ -516,7 +516,7 @@ export default function PackageForm({
                             type="button"
                             variant="destructive"
                             size="icon"
-                            className="absolute top-2 right-2 h-8 w-8 rounded-full"
+                            className="absolute top-2 right-2 h-8 w-8 rounded-[4px]"
                             onClick={() => handleRemoveImage("packageImage")}
                           >
                             <X size={14} />

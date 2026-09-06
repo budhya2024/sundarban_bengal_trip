@@ -166,7 +166,7 @@ export const TourPackagesSection = () => {
                       <BookingModal
                         packageName={pkg.packageName}
                         triggerLabel="Book Now"
-                        triggerClassName="text-sm rounded-xl font-medium w-full"
+                        triggerClassName="text-sm rounded-[4px] font-medium w-full"
                       />
                     </div>
 
@@ -174,7 +174,7 @@ export const TourPackagesSection = () => {
                     <div className=" w-full">
                       <Button
                         variant="outline"
-                        className="h-12 px-6 rounded-xl font-medium w-full"
+                        className="h-12 px-6 rounded-[4px] font-medium w-full"
                         onClick={() => router.push(`/packages/${pkg.key}`)}
                       >
                         View Details

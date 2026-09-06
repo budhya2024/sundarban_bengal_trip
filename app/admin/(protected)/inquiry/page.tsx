@@ -94,7 +94,7 @@ const InquiriesPage = async ({
             <div className="flex items-center gap-2">
               <Link
                 href={`?page=${currentPage - 1}`}
-                className={`p-2 rounded-lg border bg-white transition-all ${
+                className={`p-2 rounded-[4px] border bg-white transition-all ${
                   currentPage <= 1
                     ? "pointer-events-none opacity-30"
                     : "hover:border-emerald-200 text-emerald-600"
@@ -104,7 +104,7 @@ const InquiriesPage = async ({
               </Link>
               <Link
                 href={`?page=${currentPage + 1}`}
-                className={`p-2 rounded-lg border bg-white transition-all ${
+                className={`p-2 rounded-[4px] border bg-white transition-all ${
                   currentPage >= totalPages
                     ? "pointer-events-none opacity-30"
                     : "hover:border-emerald-200 text-emerald-600"

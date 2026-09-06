@@ -58,7 +58,7 @@ export const BookingContact = () => {
             <Button variant="hero" size="lg" asChild className="mx-auto">
               <Link
                 href="/contact"
-                className="inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold"
+                className="inline-flex items-center justify-center gap-2 rounded-[4px] px-6 py-3 text-sm font-semibold"
               >
                 Contact Us Now
                 <ArrowRight className="w-4 h-4" />

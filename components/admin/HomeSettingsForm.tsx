@@ -235,7 +235,7 @@ export default function HomeSettingsForm({
           </div>
           <Button
             disabled={isPending || isUploading || uploadingIndex !== null}
-            className="bg-emerald-700 hover:bg-emerald-800 text-white shadow-lg px-8 rounded-sm"
+            className="bg-emerald-700 hover:bg-emerald-800 text-white shadow-lg px-8 rounded-[4px]"
           >
             {isPending ? (
               <Clock className="mr-2 h-4 w-4 animate-spin" />
@@ -282,7 +282,7 @@ export default function HomeSettingsForm({
                             type="button"
                             variant="destructive"
                             size="icon"
-                            className="absolute top-2 right-2 h-8 w-8 rounded-full"
+                            className="absolute top-2 right-2 h-8 w-8 rounded-[4px]"
                             onClick={handleRemoveHero}
                           >
                             <X size={14} />

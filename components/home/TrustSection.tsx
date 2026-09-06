@@ -55,7 +55,7 @@ export default function TrustSection() {
   ];
 
   return (
-    <div className=" container -mt-24 z-20 relative mb-5">
+    <div className=" container  -mt-8 md:-mt-24 z-20 relative mb-5">
       <div className="inline-flex items-center gap-4 rounded-t-md  bg-gradient-to-r from-[#002a13] to-[#03664d] px-5 pt-3 pb-5 l ">
         {/* Icon */}
         <div className="text-white">
@@ -108,9 +108,8 @@ export default function TrustSection() {
           {features.map((item, index) => (
             <div
               key={index}
-              className={`flex flex-col items-center justify-center px-1 sm:px-4 py-3 sm:py-7 text-center ${
-                index !== features.length - 1 ? "border-r border-gray-200" : ""
-              }`}
+              className={`flex flex-col items-center justify-center px-1 sm:px-4 py-3 sm:py-7 text-center ${index !== features.length - 1 ? "border-r border-gray-200" : ""
+                }`}
             >
               <div className="mb-2 md:mb-3 text-[#003c2f]">{item.icon}</div>
 

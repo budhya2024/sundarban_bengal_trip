@@ -152,7 +152,7 @@ const Packages = ({
                     <div className="grid grid-cols-2 gap-4 w-full lg:w-auto">
                       <Button
                         variant="outline"
-                        className="h-12 px-6 rounded-xl font-medium"
+                        className="h-12 px-6 rounded-[4px] font-medium"
                         onClick={() => router.push(`/packages/${pkg.key}`)}
                       >
                         View Details
@@ -163,7 +163,7 @@ const Packages = ({
                           packageName={pkg.packageName}
                           triggerLabel="Book Now"
                           triggerVariant="outline"
-                          triggerClassName="text-base rounded-xl font-medium w-full lg:w-auto"
+                          triggerClassName="text-base rounded-[4px] font-medium w-full lg:w-auto"
                         />
                       </div>
                     </div>

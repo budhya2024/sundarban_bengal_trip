@@ -8,6 +8,7 @@ import { Footer } from "@/components/Footer";
 import { HomeSettingsValues } from "@/schemas/homeSettings.schema";
 import { getHomeSettings } from "@/app/actions/home.actions";
 import { HeroSection } from "@/components/home/HeroSection";
+import { DurgaPujaHeroSlider } from "@/components/home/DurgaPujaHeroSlider";
 import { BookingForm } from "@/components/home/BookingForm";
 import { AboutSection } from "@/components/home/WhyChooseSection";
 import { ExploreSundarbanSection } from "@/components/home/ExploreSundarbanSection";
@@ -53,17 +54,22 @@ const Index = () => {
   return (
     <main className="min-h-screen">
       <Navbar />
-      <HeroSection />
+      {/* Previous Hero Section */}
+      {/* <HeroSection /> */}
+
+      {/* Durga Puja Special Hero Slider */}
+      <DurgaPujaHeroSlider />
+
       <TrustSection />
       <BookingForm />
       <TourPackagesSection />
       <TravelExperience />
-      <HotelMenu />
+      <HotelSwiper />
+
       <AboutSection />
       <ExploreSundarbanSection />
-
       <GallerySection />
-      <HotelSwiper />
+      <HotelMenu />
       <TestimonialsSection
         data={homeSetting?.testimonials || []}
         loading={loading}

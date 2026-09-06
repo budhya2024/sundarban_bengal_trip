@@ -67,7 +67,7 @@ const GalleryPage = ({
                 <button
                   key={category}
                   onClick={() => setSelectedCategory(category)}
-                  className={`px-6 py-2 rounded-full font-medium transition-all capitalize ${selectedCategory === category
+                  className={`px-6 py-2 rounded-[4px] font-medium transition-all capitalize ${selectedCategory === category
                     ? "bg-primary text-primary-foreground"
                     : "bg-muted text-muted-foreground hover:bg-primary/10"
                     }`}
@@ -166,7 +166,7 @@ const GalleryPage = ({
           onClick={() => setLightboxImage(null)}
         >
           <button
-            className="absolute top-4 right-4 p-2 text-white hover:bg-white/10 rounded-full"
+            className="absolute top-4 right-4 p-2 text-white hover:bg-white/10 rounded-[4px]"
             onClick={() => setLightboxImage(null)}
           >
             <X className="w-8 h-8" />

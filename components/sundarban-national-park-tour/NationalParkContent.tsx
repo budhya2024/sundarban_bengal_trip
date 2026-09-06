@@ -42,7 +42,7 @@ export const NationalParkContent: React.FC = () => {
                   variant="default"
                   size="default"
                   asChild
-                  className="bg-secondary hover:bg-primary text-white font-semibold px-6 rounded-sm shadow-sm"
+                  className="bg-secondary hover:bg-primary text-white font-semibold px-6 rounded-[4px] shadow-sm"
                 >
                   <Link href="/packages" className="flex items-center gap-2">
                     <span>Explore Tours</span>

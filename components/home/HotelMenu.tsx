@@ -162,7 +162,7 @@ export default function HotelMenu() {
       <section className="md:hidden py-10 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-6">
-            <span className="text-secondary font-medium text-xs uppercase tracking-wider">
+            <span className="text-secondary font-medium text-sm uppercase tracking-wider">
               Our Special Menu
             </span>
 

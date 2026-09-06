@@ -74,11 +74,15 @@ export const Navbar = () => {
     }
   }, [isOpen]);
 
+  const isHome = pathname === "/";
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
         ? "bg-background/95 backdrop-blur-md shadow-soft"
-        : "bg-transparent"
+        : isHome
+          ? "bg-background/80 backdrop-blur-sm"
+          : "bg-transparent"
         }`}
     >
       <div className="container">
@@ -106,7 +110,7 @@ export const Navbar = () => {
                   onMouseLeave={() => setIsDropdownOpen(false)}
                 >
                   <button
-                    className={`flex items-center gap-1 font-medium transition ${isScrolled
+                    className={`flex items-center gap-1 font-medium transition ${isScrolled || isHome
                       ? "text-foreground hover:text-secondary"
                       : "text-white hover:text-white/80"
                       }`}
@@ -163,7 +167,7 @@ export const Navbar = () => {
                 <Link
                   key={link.path}
                   href={link.path}
-                  className={`font-medium transition ${isScrolled
+                  className={`font-medium transition ${isScrolled || isHome
                     ? "text-foreground hover:text-secondary"
                     : "text-white hover:text-white/80"
                     }`}

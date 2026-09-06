@@ -37,7 +37,7 @@ export const Footer = () => {
               href="https://maps.app.goo.gl/BmREXPxvGBPRn7eT8?g_st=awb"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-primary-foreground text-primary px-4 py-2 rounded-lg hover:bg-secondary hover:text-secondary-foreground transition-colors mb-4"
+              className="inline-flex items-center gap-2 bg-primary-foreground text-primary px-4 py-2 rounded-[4px] hover:bg-secondary hover:text-secondary-foreground transition-colors mb-4"
             >
               <GoogleIcon className="w-5 h-5" />
               <span className="font-medium text-sm">Review us on Google</span>
@@ -49,7 +49,7 @@ export const Footer = () => {
                 href="https://www.facebook.com/profile.php?id=61588168291064"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 rounded-full bg-primary-foreground/10 hover:bg-blue-600 transition-colors"
+                className="p-2 rounded-[4px] bg-primary-foreground/10 hover:bg-blue-600 transition-colors"
               >
                 <FacebookIcon className="w-5 h-5 fill-current" />
               </a>
@@ -59,7 +59,7 @@ export const Footer = () => {
                 href="https://www.instagram.com/sundarbanbengaltrip/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 rounded-full bg-primary-foreground/10 hover:bg-pink-600 transition-colors"
+                className="p-2 rounded-[4px] bg-primary-foreground/10 hover:bg-pink-600 transition-colors"
               >
                 <InstagramIcon className="w-5 h-5 fill-current" />
               </a>
@@ -67,7 +67,7 @@ export const Footer = () => {
               {/* Call Button */}
               <a
                 href="tel:+917074432628"
-                className="p-2 rounded-full bg-primary-foreground/10 hover:bg-green-600 transition-colors"
+                className="p-2 rounded-[4px] bg-primary-foreground/10 hover:bg-green-600 transition-colors"
               >
                 <PhoneIcon className="w-5 h-5 fill-current" />
               </a>
@@ -77,7 +77,7 @@ export const Footer = () => {
                 href="https://wa.me/917074432628"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 rounded-full bg-primary-foreground/10 hover:bg-green-500 transition-colors"
+                className="p-2 rounded-[4px] bg-primary-foreground/10 hover:bg-green-500 transition-colors"
               >
                 <WhatsAppIcon className="w-5 h-5 fill-current" />
               </a>

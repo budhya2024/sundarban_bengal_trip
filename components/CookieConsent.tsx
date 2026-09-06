@@ -79,21 +79,21 @@ export const CookieConsent = () => {
           <button
             type="button"
             onClick={handleCustomize}
-            className="w-full border-2 border-primary bg-white text-primary hover:bg-primary hover:text-white font-semibold text-xs sm:text-sm py-2.5 px-2 sm:px-3 rounded-sm transition-all duration-200 active:scale-[0.98] text-center"
+            className="w-full border-2 border-primary bg-white text-primary hover:bg-primary hover:text-white font-semibold text-xs sm:text-sm py-2.5 px-2 sm:px-3 rounded-[4px] transition-all duration-200 active:scale-[0.98] text-center"
           >
             Customize
           </button>
           <button
             type="button"
             onClick={handleRejectAll}
-            className="w-full border-2 border-primary bg-white text-primary hover:bg-gray-100 font-semibold text-xs sm:text-sm py-2.5 px-2 sm:px-3 rounded-sm transition-all duration-200 active:scale-[0.98] text-center"
+            className="w-full border-2 border-primary bg-white text-primary hover:bg-gray-100 font-semibold text-xs sm:text-sm py-2.5 px-2 sm:px-3 rounded-[4px] transition-all duration-200 active:scale-[0.98] text-center"
           >
             Reject All
           </button>
           <button
             type="button"
             onClick={handleAcceptAll}
-            className="w-full border-2 border-primary hover:border-secondary bg-primary text-white hover:bg-secondary font-semibold text-xs sm:text-sm py-2.5 px-2 sm:px-3 rounded-sm transition-all duration-200 active:scale-[0.98] text-center shadow-sm"
+            className="w-full border-2 border-primary hover:border-secondary bg-primary text-white hover:bg-secondary font-semibold text-xs sm:text-sm py-2.5 px-2 sm:px-3 rounded-[4px] transition-all duration-200 active:scale-[0.98] text-center shadow-sm"
           >
             Accept All
           </button>

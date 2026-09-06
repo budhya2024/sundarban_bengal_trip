@@ -49,7 +49,7 @@ export const SocialSidebar = () => {
           target="_blank"
           rel="noopener noreferrer"
           aria-label={social.label}
-          className={`w-12 h-12 flex items-center justify-center text-primary-foreground transition-all rounded-full scale-90 hover:scale-100 duration-300 ${social.bgColor}`}
+          className={`w-12 h-12 flex items-center justify-center text-primary-foreground transition-all rounded-[4px] scale-90 hover:scale-100 duration-300 ${social.bgColor}`}
         >
           <social.Icon className="w-5 h-5" />
         </a>

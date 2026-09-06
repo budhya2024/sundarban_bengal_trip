@@ -210,7 +210,7 @@ export default function AdminLoginPage() {
             <Button
               type="submit"
               disabled={isPending}
-              className={`w-full h-12 rounded-sm text-white text-base font-bold shadow-lg transition-all active:scale-[0.98] ${isSetupMode || view !== "auth"
+              className={`w-full h-12 rounded-[4px] text-white text-base font-bold shadow-lg transition-all active:scale-[0.98] ${isSetupMode || view !== "auth"
                 ? "bg-[#C58940] hover:bg-[#B37A36]"
                 : "bg-[#2D4A39] hover:bg-[#1f3327]"
                 }`}
