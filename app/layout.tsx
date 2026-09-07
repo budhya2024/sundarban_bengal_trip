@@ -16,7 +16,6 @@ import TanstackProvider from "@/components/TanstackProvider";
 import { CustomCursor } from "@/components/CustomCursor";
 import { GlobalBookingModal } from "@/components/GlobalBookingModal";
 import { CookieConsent } from "@/components/CookieConsent";
-import { PageLoader } from "@/components/PageLoader";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://sundarbanbengaltrip.com"),
@@ -366,8 +365,6 @@ export default function RootLayout({
 
         <TanstackProvider>
           <TooltipProvider>
-            <PageLoader />
-
             <CustomCursor />
 
             <Sonner />
