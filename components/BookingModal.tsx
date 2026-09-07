@@ -63,7 +63,7 @@ export const BookingModal = ({
 }: BookingModalProps) => {
   const [isPending, startTransition] = useTransition();
   const [internalBookingOpen, setInternalBookingOpen] = useState(false);
-  
+
   const bookingOpen = isOpen !== undefined ? isOpen : internalBookingOpen;
   const [isSuccess, setIsSuccess] = useState(false);
   const [calOpen, setCalOpen] = useState(false);

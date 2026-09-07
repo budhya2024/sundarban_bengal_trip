@@ -380,7 +380,7 @@ export default function RootLayout({
 
             <GlobalBookingModal />
 
-            <CookieConsent />
+            {/* <CookieConsent /> */}
 
             {children}
           </TooltipProvider>

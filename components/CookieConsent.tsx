@@ -6,6 +6,11 @@ import { usePathname, useRouter } from "next/navigation";
 const STORAGE_KEY = "sbt_cookie_consent";
 
 export const CookieConsent = () => {
+  return null;
+};
+
+// Disabled implementation
+export const _DisabledCookieConsent = () => {
   const pathname = usePathname();
   const router = useRouter();
   const [visible, setVisible] = useState(false);

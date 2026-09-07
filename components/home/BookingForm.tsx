@@ -130,288 +130,288 @@ export const BookingForm = ({ isModal = false }: { isModal?: boolean }) => {
         </p>
       </div>
 
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)}>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-4 md:gap-6 mb-4 md:mb-10">
-                {/* Name */}
-                <FormField
-                  control={form.control}
-                  name="name"
-                  render={({ field }) => (
-                    <FormItem>
-                      <div className="relative">
-                        <FaUser className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground z-10" />
-                        <FormControl>
-                          <Input
-                            placeholder="Enter your full name"
-                            className={INPUT_CLS}
-                            {...field}
-                          />
-                        </FormControl>
-                      </div>
-                      <FormMessage className="text-xs" />
-                    </FormItem>
-                  )}
-                />
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-4 md:gap-6 mb-4 md:mb-10">
+            {/* Name */}
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <div className="relative">
+                    <FaUser className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground z-10" />
+                    <FormControl>
+                      <Input
+                        placeholder="Enter your full name"
+                        className={INPUT_CLS}
+                        {...field}
+                      />
+                    </FormControl>
+                  </div>
+                  <FormMessage className="text-xs" />
+                </FormItem>
+              )}
+            />
 
-                {/* Email */}
-                <FormField
-                  control={form.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem>
-                      <div className="relative">
-                        <FaEnvelope className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground z-10" />
-                        <FormControl>
-                          <Input
-                            type="email"
-                            placeholder="Enter your email address"
-                            className={INPUT_CLS}
-                            {...field}
-                          />
-                        </FormControl>
-                      </div>
-                      <FormMessage className="text-xs" />
-                    </FormItem>
-                  )}
-                />
+            {/* Email */}
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <div className="relative">
+                    <FaEnvelope className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground z-10" />
+                    <FormControl>
+                      <Input
+                        type="email"
+                        placeholder="Enter your email address"
+                        className={INPUT_CLS}
+                        {...field}
+                      />
+                    </FormControl>
+                  </div>
+                  <FormMessage className="text-xs" />
+                </FormItem>
+              )}
+            />
 
-                {/* Phone */}
-                <FormField
-                  control={form.control}
-                  name="phone"
-                  render={({ field }) => (
-                    <FormItem>
-                      <div className="relative">
-                        <FaPhoneAlt className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground z-10" />
-                        <FormControl>
-                          <Input
-                            type="tel"
-                            placeholder="Enter your phone number"
-                            className={INPUT_CLS}
-                            {...field}
-                          />
-                        </FormControl>
-                      </div>
-                      <FormMessage className="text-xs" />
-                    </FormItem>
-                  )}
-                />
+            {/* Phone */}
+            <FormField
+              control={form.control}
+              name="phone"
+              render={({ field }) => (
+                <FormItem>
+                  <div className="relative">
+                    <FaPhoneAlt className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground z-10" />
+                    <FormControl>
+                      <Input
+                        type="tel"
+                        placeholder="Enter your phone number"
+                        className={INPUT_CLS}
+                        {...field}
+                      />
+                    </FormControl>
+                  </div>
+                  <FormMessage className="text-xs" />
+                </FormItem>
+              )}
+            />
 
-                {/*
+            {/*
                   ─── DATE + GUESTS ROW ──────────────────────────────────────────
                   On mobile: these two share one row (grid-cols-2 subgrid).
                   On md+: they fall into the normal 2/3-col parent grid individually.
                   We wrap them in a col-span-full subgrid div only on mobile.
                 */}
-                <div className="col-span-1 md:contents">
-                  <div className="grid grid-cols-2 gap-2 sm:gap-4 md:contents">
-                    {/* Travel Date — React Calendar */}
-                    <FormField
-                      control={form.control}
-                      name="date"
-                      render={({ field }) => (
-                        <FormItem className="md:col-auto">
-                          <div className="relative" ref={calRef}>
-                            <FaCalendarAlt className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground pointer-events-none z-10" />
+            <div className="col-span-1 md:contents">
+              <div className="grid grid-cols-2 gap-2 sm:gap-4 md:contents">
+                {/* Travel Date — React Calendar */}
+                <FormField
+                  control={form.control}
+                  name="date"
+                  render={({ field }) => (
+                    <FormItem className="md:col-auto">
+                      <div className="relative" ref={calRef}>
+                        <FaCalendarAlt className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground pointer-events-none z-10" />
 
-                            {/* Trigger button — shows placeholder or selected date */}
-                            <button
-                              type="button"
-                              onClick={() => setCalOpen((o) => !o)}
-                              className={`
+                        {/* Trigger button — shows placeholder or selected date */}
+                        <button
+                          type="button"
+                          onClick={() => setCalOpen((o) => !o)}
+                          className={`
                               w-full h-12 pl-12 pr-4 text-left
                               border border-input rounded-[4px] bg-background
                               text-sm focus:outline-none focus:ring-0
                               ${field.value ? "text-foreground" : "text-muted-foreground"}
                             `}
-                            >
-                              {field.value
-                                ? new Date(field.value).toLocaleDateString(
-                                  "en-IN",
-                                  {
-                                    day: "2-digit",
-                                    month: "short",
-                                    year: "numeric",
-                                  },
-                                )
-                                : "Select date"}
-                            </button>
+                        >
+                          {field.value
+                            ? new Date(field.value).toLocaleDateString(
+                              "en-IN",
+                              {
+                                day: "2-digit",
+                                month: "short",
+                                year: "numeric",
+                              },
+                            )
+                            : "Select date"}
+                        </button>
 
-                            {/* Calendar popover */}
-                            {calOpen && (
-                              <div className="absolute z-50 bottom-full mb-2 left-0 shadow-lg rounded-xl overflow-hidden border border-border bg-card">
-                                <Calendar
-                                  minDate={today}
-                                  value={
-                                    field.value ? new Date(field.value) : null
-                                  }
-                                  onChange={(val) => {
-                                    if (val instanceof Date) {
-                                      // Store as YYYY-MM-DD string (matches BookingSchema)
-                                      const yyyy = val.getFullYear();
-                                      const mm = String(
-                                        val.getMonth() + 1,
-                                      ).padStart(2, "0");
-                                      const dd = String(val.getDate()).padStart(
-                                        2,
-                                        "0",
-                                      );
-                                      field.onChange(`${yyyy}-${mm}-${dd}`);
-                                    }
-                                    setCalOpen(false);
-                                  }}
-                                />
-                              </div>
-                            )}
+                        {/* Calendar popover */}
+                        {calOpen && (
+                          <div className="absolute z-50 bottom-full mb-2 left-0 shadow-lg rounded-xl overflow-hidden border border-border bg-card">
+                            <Calendar
+                              minDate={today}
+                              value={
+                                field.value ? new Date(field.value) : null
+                              }
+                              onChange={(val) => {
+                                if (val instanceof Date) {
+                                  // Store as YYYY-MM-DD string (matches BookingSchema)
+                                  const yyyy = val.getFullYear();
+                                  const mm = String(
+                                    val.getMonth() + 1,
+                                  ).padStart(2, "0");
+                                  const dd = String(val.getDate()).padStart(
+                                    2,
+                                    "0",
+                                  );
+                                  field.onChange(`${yyyy}-${mm}-${dd}`);
+                                }
+                                setCalOpen(false);
+                              }}
+                            />
                           </div>
-                          <FormMessage className="text-xs" />
-                        </FormItem>
-                      )}
-                    />
+                        )}
+                      </div>
+                      <FormMessage className="text-xs" />
+                    </FormItem>
+                  )}
+                />
 
-                    {/* Guests */}
-                    <FormField
-                      control={form.control}
-                      name="guests"
-                      render={({ field }) => (
-                        <FormItem className="md:col-auto">
-                          <div className="relative">
-                            <FaUsers className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground z-10" />
-                            <FormControl>
-                              <Input
-                                type="number"
-                                min="1"
-                                placeholder="No. of guests"
-                                className={INPUT_CLS}
-                                {...field}
-                              />
-                            </FormControl>
-                          </div>
-                          <FormMessage className="text-xs" />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                </div>
-
-                {/* Package Dropdown */}
+                {/* Guests */}
                 <FormField
                   control={form.control}
-                  name="package"
+                  name="guests"
                   render={({ field }) => (
-                    <FormItem>
+                    <FormItem className="md:col-auto">
                       <div className="relative">
-                        <FaBoxOpen className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground z-20" />
-                        <Select
-                          onValueChange={field.onChange}
-                          defaultValue={field.value}
-                        >
-                          <FormControl>
-                            <SelectTrigger className="pl-12 h-12 focus:ring-0 focus:ring-offset-0 shadow-none data-[placeholder]:text-muted-foreground">
-                              <SelectValue placeholder="Select tour package" />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent>
-                            {packages?.map((pkg) => (
-                              <SelectItem key={pkg.key} value={pkg.name}>
-                                {pkg.name}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
+                        <FaUsers className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground z-10" />
+                        <FormControl>
+                          <Input
+                            type="number"
+                            min="1"
+                            placeholder="No. of guests"
+                            className={INPUT_CLS}
+                            {...field}
+                          />
+                        </FormControl>
                       </div>
                       <FormMessage className="text-xs" />
                     </FormItem>
                   )}
                 />
               </div>
+            </div>
 
-              {/* Submit */}
-              <div className="text-center space-y-5">
-                <Button
-                  type="submit"
-                  variant="hero"
-                  size="lg"
-                  className="w-full"
-                  disabled={isPending}
-                >
-                  {isPending ? "Processing..." : "Book Your Trip"}
-                </Button>
-
-                <div className="flex flex-wrap justify-center items-center gap-2 text-xs md:text-sm sm:gap-4 text-gray-700 font-medium">
-                  <div className="flex items-center gap-1 md:gap-2">
-                    <FaPhoneAlt className="text-slate-700" />
-                    <span>Callback Within 15 Minutes</span>
+            {/* Package Dropdown */}
+            <FormField
+              control={form.control}
+              name="package"
+              render={({ field }) => (
+                <FormItem>
+                  <div className="relative">
+                    <FaBoxOpen className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground z-20" />
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger className="pl-12 h-12 focus:ring-0 focus:ring-offset-0 shadow-none data-[placeholder]:text-muted-foreground">
+                          <SelectValue placeholder="Select tour package" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {packages?.map((pkg) => (
+                          <SelectItem key={pkg.key} value={pkg.name}>
+                            {pkg.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </div>
-                  <div className="hidden md:block h-4 w-px bg-gray-300" />
-                  <div className="flex items-center gap-1 md:gap-2">
-                    <FaWhatsapp className="text-green-500" />
-                    <span>WhatsApp Support</span>
-                  </div>
-                </div>
+                  <FormMessage className="text-xs" />
+                </FormItem>
+              )}
+            />
+          </div>
 
-                <div className="grid grid-cols-2 sm:grid-cols-4 text-xs md:text-sm gap-2 sm:gap-4 text-gray-700 font-medium rounded-md bg-[#f7f2d8] p-2 md:p-4">
-                  {/* Exclusive Offers */}
-                  <div className="flex items-center gap-2 md:gap-3">
-                    <FaPercent className="text-[#003c2f] text-2xl" />
-                    <div className="text-left">
-                      <p className="font-bold text-xs md:text-base text-[#003c2f]">
-                        Exclusive Offers
-                      </p>
-                      <p className="text-xs md:text-base">For Early Bookings</p>
-                    </div>
-                  </div>
+          {/* Submit */}
+          <div className="text-center space-y-5">
+            <Button
+              type="submit"
+              variant="hero"
+              size="lg"
+              className="w-full"
+              disabled={isPending}
+            >
+              {isPending ? "Processing..." : "Book Your Trip"}
+            </Button>
 
-                  {/* Instant Confirmation */}
-                  <div className="flex items-center gap-2 md:gap-3">
-                    <FaClock className="text-[#003c2f] text-2xl" />
-                    <div className="text-left">
-                      <p className="font-bold text-xs md:text-base text-[#003c2f]">
-                        Instant Confirmation
-                      </p>
-                      <p className="text-xs md:text-base text-gray-600">
-                        No Waiting
-                      </p>
-                    </div>
-                  </div>
+            <div className="flex flex-wrap justify-center items-center gap-2 text-xs md:text-sm sm:gap-4 text-gray-700 font-medium">
+              <div className="flex items-center gap-1 md:gap-2">
+                <FaPhoneAlt className="text-slate-700" />
+                <span>Callback Within 15 Minutes</span>
+              </div>
+              <div className="hidden md:block h-4 w-px bg-gray-300" />
+              <div className="flex items-center gap-1 md:gap-2">
+                <FaWhatsapp className="text-green-500" />
+                <span>WhatsApp Support</span>
+              </div>
+            </div>
 
-                  {/* Refund */}
-                  <div className="flex items-center gap-2 md:gap-3">
-                    <FaShieldAlt className="text-[#003c2f] text-2xl" />
-                    <div className="text-left">
-                      <p className="font-bold text-xs md:text-base text-[#003c2f]">
-                        100% Refund
-                      </p>
-                      <p className="text-xs md:text-base text-gray-600">
-                        On Cancellation*
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Travelers */}
-                  <div className="flex items-center gap-2 md:gap-3">
-                    <FaUsers className="text-[#003c2f] text-2xl" />
-                    <div className="text-left">
-                      <p className="font-bold text-xs md:text-base text-[#003c2f]">
-                        10,000+ Travelers
-                      </p>
-                      <p className="text-xs md:text-base text-gray-600">
-                        Trusted Across India
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="mx-auto flex w-fit items-center gap-2 md:gap-3 rounded-xl bg-[#003c2f] px-3 md:px-6 py-3 text-white">
-                  <FaUsers />
-                  <span className="text-xs md:text-sm font-medium">
-                    Trusted by Families, Couples &amp; Groups Across India
-                  </span>
+            <div className="grid grid-cols-2 sm:grid-cols-4 text-xs md:text-sm gap-2 sm:gap-4 text-gray-700 font-medium rounded-md bg-[#f7f2d8] p-2 md:p-4">
+              {/* Exclusive Offers */}
+              <div className="flex items-center gap-2 md:gap-3">
+                <FaPercent className="text-[#003c2f] text-2xl" />
+                <div className="text-left">
+                  <p className="font-bold text-xs md:text-base text-[#003c2f]">
+                    Exclusive Offers
+                  </p>
+                  <p className="text-xs md:text-base">For Early Bookings</p>
                 </div>
               </div>
-            </form>
-          </Form>
+
+              {/* Instant Confirmation */}
+              <div className="flex items-center gap-2 md:gap-3">
+                <FaClock className="text-[#003c2f] text-2xl" />
+                <div className="text-left">
+                  <p className="font-bold text-xs md:text-base text-[#003c2f]">
+                    Instant Confirmation
+                  </p>
+                  <p className="text-xs md:text-base text-gray-600">
+                    No Waiting
+                  </p>
+                </div>
+              </div>
+
+              {/* Refund */}
+              <div className="flex items-center gap-2 md:gap-3">
+                <FaShieldAlt className="text-[#003c2f] text-2xl" />
+                <div className="text-left">
+                  <p className="font-bold text-xs md:text-base text-[#003c2f]">
+                    100% Refund
+                  </p>
+                  <p className="text-xs md:text-base text-gray-600">
+                    On Cancellation*
+                  </p>
+                </div>
+              </div>
+
+              {/* Travelers */}
+              <div className="flex items-center gap-2 md:gap-3">
+                <FaUsers className="text-[#003c2f] text-2xl" />
+                <div className="text-left">
+                  <p className="font-bold text-xs md:text-base text-[#003c2f]">
+                    10,000+ Travelers
+                  </p>
+                  <p className="text-xs md:text-base text-gray-600">
+                    Trusted Across India
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="mx-auto flex w-fit items-center gap-2 md:gap-3 rounded-xl bg-[#003c2f] px-3 md:px-6 py-3 text-white">
+              <FaUsers />
+              <span className="text-xs md:text-sm font-medium">
+                Trusted by Families, Couples &amp; Groups Across India
+              </span>
+            </div>
+          </div>
+        </form>
+      </Form>
     </>
   );
 

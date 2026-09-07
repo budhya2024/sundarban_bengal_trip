@@ -45,8 +45,8 @@ export function PageLoader() {
           </div>
 
           {/* Elegant Loading Text */}
-          <h2 className="text-xl sm:text-2xl font-serif text-primary">
-            Loading
+          <h2 className="text-xl sm:text-2xl font-serif text-secondary">
+            Loading...
           </h2>
         </motion.div>
       )}
