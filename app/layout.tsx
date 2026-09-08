@@ -151,7 +151,7 @@ export default function RootLayout({
                   "image": "https://sundarbanbengaltrip.com/og-image.jpg",
                   "description": "Sundarban Bengal Trip is a trusted travel agency in West Bengal offering affordable Sundarban tour packages from Kolkata including boat safari, resort stay, jungle exploration and guided tours.",
                   "email": "sundarbanbengaltrip@gmail.com",
-                  "telephone": "+91-7074432628",
+                  "telephone": "+91-7586889519",
                   "foundingDate": "2024",
                   "priceRange": "₹₹",
                   "address": {
@@ -185,7 +185,7 @@ export default function RootLayout({
                   ],
                   "contactPoint": {
                     "@type": "ContactPoint",
-                    "telephone": "+91-7074432628",
+                    "telephone": "+91-7586889519",
                     "contactType": "customer service",
                     "areaServed": "IN",
                     "availableLanguage": ["English", "Bengali", "Hindi"]
@@ -275,7 +275,7 @@ export default function RootLayout({
               description:
                 "Sundarban Bengal Trip is a trusted Sundarban tour operator offering jungle safari, boat tours, hotel booking, wildlife exploration, and customized Sundarban travel packages from Kolkata.",
 
-              telephone: "+91 70744 32628",
+              telephone: "+91 75868 89519",
 
               email: "sundarbanbengaltrip@gmail.com",
 
@@ -334,7 +334,7 @@ export default function RootLayout({
 
               contactPoint: {
                 "@type": "ContactPoint",
-                telephone: "+91 70744 32628",
+                telephone: "+91 75868 89519",
                 contactType: "customer support",
                 areaServed: "IN",
                 availableLanguage: ["English", "Bengali", "Hindi"],
@@ -375,7 +375,7 @@ export default function RootLayout({
 
             <ScrollToTopButton />
 
-            <GlobalBookingModal />
+            {/* <GlobalBookingModal /> */}
 
             {/* <CookieConsent /> */}
 

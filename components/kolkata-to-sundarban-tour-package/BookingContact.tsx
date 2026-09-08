@@ -38,11 +38,11 @@ export const BookingContact = () => {
 
 
                 <a
-                  href="tel:+917074432628"
+                  href="tel:+917586889519"
                   className="text-muted-foreground font-semibold"
                 >
                   <Phone className="inline-block w-4 h-4 mr-1 text-primary" />
-                  +91 70744 32628
+                  +91 75868 89519
                 </a>
 
                 <a

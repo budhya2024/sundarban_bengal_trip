@@ -54,18 +54,13 @@ const Index = () => {
   return (
     <main className="min-h-screen">
       <Navbar />
-      {/* Previous Hero Section */}
       {/* <HeroSection /> */}
-
-      {/* Durga Puja Special Hero Slider */}
       <DurgaPujaHeroSlider />
-
       <TrustSection />
       <BookingForm />
       <TourPackagesSection />
       <TravelExperience />
       <HotelSwiper />
-
       <AboutSection />
       <ExploreSundarbanSection />
       <GallerySection />

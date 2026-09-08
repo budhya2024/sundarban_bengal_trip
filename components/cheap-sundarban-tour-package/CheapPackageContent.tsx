@@ -247,7 +247,7 @@ const CheapPackageContent: React.FC = () => {
           </p>
           <div className="pt-4 flex flex-wrap items-center gap-6">
             <div className="flex items-center gap-2 text-foreground font-semibold">
-              <span>Mobile No: +91 70744 32628</span>
+              <span>Mobile No: +91 75868 89519</span>
             </div>
             <div className="flex items-center gap-2 text-foreground font-semibold">
               <span>Mail: sundarbanbengaltrip@gmail.com</span>

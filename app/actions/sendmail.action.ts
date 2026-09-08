@@ -290,7 +290,7 @@ function getContactClientConfirmationTemplate(data: {
         </div>
         <div style="padding: 16px 20px; background-color: #fafafa;">
           <p style="margin: 0 0 6px 0; color: #475569; font-size: 14px;">
-            📞 Call us: <a href="tel:+919876543210" style="color: #064e3b; text-decoration: none; font-weight: 700;">+91 98765 43210</a>
+            📞 Call us: <a href="tel:+917586889519" style="color: #064e3b; text-decoration: none; font-weight: 700;">+91 75868 89519</a>
           </p>
           <p style="margin: 0; color: #475569; font-size: 14px;">
             🌐 Visit: <a href="https://sundarbanbengaltrip.com" style="color: #064e3b; text-decoration: none; font-weight: 700;">sundarbanbengaltrip.com</a>

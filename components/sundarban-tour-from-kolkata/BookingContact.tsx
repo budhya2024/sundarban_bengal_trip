@@ -18,7 +18,7 @@ export const BookingContact = () => {
                 With our Sundarban Bengal Trip - Tours & Travel agency you will easily cover the major attractions of Sundarban which are included in our every Sundarban tour package from Kolkata. Like visiting Sajnekhali Watch Tower, Dobanki Canopy Walk, Sudhanyakhali Watch Tower, Pakhiralay, and several beautiful river routes inside the mangrove forest.
               </p>
               <p>
-                Every tourist can easily enjoy the deep nature and raw beauty of Sundarban’s whole nature. You can even spot wildlife animals with proper safety with our Tour guides like watching crocodiles, deer, exotic birds, and the famous Royal Bengal Tiger. So come and enjoy the immense beauty of Sundarban’s nature and the whole environment with our best sundarban tour package from kolkata. Our Mobile No- <strong>+91 70744 32628</strong> ,  Mail- <strong>sundarbanbengaltrip@gmail.com</strong>.
+                Every tourist can easily enjoy the deep nature and raw beauty of Sundarban’s whole nature. You can even spot wildlife animals with proper safety with our Tour guides like watching crocodiles, deer, exotic birds, and the famous Royal Bengal Tiger. So come and enjoy the immense beauty of Sundarban’s nature and the whole environment with our best sundarban tour package from kolkata. Our Mobile No- <strong>+91 75868 89519</strong> ,  Mail- <strong>sundarbanbengaltrip@gmail.com</strong>.
               </p>
             </div>
 

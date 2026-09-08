@@ -89,7 +89,7 @@ export default function Page() {
                 "name": "Sundarban Bengal Trip",
                 "url": "https://sundarbanbengaltrip.com/",
                 "description": "Professional travel agency offering Kolkata to Sundarban tour packages with pickup, sightseeing and boat safari.",
-                "telephone": "+91-7074432628",
+                "telephone": "+91-7586889519",
                 "email": "sundarbanbengaltrip@gmail.com",
                 "areaServed": {
                   "@type": "City",

@@ -99,11 +99,31 @@ const PrivacyPolicy = () => {
               contact us at:
             </p>
             <p>
-              Email: sundarbanbengaltrip@gmail.com
+              Email:{" "}
+              <a
+                href="mailto:sundarbanbengaltrip@gmail.com"
+                className="text-primary hover:underline"
+              >
+                sundarbanbengaltrip@gmail.com
+              </a>
               <br />
-              Phone: +917074432628
+              Phone:{" "}
+              <a
+                href="tel:+917586889519"
+                className="text-primary hover:underline"
+              >
+                +91 75868 89519
+              </a>
               <br />
-              Address: 5R82+296, Nath Para, Gosaba, Arampur, West Bengal 743370
+              Address:{" "}
+              <a
+                href="https://maps.app.goo.gl/BmREXPxvGBPRn7eT8?g_st=awb"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary hover:underline"
+              >
+                5R82+296, Nath Para, Gosaba, Arampur, West Bengal 743370
+              </a>
             </p>
 
             <p className="text-sm text-muted-foreground mt-8">

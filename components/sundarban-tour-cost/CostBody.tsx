@@ -256,7 +256,7 @@ export const CostBody = () => {
           <div className="pt-2  flex flex-wrap items-center gap-4">
             <div className="flex items-center gap-2 text-foreground font-semibold">
               <Phone className="w-4 h-4" />
-              <span>+91 70744 32628</span>
+              <span>+91 75868 89519</span>
             </div>
             <div className="flex items-center gap-2 text-foreground font-semibold">
               <Mail className="w-4 h-4" />

@@ -66,7 +66,7 @@ export const Footer = () => {
 
               {/* Call Button */}
               <a
-                href="tel:+917074432628"
+                href="tel:+917586889519"
                 className="p-2 rounded-[4px] bg-primary-foreground/10 hover:bg-green-600 transition-colors"
               >
                 <PhoneIcon className="w-5 h-5 fill-current" />
@@ -74,7 +74,7 @@ export const Footer = () => {
 
               {/* WhatsApp */}
               <a
-                href="https://wa.me/917074432628"
+                href="https://wa.me/917586889519"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-2 rounded-[4px] bg-primary-foreground/10 hover:bg-green-500 transition-colors"
@@ -135,6 +135,10 @@ export const Footer = () => {
                   link: "/packages/sundarban-2-night-3-days-tour",
                 },
                 {
+                  name: "Sundarban Durga Puja Special Packages",
+                  link: "/sundarban-durga-puja-special-packages",
+                },
+                {
                   name: "Customised Tour Package",
                   link: "/contact",
                 },
@@ -159,18 +163,26 @@ export const Footer = () => {
             <ul className="space-y-4">
               <li className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-secondary mt-0.5 flex-shrink-0" />
-                <span className="text-primary-foreground/80">
-                  5R82+296, Nath Para, Gosaba, Arampur, West Bengal 743370
-                </span>
-              </li>
-              <li className="flex items-center gap-3">
-                <Phone className="w-5 h-5 text-secondary flex-shrink-0" />
                 <a
-                  href="tel:+917074432628"
+                  href="https://maps.app.goo.gl/BmREXPxvGBPRn7eT8?g_st=awb"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="text-primary-foreground/80 hover:text-secondary transition-colors"
                 >
-                  +917074432628
+                  5R82+296, Nath Para, Gosaba, Arampur, West Bengal 743370
                 </a>
+              </li>
+              <li className="flex items-start gap-3">
+                <Phone className="w-5 h-5 text-secondary mt-0.5 flex-shrink-0" />
+                <div className="flex flex-col gap-1">
+                  <a
+                    href="tel:+917586889519"
+                    className="text-primary-foreground/80 hover:text-secondary transition-colors"
+                  >
+                    +91 75868 89519
+                  </a>
+
+                </div>
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="w-5 h-5 text-secondary flex-shrink-0" />
@@ -185,6 +197,15 @@ export const Footer = () => {
           </div>
         </div>
         <div className="mt-12 border-t border-primary-foreground/20 pt-8 flex flex-wrap  gap-2 text-sm">
+          <Link
+            href="/sundarban-durga-puja-special-packages"
+            className="text-primary-foreground/80 hover:text-secondary transition-colors"
+          >
+            Sundarban Durga Puja Special Packages
+          </Link>
+
+          <span className="text-primary-foreground/40">|</span>
+
           <Link
             href="/kolkata-to-sundarban-tour-package"
             className="text-primary-foreground/80 hover:text-secondary transition-colors"

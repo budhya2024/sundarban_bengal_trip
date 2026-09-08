@@ -20,7 +20,7 @@ export const PackageHero = () => {
                 Whether you are looking to plan a Sundarban trip from Kolkata, with your friends, family members or your partner or a corporate group we will provide complete travel solutions and hotel stay options, with proper fooding and guiding. As the most trusted Sundarban tour guide in Kolkata we always ensure our clients safety, comfort and enjoyment at our priority.
               </p>
               <p>
-                So if you are looking for the best Sundarban tour package from Kolkata then you must contact us - <strong>Sundarban Bengal Trip</strong> , PH No- <strong>+91 70744 32628</strong> ,  Mail- <strong>sundarbanbengaltrip@gmail.com</strong>.
+                So if you are looking for the best Sundarban tour package from Kolkata then you must contact us - <strong>Sundarban Bengal Trip</strong> , PH No- <strong>+91 75868 89519</strong> ,  Mail- <strong>sundarbanbengaltrip@gmail.com</strong>.
               </p>
             </div>
 

@@ -21,7 +21,7 @@ const DEFAULT_CONTACT_DATA = {
   heroSubtitle:
     "Have questions about our tours? We're here to help you plan the perfect Sundarban adventure.",
   heroImage: "/assets/hero-sundarban.jpg",
-  phones: [{ value: "7074432628" }],
+  phones: [{ value: "7586889519" }],
   emails: [{ value: "sundarbanbengaltrip@gmail.com" }],
   address: "5R82+296, Nath Para, Gosaba, Arampur, West Bengal 743370",
   schedules: [
@@ -30,7 +30,7 @@ const DEFAULT_CONTACT_DATA = {
   sidebarHeadline: "Need Immediate Help?",
   sidebarDescription:
     "Our travel experts are available to assist you with booking and itinerary customization.",
-  whatsappNumber: "7074432628",
+  whatsappNumber: "7586889519",
 };
 
 const ContactPage = ({ data }: { data: ContactPageValues | null }) => {
@@ -111,14 +111,51 @@ const ContactPage = ({ data }: { data: ContactPageValues | null }) => {
                 <p className="text-sm text-muted-foreground mb-4">
                   {card.description}
                 </p>
-                {card.details.map((detail) => (
-                  <p
-                    key={detail}
-                    className="text-foreground font-medium text-sm"
-                  >
-                    {detail}
-                  </p>
-                ))}
+                {card.details.map((detail) => {
+                  if (card.title === "Visit Us") {
+                    return (
+                      <a
+                        key={detail}
+                        href="https://maps.app.goo.gl/BmREXPxvGBPRn7eT8?g_st=awb"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-foreground font-medium text-sm hover:text-primary transition-colors block"
+                      >
+                        {detail}
+                      </a>
+                    );
+                  }
+                  if (card.title === "Email Us") {
+                    return (
+                      <a
+                        key={detail}
+                        href={`mailto:${detail}`}
+                        className="text-foreground font-medium text-sm hover:text-primary transition-colors block"
+                      >
+                        {detail}
+                      </a>
+                    );
+                  }
+                  if (card.title === "Call Us") {
+                    return (
+                      <a
+                        key={detail}
+                        href={`tel:${detail.replace(/\s+/g, "")}`}
+                        className="text-foreground font-medium text-sm hover:text-primary transition-colors block"
+                      >
+                        {detail}
+                      </a>
+                    );
+                  }
+                  return (
+                    <p
+                      key={detail}
+                      className="text-foreground font-medium text-sm"
+                    >
+                      {detail}
+                    </p>
+                  );
+                })}
               </div>
             ))}
           </div>
@@ -169,13 +206,21 @@ const ContactPage = ({ data }: { data: ContactPageValues | null }) => {
                 </p>
                 <div className="space-y-3">
                   <a
-                    href="tel:+919876543210"
+                    href={`tel:+91${data?.phones?.[0]?.value || DEFAULT_CONTACT_DATA.phones[0].value}`}
                     className="flex items-center gap-3 text-secondary font-semibold hover:text-secondary/80 transition-colors"
                   >
                     <Phone className="w-5 h-5" />
-                    {data?.whatsappNumber ||
-                      DEFAULT_CONTACT_DATA.whatsappNumber}
+                    +91 {data?.phones?.[0]?.value || DEFAULT_CONTACT_DATA.phones[0].value}
                   </a>
+                  {(data?.phones?.[1]?.value || DEFAULT_CONTACT_DATA.phones[1]?.value) && (
+                    <a
+                      href={`tel:+91${data?.phones?.[1]?.value || DEFAULT_CONTACT_DATA.phones[1].value}`}
+                      className="flex items-center gap-3 text-secondary/90 font-medium hover:text-secondary transition-colors"
+                    >
+                      <Phone className="w-5 h-5" />
+                      +91 {data?.phones?.[1]?.value || DEFAULT_CONTACT_DATA.phones[1].value}
+                    </a>
+                  )}
                   <a
                     href={`https://wa.me/${data?.whatsappNumber || DEFAULT_CONTACT_DATA.whatsappNumber}`}
                     target="_blank"

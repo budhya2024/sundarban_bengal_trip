@@ -166,8 +166,21 @@ const PaymentPolicy = () => {
 
             <h2>Contact</h2>
             <p>
-              Email: sundarbanbengaltrip@gmail.com <br />
-              Phone: +917074432628
+              Email:{" "}
+              <a
+                href="mailto:sundarbanbengaltrip@gmail.com"
+                className="text-primary hover:underline"
+              >
+                sundarbanbengaltrip@gmail.com
+              </a>{" "}
+              <br />
+              Phone:{" "}
+              <a
+                href="tel:+917586889519"
+                className="text-primary hover:underline"
+              >
+                +91 75868 89519
+              </a>
             </p>
 
             <p className="text-sm text-muted-foreground mt-8">

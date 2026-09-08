@@ -305,8 +305,8 @@ export const NationalParkContent: React.FC = () => {
             <div className="pt-2 flex flex-wrap items-center gap-4">
               <div className="flex items-center gap-2 text-foreground font-semibold">
                 <Phone className="w-4 h-4 text-primary" />
-                <a href="tel:+917074432628" className="hover:text-primary transition-colors">
-                  +91 70744 32628
+                <a href="tel:+917586889519" className="hover:text-primary transition-colors">
+                  +91 75868 89519
                 </a>
               </div>
               <div className="flex items-center gap-2 text-foreground font-semibold">

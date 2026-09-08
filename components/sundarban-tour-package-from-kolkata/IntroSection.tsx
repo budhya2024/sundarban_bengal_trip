@@ -38,11 +38,11 @@ export const IntroSection = () => {
           </p>
           <div className="flex flex-col sm:flex-row  gap-4">
             <a
-              href="tel:+917074432628"
+              href="tel:+917586889519"
               className="flex gap-1 items-center"
             >
               <Phone className="w-5 h-5" />
-              +91 70744 32628
+              +91 75868 89519
             </a>
             <a
               href="mailto:sundarbanbengaltrip@gmail.com"

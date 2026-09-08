@@ -24,13 +24,13 @@ const socialLinks = [
   },
   {
     Icon: PhoneIcon,
-    href: "tel:+917074432628",
+    href: "tel:+917586889519",
     label: "Call",
     bgColor: "bg-green-600",
   },
   {
     Icon: WhatsAppIcon,
-    href: "https://wa.me/917074432628",
+    href: "https://wa.me/917586889519",
     label: "WhatsApp",
     bgColor: "bg-[hsl(142,70%,49%)]",
   },

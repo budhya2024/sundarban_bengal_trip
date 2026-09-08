@@ -181,7 +181,7 @@ export const Navbar = () => {
           {/* DESKTOP CTA */}
           <div className="hidden lg:block">
             <a
-              href="tel:+917074432628"
+              href="tel:+917586889519"
               className="relative inline-flex items-center justify-center overflow-hidden bg-primary
               
               px-7 py-3 rounded-full text-white font-medium 
@@ -199,7 +199,7 @@ export const Navbar = () => {
 
               <span className="relative z-10 flex flex-col">
                 <span className="flex gap-2 items-center ">
-                  <PhoneCallIcon size={18} />7074432628
+                  <PhoneCallIcon size={18} />7586889519
                 </span>
               </span>
             </a>
