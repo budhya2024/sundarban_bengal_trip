@@ -5,9 +5,18 @@ import Image from "next/image";
 import { Phone, Sparkles, ShieldCheck, Award, Calendar, Users, User, Mail } from "lucide-react";
 import { WhatsAppIcon } from "@/components/icons/SocialIcons";
 import { toast } from "sonner";
-import { createBooking } from "@/app/actions/home.actions";
+import { sendDurgaPujaHeroEmail } from "@/app/actions/durgaPujaHeroEmail.action";
 
 export const DurgaPujaHero = () => {
+  const getTodayString = () => {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, "0");
+    const day = String(now.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
+  const todayStr = getTodayString();
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -24,18 +33,22 @@ export const DurgaPujaHero = () => {
       return;
     }
 
+    if (formData.date && formData.date < todayStr) {
+      toast.error("পূর্বের কোনো তারিখ নির্বাচন করা যাবে না। অনুগ্রহ করে আজ বা ভবিষ্যৎ কোনো তারিখ বেছে নিন।");
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
       // 1. Submit to database & trigger automated Email to admin + confirmation response Email to user
-      const result = await createBooking({
+      const result = await sendDurgaPujaHeroEmail({
         name: formData.name,
         email: formData.email,
         phone: formData.phone,
         date: formData.date || "Durga Puja 2026",
-        guests: formData.guests || "2-4",
+        guests: formData.guests || "২ - ৪ জন",
         package: "Sundarban Durga Puja Special (3D/2N)",
-        status: "pending",
       });
 
       if (result.success) {
@@ -220,12 +233,23 @@ export const DurgaPujaHero = () => {
                     <input
                       type="text"
                       placeholder="যাত্রার তারিখ"
-                      onFocus={(e) => (e.target.type = "date")}
+                      min={todayStr}
+                      onFocus={(e) => {
+                        e.target.type = "date";
+                        e.target.min = todayStr;
+                      }}
                       onBlur={(e) => {
                         if (!e.target.value) e.target.type = "text";
                       }}
                       value={formData.date}
-                      onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+                      onChange={(e) => {
+                        const selectedDate = e.target.value;
+                        if (selectedDate && selectedDate < todayStr) {
+                          toast.error("পূর্বের কোনো তারিখ নির্বাচন করা যাবে না। অনুগ্রহ করে আজ বা ভবিষ্যৎ কোনো তারিখ বেছে নিন।");
+                          return;
+                        }
+                        setFormData({ ...formData, date: selectedDate });
+                      }}
                       className="w-full pl-9 pr-2.5 py-2.5 sm:py-3 rounded-sm border border-slate-300 focus:border-amber-500 focus:ring-1 focus:ring-amber-400 outline-none text-xs sm:text-sm text-slate-900 bg-white placeholder-slate-400"
                     />
                   </div>
