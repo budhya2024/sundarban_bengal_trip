@@ -94,8 +94,13 @@ export const sendDurgaPujaHeroEmail = async (data: DurgaPujaHeroBookingData) => 
     guests: guestCount,
   });
 
+  const recipientEmail =
+    process.env.SITE_OWNER_EMAIL ||
+    process.env.NODEMAILER_USER ||
+    "sundarbanbengaltrip@gmail.com";
+
   const adminEmailResult = await sendBaseEmail({
-    to: process.env.SITE_OWNER_EMAIL || process.env.NODEMAILER_USER!,
+    to: recipientEmail,
     subject: adminSubject,
     html: adminHtml,
     replyTo: data.email,
@@ -117,7 +122,7 @@ export const sendDurgaPujaHeroEmail = async (data: DurgaPujaHeroBookingData) => 
       to: data.email,
       subject: clientSubject,
       html: clientHtml,
-      replyTo: process.env.SITE_OWNER_EMAIL || process.env.NODEMAILER_USER!,
+      replyTo: recipientEmail,
       name: "Sundarban Bengal Trip",
     });
   }
