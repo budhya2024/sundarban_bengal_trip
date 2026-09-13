@@ -97,7 +97,17 @@ export function InquiryDrawer({ isOpen, onClose, inquiry }: any) {
                 </SheetTitle>
                 <SheetDescription className="text-xs">
                   Received on{" "}
-                  {format(new Date(inquiry.createdAt), "MMMM dd, hh:mm a")}
+                  {(() => {
+                    if (!inquiry?.createdAt) return "N/A";
+                    try {
+                      const d = new Date(inquiry.createdAt);
+                      return isNaN(d.getTime())
+                        ? String(inquiry.createdAt)
+                        : format(d, "MMMM dd, hh:mm a");
+                    } catch {
+                      return String(inquiry.createdAt);
+                    }
+                  })()}
                 </SheetDescription>
               </SheetHeader>
             </div>

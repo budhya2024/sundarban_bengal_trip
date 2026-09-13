@@ -44,7 +44,7 @@ export async function getInquiryRows(page: number = 1, limit: number = 10) {
         guests: bookings.guests,
         package: bookings.package,
         date: bookings.date,
-        notes: bookings.adminNotes,
+        adminNotes: bookings.adminNotes,
         createdAt: bookings.createdAt,
         status: bookings.status,
       })

@@ -16,7 +16,21 @@ import { InquiryDrawer } from "@/components/admin/InquiryDrawer";
 import { BookingValues } from "@/schemas/booking.schema";
 import { format, parseISO } from "date-fns";
 
-export default function InquiryRow({ inquiry }: { inquiry: BookingValues }) {
+export interface InquiryItem {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  guests: string;
+  package: string;
+  date: string;
+  adminNotes?: string | null;
+  notes?: string | null;
+  createdAt?: string | Date;
+  status: string;
+}
+
+export default function InquiryRow({ inquiry }: { inquiry: InquiryItem }) {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   // Status Badge Logic
@@ -26,6 +40,28 @@ export default function InquiryRow({ inquiry }: { inquiry: BookingValues }) {
     confirmed: "bg-emerald-100 text-emerald-700 border-emerald-200",
     cancelled: "bg-red-100 text-red-700 border-red-200",
   };
+
+  const formattedDate = (() => {
+    if (!inquiry.date) return "N/A";
+    try {
+      const parsed = parseISO(inquiry.date);
+      if (!isNaN(parsed.getTime())) {
+        return format(parsed, "MMM dd, yyyy");
+      }
+      const d = new Date(inquiry.date);
+      if (!isNaN(d.getTime())) {
+        return format(d, "MMM dd, yyyy");
+      }
+      return inquiry.date;
+    } catch {
+      return inquiry.date;
+    }
+  })();
+
+  const currentStatus = inquiry.status?.toLowerCase() || "pending";
+  const badgeStyle =
+    statusStyles[currentStatus] ||
+    "bg-slate-100 text-slate-700 border-slate-200";
 
   return (
     <>
@@ -62,8 +98,7 @@ export default function InquiryRow({ inquiry }: { inquiry: BookingValues }) {
               {inquiry.package}
             </span>
             <span className="text-xs text-slate-500 flex items-center gap-1">
-              <Calendar size={12} />{" "}
-              {format(parseISO(inquiry.date), "MMM dd, yyyy")}
+              <Calendar size={12} /> {formattedDate}
             </span>
           </div>
         </TableCell>
@@ -71,9 +106,9 @@ export default function InquiryRow({ inquiry }: { inquiry: BookingValues }) {
         <TableCell>
           <Badge
             variant="outline"
-            className={`capitalize font-bold text-[10px] px-2 py-0 ${statusStyles[inquiry.status]}`}
+            className={`capitalize font-bold text-[10px] px-2 py-0 ${badgeStyle}`}
           >
-            {inquiry.status}
+            {inquiry.status || "Pending"}
           </Badge>
         </TableCell>
 
