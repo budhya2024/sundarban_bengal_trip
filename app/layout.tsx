@@ -407,6 +407,19 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         </TanstackProvider>
 
         <Toaster />
+
+        {/* Sundarban Bengal Trip Assistant */}
+        <Script id="conversia-assistant" strategy="afterInteractive">
+          {`
+            (function (w, d, k) {
+              w.ConversiaSettings = { key: k, locale: "en-US" };
+              var s = d.createElement("script");
+              s.src = "https://conversia-omega-one.vercel.app/widget/v1.js";
+              s.async = true;
+              d.head.appendChild(s);
+            })(window, document, "cv_pk_758a62719bf1b71e42b7e458");
+          `}
+        </Script>
       </body>
     </html>
   );
