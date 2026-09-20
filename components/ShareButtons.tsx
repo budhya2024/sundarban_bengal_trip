@@ -73,7 +73,7 @@ export default function ShareButtons({ title }: { title?: string }) {
         <button
           onClick={copyToClipboard}
           aria-label="Copy Link"
-          className="w-10 h-10 flex items-center justify-center bg-slate-100 text-slate-600 transition-all rounded-[4px] hover:bg-emerald-600 hover:text-white hover:scale-110 active:scale-90 duration-300 border border-slate-200"
+          className="w-10 h-10 flex items-center justify-center bg-white text-slate-600 transition-all rounded-[4px] hover:bg-emerald-600 hover:text-white hover:scale-110 active:scale-90 duration-300 border border-slate-200 shadow-2xs cursor-pointer"
         >
           <Link2 className="w-4 h-4" />
         </button>

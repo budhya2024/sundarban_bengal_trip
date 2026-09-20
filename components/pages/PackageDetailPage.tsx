@@ -70,7 +70,7 @@ const PackageDetailsPage = ({
         backgroundImage={data.heroImage}
       />
 
-      <section className="py-16 bg-background">
+      <section className="py-8 md:py-16 bg-background">
         <div className="container">
           {/* Back Link */}
           <Link
@@ -98,7 +98,7 @@ const PackageDetailsPage = ({
               {/* Summary Box */}
               <div
                 data-aos="fade-up"
-                className="bg-card border-l-4 border-primary p-6 rounded-r-xl shadow-soft"
+                className="bg-card border-l-4 border-primary p-3 md:p-6 rounded-r-xl shadow-soft"
               >
                 <p className="text-foreground leading-relaxed">{data.note}</p>
               </div>
@@ -108,7 +108,7 @@ const PackageDetailsPage = ({
                 data-aos="fade-up"
                 className="grid grid-cols-2 md:grid-cols-4 gap-4"
               >
-                <div className="bg-card p-4 rounded-xl text-center shadow-soft">
+                <div className="bg-card p-4 rounded-xl text-center shadow">
                   <Clock className="w-6 h-6 text-secondary mx-auto mb-2" />
                   <span className="text-sm text-muted-foreground">
                     Duration
@@ -117,7 +117,7 @@ const PackageDetailsPage = ({
                     {data.duration}
                   </p>
                 </div>
-                <div className="bg-card p-4 rounded-xl text-center shadow-soft">
+                <div className="bg-card p-4 rounded-xl text-center shadow">
                   <FaCarSide className="w-6 h-6 text-secondary mx-auto mb-2" />
                   <span className="text-sm text-muted-foreground">
                     Pickup & Drop
@@ -127,7 +127,7 @@ const PackageDetailsPage = ({
                     kolkata & Caning
                   </p>
                 </div>
-                <div className="bg-card p-4 rounded-xl text-center shadow-soft">
+                <div className="bg-card p-4 rounded-xl text-center shadow">
                   <MapPin className="w-6 h-6 text-secondary mx-auto mb-2" />
                   <span className="text-sm text-muted-foreground">
                     Location
@@ -136,7 +136,7 @@ const PackageDetailsPage = ({
                     {data.location}
                   </p>
                 </div>
-                <div className="bg-card p-4 rounded-xl text-center shadow-soft">
+                <div className="bg-card p-4 rounded-xl text-center shadow">
                   <Star className="w-6 h-6 text-secondary mx-auto mb-2" />
                   <span className="text-sm text-muted-foreground">Rating</span>
                   <p className="font-semibold text-foreground">{data.rating}</p>

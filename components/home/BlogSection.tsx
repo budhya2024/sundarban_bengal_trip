@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import AOS from "aos";
@@ -5,9 +7,13 @@ import { Button } from "@/components/ui/button";
 import { Calendar, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { BlogType } from "@/db/schema";
-import { getAllBlogs, getLimitedBlogs } from "@/app/actions/blogs.actions";
+import { getLimitedBlogs } from "@/app/actions/blogs.actions";
 import { format } from "date-fns";
 
+// Swiper
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
+import "swiper/css";
 
 export const BlogSection = () => {
   const [blogs, setBlogs] = useState<BlogType[]>([]);
@@ -17,7 +23,7 @@ export const BlogSection = () => {
     const fetchBlogs = async () => {
       try {
         setLoading(true);
-        const { data, success } = await getLimitedBlogs(3);
+        const { data, success } = await getLimitedBlogs(5);
         if (success && data) {
           setBlogs(data);
         }
@@ -35,7 +41,7 @@ export const BlogSection = () => {
   }, []);
 
   return (
-    <section className="py-10 md:py-16 bg-muted">
+    <section className="py-10 md:py-16 bg-muted overflow-hidden">
       <div className="container">
         {/* Header */}
         <div
@@ -47,7 +53,7 @@ export const BlogSection = () => {
             Blog
           </span>
           <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mt-2 mb-4">
-            Travel Stories & Tips
+            Travel Stories &amp; Tips
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             Get inspired with travel stories, insider tips, and wildlife
@@ -55,61 +61,73 @@ export const BlogSection = () => {
           </p>
         </div>
 
-        {/* Blog Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {loading ? (
+        {/* Blog Slider (5 Articles, Smooth Autoplay, No Dots, No Arrows) */}
+        {loading ? (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             <BlogSkeleton />
-          ) : (
-            blogs.map((post, index) => (
-              <Link
-                key={index}
-                href={`/blog/${post.slug}`}
-                data-aos="fade-up"
-                data-aos-duration="500"
-                data-aos-delay={index * 100}
-                className="bg-card rounded-2xl overflow-hidden shadow-soft hover:shadow-elevated transition-all duration-300 group"
-              >
-                {/* Image */}
-                <div className="relative h-48 overflow-hidden">
-                  <Image
-                    src={post.image || "/assets/sundarban-tiger.jpeg"}
-                    alt={post.title}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                    quality={100}
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                    loading="lazy"
-                  />
-                </div>
-
-                {/* Content */}
-                <div className="p-6">
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3">
-                    <Calendar className="w-4 h-4" />
-                    {format(post.createdAt, "MMM dd, yyyy")}
+          </div>
+        ) : (
+          <Swiper
+            modules={[Autoplay]}
+            autoplay={{ delay: 4500, disableOnInteraction: false }}
+            spaceBetween={24}
+            className="items-stretch"
+            breakpoints={{
+              0: { slidesPerView: 1 },
+              768: { slidesPerView: 2 },
+              1024: { slidesPerView: 3 },
+            }}
+          >
+            {blogs.map((post, index) => (
+              <SwiperSlide key={post.id || post.slug || index} className="!h-auto pb-2">
+                <Link
+                  href={`/blog/${post.slug}`}
+                  className="bg-card rounded-2xl overflow-hidden  transition-all duration-300 group flex flex-col h-full border border-border/40"
+                >
+                  {/* Image */}
+                  <div className="relative h-48 overflow-hidden shrink-0">
+                    <Image
+                      src={post.image || "/assets/sundarban-tiger.jpeg"}
+                      alt={post.title}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                      quality={100}
+                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                      loading="lazy"
+                    />
                   </div>
-                  <h3 className="text-base md:text-lg font-semibold text-foreground mb-3 group-hover:text-primary transition-colors line-clamp-1">
-                    {post.title}
-                  </h3>
-                  <p
-                    dangerouslySetInnerHTML={{ __html: post.content }}
-                    className="text-muted-foreground text-sm mb-4 line-clamp-2"
-                  />
-                  <span className="inline-flex items-center gap-2 text-secondary font-medium group-hover:gap-3 transition-all">
-                    Read More <ArrowRight className="w-4 h-4" />
-                  </span>
-                </div>
-              </Link>
-            ))
-          )}
-        </div>
+
+                  {/* Content */}
+                  <div className="p-6 flex-1 flex flex-col justify-between">
+                    <div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3">
+                        <Calendar className="w-4 h-4" />
+                        {format(new Date(post.createdAt), "MMM dd, yyyy")}
+                      </div>
+                      <h3 className="text-base md:text-lg font-semibold text-foreground mb-3 group-hover:text-primary transition-colors line-clamp-2">
+                        {post.title}
+                      </h3>
+                      <p
+                        dangerouslySetInnerHTML={{ __html: post.content }}
+                        className="text-muted-foreground text-sm mb-4 line-clamp-2"
+                      />
+                    </div>
+                    <span className="inline-flex items-center gap-2 text-secondary font-medium group-hover:gap-3 transition-all mt-auto pt-2">
+                      Read More <ArrowRight className="w-4 h-4" />
+                    </span>
+                  </div>
+                </Link>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        )}
 
         {/* View All CTA */}
         <div
           data-aos="fade-up"
           data-aos-duration="500"
           data-aos-delay="300"
-          className="text-center mt-12"
+          className="text-center mt-8 md:mt-12"
         >
           <Button variant="hero" size="lg" asChild>
             <Link href="/blog">View All Articles</Link>

@@ -5,10 +5,10 @@ import { ArrowRight, Flag } from "lucide-react";
 
 export const PackageHero = () => {
   return (
-    <section className="bg-background text-foreground py-8 md:py-16">
+    <section className="bg-background text-foreground py-6 md:py-12">
       <div className="container ">
-        <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] items-center">
-          <div className="space-y-8 max-w-3xl">
+        <div className="grid gap-6 lg:gap-10 lg:grid-cols-[1.1fr_0.9fr] items-center">
+          <div className="space-y-4 sm:space-y-6 max-w-3xl">
             <h1 className="text-lg md:text-xl xl:text-2xl font-semibold text-foreground">
               Kolkata to Sundarban Tour Package – Comfortable Journey from
               Kolkata to the Mangrove Paradise

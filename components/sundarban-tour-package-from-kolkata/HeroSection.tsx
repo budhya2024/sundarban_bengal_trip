@@ -8,13 +8,11 @@ import Link from "next/link";
 export const SundarbanHeroSection = () => {
   return (
     <section className="relative pt-16 pb-24 lg:pt-24 lg:pb-32 bg-primary overflow-hidden">
-      <div className="container  relative z-10">
+      <div className="container relative z-10">
         <div className="flex flex-col lg:flex-row items-center gap-6 lg:gap-8">
 
           {/* Left Content */}
           <div className="lg:w-[55%] pt-8">
-
-
 
             {/* Heading */}
             <h1

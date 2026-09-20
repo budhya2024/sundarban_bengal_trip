@@ -354,3 +354,21 @@ select:focus {
     left: 150%;
   }
 }
+
+/* Swiper Pagination Dots Custom Styling */
+.swiper-pagination-bullet {
+  width: 8px !important;
+  height: 8px !important;
+  background: #94a3b8 !important;
+  opacity: 0.5 !important;
+  transition: all 0.3s ease !important;
+  border-radius: 9999px !important;
+  margin: 0 4px !important;
+}
+
+.swiper-pagination-bullet-active {
+  width: 24px !important;
+  background: #003c2f !important;
+  opacity: 1 !important;
+  border-radius: 9999px !important;
+}

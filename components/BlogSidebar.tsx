@@ -30,7 +30,7 @@ export const BlogSidebar = ({ latestPosts }: BlogSidebarProps) => {
   return (
     <aside className="space-y-8 sticky top-20">
       {/* Latest Posts */}
-      <div className="bg-card rounded-2xl p-6 shadow-soft" data-aos="fade-left">
+      <div className="bg-white border border-slate-200/80 rounded-2xl p-6 shadow-sm" data-aos="fade-left">
         <h3 className="font-display text-xl font-bold text-foreground mb-6 pb-3 border-b border-border">
           Latest Posts
         </h3>
@@ -41,7 +41,7 @@ export const BlogSidebar = ({ latestPosts }: BlogSidebarProps) => {
               href={`/blog/${post.slug}`}
               className="flex gap-4 group"
             >
-              <div className="w-20 h-20 rounded-sm overflow-hidden flex-shrink-0">
+              <div className="w-20 h-20 rounded-sm overflow-hidden flex-shrink-0 bg-slate-100">
                 <img
                   src={post.image || "/assets/placeholder.svg"}
                   alt={post.title}
@@ -49,7 +49,7 @@ export const BlogSidebar = ({ latestPosts }: BlogSidebarProps) => {
                 />
               </div>
               <div className="flex-1 min-w-0">
-                <h4 className="font-semibold text-foreground group-hover:text-primary transition-colors   line-clamp-2 text-sm">
+                <h4 className="font-semibold text-foreground group-hover:text-primary transition-colors line-clamp-2 text-sm">
                   {post.title}
                 </h4>
                 <div className="flex items-center gap-1 text-xs text-muted-foreground mt-2">
@@ -62,31 +62,9 @@ export const BlogSidebar = ({ latestPosts }: BlogSidebarProps) => {
         </div>
       </div>
 
-      {/* Tags */}
-      {/* <div
-        className="bg-card rounded-2xl p-6 shadow-soft"
-        data-aos="fade-left"
-        data-aos-delay="100"
-      >
-        <h3 className="font-display text-xl font-bold text-foreground mb-6 pb-3 border-b border-border">
-          Popular Tags
-        </h3>
-        <div className="flex flex-wrap gap-2">
-          {tags.map((tag) => (
-            <Link
-              key={tag}
-              href="/blog"
-              className="px-3 py-1.5 text-sm bg-muted text-muted-foreground rounded-full hover:bg-primary hover:text-primary-foreground transition-colors"
-            >
-              {tag}
-            </Link>
-          ))}
-        </div>
-      </div> */}
-
       {/* Follow Us */}
       <div
-        className="bg-card rounded-2xl p-6 shadow-soft"
+        className="bg-white border border-slate-200/80 rounded-2xl p-6 shadow-sm"
         data-aos="fade-left"
         data-aos-delay="200"
       >

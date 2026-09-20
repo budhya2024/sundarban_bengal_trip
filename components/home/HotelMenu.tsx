@@ -170,7 +170,7 @@ export default function HotelMenu() {
               Best Sundarban Menu
             </h2>
 
-            <p className="text-muted-foreground max-w-2xl mx-auto text-xs">
+            <p className="text-muted-foreground max-w-2xl mx-auto text-sm">
               Bengal Menu providing you authentic cuisines is an essential service
               in Sundarban tour from Kolkata. We offer delicious meals with the
               authenticity of Sundarban's core aroma.

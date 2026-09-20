@@ -43,15 +43,16 @@ export const Footer = () => {
               <span className="font-medium text-sm">Review us on Google</span>
             </a>
 
-            <div className="flex gap-4">
+            <div className="flex items-center gap-3">
               {/* Facebook */}
               <a
                 href="https://www.facebook.com/profile.php?id=61588168291064"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 rounded-[4px] bg-primary-foreground/10 hover:bg-blue-600 transition-colors"
+                aria-label="Facebook"
+                className="w-10 h-10 rounded-full flex items-center justify-center bg-primary-foreground/10 hover:bg-blue-600 text-primary-foreground transition-all duration-300 hover:scale-110 active:scale-95 shadow-sm"
               >
-                <FacebookIcon className="w-5 h-5 fill-current" />
+                <FacebookIcon className="w-4 h-4 fill-current" />
               </a>
 
               {/* Instagram */}
@@ -59,17 +60,19 @@ export const Footer = () => {
                 href="https://www.instagram.com/sundarbanbengaltrip/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 rounded-[4px] bg-primary-foreground/10 hover:bg-pink-600 transition-colors"
+                aria-label="Instagram"
+                className="w-10 h-10 rounded-full flex items-center justify-center bg-primary-foreground/10 hover:bg-pink-600 text-primary-foreground transition-all duration-300 hover:scale-110 active:scale-95 shadow-sm"
               >
-                <InstagramIcon className="w-5 h-5 fill-current" />
+                <InstagramIcon className="w-4 h-4 fill-current" />
               </a>
 
               {/* Call Button */}
               <a
                 href="tel:+917586889519"
-                className="p-2 rounded-[4px] bg-primary-foreground/10 hover:bg-green-600 transition-colors"
+                aria-label="Phone"
+                className="w-10 h-10 rounded-full flex items-center justify-center bg-primary-foreground/10 hover:bg-emerald-600 text-primary-foreground transition-all duration-300 hover:scale-110 active:scale-95 shadow-sm"
               >
-                <PhoneIcon className="w-5 h-5 fill-current" />
+                <PhoneIcon className="w-4 h-4 fill-current" />
               </a>
 
               {/* WhatsApp */}
@@ -77,9 +80,10 @@ export const Footer = () => {
                 href="https://wa.me/917586889519"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 rounded-[4px] bg-primary-foreground/10 hover:bg-green-500 transition-colors"
+                aria-label="WhatsApp"
+                className="w-10 h-10 rounded-full flex items-center justify-center bg-primary-foreground/10 hover:bg-[#25D366] text-primary-foreground transition-all duration-300 hover:scale-110 active:scale-95 shadow-sm"
               >
-                <WhatsAppIcon className="w-5 h-5 fill-current" />
+                <WhatsAppIcon className="w-4 h-4 fill-current" />
               </a>
             </div>
           </div>

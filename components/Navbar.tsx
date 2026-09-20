@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { getNavbarPackageKeys } from "@/app/actions/package.actions";
 import { Skeleton } from "./ui/skeleton";
 import { FaPhoneAlt, FaPhoneSquareAlt } from "react-icons/fa";
+import { HeaderSearch } from "@/components/HeaderSearch";
 
 const navLinks = [
   { name: "Home", path: "/" },
@@ -178,40 +179,21 @@ export const Navbar = () => {
             )}
           </div>
 
-          {/* DESKTOP CTA */}
-          <div className="hidden lg:block">
-            <a
-              href="tel:+917586889519"
-              className="relative inline-flex items-center justify-center overflow-hidden bg-primary
-              
-              px-7 py-3 rounded-full text-white font-medium 
-              transition-all duration-300"
+          {/* RIGHT SIDE ACTIONS */}
+          <div className="flex items-center gap-2.5 sm:gap-3">
+            <HeaderSearch isScrolled={isScrolled} isHome={isHome} />
+
+
+
+            {/* MOBILE TOGGLE */}
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="lg:hidden z-50 h-10 w-10 rounded-full bg-white text-slate-800 flex justify-center items-center shadow-sm"
+              aria-label="Toggle Menu"
             >
-              {/* Shine Effect */}
-              <span
-                className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/50 to-transparent"
-                style={{
-                  animation: "shine 2s linear infinite",
-                  transform: "skewX(-25deg)",
-                  width: "50%",
-                }}
-              />
-
-              <span className="relative z-10 flex flex-col">
-                <span className="flex gap-2 items-center ">
-                  <PhoneCallIcon size={18} />7586889519
-                </span>
-              </span>
-            </a>
+              {isOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
           </div>
-
-          {/* MOBILE TOGGLE */}
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="lg:hidden z-50 h-10 w-10 rounded-full bg-white flex justify-center items-center"
-          >
-            {isOpen ? <X size={26} /> : <Menu size={26} />}
-          </button>
         </nav>
       </div>
 

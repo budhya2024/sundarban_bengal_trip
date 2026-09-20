@@ -260,7 +260,7 @@ const BlogDetails = ({
               {/* Share */}
               <div
                 data-aos="fade-up"
-                className="mt-8 pt-6 border-t border-border"
+                className="mt-8 bg-white border border-slate-200/80 rounded-xl p-5 shadow-sm"
               >
                 <ShareButtons title={post.title} />
               </div>
