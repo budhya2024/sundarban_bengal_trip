@@ -8,7 +8,6 @@ import { Footer } from "@/components/Footer";
 import { PageHeader } from "@/components/PageHeader";
 
 import { SundarbanHeroSection } from "@/components/sundarban-tour-package-from-kolkata/HeroSection";
-import { IntroSection } from "@/components/sundarban-tour-package-from-kolkata/IntroSection";
 import { PackagesSection } from "@/components/sundarban-tour-package-from-kolkata/PackagesSection";
 import { ServicesSection } from "@/components/sundarban-tour-package-from-kolkata/ServicesSection";
 import { ExploreSection } from "@/components/sundarban-tour-package-from-kolkata/ExploreSection";
@@ -24,7 +23,7 @@ const SundarbanTourPackageFromKolkata = () => {
   }, []);
 
   return (
-    <main className="min-h-screen bg-background font-sans selection:bg-primary/20 selection:text-primary">
+    <main className="min-h-screen bg-white font-sans selection:bg-primary/20 selection:text-primary">
       <Navbar />
 
       <PageHeader
@@ -36,9 +35,6 @@ const SundarbanTourPackageFromKolkata = () => {
       {/* Hero */}
       <SundarbanHeroSection />
 
-      {/* Intro */}
-      <IntroSection />
-
       {/* Packages */}
       <PackagesSection />
 
@@ -49,7 +45,7 @@ const SundarbanTourPackageFromKolkata = () => {
       <ExploreSection />
 
       {/* How to Choose section */}
-      <section className="py-10 md:py-16 bg-background">
+      <section className="py-10 md:py-16 bg-white border-t border-border/40">
         <div className="container">
           <div className="space-y-6">
             <h2 className="font-display text-xl md:text-2xl lg:text-3xl font-bold text-foreground">
@@ -60,7 +56,7 @@ const SundarbanTourPackageFromKolkata = () => {
             </p>
 
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              <div className="p-5 rounded-xl border border-border/30 bg-card hover:shadow-md transition duration-200">
+              <div className="p-5 rounded-xl border border-border/40 bg-white shadow-sm hover:shadow-md transition duration-200">
                 <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-3">
                   <Heart className="w-5 h-5" />
                 </div>
@@ -70,7 +66,7 @@ const SundarbanTourPackageFromKolkata = () => {
                 </p>
               </div>
 
-              <div className="p-5 rounded-xl border border-border/30 bg-card hover:shadow-md transition duration-200">
+              <div className="p-5 rounded-xl border border-border/40 bg-white shadow-sm hover:shadow-md transition duration-200">
                 <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-3">
                   <Users className="w-5 h-5" />
                 </div>
@@ -80,7 +76,7 @@ const SundarbanTourPackageFromKolkata = () => {
                 </p>
               </div>
 
-              <div className="p-5 rounded-xl border border-border/30 bg-card hover:shadow-md transition duration-200">
+              <div className="p-5 rounded-xl border border-border/40 bg-white shadow-sm hover:shadow-md transition duration-200">
                 <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-3">
                   <Award className="w-5 h-5" />
                 </div>
@@ -90,7 +86,7 @@ const SundarbanTourPackageFromKolkata = () => {
                 </p>
               </div>
 
-              <div className="p-5 rounded-xl border border-border/30 bg-card hover:shadow-md transition duration-200">
+              <div className="p-5 rounded-xl border border-border/40 bg-white shadow-sm hover:shadow-md transition duration-200">
                 <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-3">
                   <Coins className="w-5 h-5" />
                 </div>
@@ -100,7 +96,7 @@ const SundarbanTourPackageFromKolkata = () => {
                 </p>
               </div>
 
-              <div className="p-5 rounded-xl border border-border/30 bg-card hover:shadow-md transition duration-200">
+              <div className="p-5 rounded-xl border border-border/40 bg-white shadow-sm hover:shadow-md transition duration-200">
                 <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-3">
                   <GraduationCap className="w-5 h-5" />
                 </div>
@@ -110,7 +106,7 @@ const SundarbanTourPackageFromKolkata = () => {
                 </p>
               </div>
 
-              <div className="p-5 rounded-xl border border-border/30 bg-card hover:shadow-md transition duration-200">
+              <div className="p-5 rounded-xl border border-border/40 bg-white shadow-sm hover:shadow-md transition duration-200">
                 <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-3">
                   <Briefcase className="w-5 h-5" />
                 </div>
@@ -125,7 +121,7 @@ const SundarbanTourPackageFromKolkata = () => {
       </section>
 
       {/* Things to Confirm section */}
-      <section className="py-10 md:py-16 bg-muted">
+      <section className="py-10 md:py-16 bg-[#faf8f5] border-t border-border/40">
         <div className="container">
           <div className="space-y-6">
             <h2 className="font-display text-xl md:text-2xl lg:text-3xl font-bold text-foreground">
@@ -136,7 +132,7 @@ const SundarbanTourPackageFromKolkata = () => {
             </p>
 
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              <div className="flex gap-4 p-5 rounded-xl border border-border/30 bg-card shadow-sm hover:shadow-md transition duration-200">
+              <div className="flex gap-4 p-5 rounded-xl border border-border/40 bg-white shadow-sm hover:shadow-md transition duration-200">
                 <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-secondary/10 flex items-center justify-center text-secondary">
                   <Hotel className="w-5 h-5" />
                 </div>
@@ -148,7 +144,7 @@ const SundarbanTourPackageFromKolkata = () => {
                 </div>
               </div>
 
-              <div className="flex gap-4 p-5 rounded-xl border border-border/30 bg-card shadow-sm hover:shadow-md transition duration-200">
+              <div className="flex gap-4 p-5 rounded-xl border border-border/40 bg-white shadow-sm hover:shadow-md transition duration-200">
                 <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-secondary/10 flex items-center justify-center text-secondary">
                   <Anchor className="w-5 h-5" />
                 </div>
@@ -160,7 +156,7 @@ const SundarbanTourPackageFromKolkata = () => {
                 </div>
               </div>
 
-              <div className="flex gap-4 p-5 rounded-xl border border-border/30 bg-card shadow-sm hover:shadow-md transition duration-200">
+              <div className="flex gap-4 p-5 rounded-xl border border-border/40 bg-white shadow-sm hover:shadow-md transition duration-200">
                 <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-secondary/10 flex items-center justify-center text-secondary">
                   <Utensils className="w-5 h-5" />
                 </div>
@@ -172,7 +168,7 @@ const SundarbanTourPackageFromKolkata = () => {
                 </div>
               </div>
 
-              <div className="flex gap-4 p-5 rounded-xl border border-border/30 bg-card shadow-sm hover:shadow-md transition duration-200">
+              <div className="flex gap-4 p-5 rounded-xl border border-border/40 bg-white shadow-sm hover:shadow-md transition duration-200">
                 <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-secondary/10 flex items-center justify-center text-secondary">
                   <Car className="w-5 h-5" />
                 </div>
@@ -184,7 +180,7 @@ const SundarbanTourPackageFromKolkata = () => {
                 </div>
               </div>
 
-              <div className="flex gap-4 p-5 rounded-xl border border-border/30 bg-card shadow-sm hover:shadow-md transition duration-200">
+              <div className="flex gap-4 p-5 rounded-xl border border-border/40 bg-white shadow-sm hover:shadow-md transition duration-200">
                 <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-secondary/10 flex items-center justify-center text-secondary">
                   <ShieldCheck className="w-5 h-5" />
                 </div>
@@ -196,7 +192,7 @@ const SundarbanTourPackageFromKolkata = () => {
                 </div>
               </div>
 
-              <div className="flex gap-4 p-5 rounded-xl border border-border/30 bg-card shadow-sm hover:shadow-md transition duration-200">
+              <div className="flex gap-4 p-5 rounded-xl border border-border/40 bg-white shadow-sm hover:shadow-md transition duration-200">
                 <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-secondary/10 flex items-center justify-center text-secondary">
                   <FileText className="w-5 h-5" />
                 </div>

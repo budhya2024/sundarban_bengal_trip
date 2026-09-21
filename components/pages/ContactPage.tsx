@@ -90,7 +90,7 @@ const ContactPage = ({ data }: { data: ContactPageValues | null }) => {
       />
 
       {/* Contact Cards */}
-      <section className="py-10 md:py-16 bg-background -mt-16 relative z-10">
+      <section className="py-10 md:py-16 bg-background">
         <div className="container">
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {contactCards.map((card, index) => (

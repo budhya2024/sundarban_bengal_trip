@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export const CostHero = () => {
   return (
-    <section className="relative min-h-[260px] sm:min-h-[320px] md:min-h-[360px] flex items-center pt-28 sm:pt-32 md:pt-36 pb-10 sm:pb-14 md:pb-16 overflow-hidden">
+    <section className="relative min-h-[260px] sm:min-h-[320px] md:min-h-[440px] flex items-center pt-28 sm:pt-32 md:pt-44 pb-10 sm:pb-14 md:pb-24 overflow-hidden">
       <div className="absolute inset-0">
         <Image
           src="/assets/howrah-bridge-howrah-west-bengal-city-1-hero.jpeg"

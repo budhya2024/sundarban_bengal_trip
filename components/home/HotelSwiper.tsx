@@ -1,6 +1,8 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 
 const row1Hotels = [
   {
@@ -132,9 +134,10 @@ export default function HotelSwiper() {
         <div className="relative w-full overflow-hidden mask-fade">
           <div className="flex gap-4 md:gap-6 animate-scroll-left">
             {loopRow1.map((hotel, index) => (
-              <div
+              <Link
+                href="/packages"
                 key={`r1-${index}`}
-                className="flex-shrink-0 w-72 sm:w-80 md:w-96 group"
+                className="flex-shrink-0 w-72 sm:w-80 md:w-96 group block cursor-pointer"
               >
                 <div className="relative h-44 sm:h-56 md:h-64 w-full rounded-sm overflow-hidden shadow-sm hover:shadow-elevated border border-border/60 transition-all duration-300 bg-card">
                   <Image
@@ -145,13 +148,16 @@ export default function HotelSwiper() {
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
                     loading="lazy"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-                    <span className="text-white text-sm font-medium tracking-wide">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+                    <span className="text-white text-sm font-semibold tracking-wide">
                       {hotel.title}
+                    </span>
+                    <span className="text-secondary text-xs font-medium mt-1 flex items-center gap-1">
+                      View Tour Packages <ArrowRight className="w-3.5 h-3.5" />
                     </span>
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
@@ -160,9 +166,10 @@ export default function HotelSwiper() {
         <div className="relative w-full overflow-hidden mask-fade">
           <div className="flex gap-4 md:gap-6 animate-scroll-right">
             {loopRow2.map((hotel, index) => (
-              <div
+              <Link
+                href="/packages"
                 key={`r2-${index}`}
-                className="flex-shrink-0 w-72 sm:w-80 md:w-96 group"
+                className="flex-shrink-0 w-72 sm:w-80 md:w-96 group block cursor-pointer"
               >
                 <div className="relative h-44 sm:h-56 md:h-64 w-full rounded-sm overflow-hidden shadow-sm hover:shadow-elevated border border-border/60 transition-all duration-300 bg-card">
                   <Image
@@ -173,16 +180,30 @@ export default function HotelSwiper() {
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
                     loading="lazy"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-                    <span className="text-white text-sm font-medium tracking-wide">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+                    <span className="text-white text-sm font-semibold tracking-wide">
                       {hotel.title}
+                    </span>
+                    <span className="text-secondary text-xs font-medium mt-1 flex items-center gap-1">
+                      View Tour Packages <ArrowRight className="w-3.5 h-3.5" />
                     </span>
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
+      </div>
+
+      {/* Bottom CTA Button to Tour List */}
+      <div className="container text-center mt-8 md:mt-10">
+        <Link
+          href="/packages"
+          className="inline-flex items-center gap-2 bg-secondary hover:bg-primary text-white font-semibold px-6 py-3 rounded-[4px] shadow-sm transition-all  text-sm"
+        >
+          <span>Explore All Tour Packages</span>
+          <ArrowRight className="w-4 h-4" />
+        </Link>
       </div>
 
       {/* Animation Keyframes */}

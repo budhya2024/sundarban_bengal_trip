@@ -73,26 +73,29 @@ export const BlogSidebar = ({ latestPosts }: BlogSidebarProps) => {
         </h3>
         <div className="flex gap-3">
           <a
-            href="#"
+            href="https://www.facebook.com/profile.php?id=61588168291064"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Facebook"
             className="w-10 h-10 rounded-full bg-[hsl(221,44%,41%)] text-primary-foreground flex items-center justify-center hover:opacity-90 transition-opacity"
           >
             <FacebookIcon className="w-5 h-5" />
           </a>
           <a
-            href="#"
+            href="https://www.instagram.com/sundarbanbengaltrip/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram"
             className="w-10 h-10 rounded-full bg-gradient-to-br from-[hsl(280,100%,44%)] via-[hsl(350,100%,55%)] to-[hsl(28,95%,59%)] text-primary-foreground flex items-center justify-center hover:opacity-90 transition-opacity"
           >
             <InstagramIcon className="w-5 h-5" />
           </a>
           <a
-            href="#"
-            className="w-10 h-10 rounded-full bg-[hsl(0,0%,0%)] text-primary-foreground flex items-center justify-center hover:opacity-90 transition-opacity"
-          >
-            <TwitterIcon className="w-5 h-5" />
-          </a>
-          <a
-            href="#"
-            className="w-10 h-10 rounded-full bg-[hsl(0,100%,50%)] text-primary-foreground flex items-center justify-center hover:opacity-90 transition-opacity"
+            href="https://www.youtube.com/@sundarbanbengaltrip"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="YouTube"
+            className="w-10 h-10 rounded-full bg-[#FF0000] text-primary-foreground flex items-center justify-center hover:opacity-90 transition-opacity"
           >
             <YoutubeIcon className="w-5 h-5" />
           </a>

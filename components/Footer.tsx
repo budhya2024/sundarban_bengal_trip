@@ -66,13 +66,15 @@ export const Footer = () => {
                 <InstagramIcon className="w-4 h-4 fill-current" />
               </a>
 
-              {/* Call Button */}
+              {/* YouTube */}
               <a
-                href="tel:+917586889519"
-                aria-label="Phone"
-                className="w-10 h-10 rounded-full flex items-center justify-center bg-primary-foreground/10 hover:bg-emerald-600 text-primary-foreground transition-all duration-300 hover:scale-110 active:scale-95 shadow-sm"
+                href="https://www.youtube.com/@sundarbanbengaltrip"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="YouTube"
+                className="w-10 h-10 rounded-full flex items-center justify-center bg-primary-foreground/10 hover:bg-red-600 text-primary-foreground transition-all duration-300 hover:scale-110 active:scale-95 shadow-sm"
               >
-                <PhoneIcon className="w-4 h-4 fill-current" />
+                <YoutubeIcon className="w-4 h-4 fill-current" />
               </a>
 
               {/* WhatsApp */}
@@ -95,23 +97,19 @@ export const Footer = () => {
             </h4>
             <ul className="space-y-3">
               {[
-                "Home",
-                "About Us",
-                "Tour Packages",
-                "Gallery",
-                "Blog",
-                "Contact",
+                { name: "Home", href: "/" },
+                { name: "About Us", href: "/about" },
+                { name: "Tour Packages", href: "/packages" },
+                { name: "Gallery", href: "/gallery" },
+                { name: "Blog", href: "/blog" },
+                { name: "Contact", href: "/contact" },
               ].map((item) => (
-                <li key={item}>
+                <li key={item.name}>
                   <Link
-                    href={
-                      item === "Home"
-                        ? "/"
-                        : `/${item.toLowerCase().replace(" ", "-").replace("tour-", "")}`
-                    }
+                    href={item.href}
                     className="text-primary-foreground/80 hover:text-secondary transition-colors"
                   >
-                    {item}
+                    {item.name}
                   </Link>
                 </li>
               ))}

@@ -289,3 +289,4 @@ export const PlacesContent: React.FC = () => {
     </div>
   );
 };
+

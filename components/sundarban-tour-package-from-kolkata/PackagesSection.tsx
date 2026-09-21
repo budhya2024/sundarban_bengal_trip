@@ -14,7 +14,7 @@ const services = [
 
 export const PackagesSection = () => {
   return (
-    <section className="py-8 md:py-16 bg-muted/20 border-y border-border/50 overflow-hidden">
+    <section className="py-8 md:py-16 overflow-hidden bg-card">
       <div className="container">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-14 lg:gap-20 items-stretch">
 
@@ -23,12 +23,12 @@ export const PackagesSection = () => {
             className="w-full relative h-full"
             data-aos="fade-right"
           >
-            <div className="relative rounded-2xl overflow-hidden border-4 border-background h-full min-h-[300px] md:min-h-[500px] shadow-xl">
+            <div className="relative rounded-2xl overflow-hidden h-full min-h-[300px] md:min-h-[500px] shadow-xl">
               <Image
                 src="/assets/gallery-bird.jpg"
                 alt="Sundarban Tour"
                 fill
-                className="object-cover hover:scale-110 transition-transform duration-700"
+                className="object-cover"
               />
             </div>
           </div>

@@ -14,7 +14,7 @@ export const PageHeader = ({
   backgroundImage,
 }: PageHeaderProps) => {
   return (
-    <section className="relative overflow-hidden min-h-[260px] sm:min-h-[320px] md:min-h-[360px] flex items-center pt-28 sm:pt-32 md:pt-36 pb-10 sm:pb-14 md:pb-16">
+    <section className="relative overflow-hidden min-h-[260px] sm:min-h-[320px] md:min-h-[440px] flex items-center pt-28 sm:pt-32 md:pt-44 pb-10 sm:pb-14 md:pb-24">
       {/* Background Image */}
       <div className="absolute inset-0">
         <img

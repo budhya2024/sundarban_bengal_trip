@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  ArrowRight,
   Phone,
   Mail,
   Sparkles,
@@ -35,37 +34,33 @@ const galleryImages = [
 
 export const ExploreSection = () => {
   return (
-    <section className="relative py-8 lg:py-16 bg-[#061117] overflow-hidden">
-      {/* Grid Pattern */}
-      <div className="absolute inset-0 opacity-[0.04] bg-[linear-gradient(rgba(255,255,255,0.12)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.12)_1px,transparent_1px)] bg-[size:80px_80px]"></div>
-
+    <section className="relative py-10 md:py-16 bg-white overflow-hidden border-t border-border/40">
       <div className="container relative z-10">
         {/* Heading */}
-        <div className="max-w-4xl mx-auto text-center mb-6 md:mb-12">
-
-
-          <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-white leading-[1.1] mb-4">
+        <div className="max-w-4xl mx-auto text-center mb-8 md:mb-12">
+          <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-foreground leading-snug mb-4">
             Explore The Untamed Beauty Of{" "}
             <Link
               href="https://en.wikipedia.org/wiki/Sundarbans"
-              target="/blank"
+              target="_blank"
+              className="text-primary hover:underline"
             >
               Sundarban
             </Link>
           </h2>
 
-          <p className="text-white/60 leading-relaxed max-w-3xl mx-auto">
+          <p className="text-muted-foreground leading-relaxed max-w-3xl mx-auto text-sm md:text-base">
             Cruise through the world’s largest mangrove forest, witness exotic
             wildlife, luxury riverside stays, and unforgettable boat safari
             adventures with our premium Sundarban tour packages.
           </p>
         </div>
 
-        {/* MAIN GRID FIX */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-10 items-stretch">
-          {/* LEFT SIDE */}
+        {/* MAIN GRID */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 items-stretch">
+          {/* LEFT SIDE: SLIDER */}
           <div className="relative w-full h-[400px] md:h-auto">
-            <div className="h-full relative rounded-[2rem] overflow-hidden border border-white/10 bg-white/5 backdrop-blur-2xl shadow-[0_20px_60px_rgba(0,0,0,0.45)]">
+            <div className="h-full relative rounded-2xl overflow-hidden border border-border/40 shadow-xl bg-card">
               <Swiper
                 modules={[Autoplay, Pagination]}
                 autoplay={{
@@ -85,37 +80,34 @@ export const ExploreSection = () => {
                         className="object-cover"
                       />
 
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
 
-                      <div className="absolute bottom-0 left-0 w-full p-5 sm:p-8 z-10">
-                        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-black/40 backdrop-blur-xl border border-white/10 text-white text-sm mb-5">
-                          <Trees className="w-4 h-4 text-secondary" />
-                          {item.tag}
-                        </div>
+                      <div className="absolute bottom-0 left-0 w-full p-5 sm:p-7 z-10">
 
-                        <h3 className="text-2xl md:text-3xl font-bold text-white leading-tight mb-3">
+
+                        <h3 className="text-xl sm:text-2xl font-bold text-white leading-tight mb-2">
                           {item.title}
                         </h3>
 
-                        <p className="text-white/70 mb-6">{item.subtitle}</p>
+                        <p className="text-white/80 text-xs sm:text-sm mb-4">{item.subtitle}</p>
 
-                        <div className="max-w-sm rounded-3xl border border-white/10 bg-white/10 backdrop-blur-2xl p-5 shadow-[0_20px_60px_rgba(0,0,0,0.35)]">
-                          <div className="flex items-center gap-3 mb-4">
-                            <div className="w-12 h-12 rounded-2xl bg-secondary/20 flex items-center justify-center">
-                              <ShieldCheck className="w-6 h-6 text-secondary" />
+                        <div className="rounded-xl border border-white/15 bg-black/40 backdrop-blur-md p-4 shadow-lg">
+                          <div className="flex items-center gap-3 mb-2">
+                            <div className="w-9 h-9 rounded-lg bg-secondary/20 flex items-center justify-center shrink-0">
+                              <ShieldCheck className="w-5 h-5 text-secondary" />
                             </div>
 
                             <div>
-                              <h5 className="text-white font-bold text-lg">
+                              <h5 className="text-white font-bold text-sm sm:text-base">
                                 {item.title}
                               </h5>
-                              <p className="text-white/50 text-sm">
+                              <p className="text-white/60 text-xs">
                                 {item.subtitle}
                               </p>
                             </div>
                           </div>
 
-                          <p className="text-white/60 leading-relaxed text-sm">
+                          <p className="text-white/75 leading-relaxed text-xs md:text-sm font-normel">
                             {item.description}
                           </p>
                         </div>
@@ -127,21 +119,21 @@ export const ExploreSection = () => {
             </div>
           </div>
 
-          {/* RIGHT SIDE FIX */}
+          {/* RIGHT SIDE: FEATURES & CTA */}
           <div className="w-full">
-            <div className="h-full bg-white/[0.04] backdrop-blur-2xl border border-white/10 rounded-3xl p-4 md:p-8 shadow-[0_20px_80px_rgba(0,0,0,0.4)] overflow-auto">
-              <div className="space-y-8">
-                {/* Feature */}
-                <div className="flex gap-5">
-                  <div className="w-14 h-14 rounded-2xl bg-primary/20 flex items-center justify-center flex-shrink-0">
-                    <Trees className="w-7 h-7 text-primary" />
+            <div className="h-full bg-white border border-border/60 rounded-2xl p-6 sm:p-8 shadow-sm flex flex-col justify-between space-y-6">
+              <div className="space-y-6">
+                {/* Feature 1 */}
+                <div className="flex gap-4 items-start">
+                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0 mt-0.5">
+                    <Trees className="w-6 h-6 text-primary" />
                   </div>
 
                   <div>
-                    <h4 className="text-lg md:text-xl font-bold text-white mb-3">
+                    <h4 className="text-base sm:text-lg font-bold text-foreground mb-1.5">
                       Explore Iconic Attractions
                     </h4>
-                    <p className="text-white/60 leading-relaxed">
+                    <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
                       Visit Sajnekhali Watch Tower, Dobanki Canopy Walk,
                       Sudhanyakhali, Pakhiralay, and stunning mangrove forest
                       landscapes.
@@ -149,59 +141,55 @@ export const ExploreSection = () => {
                   </div>
                 </div>
 
-                {/* Feature */}
-                <div className="flex gap-5">
-                  <div className="w-14 h-14 rounded-2xl bg-secondary/20 flex items-center justify-center flex-shrink-0">
-                    <Sparkles className="w-7 h-7 text-secondary" />
+                {/* Feature 2 */}
+                <div className="flex gap-4 items-start">
+                  <div className="w-12 h-12 rounded-xl bg-secondary/15 flex items-center justify-center shrink-0 mt-0.5">
+                    <Sparkles className="w-6 h-6 text-secondary" />
                   </div>
 
                   <div>
-                    <h4 className="text-lg md:text-xl font-bold text-white mb-3">
+                    <h4 className="text-base sm:text-lg font-bold text-foreground mb-1.5">
                       Premium Wildlife Experience
                     </h4>
-                    <p className="text-white/60 leading-relaxed">
+                    <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
                       Witness crocodiles, spotted deer, exotic birds, and the
                       majestic Royal Bengal Tiger while cruising through serene
                       rivers.
                     </p>
                   </div>
                 </div>
+              </div>
 
-                <div className="w-full h-px bg-white/10"></div>
+              <div className="w-full h-px bg-border/60" />
 
-                {/* CTA */}
-                <div>
-                  <h4 className="text-xl font-bold text-white mb-5">
-                    Book Your Premium
-                    <span className="block text-secondary">Sundarban Tour</span>
-                  </h4>
+              {/* CTA */}
+              <div>
+                <h4 className="text-lg sm:text-xl font-bold text-foreground mb-2">
+                  Book Your Premium{" "}
+                  <span className="text-primary">Sundarban Tour</span>
+                </h4>
 
-                  <p className="text-white/60 leading-relaxed mb-8">
-                    Luxury stay, Bengali meals, guided safari, transport, and
-                    memories.
-                  </p>
+                <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed mb-5">
+                  Luxury stay, Bengali meals, guided safari, transport, and
+                  memories.
+                </p>
 
-                  <div className="flex flex-col sm:flex-row gap-4">
-                    <a
-                      href="tel:+917586889519"
-                      className="flex items-center justify-between gap-4 bg-primary text-white px-6 py-4 rounded-2xl"
-                    >
-                      <div className="flex items-center gap-3">
-                        <Phone className="w-5 h-5" />
-                        +91 75868 89519
-                      </div>
-                    </a>
+                <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+                  <a
+                    href="tel:+917586889519"
+                    className="inline-flex items-center justify-center gap-2.5 bg-primary hover:bg-primary/90 text-white font-semibold px-5 py-3 rounded-xl shadow-sm transition-all  text-sm"
+                  >
+                    <Phone className="w-4 h-4" />
+                    <span>+91 75868 89519</span>
+                  </a>
 
-                    <a
-                      href="mailto:sundarbanbengaltrip@gmail.com"
-                      className="flex items-center justify-between gap-4 bg-white/5 border border-white/10 text-white px-6 py-4 rounded-2xl"
-                    >
-                      <div className="flex items-center gap-3">
-                        <Mail className="w-5 h-5 text-secondary" />
-                        Contact Us
-                      </div>
-                    </a>
-                  </div>
+                  <a
+                    href="mailto:sundarbanbengaltrip@gmail.com"
+                    className="inline-flex items-center justify-center gap-2.5 bg-muted hover:bg-secondary/15 text-foreground hover:text-secondary font-medium px-5 py-3 rounded-xl border border-border/60 transition-colors text-sm"
+                  >
+                    <Mail className="w-4 h-4" />
+                    <span>Contact Us</span>
+                  </a>
                 </div>
               </div>
             </div>
@@ -211,3 +199,4 @@ export const ExploreSection = () => {
     </section>
   );
 };
+

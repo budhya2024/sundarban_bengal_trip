@@ -84,7 +84,7 @@ export const TourPackagesSection = () => {
             autoplay={{ delay: 4000, disableOnInteraction: false }}
             pagination={{ clickable: true }}
             spaceBetween={20}
-            className="pb-6"
+            className="!pb-14 md:!pb-16 pt-2"
             breakpoints={{
               0: { slidesPerView: 1 },
               768: { slidesPerView: 2 },
@@ -94,9 +94,8 @@ export const TourPackagesSection = () => {
             {packages.map((pkg, index) => (
               <SwiperSlide key={pkg.id || pkg.key || index} className="!h-auto">
                 <div
-                  className={`group relative rounded-xl overflow-hidden bg-card border border-border/60 shadow-sm hover:shadow-lg transition-all duration-500 h-full flex flex-col ${
-                    pkg.isPopular ? "ring-2 ring-secondary" : ""
-                  }`}
+                  className={`group relative rounded-xl overflow-hidden bg-card border border-border/60 shadow-sm hover:shadow-lg transition-all duration-500 h-full flex flex-col ${pkg.isPopular ? "ring-2 ring-secondary" : ""
+                    }`}
                 >
                   {/* Popular Badge */}
                   {pkg.isPopular && (

@@ -46,7 +46,7 @@ export default function Sundarban1Night() {
                 The 1 Night 2 Days Sundarban Package is ideal for travellers seeking a quick, memorable adventure without a major time commitment. Here is why this package is the perfect fit for different traveler groups:
               </p>
             </div>
-            
+
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               <div className="p-6 rounded-xl border border-border/50 bg-card/50 backdrop-blur-sm shadow-md hover:shadow-lg transition duration-200">
                 <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-4">
@@ -80,7 +80,7 @@ export default function Sundarban1Night() {
 
               <div className="p-6 rounded-xl border border-border/50 bg-card/50 backdrop-blur-sm shadow-md hover:shadow-lg transition duration-200">
                 <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-4">
-                  <Users className="w-6 h-6" /> 
+                  <Users className="w-6 h-6" />
                 </div>
                 <h4 className="text-lg font-semibold text-foreground mb-2">Families with Kids & Elders</h4>
                 <p className="text-sm text-muted-foreground">

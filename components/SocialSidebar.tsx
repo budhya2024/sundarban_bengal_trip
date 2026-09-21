@@ -4,8 +4,8 @@ import {
   InstagramIcon,
   TwitterIcon,
   WhatsAppIcon,
+  YoutubeIcon,
 } from "@/components/icons/SocialIcons";
-import { PhoneIcon } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 const socialLinks = [
@@ -23,10 +23,10 @@ const socialLinks = [
       "bg-gradient-to-br from-[hsl(280,100%,44%)] via-[hsl(350,100%,55%)] to-[hsl(28,95%,59%)]", // Instagram gradient
   },
   {
-    Icon: PhoneIcon,
-    href: "tel:+917586889519",
-    label: "Call",
-    bgColor: "bg-green-600",
+    Icon: YoutubeIcon,
+    href: "https://www.youtube.com/@sundarbanbengaltrip",
+    label: "YouTube",
+    bgColor: "bg-[#FF0000]",
   },
   {
     Icon: WhatsAppIcon,

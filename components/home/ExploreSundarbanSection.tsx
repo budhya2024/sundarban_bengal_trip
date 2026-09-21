@@ -59,11 +59,11 @@ export const ExploreSundarbanSection = () => {
           {/* Left Side - Details */}
           <div data-aos="fade-right" className="lg:sticky top-24">
             {/* Features Grid */}
-            <div className="grid sm:grid-cols-2 gap-6 mb-4 lg:mb-8">
+            <div className="grid grid-cols-2 gap-2 sm:gap-6 mb-4 lg:mb-8">
               {features.map((feature, index) => (
                 <div
                   key={index}
-                  className="bg-card p-5 rounded-xl shadow-soft flex items-start gap-4"
+                  className="bg-card p-5 rounded-xl shadow-soft flex flex-col sm:flex-row  items-start gap-4"
                 >
                   <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
                     <feature.icon className="w-6 h-6 text-primary" />
