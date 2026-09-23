@@ -38,6 +38,7 @@ import { PackageSchema, PackageValues } from "@/schemas/package.schema";
 import { cn } from "@/lib/utils";
 
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { SidebarTrigger } from "./SidebarTrigger";
 import { upsertPackage } from "@/app/actions/package.actions";
 import {
@@ -164,12 +165,12 @@ const emptyState: PackageValues = {
   location: "",
   rating: "4.6/5",
   availability: "Daily departures",
-  highlights: [{ value: "" }],
+  highlights: [],
   timeline: [
     { dayTitle: "Day 1", events: [{ time: "", title: "", description: "" }] },
   ],
-  inclusions: [{ value: "" }],
-  exclusions: [{ value: "" }],
+  inclusions: [],
+  exclusions: [],
   menu: [
     { dayTitle: "Day 1", breakfast: "", lunch: "", eveningSnacks: "", dinner: "" },
   ],
@@ -178,8 +179,9 @@ const emptyState: PackageValues = {
 export default function PackageForm({
   initialData,
 }: {
-  initialData: PackageValues | null;
+  initialData: (PackageValues & { key?: string; id?: string }) | null;
 }) {
+  const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const { toast } = useToast();
 
@@ -206,6 +208,9 @@ export default function PackageForm({
       ? {
           ...emptyState,
           ...initialData,
+          highlights: initialData.highlights || [],
+          inclusions: initialData.inclusions || [],
+          exclusions: initialData.exclusions || [],
           menu: initialData.menu && initialData.menu.length > 0
             ? initialData.menu
             : [
@@ -319,20 +324,35 @@ export default function PackageForm({
     }
   };
 
+  const onValidationError = (errors: any) => {
+    console.error("Form validation errors:", errors);
+    const getFirstErrorMessage = (err: any): string | null => {
+      if (!err) return null;
+      if (err.message && typeof err.message === "string") return err.message;
+      for (const key of Object.keys(err)) {
+        const msg = getFirstErrorMessage(err[key]);
+        if (msg) return msg;
+      }
+      return null;
+    };
+    const firstError = getFirstErrorMessage(errors);
+    toast({
+      title: "Validation Error",
+      description: firstError || "Please check all required fields.",
+      variant: "destructive",
+    });
+  };
+
   const onSubmit = async (values: PackageValues) => {
     startTransition(async () => {
-      const res = await upsertPackage(values);
+      const res = await upsertPackage(values, initialData?.key);
       if (res.success) {
         toast({ title: "Success", description: "Package saved successfully!" });
-        if (!initialData) {
-          setHeroPreview(null);
-          setPackagePreview(null);
-          form.reset(emptyState);
-        }
+        router.push("/admin/package");
       } else {
         toast({
           title: "Error",
-          description: "Failed to save",
+          description: res.error || "Failed to save package",
           variant: "destructive",
         });
       }
@@ -342,7 +362,7 @@ export default function PackageForm({
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(onSubmit)}
+        onSubmit={form.handleSubmit(onSubmit, onValidationError)}
         className="min-h-screen bg-slate-50/30 pb-20"
       >
         {/* --- STICKY HEADER --- */}
@@ -885,8 +905,18 @@ export default function PackageForm({
               ))}
             </div>
 
-            {/* Highlights, Inclusions, Exclusions sections follow the same UI ... */}
+            {/* Inclusions and Exclusions sections (Highlights commented out for now) */}
             {[
+              /*
+              {
+                title: "Highlights",
+                color: "text-amber-700",
+                name: "highlights",
+                fields: hFields,
+                append: hAppend,
+                remove: hRemove,
+              },
+              */
               {
                 title: "Inclusions",
                 color: "text-blue-700",

@@ -150,6 +150,7 @@ const BlogRows = ({ blogs }: { blogs: BlogType[] }) => {
                     src={blog.image}
                     alt={blog.title}
                     fill
+                    unoptimized
                     className="object-cover"
                   />
                 ) : (

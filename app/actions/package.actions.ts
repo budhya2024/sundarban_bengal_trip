@@ -183,7 +183,7 @@ export async function getPackageBySlug(slug: string) {
   }
 }
 
-export async function upsertPackage(values: PackageValues) {
+export async function upsertPackage(values: PackageValues, existingKey?: string) {
   try {
     // 1. Generate a URL-friendly slug from Package Name
     // Example: "Sundarban 2 Days 1 Night Deluxe" -> "sundarban-2-days-1-night-deluxe"
@@ -194,29 +194,45 @@ export async function upsertPackage(values: PackageValues) {
       .replace(/\s+/g, "-") // Replace spaces with hyphens
       .replace(/-+/g, "-"); // Remove duplicate hyphens
 
-    // 2. Perform the Upsert
-    await db
-      .insert(travelPackages)
-      .values({
-        key: packageKey,
-        // Using heroTitle or category fallback since category was removed from form
-        category: "General",
-        isPopular: values.isPopular,
-        data: values,
-      })
-      .onConflictDoUpdate({
-        target: travelPackages.key,
-        set: {
+    // 2. Perform the Upsert / Update
+    if (existingKey) {
+      await db
+        .update(travelPackages)
+        .set({
+          key: packageKey,
           category: "General",
           isPopular: values.isPopular,
           data: values,
           updatedAt: new Date(),
-        },
-      });
+        })
+        .where(eq(travelPackages.key, existingKey));
+    } else {
+      await db
+        .insert(travelPackages)
+        .values({
+          key: packageKey,
+          // Using heroTitle or category fallback since category was removed from form
+          category: "General",
+          isPopular: values.isPopular,
+          data: values,
+        })
+        .onConflictDoUpdate({
+          target: travelPackages.key,
+          set: {
+            category: "General",
+            isPopular: values.isPopular,
+            data: values,
+            updatedAt: new Date(),
+          },
+        });
+    }
 
     // 4. Invalidate Caches
     revalidatePath("/admin/package");
     revalidatePath(`/packages/${packageKey}`);
+    if (existingKey && existingKey !== packageKey) {
+      revalidatePath(`/packages/${existingKey}`);
+    }
 
     return { success: true, key: packageKey };
   } catch (error) {

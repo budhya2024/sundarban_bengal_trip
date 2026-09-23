@@ -83,6 +83,7 @@ export function PackageRow({ pkg }: { pkg: any }) {
                   src={pkg.heroImage}
                   alt={pkg.packageName}
                   fill
+                  unoptimized
                   className="object-cover transition-transform group-hover:scale-105"
                 />
               ) : (
