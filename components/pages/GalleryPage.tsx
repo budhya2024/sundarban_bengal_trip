@@ -55,7 +55,7 @@ const GalleryPage = ({
         backgroundImage="/assets/house-boat.jpeg"
       />
 
-      <section className="py-10 md:py-16bg-background">
+      <section className="py-10 md:py-16 bg-background">
         <div className="container">
           {/* Category Filter */}
           {galleryItems.length > 0 && (

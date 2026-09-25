@@ -77,7 +77,7 @@ const AboutPage = ({ data }: { data: AboutValues }) => {
       />
 
       {/* Story Section */}
-      <section className="py-10 md:py-16bg-background">
+      <section className="py-10 md:py-16 bg-background">
         <div className="container">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div data-aos="fade-right">
@@ -177,7 +177,7 @@ const AboutPage = ({ data }: { data: AboutValues }) => {
       </section>
 
       {/* Values */}
-      <section className="py-10 md:py-16bg-background">
+      <section className="py-10 md:py-16 bg-background">
         <div className="container">
           <div data-aos="fade-up" className="text-center mb-8 md:mb-12">
             <span className="text-secondary font-medium text-sm uppercase tracking-wider">

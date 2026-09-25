@@ -71,7 +71,7 @@ const Index = () => {
       />
       <FAQSection data={homeSetting?.faqs || []} loading={loading} />
       <BlogSection />
-      <ContactSection />
+      {/* <ContactSection /> */}
       <CTASection />
       <Footer />
     </main>

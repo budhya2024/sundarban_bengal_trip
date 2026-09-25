@@ -24,7 +24,7 @@ export const FAQSection = ({
   }, []);
 
   return (
-    <section className="py-10 md:py-16bg-background">
+    <section className="py-10 md:py-16 bg-background">
       <div className="container">
         {/* Header */}
         <div

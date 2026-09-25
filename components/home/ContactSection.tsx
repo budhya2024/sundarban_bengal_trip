@@ -39,7 +39,7 @@ export const ContactSection = () => {
           {/* RIGHT IMAGE */}
           <div className="relative">
             <Image
-              src="/assets/tourman.jpg"
+              src="/assets/tourman.avif"
               alt="Sundarban Tour"
               width={600}
               height={600}

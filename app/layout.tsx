@@ -456,7 +456,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <Toaster />
 
         {/* Sundarban Bengal Trip Assistant */}
-        <Script id="conversia-assistant" strategy="afterInteractive">
+        {/* <Script id="conversia-assistant" strategy="afterInteractive">
           {`
             (function (w, d, k) {
               w.ConversiaSettings = { key: k, locale: "en-US" };
@@ -466,7 +466,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
               d.head.appendChild(s);
             })(window, document, "cv_pk_758a62719bf1b71e42b7e458");
           `}
-        </Script>
+        </Script> */}
       </body>
     </html>
   );
