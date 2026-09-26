@@ -137,6 +137,10 @@ export const Footer = () => {
                   link: "/packages/sundarban-2-night-3-days-tour",
                 },
                 {
+                  name: "Sundarban Luxury Hotel Tour",
+                  link: "/sundarban-luxury-hotel-tour-package-in-west-bengal",
+                },
+                {
                   name: "Sundarban Durga Puja Special Packages",
                   link: "/sundarban-durga-puja-special-packages",
                 },
@@ -294,6 +298,42 @@ export const Footer = () => {
             className="text-primary-foreground/80 hover:text-secondary transition-colors"
           >
             Best Sundarban Tour in 2026
+          </Link>
+
+          <span className="text-primary-foreground/40">|</span>
+
+          <Link
+            href="/sundarban-luxury-hotel-tour-package-in-west-bengal"
+            className="text-primary-foreground/80 hover:text-secondary transition-colors"
+          >
+            Sundarban Luxury Hotel Tour Package in West Bengal
+          </Link>
+
+          <span className="text-primary-foreground/40">|</span>
+
+          <Link
+            href="/sundarban-sonar-bangla-resort-package-west-bengal"
+            className="text-primary-foreground/80 hover:text-secondary transition-colors"
+          >
+            Sundarban Sonar Bangla Resort Package in West Bengal
+          </Link>
+
+          <span className="text-primary-foreground/40">|</span>
+
+          <Link
+            href="/explore-sundarban-tours-from-kolkata"
+            className="text-primary-foreground/80 hover:text-secondary transition-colors"
+          >
+            Explore Sundarban Tours from Kolkata
+          </Link>
+
+          <span className="text-primary-foreground/40">|</span>
+
+          <Link
+            href="/sundarban-winter-season-tour-from-kolkata"
+            className="text-primary-foreground/80 hover:text-secondary transition-colors"
+          >
+            Sundarban Winter Season Tour from Kolkata
           </Link>
         </div>
 

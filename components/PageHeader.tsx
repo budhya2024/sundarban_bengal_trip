@@ -48,7 +48,7 @@ export const PageHeader = ({
           </div>
 
           {/* Title */}
-          <h1 className="font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight mb-2.5 sm:mb-3.5 max-w-4xl">
+          <h1 className="font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-relaxed  mb-2.5 sm:mb-3.5 max-w-4xl">
             {title}
           </h1>
 

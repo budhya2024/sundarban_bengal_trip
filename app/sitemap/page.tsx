@@ -137,6 +137,26 @@ const SitemapPage = () => {
                     Best Sundarban Tour in 2026
                   </Link>
                 </li>
+                <li>
+                  <Link href="/sundarban-luxury-hotel-tour-package-in-west-bengal" className="text-primary hover:text-secondary font-semibold transition-colors duration-200">
+                    Sundarban Luxury Hotel Tour Package in West Bengal
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/sundarban-sonar-bangla-resort-package-west-bengal" className="text-primary hover:text-secondary font-semibold transition-colors duration-200">
+                    Sundarban Sonar Bangla Resort Package in West Bengal
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/explore-sundarban-tours-from-kolkata" className="text-primary hover:text-secondary font-semibold transition-colors duration-200">
+                    Explore Sundarban Tours with sundarbanbengaltrip from Kolkata
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/sundarban-winter-season-tour-from-kolkata" className="text-primary hover:text-secondary font-semibold transition-colors duration-200">
+                    Sundarban Winter Season Tour from Kolkata
+                  </Link>
+                </li>
               </ul>
             </div>
           </div>

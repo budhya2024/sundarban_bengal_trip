@@ -64,6 +64,7 @@ export const GallerySection = () => {
                 key={i}
                 className={`
         ${span} 
+        ${i >= 4 ? "hidden md:block" : ""}
         rounded-xl 
         bg-slate-300/80 
         border border-slate-200 
@@ -85,7 +86,7 @@ export const GallerySection = () => {
                   key={image.id}
                   data-aos="fade-up"
                   data-aos-delay={index * 100}
-                  className={`${spanClass} relative rounded-xl overflow-hidden group cursor-pointer`}
+                  className={`${spanClass} ${index >= 4 ? "hidden md:block" : ""} relative rounded-xl overflow-hidden group cursor-pointer`}
                 >
                   <Image
                     src={image.url}

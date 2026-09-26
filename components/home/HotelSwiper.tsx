@@ -148,14 +148,6 @@ export default function HotelSwiper() {
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
                     loading="lazy"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
-                    <span className="text-white text-sm font-semibold tracking-wide">
-                      {hotel.title}
-                    </span>
-                    <span className="text-secondary text-xs font-medium mt-1 flex items-center gap-1">
-                      View Tour Packages <ArrowRight className="w-3.5 h-3.5" />
-                    </span>
-                  </div>
                 </div>
               </Link>
             ))}
@@ -180,14 +172,6 @@ export default function HotelSwiper() {
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
                     loading="lazy"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
-                    <span className="text-white text-sm font-semibold tracking-wide">
-                      {hotel.title}
-                    </span>
-                    <span className="text-secondary text-xs font-medium mt-1 flex items-center gap-1">
-                      View Tour Packages <ArrowRight className="w-3.5 h-3.5" />
-                    </span>
-                  </div>
                 </div>
               </Link>
             ))}

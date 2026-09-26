@@ -12,7 +12,7 @@ export const DurgaPujaHotel = () => {
       {/* Background Image: Sundar Sonar Bangla Hotel Resort Dusk View */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="/assets/sonar-bangla-hotel-bg.jpg"
+          src="/assets/sonarbanglahotel.jpg"
           alt="Sundar Sonar Bangla Hotel Resort"
           fill
           priority
