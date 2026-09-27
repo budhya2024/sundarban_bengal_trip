@@ -2,6 +2,7 @@ import * as z from "zod";
 
 export const PackageSchema = z.object({
   isPopular: z.boolean().default(false),
+  isSonarBangla: z.boolean().default(false),
   packageName: z.string().min(5, "Package name is required"),
   packageImage: z.string().min(1, "Package image is required"),
   // Section 1: HERO

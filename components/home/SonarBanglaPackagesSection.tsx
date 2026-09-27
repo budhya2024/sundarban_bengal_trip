@@ -8,8 +8,8 @@ import { BookingModal } from "@/components/BookingModal";
 import { FaClock, FaStar, FaCarSide, FaBed } from "react-icons/fa6";
 import { GiHotMeal } from "react-icons/gi";
 import { PiBinocularsFill } from "react-icons/pi";
+import { Hotel } from "lucide-react";
 
-import Link from "next/link";
 import Image from "next/image";
 import { PackageValues } from "@/schemas/package.schema";
 import { getPackages } from "@/app/actions/package.actions";
@@ -20,13 +20,14 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
+import { PackageSkeleton } from "./TourPackagesSection";
 
 interface PackageListValue extends PackageValues {
   key: string;
   id: string;
 }
 
-export const TourPackagesSection = () => {
+export const SonarBanglaPackagesSection = () => {
   const [packages, setPackages] = useState<PackageListValue[]>([]);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
@@ -38,7 +39,10 @@ export const TourPackagesSection = () => {
       const { data, success } = await getPackages();
 
       if (success && data) {
-        setPackages(data.filter((pkg) => !pkg.isSonarBangla));
+        const sonarBanglaPkgs = data.filter(
+          (pkg) => pkg.isSonarBangla === true
+        );
+        setPackages(sonarBanglaPkgs);
       }
 
       setLoading(false);
@@ -51,29 +55,37 @@ export const TourPackagesSection = () => {
     AOS.refresh();
   }, []);
 
+  // If still loading or no Sonar Bangla packages exist, do not display the section
+  if (loading || packages.length === 0) {
+    return null;
+  }
+
   return (
-    <section className="py-8 md:py-16 overflow-hidden">
+    <section className="py-8 md:py-16 overflow-hidden bg-slate-50/60 border-y border-border/40">
       <div className="container">
         {/* Header */}
         <div
           data-aos="fade-up"
           className="text-center max-w-4xl mx-auto mb-10 md:mb-16"
         >
-          <h1 className="font-display text-2xl md:text-3xl font-bold text-foreground mt-2 mb-4">
-            Choose Your Sundarban tour package from kolkata
-          </h1>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-100 text-amber-800 text-xs font-bold uppercase tracking-wider mb-3 border border-amber-200">
+            <Hotel className="w-3.5 h-3.5" />
+            <span>Luxury Resort Partner</span>
+          </div>
 
-          <p className="text-muted-foreground max-w-4xl mx-auto">
-            Finding the perfect travel destination isn’t about picking the most
-            popular spot on social media—it is about finding the place that
-            matches your current energy, budget, and travel style. Experience
-            the natural beauty of Sundarban with Kolkata to Sundarban tour
-            package comfortable journey, delicious meals and extraordinary
-            sightseeing.
+          <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-4">
+            Hotel Sonar Bangla
+          </h2>
+
+          <p className="text-muted-foreground max-w-3xl mx-auto text-sm md:text-base">
+            Indulge in 5-star comfort and riverside elegance at the renowned Hotel
+            Sonar Bangla Sundarban. Experience premium AC cottages, authentic
+            Bengali feasts, Kolkata-to-Kolkata transfers, and private mangrove boat
+            safaris.
           </p>
         </div>
 
-        {/* Packages Slider with Dots Pagination */}
+        {/* Packages Slider */}
         {loading ? (
           <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-4">
             <PackageSkeleton />
@@ -81,7 +93,7 @@ export const TourPackagesSection = () => {
         ) : (
           <Swiper
             modules={[Autoplay, Pagination]}
-            autoplay={{ delay: 4000, disableOnInteraction: false }}
+            autoplay={{ delay: 4500, disableOnInteraction: false }}
             pagination={{ clickable: true }}
             spaceBetween={20}
             className="!pb-14 md:!pb-16 !pt-3"
@@ -92,13 +104,12 @@ export const TourPackagesSection = () => {
             }}
           >
             {packages.map((pkg, index) => (
-              <SwiperSlide key={pkg.id || pkg.key || index} className="!h-auto p-1">
+              <SwiperSlide
+                key={pkg.id || pkg.key || index}
+                className="!h-auto p-1"
+              >
                 <div
-                  className={`group relative rounded-xl overflow-hidden bg-card shadow-sm hover:shadow-lg transition-all duration-500 h-full flex flex-col ${
-                    pkg.isPopular
-                      ? "border-2 border-secondary"
-                      : "border border-border/60"
-                  }`}
+                  className="group relative rounded-xl overflow-hidden bg-card shadow-sm hover:shadow-xl transition-all duration-500 h-full flex flex-col border-2 border-amber-500/30 hover:border-amber-500/80"
                 >
                   {/* Popular Badge */}
                   {pkg.isPopular && (
@@ -149,23 +160,25 @@ export const TourPackagesSection = () => {
                     {/* Features */}
                     <div className="flex flex-wrap gap-y-3 gap-x-6 mb-4 md:mb-6">
                       <div className="flex items-center gap-2">
-                        <FaBed className="w-5 h-5 text-secondary" />
-                        <span className="text-sm font-medium">Premium Hotel</span>
+                        <FaBed className="w-5 h-5 text-amber-600" />
+                        <span className="text-sm font-medium">
+                          Sonar Bangla Resort
+                        </span>
                       </div>
 
                       <div className="flex items-center gap-2">
-                        <GiHotMeal className="w-5 h-5 text-secondary" />
+                        <GiHotMeal className="w-5 h-5 text-amber-600" />
                         <span className="text-sm font-medium">All Meals</span>
                       </div>
 
                       <div className="flex items-center gap-2">
-                        <FaCarSide className="w-5 h-5 text-secondary" />
+                        <FaCarSide className="w-5 h-5 text-amber-600" />
                         <span className="text-sm font-medium">Pickup &amp; Drop</span>
                       </div>
 
                       <div className="flex items-center gap-2">
-                        <PiBinocularsFill className="w-5 h-5 text-secondary" />
-                        <span className="text-sm font-medium">Sightseeing</span>
+                        <PiBinocularsFill className="w-5 h-5 text-amber-600" />
+                        <span className="text-sm font-medium">Boat Safari</span>
                       </div>
                     </div>
 
@@ -175,14 +188,14 @@ export const TourPackagesSection = () => {
                         <BookingModal
                           packageName={pkg.packageName}
                           triggerLabel="Book Now"
-                          triggerClassName="text-sm rounded-[4px] font-medium w-full"
+                          triggerClassName="text-sm rounded-[4px] font-medium w-full bg-amber-600 hover:bg-amber-700 text-white"
                         />
                       </div>
 
                       <div className="w-full">
                         <Button
                           variant="outline"
-                          className="h-12 px-6 rounded-[4px] font-medium w-full"
+                          className="h-12 px-6 rounded-[4px] font-medium w-full border-amber-300 hover:bg-amber-50 text-slate-800"
                           onClick={() => router.push(`/packages/${pkg.key}`)}
                         >
                           View Details
@@ -197,45 +210,5 @@ export const TourPackagesSection = () => {
         )}
       </div>
     </section>
-  );
-};
-
-export const PackageSkeleton = () => {
-  return (
-    <>
-      {[1, 2, 3].map((i) => (
-        <div
-          key={i}
-          className="rounded-xl overflow-hidden border border-border animate-pulse"
-        >
-          <div className="h-64 bg-slate-200" />
-
-          <div className="p-6">
-            <div className="h-6 w-2/3 bg-slate-200 rounded mb-3" />
-            <div className="h-4 w-24 bg-slate-100 rounded mb-6" />
-
-            <div className="grid grid-cols-2 gap-3 mb-6">
-              {[1, 2, 3, 4].map((item) => (
-                <div key={item} className="h-20 rounded-xl bg-slate-100" />
-              ))}
-            </div>
-
-            <div className="flex justify-between items-center mb-6">
-              <div>
-                <div className="h-3 w-20 bg-slate-100 rounded mb-2" />
-                <div className="h-8 w-28 bg-slate-200 rounded" />
-              </div>
-
-              <div className="w-14 h-14 rounded-xl bg-slate-100" />
-            </div>
-
-            <div className="grid grid-cols-2 gap-3">
-              <div className="h-11 rounded-xl bg-slate-200" />
-              <div className="h-11 rounded-xl bg-slate-200" />
-            </div>
-          </div>
-        </div>
-      ))}
-    </>
   );
 };

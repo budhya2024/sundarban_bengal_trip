@@ -13,6 +13,7 @@ import { BookingForm } from "@/components/home/BookingForm";
 import { AboutSection } from "@/components/home/WhyChooseSection";
 import { ExploreSundarbanSection } from "@/components/home/ExploreSundarbanSection";
 import { TourPackagesSection } from "@/components/home/TourPackagesSection";
+import { SonarBanglaPackagesSection } from "@/components/home/SonarBanglaPackagesSection";
 import { GallerySection } from "@/components/home/GallerySection";
 import { TestimonialsSection } from "@/components/home/TestimonialsSection";
 import { FAQSection } from "@/components/home/FAQSection";
@@ -59,6 +60,7 @@ const Index = () => {
       <TrustSection />
       <BookingForm />
       <TourPackagesSection />
+      <SonarBanglaPackagesSection />
       <TravelExperience />
       <HotelSwiper />
       <AboutSection />

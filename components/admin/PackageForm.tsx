@@ -151,6 +151,7 @@ function DayActivities({
 
 const emptyState: PackageValues = {
   isPopular: false,
+  isSonarBangla: false,
   heroTitle: "",
   heroSubtitle: "",
   heroImage: "",
@@ -208,6 +209,8 @@ export default function PackageForm({
       ? {
           ...emptyState,
           ...initialData,
+          isPopular: initialData.isPopular ?? false,
+          isSonarBangla: initialData.isSonarBangla ?? false,
           highlights: initialData.highlights || [],
           inclusions: initialData.inclusions || [],
           exclusions: initialData.exclusions || [],
@@ -857,23 +860,48 @@ export default function PackageForm({
           {/* --- RIGHT COLUMN (Stats, Highlights, Inclusions, etc.) remain identical ... */}
           <div className="lg:col-span-4 space-y-8">
             <div className="bg-white p-6 rounded-2xl border shadow-sm space-y-5">
-              <div className="flex items-center justify-between border-b pb-3">
-                <div className="flex items-center gap-2 font-bold text-slate-700">
-                  <Star size={18} className="fill-amber-400 text-amber-400" />{" "}
-                  Quick Stats
+              <div className="border-b pb-3 space-y-3">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2 font-bold text-slate-700">
+                    <Star size={18} className="fill-amber-400 text-amber-400" />{" "}
+                    Quick Stats & Flags
+                  </div>
+                  <FormField
+                    control={form.control}
+                    name="isPopular"
+                    render={({ field }) => (
+                      <FormItem className="flex items-center gap-2 space-y-0 bg-slate-50 px-2.5 py-1 rounded-full border">
+                        <FormLabel className="text-[9px] font-black uppercase tracking-tighter">
+                          {field.value ? "Popular" : "Standard"}
+                        </FormLabel>
+                        <Switch
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                          className="scale-75 data-[state=checked]:bg-emerald-600"
+                        />
+                      </FormItem>
+                    )}
+                  />
                 </div>
+                {/* Hotel Sonar Bangla Toggle Flag */}
                 <FormField
                   control={form.control}
-                  name="isPopular"
+                  name="isSonarBangla"
                   render={({ field }) => (
-                    <FormItem className="flex items-center gap-2 space-y-0 bg-slate-50 px-2.5 py-1 rounded-full border">
-                      <FormLabel className="text-[9px] font-black uppercase tracking-tighter">
-                        {field.value ? "Popular" : "Standard"}
-                      </FormLabel>
+                    <FormItem className="flex items-center justify-between p-2.5 rounded-xl border bg-amber-50/50 border-amber-200/70">
+                      <div>
+                        <FormLabel className="text-xs font-bold text-slate-800 flex items-center gap-1.5 cursor-pointer">
+                          <span className="w-2 h-2 rounded-full bg-amber-500 inline-block" />
+                          Hotel Sonar Bangla
+                        </FormLabel>
+                        <p className="text-[10px] text-slate-500">
+                          Display in Hotel Sonar Bangla section on Home
+                        </p>
+                      </div>
                       <Switch
                         checked={field.value}
                         onCheckedChange={field.onChange}
-                        className="scale-75 data-[state=checked]:bg-emerald-600"
+                        className="scale-90 data-[state=checked]:bg-amber-600"
                       />
                     </FormItem>
                   )}

@@ -98,8 +98,13 @@ export function PackageRow({ pkg }: { pkg: any }) {
                   {pkg.heroTitle}
                 </span>
                 {pkg.isPopular && (
-                  <span className="bg-amber-100 text-amber-700 text-[9px] font-black px-1.5 py-0.5 rounded-lg uppercase tracking-tighter border">
+                  <span className="bg-amber-100 text-amber-700 text-[9px] font-black px-1.5 py-0.5 rounded-lg uppercase tracking-tighter border border-amber-200">
                     Popular
+                  </span>
+                )}
+                {pkg.isSonarBangla && (
+                  <span className="bg-amber-50 text-amber-800 text-[9px] font-black px-1.5 py-0.5 rounded-lg uppercase tracking-tighter border border-amber-300">
+                    Hotel Sonar Bangla
                   </span>
                 )}
               </div>
