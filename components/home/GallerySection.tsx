@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import AOS from "aos";
@@ -5,15 +7,6 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { getAllGalleryItems } from "@/app/actions/gallery.actions";
 import { GalleryType } from "@/db/schema";
-import { Skeleton } from "@/components/ui/skeleton";
-
-const MASONRY_LAYOUT = [
-  "col-span-2 row-span-2",
-  "col-span-1 row-span-1",
-  "col-span-1 row-span-1",
-  "col-span-1 row-span-1",
-  "col-span-1 row-span-1",
-];
 
 export const GallerySection = () => {
   const [galleryImages, setGalleryImages] = useState<GalleryType[]>([]);
@@ -21,7 +14,7 @@ export const GallerySection = () => {
 
   useEffect(() => {
     const fetchGalleryImages = async () => {
-      const { success, data } = await getAllGalleryItems(5);
+      const { success, data } = await getAllGalleryItems(4);
       if (success && data) {
         setGalleryImages(data);
       }
@@ -47,7 +40,7 @@ export const GallerySection = () => {
             Gallery
           </span>
           <h3 className="font-display text-2xl md:text-3xl font-bold text-foreground mt-2 mb-4">
-            Moments from the Wild
+            Sundarban Jungle Safari Moments
           </h3>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             Explore the stunning wildlife and breathtaking landscapes captured
@@ -55,59 +48,43 @@ export const GallerySection = () => {
           </p>
         </div>
 
-        {/* Gallery Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 auto-rows-[200px]">
+        {/* Gallery Grid — 2 columns × 2 rows = 4 images */}
+        <div className="grid grid-cols-2 gap-4">
           {loading
-            ? // Loading Skeletons
-            MASONRY_LAYOUT.map((span, i) => (
+            ? Array.from({ length: 4 }).map((_, i) => (
               <div
                 key={i}
-                className={`
-        ${span} 
-        ${i >= 4 ? "hidden md:block" : ""}
-        rounded-xl 
-        bg-slate-300/80 
-        border border-slate-200 
-        animate-pulse 
-        relative overflow-hidden
-      `}
+                className="aspect-[4/3] rounded-xl bg-slate-300/80 border border-slate-200 animate-pulse relative overflow-hidden"
               >
-                {/* Optional: Add a slight gradient shimmer for better visibility */}
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full animate-[shimmer_2s_infinite]" />
               </div>
             ))
-            : galleryImages.map((image, index) => {
-              // Dynamically assign the span class based on the index
-              const spanClass =
-                MASONRY_LAYOUT[index] || "col-span-1 row-span-1";
-
-              return (
-                <div
-                  key={image.id}
-                  data-aos="fade-up"
-                  data-aos-delay={index * 100}
-                  className={`${spanClass} ${index >= 4 ? "hidden md:block" : ""} relative rounded-xl overflow-hidden group cursor-pointer`}
-                >
-                  <Image
-                    src={image.url}
-                    alt={image.title || "Sundarban Gallery"}
-                    fill
-                    sizes="(max-width: 768px) 50vw, 25vw"
-                    quality={100}
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/70 transition-colors duration-300" />
-
-                  <div className="absolute inset-5 border border-secondary-2  scale-0 group-hover:scale-100 transition-all rounded-xl duration-300" />
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-400 p-4 text-center">
-                    <span className="text-primary-foreground font-medium text-lg">
-                      {image.title}
-                    </span>
-                  </div>
+            : galleryImages.slice(0, 4).map((image, index) => (
+              <div
+                key={image.id}
+                data-aos="fade-up"
+                data-aos-delay={index * 100}
+                className="relative aspect-[4/3] rounded-xl overflow-hidden group cursor-pointer"
+              >
+                <Image
+                  src={image.url}
+                  alt={image.title || "Sundarban Gallery"}
+                  fill
+                  sizes="(max-width: 768px) 50vw, 50vw"
+                  quality={85}
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
+                  loading="lazy"
+                />
+                {/* Hover overlay */}
+                <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/60 transition-colors duration-300" />
+                <div className="absolute inset-4 border border-white/50 rounded-lg scale-0 group-hover:scale-100 transition-transform duration-300" />
+                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 text-center">
+                  <span className="text-primary-foreground font-semibold text-lg drop-shadow">
+                    {image.title}
+                  </span>
                 </div>
-              );
-            })}
+              </div>
+            ))}
         </div>
 
         {/* View All CTA */}
