@@ -57,7 +57,7 @@ export const TourPackagesSection = () => {
         {/* Header */}
         <div
           data-aos="fade-up"
-          className="text-center max-w-4xl mx-auto mb-10 md:mb-16"
+          className="text-center max-w-4xl mx-auto mb-8 md:mb-12"
         >
           <h1 className="font-display text-2xl md:text-3xl font-bold text-foreground mt-2 mb-4">
             Choose Your Sundarban tour package from kolkata
@@ -84,7 +84,7 @@ export const TourPackagesSection = () => {
             autoplay={{ delay: 4000, disableOnInteraction: false }}
             pagination={{ clickable: true }}
             spaceBetween={20}
-            className="!pb-14 md:!pb-16 !pt-3"
+            className="!pb-8 md:!pb-0 !pt-1"
             breakpoints={{
               0: { slidesPerView: 1 },
               768: { slidesPerView: 2 },
@@ -94,11 +94,10 @@ export const TourPackagesSection = () => {
             {packages.map((pkg, index) => (
               <SwiperSlide key={pkg.id || pkg.key || index} className="!h-auto p-1">
                 <div
-                  className={`group relative rounded-xl overflow-hidden bg-card shadow-sm hover:shadow-lg transition-all duration-500 h-full flex flex-col ${
-                    pkg.isPopular
-                      ? "border-2 border-secondary"
-                      : "border border-border/60"
-                  }`}
+                  className={`group relative rounded-xl overflow-hidden bg-card shadow-sm hover:shadow-lg transition-all duration-500 h-full flex flex-col ${pkg.isPopular
+                    ? "border-2 border-secondary"
+                    : "border border-border/60"
+                    }`}
                 >
                   {/* Popular Badge */}
                   {pkg.isPopular && (
@@ -133,7 +132,7 @@ export const TourPackagesSection = () => {
 
                     {/* Package Name */}
                     <div className="absolute bottom-5 left-5 right-5">
-                      <h3 className="text-white text-xl font-bold leading-snug">
+                      <h3 className="text-white text-lg md:text-xl font-bold leading-snug">
                         {pkg.packageName}
                       </h3>
 

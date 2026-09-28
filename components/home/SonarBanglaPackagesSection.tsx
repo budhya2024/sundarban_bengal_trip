@@ -55,33 +55,24 @@ export const SonarBanglaPackagesSection = () => {
     AOS.refresh();
   }, []);
 
-  // If still loading or no Sonar Bangla packages exist, do not display the section
   if (loading || packages.length === 0) {
     return null;
   }
 
   return (
-    <section className="py-8 md:py-16 overflow-hidden bg-slate-50/60 border-y border-border/40">
+    <section className="py-8 md:py-16 overflow-hidden bg-primary/5">
       <div className="container">
         {/* Header */}
         <div
           data-aos="fade-up"
-          className="text-center max-w-4xl mx-auto mb-10 md:mb-16"
+          className="text-center max-w-4xl mx-auto mb-8 md:mb-12"
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-100 text-amber-800 text-xs font-bold uppercase tracking-wider mb-3 border border-amber-200">
-            <Hotel className="w-3.5 h-3.5" />
-            <span>Luxury Resort Partner</span>
-          </div>
-
           <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-4">
-            Hotel Sonar Bangla
+            Hotel sonar bangla sundarban package tour
           </h2>
 
-          <p className="text-muted-foreground max-w-3xl mx-auto text-sm md:text-base">
-            Indulge in 5-star comfort and riverside elegance at the renowned Hotel
-            Sonar Bangla Sundarban. Experience premium AC cottages, authentic
-            Bengali feasts, Kolkata-to-Kolkata transfers, and private mangrove boat
-            safaris.
+          <p className="text-muted-foreground max-w-4xl mx-auto text-sm md:text-base">
+            Experience the perfect blend of Luxury and Wilderness with the Hotel Sonar Bangla Sundarban Package Tour. Nestled in the heart of nature, Hotel Sonar Bangla is a Premier Luxury Resort in Sundarban that offers unmatched comfort and elegance amidst the enchanting mangroves of the Sundarbans.
           </p>
         </div>
 
@@ -96,7 +87,7 @@ export const SonarBanglaPackagesSection = () => {
             autoplay={{ delay: 4500, disableOnInteraction: false }}
             pagination={{ clickable: true }}
             spaceBetween={20}
-            className="!pb-14 md:!pb-16 !pt-3"
+            className="!pb-8 md:!pb-0 !pt-.5"
             breakpoints={{
               0: { slidesPerView: 1 },
               768: { slidesPerView: 2 },
@@ -109,7 +100,7 @@ export const SonarBanglaPackagesSection = () => {
                 className="!h-auto p-1"
               >
                 <div
-                  className="group relative rounded-xl overflow-hidden bg-card shadow-sm hover:shadow-xl transition-all duration-500 h-full flex flex-col border-2 border-amber-500/30 hover:border-amber-500/80"
+                  className="group relative rounded-xl overflow-hidden bg-card shadow-sm  transition-all duration-500 h-full flex flex-col border-2 border-amber-500/30 hover:border-amber-500/80"
                 >
                   {/* Popular Badge */}
                   {pkg.isPopular && (
@@ -144,7 +135,7 @@ export const SonarBanglaPackagesSection = () => {
 
                     {/* Package Name */}
                     <div className="absolute bottom-5 left-5 right-5">
-                      <h3 className="text-white text-xl font-bold leading-snug">
+                      <h3 className="text-white text-lg md:text-xl font-bold leading-snug">
                         {pkg.packageName}
                       </h3>
 
@@ -195,7 +186,7 @@ export const SonarBanglaPackagesSection = () => {
                       <div className="w-full">
                         <Button
                           variant="outline"
-                          className="h-12 px-6 rounded-[4px] font-medium w-full border-amber-300 hover:bg-amber-50 text-slate-800"
+                          className="h-12 px-6 rounded-[4px] font-medium w-full hover:bg-primary text-primary"
                           onClick={() => router.push(`/packages/${pkg.key}`)}
                         >
                           View Details
