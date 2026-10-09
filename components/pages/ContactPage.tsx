@@ -173,18 +173,38 @@ const ContactPage = ({ data }: { data: ContactPageValues | null }) => {
               {/* Map */}
               <div
                 data-aos="fade-left"
-                className="rounded-3xl overflow-hidden h-[300px] shadow-elevated"
+                className="rounded-3xl overflow-hidden shadow-elevated bg-card border border-border flex flex-col"
               >
-                <iframe
-                  src="https://maps.google.com/maps?q=Sundarban%20Bengal%20Trip,%20Gosaba,%20Arampur,%20West%20Bengal%20743370&t=&z=15&ie=UTF8&iwloc=&output=embed"
-                  width="100%"
-                  height="100%"
-                  style={{ border: 0 }}
-                  allowFullScreen
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  title="Sundarban Bengal Trip Location"
-                />
+                <div className="h-[280px] w-full relative">
+                  <iframe
+                    src={`https://maps.google.com/maps?q=${encodeURIComponent(
+                      data?.address
+                        ? `Sundarban Bengal Trip, ${data.address}`
+                        : "Sundarban Bengal Trip, Nath Para, Gosaba, West Bengal 743370"
+                    )}&t=&z=15&ie=UTF8&iwloc=B&output=embed`}
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    allowFullScreen
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    title="Sundarban Bengal Trip Location"
+                  />
+                </div>
+                <div className="p-3 px-4 bg-card border-t border-border flex items-center justify-between">
+                  <span className="text-xs text-muted-foreground font-medium flex items-center gap-1.5">
+                    <MapPin className="w-4 h-4 text-primary shrink-0" />
+                    Sundarban Bengal Trip
+                  </span>
+                  <a
+                    href="https://maps.app.goo.gl/BmREXPxvGBPRn7eT8"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs font-semibold text-primary hover:underline flex items-center gap-1"
+                  >
+                    Open in Google Maps &rarr;
+                  </a>
+                </div>
               </div>
 
               {/* Quick Contact */}

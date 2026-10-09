@@ -1,15 +1,15 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { PageHeader } from "@/components/PageHeader";
-import { X, ImageOff, RefreshCcw } from "lucide-react";
+import { X, ImageOff, RefreshCcw, Loader2 } from "lucide-react";
 import { GalleryType } from "@/db/schema";
 
-const ITEMS_PER_LOAD = 6;
+const ITEMS_PER_LOAD = 8;
 
 const GalleryPage = ({
   galleryItems,
@@ -21,6 +21,8 @@ const GalleryPage = ({
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [lightboxImage, setLightboxImage] = useState<string | null>(null);
   const [visibleCount, setVisibleCount] = useState(ITEMS_PER_LOAD);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const observerTarget = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     AOS.init({
@@ -44,6 +46,34 @@ const GalleryPage = ({
       );
 
   const visibleImages = filteredImages.slice(0, visibleCount);
+  const hasMore = visibleCount < filteredImages.length;
+
+  // Infinite scroll listener using IntersectionObserver
+  useEffect(() => {
+    const currentTarget = observerTarget.current;
+    if (!currentTarget || !hasMore) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && !isLoadingMore) {
+          setIsLoadingMore(true);
+          setTimeout(() => {
+            setVisibleCount((prev) => Math.min(prev + ITEMS_PER_LOAD, filteredImages.length));
+            setIsLoadingMore(false);
+          }, 250);
+        }
+      },
+      { rootMargin: "300px", threshold: 0.1 }
+    );
+
+    observer.observe(currentTarget);
+
+    return () => {
+      if (currentTarget) {
+        observer.unobserve(currentTarget);
+      }
+    };
+  }, [hasMore, filteredImages.length, isLoadingMore]);
 
   return (
     <main className="min-h-screen">
@@ -55,7 +85,7 @@ const GalleryPage = ({
         backgroundImage="/assets/house-boat.jpeg"
       />
 
-      <section className="py-10 md:py-16 bg-background">
+      <section className="py-8 md:py-16 bg-background">
         <div className="container">
           {/* Category Filter */}
           {galleryItems.length > 0 && (
@@ -67,7 +97,7 @@ const GalleryPage = ({
                 <button
                   key={category}
                   onClick={() => setSelectedCategory(category)}
-                  className={`px-6 py-2 rounded-[4px] font-medium transition-all capitalize ${selectedCategory === category
+                  className={`px-6 py-1.5 rounded-full  text-sm font-medium transition-all capitalize ${selectedCategory === category
                     ? "bg-primary text-primary-foreground"
                     : "bg-muted text-muted-foreground hover:bg-primary/10"
                     }`}
@@ -81,13 +111,13 @@ const GalleryPage = ({
           {/* Grid */}
           {visibleImages.length > 0 ? (
             <>
-              <div className="grid  grid-cols-2 md:grid-cols-2 xl:grid-cols-4 gap-2 md:gap-4">
+              <div className="grid grid-cols-2 md:grid-cols-2 xl:grid-cols-4 gap-2 md:gap-4">
                 {visibleImages.map((image, index) => (
                   <div
                     key={index}
                     data-aos="fade-up"
                     data-aos-delay={index * 50}
-                    className="relative aspect-[4/3] rounded-sm  overflow-hidden group cursor-pointer"
+                    className="relative aspect-[4/3] rounded-sm overflow-hidden group cursor-pointer"
                     onClick={() => setLightboxImage(image.url)}
                   >
                     <img
@@ -100,29 +130,26 @@ const GalleryPage = ({
                       <p className="text-primary-foreground font-medium">
                         {image.title}
                       </p>
-                      {/* <span className="text-primary-foreground/70 text-sm">
-                        {image.category}
-                      </span> */}
                     </div>
                   </div>
                 ))}
               </div>
 
-              {/* LOAD MORE BUTTON */}
-              {visibleCount < filteredImages.length && (
+              {/* INFINITE SCROLL TRIGGER & SPINNER */}
+              {hasMore ? (
                 <div
-                  data-aos="fade-up"
-                  className="flex justify-center mt-14"
+                  ref={observerTarget}
+                  className="flex items-center justify-center gap-2 mt-8  md:mt-16 text-primary font-medium"
                 >
-                  <button
-                    onClick={() =>
-                      setVisibleCount((prev) => prev + ITEMS_PER_LOAD)
-                    }
-                    className="px-8 py-3 rounded-sm bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition"
-                  >
-                    Load More
-                  </button>
+                  <Loader2 className="w-6 h-6 animate-spin text-primary" />
+                  <span>Loading more photos...</span>
                 </div>
+              ) : (
+                filteredImages.length > ITEMS_PER_LOAD && (
+                  <div className="text-center mt-8  md:mt-16 text-muted-foreground text-sm font-medium">
+                    Showing all {filteredImages.length} photos
+                  </div>
+                )
               )}
             </>
           ) : (

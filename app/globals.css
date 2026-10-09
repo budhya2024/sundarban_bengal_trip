@@ -255,15 +255,41 @@
   }
 
   @keyframes phoneRing {
-    0% { transform: rotate(0deg) scale(1); }
-    8% { transform: rotate(-24deg) scale(1.12); }
-    16% { transform: rotate(24deg) scale(1.12); }
-    24% { transform: rotate(-24deg) scale(1.12); }
-    32% { transform: rotate(24deg) scale(1.12); }
-    40% { transform: rotate(-12deg) scale(1.06); }
-    48% { transform: rotate(12deg) scale(1.06); }
-    56% { transform: rotate(0deg) scale(1); }
-    100% { transform: rotate(0deg) scale(1); }
+    0% {
+      transform: rotate(0deg) scale(1);
+    }
+
+    8% {
+      transform: rotate(-24deg) scale(1.12);
+    }
+
+    16% {
+      transform: rotate(24deg) scale(1.12);
+    }
+
+    24% {
+      transform: rotate(-24deg) scale(1.12);
+    }
+
+    32% {
+      transform: rotate(24deg) scale(1.12);
+    }
+
+    40% {
+      transform: rotate(-12deg) scale(1.06);
+    }
+
+    48% {
+      transform: rotate(12deg) scale(1.06);
+    }
+
+    56% {
+      transform: rotate(0deg) scale(1);
+    }
+
+    100% {
+      transform: rotate(0deg) scale(1);
+    }
   }
 
   .animate-call-wave {
@@ -275,7 +301,9 @@
       transform: scale(0.95);
       opacity: 0.8;
     }
-    70%, 100% {
+
+    70%,
+    100% {
       transform: scale(1.65);
       opacity: 0;
     }
@@ -365,45 +393,56 @@ select:focus {
 .shine {
   position: absolute;
   top: 0;
-  left: -80%;
-  width: 45%;
+  left: -100%;
+  width: 40%;
   height: 100%;
   background: linear-gradient(120deg,
-      transparent,
-      rgba(255, 255, 255, 0.8),
-      transparent);
+      transparent 0%,
+      rgba(255, 255, 255, 0.45) 50%,
+      transparent 100%);
   transform: skewX(-25deg);
-  animation: shine 1.8s linear infinite;
+  animation: shine 3.5s ease-in-out infinite;
   pointer-events: none;
+  will-change: left;
 }
 
 @keyframes shine {
   0% {
-    left: -80%;
+    left: -100%;
+  }
+
+  65% {
+    left: 170%;
   }
 
   100% {
-    left: 150%;
+    left: 170%;
   }
 }
 
 /* Swiper Pagination Dots Custom Styling */
 .swiper-pagination {
-  bottom: 8px !important;
+  position: relative !important;
+  bottom: 0 !important;
+  margin-top: 28px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
 }
 
 .swiper-pagination-bullet {
-  width: 8px !important;
-  height: 8px !important;
+  width: 14px !important;
+  height: 6px !important;
   background: #94a3b8 !important;
-  opacity: 0.5 !important;
-  transition: all 0.3s ease !important;
+  opacity: 0.45 !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
   border-radius: 9999px !important;
   margin: 0 5px !important;
 }
 
 .swiper-pagination-bullet-active {
-  width: 24px !important;
+  width: 38px !important;
+  height: 6px !important;
   background: #003c2f !important;
   opacity: 1 !important;
   border-radius: 9999px !important;

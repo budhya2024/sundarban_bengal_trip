@@ -129,9 +129,9 @@ export const Navbar = () => {
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 10 }}
-                        className="absolute top-full left-0 mt-2 w-64"
+                        className="absolute top-full left-0 mt-2 w-80 md:w-[380px]"
                       >
-                        <div className="bg-card rounded-xl shadow-elevated overflow-hidden">
+                        <div className="bg-card border border-border/60 rounded-xl shadow-elevated overflow-hidden py-1">
                           {loading ? (
                             <>
                               {[...Array(5)].map((_, index) => (
@@ -146,14 +146,14 @@ export const Navbar = () => {
                                 <Link
                                   key={pkg.key}
                                   href={`/packages/${pkg.key}`}
-                                  className="block px-4 py-3 hover:bg-muted transition"
+                                  className="block px-5 py-3 text-sm font-medium text-foreground hover:bg-muted hover:text-secondary transition-colors border-b border-border/30 last:border-0"
                                 >
                                   {pkg.name}
                                 </Link>
                               ))}
                               <Link
                                 href={`/contact`}
-                                className="block px-4 py-3 hover:bg-muted transition"
+                                className="block px-5 py-3 text-sm font-semibold text-secondary hover:bg-muted transition-colors"
                               >
                                 Plan Your Custom Trip
                               </Link>

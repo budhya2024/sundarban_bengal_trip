@@ -403,12 +403,12 @@ export const BookingForm = ({ isModal = false }: { isModal?: boolean }) => {
               </div>
             </div>
 
-            <div className="mx-auto flex w-fit items-center gap-2 md:gap-3 rounded-xl bg-[#003c2f] px-3 md:px-6 py-3 text-white">
+            {/* <div className="mx-auto flex w-fit items-center gap-2 md:gap-3 rounded-xl bg-[#003c2f] px-3 md:px-6 py-3 text-white">
               <FaUsers />
               <span className="text-xs md:text-sm font-medium">
                 Trusted by Families, Couples &amp; Groups Across India
               </span>
-            </div>
+            </div> */}
           </div>
         </form>
       </Form>

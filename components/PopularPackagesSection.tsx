@@ -1,109 +1,274 @@
-import { Clock, Users, Star } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import { PackageValues } from "@/schemas/package.schema";
-import { getPopularPackages } from "@/app/actions/package.actions";
-import { useEffect, useState } from "react";
+"use client";
 
-interface PopularPackage extends PackageValues {
-  id: string;
+import { useEffect, useState } from "react";
+import AOS from "aos";
+import { Button } from "@/components/ui/button";
+import { BookingModal } from "@/components/BookingModal";
+
+import { FaStar, FaCarSide, FaBed } from "react-icons/fa6";
+import { GiHotMeal } from "react-icons/gi";
+import { PiBinocularsFill } from "react-icons/pi";
+import { TrendingUp } from "lucide-react";
+
+import Image from "next/image";
+import { PackageValues } from "@/schemas/package.schema";
+import { getPackages } from "@/app/actions/package.actions";
+import { useRouter } from "next/navigation";
+
+// Swiper
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Pagination } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
+
+interface PackageListValue extends PackageValues {
   key: string;
+  id: string;
 }
+
+// Helper for deterministic 30-day booking data
+const get30DaysBookingData = (identifier: string, index: number) => {
+  const ratios = [94, 88, 96, 91, 93, 90, 95];
+  const counts = [142, 98, 165, 118, 134, 105, 156];
+  const hash = identifier
+    ? identifier.split("").reduce((acc, char) => acc + char.charCodeAt(0), 0)
+    : index;
+  const idx = Math.abs(hash) % ratios.length;
+  return {
+    ratio: ratios[idx],
+    count: counts[idx],
+  };
+};
 
 export const PopularPackagesSection = ({
   excludePackage,
 }: {
-  excludePackage: string;
+  excludePackage?: string;
 }) => {
-  const [popularPackages, setPopularPackages] = useState<PopularPackage[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [packages, setPackages] = useState<PackageListValue[]>([]);
+  const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
-    const fetchPopularPackages = async () => {
+    const fetchPackages = async () => {
       setLoading(true);
-      const { success, data, error } = await getPopularPackages(excludePackage);
-      if (success) {
-        setPopularPackages(data);
+      const { data, success } = await getPackages();
+      if (success && data) {
+        let filtered = data;
+        if (excludePackage) {
+          filtered = data.filter(
+            (pkg) => pkg.key !== excludePackage && pkg.id !== excludePackage
+          );
+        }
+        setPackages(filtered);
       }
       setLoading(false);
     };
-    fetchPopularPackages();
+
+    fetchPackages();
+  }, [excludePackage]);
+
+  useEffect(() => {
+    AOS.refresh();
   }, []);
 
-  if (loading || popularPackages.length === 0) return null;
+  if (!loading && packages.length === 0) return null;
 
   return (
-    <section className="py-16 bg-muted">
+    <section className="py-8 md:py-16 bg-muted/30 overflow-hidden">
       <div className="container">
-        <div className="text-center mb-12" data-aos="fade-up">
-          <span className="text-secondary font-medium text-sm uppercase tracking-wider">
+        {/* Header */}
+        <div data-aos="fade-up" className="text-center max-w-4xl mx-auto mb-8 md:mb-12">
+          <span className="text-secondary font-semibold text-xs md:text-sm uppercase tracking-wider">
             Explore More
           </span>
-          <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mt-2">
-            Popular Packages
+          <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mt-2 mb-3">
+            Related Packages
           </h2>
+          <p className="text-muted-foreground text-sm md:text-base max-w-2xl mx-auto">
+            Discover related Sundarban tour packages carefully designed for comfortable travel, delicious food, and memorable jungle safari experiences.
+          </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {popularPackages.map((pkg, index) => (
-            <div
-              key={pkg.id}
-              data-aos="fade-up"
-              data-aos-delay={index * 100}
-              className="bg-card rounded-2xl overflow-hidden shadow-soft hover:shadow-elevated transition-all duration-300 group"
-            >
-              {/* Image */}
-              <div className="relative h-48 overflow-hidden">
-                <img
-                  src={pkg.packageImage}
-                  alt={pkg.packageName}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/60 to-transparent" />
-                <div className="absolute bottom-4 left-4 right-4 flex justify-between items-end">
-                  <h3 className="font-display text-lg font-bold text-primary-foreground">
-                    {pkg.packageName}
-                  </h3>
-                  {/* <div className="flex items-center gap-1 text-secondary">
-                    <Star className="w-4 h-4 fill-current" />
-                    <span className="text-primary-foreground font-medium">
-                      {pkg.rating}
-                    </span>
-                  </div> */}
-                </div>
-              </div>
+        {/* Packages Slider */}
+        {loading ? (
+          <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-4">
+            <PackageSkeleton />
+          </div>
+        ) : (
+          <Swiper
+            modules={[Autoplay, Pagination]}
+            autoplay={{ delay: 4000, disableOnInteraction: false }}
+            pagination={{ clickable: true }}
+            spaceBetween={20}
+            slidesPerGroup={1}
 
-              {/* Content */}
-              <div className="p-5">
-                {/* Meta */}
-                <div className="flex gap-4 mb-4">
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <Clock className="w-4 h-4" />
-                    {pkg.duration}
-                  </div>
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <Users className="w-4 h-4" />
-                    {pkg.groupSize}
-                  </div>
-                </div>
+            breakpoints={{
+              0: { slidesPerView: 1, slidesPerGroup: 1 },
+              768: { slidesPerView: 2, slidesPerGroup: 1 },
+              1200: { slidesPerView: 3, slidesPerGroup: 1 },
+            }}
+          >
+            {packages.map((pkg, index) => {
+              const booking = get30DaysBookingData(pkg.key || pkg.id || "", index);
+              return (
+                <SwiperSlide key={pkg.id || pkg.key || index} className="!h-auto p-1">
+                  <div
+                    className={`group relative rounded-xl overflow-hidden bg-card shadow-sm hover:shadow-lg transition-all duration-500 h-full flex flex-col ${pkg.isPopular
+                      ? "border-2 border-secondary"
+                      : "border border-border/60"
+                      }`}
+                  >
+                    {/* Popular Badge */}
+                    {pkg.isPopular && (
+                      <div className="absolute top-4 left-4 z-20">
+                        <span className="px-4 py-1.5 rounded-full bg-secondary text-secondary-foreground text-xs font-semibold shadow-lg">
+                          Most Popular
+                        </span>
+                      </div>
+                    )}
 
-                {/* Price & CTA */}
-                <div className="flex items-center justify-between pt-4 border-t border-border">
-                  <div>
-                    {/* <span className="text-sm text-muted-foreground">From</span> */}
-                    <p className="font-display text-xl font-bold text-foreground">
-                      {pkg.price}
-                    </p>
+                    {/* Image */}
+                    <div className="relative h-64 overflow-hidden shrink-0">
+                      <Image
+                        src={pkg.packageImage}
+                        alt={pkg.packageName}
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        quality={100}
+                        className="object-cover transition-transform duration-700 group-hover:scale-105"
+                        loading="lazy"
+                      />
+
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+
+                      {/* Rating */}
+                      <div className="absolute top-4 right-4 flex items-center gap-1 bg-secondary text-white px-3 py-1 rounded-full">
+                        <FaStar className="w-5 h-5 text-white" />
+                        <span className="text-white text-sm font-medium">
+                          {pkg.rating}
+                        </span>
+                      </div>
+
+                      {/* Package Name */}
+                      <div className="absolute bottom-5 left-5 right-5">
+                        <h3 className="text-white text-base md:text-lg font-semibold leading-snug">
+                          {pkg.packageName}
+                        </h3>
+                      </div>
+                    </div>
+
+                    {/* Content (Outside Image Box) */}
+                    <div className="p-6 flex-1 flex flex-col justify-between">
+                      <div>
+                        {/* 30-Day Booking Quantity Banner */}
+                        <div className="relative overflow-hidden bg-primary text-white py-2 px-6 -mx-6 -mt-6 mb-6 w-[calc(100%+3rem)]">
+                          <div className="shine" />
+                          <div className="relative z-10 flex items-center justify-between text-xs font-bold">
+                            <div className="flex items-center gap-1.5">
+                              <TrendingUp className="w-4 h-4 text-white shrink-0" />
+                              <span className="tracking-wide font-semibold text-xs md:text-sm text-white">
+                                Last 30 Days:
+                              </span>
+                            </div>
+                            <span className="text-white text-xs md:text-sm font-semibold tracking-wider shadow-inner">
+                              {booking.count}+ Tour Booked
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Features */}
+                        <div className="flex flex-wrap gap-y-3 gap-x-6 mb-4 md:mb-6">
+                          <div className="flex items-center gap-2">
+                            <FaBed className="w-5 h-5 text-secondary" />
+                            <span className="text-sm font-medium">
+                              Premium Hotel
+                            </span>
+                          </div>
+
+                          <div className="flex items-center gap-2">
+                            <GiHotMeal className="w-5 h-5 text-secondary" />
+                            <span className="text-sm font-medium">
+                              All Meals
+                            </span>
+                          </div>
+
+                          <div className="flex items-center gap-2">
+                            <FaCarSide className="w-5 h-5 text-secondary" />
+                            <span className="text-sm font-medium">
+                              Pickup &amp; Drop
+                            </span>
+                          </div>
+
+                          <div className="flex items-center gap-2">
+                            <PiBinocularsFill className="w-5 h-5 text-secondary" />
+                            <span className="text-sm font-medium">
+                              Sightseeing
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Action Buttons */}
+                      <div>
+                        <div className="flex items-center gap-3 mt-auto">
+                          <div className="w-full">
+                            <BookingModal
+                              packageName={pkg.packageName}
+                              triggerLabel="Book Now"
+                              triggerClassName="text-sm rounded-[4px] font-medium w-full"
+                            />
+                          </div>
+
+                          <div className="w-full">
+                            <Button
+                              variant="outline"
+                              className="h-12 px-6 rounded-[4px] font-medium w-full"
+                              onClick={() =>
+                                router.push(`/packages/${pkg.key}`)
+                              }
+                            >
+                              View Details
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <Button variant="nature" size="sm" asChild>
-                    <Link href={`/packages/${pkg.key}`}>View Details</Link>
-                  </Button>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+                </SwiperSlide>
+              );
+            })}
+          </Swiper>
+        )}
       </div>
     </section>
+  );
+};
+
+const PackageSkeleton = () => {
+  return (
+    <>
+      {[1, 2, 3].map((i) => (
+        <div
+          key={i}
+          className="rounded-xl overflow-hidden border border-border animate-pulse"
+        >
+          <div className="h-64 bg-slate-200" />
+          <div className="p-6">
+            <div className="h-6 w-2/3 bg-slate-200 rounded mb-3" />
+            <div className="h-4 w-24 bg-slate-100 rounded mb-6" />
+            <div className="grid grid-cols-2 gap-3 mb-6">
+              {[1, 2, 3, 4].map((item) => (
+                <div key={item} className="h-20 rounded-xl bg-slate-100" />
+              ))}
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <div className="h-11 rounded-xl bg-slate-200" />
+              <div className="h-11 rounded-xl bg-slate-200" />
+            </div>
+          </div>
+        </div>
+      ))}
+    </>
   );
 };
