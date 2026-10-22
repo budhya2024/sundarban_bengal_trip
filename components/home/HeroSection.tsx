@@ -70,7 +70,7 @@ export const HeroSection = () => {
         }}
         effect="fade"
         loop={true}
-        className="h-[300px] md:h-[80vh]"
+        className="h-[340px] md:h-[80vh]"
       >
         {slides.map((slide, index) => (
           <SwiperSlide key={slide.id}>
@@ -92,7 +92,7 @@ export const HeroSection = () => {
 
               {/* Content */}
               <div className="relative z-10 container mx-auto h-full flex items-center px-4  ">
-                <div className="max-w-md text-white">
+                <div className="max-w-md text-white mt-20">
 
                   {/* Title */}
                   <h1
@@ -102,6 +102,8 @@ export const HeroSection = () => {
                   >
                     {slide.title}
                   </h1>
+
+
 
                   {/* Rating */}
                   <p className="flex gap-1.5 items-center mb-6 md:mb-8 text-sm md:text-lg ">

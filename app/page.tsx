@@ -55,8 +55,8 @@ const Index = () => {
   return (
     <main className="min-h-screen">
       <Navbar />
-      {/* <HeroSection /> */}
-      <DurgaPujaHeroSlider />
+      <HeroSection />
+      {/* <DurgaPujaHeroSlider /> */}
       <TrustSection />
       <BookingForm />
       <TourPackagesSection />

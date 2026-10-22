@@ -4,13 +4,12 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Menu, X, ChevronDown, ChevronRight, PhoneCallIcon } from "lucide-react";
+import { Menu, X, ChevronDown, ChevronRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Button } from "@/components/ui/button";
 import { getNavbarPackageKeys } from "@/app/actions/package.actions";
 import { Skeleton } from "./ui/skeleton";
-import { FaPhoneAlt, FaPhoneSquareAlt } from "react-icons/fa";
 import { HeaderSearch } from "@/components/HeaderSearch";
+import { AnnouncementBar } from "@/components/AnnouncementBar";
 
 const navLinks = [
   { name: "Home", path: "/" },
@@ -48,7 +47,7 @@ export const Navbar = () => {
 
   /* Scroll shadow */
   useEffect(() => {
-    const onScroll = () => setIsScrolled(window.scrollY > 50);
+    const onScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -75,17 +74,25 @@ export const Navbar = () => {
     }
   }, [isOpen]);
 
-  const isHome = pathname === "/";
-
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
-        ? "bg-background/95 backdrop-blur-md shadow-soft"
-        : isHome
-          ? "bg-background/80 backdrop-blur-sm"
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        isScrolled
+          ? "bg-background/95 backdrop-blur-md shadow-soft"
           : "bg-transparent"
-        }`}
+      }`}
     >
+      {/* Announcement Bar: only shown at top of page, not fixed when scrolling */}
+      <div
+        className={`transition-all duration-300 overflow-hidden ${
+          isScrolled
+            ? "max-h-0 opacity-0 pointer-events-none -translate-y-2"
+            : "max-h-12 opacity-100 translate-y-0"
+        }`}
+      >
+        <AnnouncementBar isScrolled={false} />
+      </div>
+
       <div className="container">
         <nav className="flex items-center justify-between h-20">
           {/* LOGO */}
@@ -111,15 +118,17 @@ export const Navbar = () => {
                   onMouseLeave={() => setIsDropdownOpen(false)}
                 >
                   <button
-                    className={`flex items-center gap-1 font-medium transition ${isScrolled || isHome
-                      ? "text-foreground hover:text-secondary"
-                      : "text-white hover:text-white/80"
-                      }`}
+                    className={`flex items-center gap-1 font-medium transition ${
+                      isScrolled
+                        ? "text-foreground hover:text-secondary"
+                        : "text-white hover:text-white/80"
+                    }`}
                   >
                     {link.name}
                     <ChevronDown
-                      className={`w-4 h-4 transition ${isDropdownOpen ? "rotate-180" : ""
-                        }`}
+                      className={`w-4 h-4 transition ${
+                        isDropdownOpen ? "rotate-180" : ""
+                      }`}
                     />
                   </button>
 
@@ -168,20 +177,21 @@ export const Navbar = () => {
                 <Link
                   key={link.path}
                   href={link.path}
-                  className={`font-medium transition ${isScrolled || isHome
-                    ? "text-foreground hover:text-secondary"
-                    : "text-white hover:text-white/80"
-                    }`}
+                  className={`font-medium transition ${
+                    isScrolled
+                      ? "text-foreground hover:text-secondary"
+                      : "text-white hover:text-white/80"
+                  }`}
                 >
                   {link.name}
                 </Link>
-              ),
+              )
             )}
           </div>
 
           {/* RIGHT SIDE ACTIONS */}
           <div className="flex items-center gap-2.5 sm:gap-3">
-            <HeaderSearch isScrolled={isScrolled} isHome={isHome} />
+            <HeaderSearch />
 
 
 

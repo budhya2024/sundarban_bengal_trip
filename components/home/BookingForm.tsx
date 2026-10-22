@@ -14,7 +14,6 @@ import {
   FaClock,
   FaShieldAlt,
   FaUsers,
-  FaHeart,
   FaUser,
   FaEnvelope,
   FaCalendarAlt,
@@ -29,13 +28,7 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -54,10 +47,9 @@ import { useToast } from "@/hooks/use-toast";
 
 // Shared input className — keeps placeholder color consistent across all fields
 const INPUT_CLS = `
-  pl-12 h-12  text-base
+  pl-10 sm:pl-12 h-12 text-sm sm:text-base
   focus-visible:ring-0 focus-visible:ring-offset-0
   shadow-none
-  
   placeholder:text-muted-foreground
 `;
 
@@ -125,14 +117,14 @@ export const BookingForm = ({ isModal = false }: { isModal?: boolean }) => {
         <p className="font-display text-2xl md:text-3xl font-bold text-foreground mt-2 mb-2 md:mb-4">
           Sundarban tour package
         </p>
-        <p className="text-muted-foreground text-base">
+        <p className="text-muted-foreground text-sm sm:text-base">
           Fill up the form and our travel expert will contact you shortly.
         </p>
       </div>
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-4 md:gap-6 mb-4 md:mb-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-4 md:gap-6 mb-4 md:mb-10">
             {/* Name */}
             <FormField
               control={form.control}
@@ -140,7 +132,7 @@ export const BookingForm = ({ isModal = false }: { isModal?: boolean }) => {
               render={({ field }) => (
                 <FormItem>
                   <div className="relative">
-                    <FaUser className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground z-10" />
+                    <FaUser className="absolute left-3.5 sm:left-4 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-muted-foreground pointer-events-none z-10" />
                     <FormControl>
                       <Input
                         placeholder="Enter your full name"
@@ -161,7 +153,7 @@ export const BookingForm = ({ isModal = false }: { isModal?: boolean }) => {
               render={({ field }) => (
                 <FormItem>
                   <div className="relative">
-                    <FaEnvelope className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground z-10" />
+                    <FaEnvelope className="absolute left-3.5 sm:left-4 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-muted-foreground pointer-events-none z-10" />
                     <FormControl>
                       <Input
                         type="email"
@@ -183,7 +175,7 @@ export const BookingForm = ({ isModal = false }: { isModal?: boolean }) => {
               render={({ field }) => (
                 <FormItem>
                   <div className="relative">
-                    <FaPhoneAlt className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground z-10" />
+                    <FaPhoneAlt className="absolute left-3.5 sm:left-4 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-muted-foreground pointer-events-none z-10" />
                     <FormControl>
                       <Input
                         type="tel"
@@ -213,29 +205,31 @@ export const BookingForm = ({ isModal = false }: { isModal?: boolean }) => {
                   render={({ field }) => (
                     <FormItem className="md:col-auto">
                       <div className="relative" ref={calRef}>
-                        <FaCalendarAlt className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground pointer-events-none z-10" />
+                        <FaCalendarAlt className="absolute left-3.5 sm:left-4 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-muted-foreground pointer-events-none z-10" />
 
                         {/* Trigger button — shows placeholder or selected date */}
                         <button
                           type="button"
                           onClick={() => setCalOpen((o) => !o)}
                           className={`
-                              w-full h-12 pl-12 pr-4 text-left
-                              border border-input rounded-[4px] bg-background
-                              text-sm focus:outline-none focus:ring-0
+                              w-full h-12 pl-10 sm:pl-12 pr-3 sm:pr-4 text-left
+                              border border-input rounded-md bg-background
+                              text-sm sm:text-base focus:outline-none focus:ring-0 truncate
                               ${field.value ? "text-foreground" : "text-muted-foreground"}
                             `}
                         >
-                          {field.value
-                            ? new Date(field.value).toLocaleDateString(
-                              "en-IN",
-                              {
-                                day: "2-digit",
-                                month: "short",
-                                year: "numeric",
-                              },
-                            )
-                            : "Select date"}
+                          <span className="truncate block">
+                            {field.value
+                              ? new Date(field.value).toLocaleDateString(
+                                "en-IN",
+                                {
+                                  day: "2-digit",
+                                  month: "short",
+                                  year: "numeric",
+                                },
+                              )
+                              : "Select date"}
+                          </span>
                         </button>
 
                         {/* Calendar popover */}
@@ -277,12 +271,12 @@ export const BookingForm = ({ isModal = false }: { isModal?: boolean }) => {
                   render={({ field }) => (
                     <FormItem className="md:col-auto">
                       <div className="relative">
-                        <FaUsers className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground z-10" />
+                        <FaUsers className="absolute left-3.5 sm:left-4 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-muted-foreground pointer-events-none z-10" />
                         <FormControl>
                           <Input
                             type="number"
                             min="1"
-                            placeholder="No. of guests"
+                            placeholder="Guests"
                             className={INPUT_CLS}
                             {...field}
                           />
@@ -302,24 +296,44 @@ export const BookingForm = ({ isModal = false }: { isModal?: boolean }) => {
               render={({ field }) => (
                 <FormItem>
                   <div className="relative">
-                    <FaBoxOpen className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground z-20" />
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger className="pl-12 h-12 focus:ring-0 focus:ring-offset-0 shadow-none data-[placeholder]:text-muted-foreground">
-                          <SelectValue placeholder="Select tour package" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
+                    <FaBoxOpen className="absolute left-3.5 sm:left-4 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-muted-foreground pointer-events-none z-10" />
+                    <FormControl>
+                      <select
+                        {...field}
+                        className={`w-full h-12 pl-10 sm:pl-12 pr-9 sm:pr-10 rounded-md border border-input bg-background text-sm sm:text-base focus-visible:outline-none focus:outline-none focus-visible:ring-0 shadow-none appearance-none cursor-pointer truncate ${
+                          !field.value ? "text-muted-foreground" : "text-foreground"
+                        }`}
+                      >
+                        <option value="" disabled className="text-muted-foreground bg-background">
+                          Select tour package
+                        </option>
                         {packages?.map((pkg) => (
-                          <SelectItem key={pkg.key} value={pkg.name}>
+                          <option
+                            key={pkg.key}
+                            value={pkg.name}
+                            className="text-foreground bg-background"
+                          >
                             {pkg.name}
-                          </SelectItem>
+                          </option>
                         ))}
-                      </SelectContent>
-                    </Select>
+                      </select>
+                    </FormControl>
+                    <div className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 pointer-events-none text-muted-foreground">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="opacity-70"
+                      >
+                        <path d="m6 9 6 6 6-6" />
+                      </svg>
+                    </div>
                   </div>
                   <FormMessage className="text-xs" />
                 </FormItem>
@@ -354,23 +368,25 @@ export const BookingForm = ({ isModal = false }: { isModal?: boolean }) => {
             <div className="grid grid-cols-2 sm:grid-cols-4 text-xs md:text-sm gap-2 sm:gap-4 text-gray-700 font-medium rounded-md bg-[#f7f2d8] p-2 md:p-4">
               {/* Exclusive Offers */}
               <div className="flex items-center gap-2 md:gap-3">
-                <FaPercent className="text-[#003c2f] text-2xl" />
-                <div className="text-left">
-                  <p className="font-bold text-xs md:text-base text-[#003c2f]">
+                <FaPercent className="text-[#003c2f] text-xl sm:text-2xl shrink-0" />
+                <div className="text-left min-w-0">
+                  <p className="font-bold text-xs sm:text-sm md:text-base text-[#003c2f] truncate">
                     Exclusive Offers
                   </p>
-                  <p className="text-xs md:text-base">For Early Bookings</p>
+                  <p className="text-[11px] sm:text-xs md:text-sm truncate sm:whitespace-normal">
+                    For Early Bookings
+                  </p>
                 </div>
               </div>
 
               {/* Instant Confirmation */}
               <div className="flex items-center gap-2 md:gap-3">
-                <FaClock className="text-[#003c2f] text-2xl" />
-                <div className="text-left">
-                  <p className="font-bold text-xs md:text-base text-[#003c2f]">
+                <FaClock className="text-[#003c2f] text-xl sm:text-2xl shrink-0" />
+                <div className="text-left min-w-0">
+                  <p className="font-bold text-xs sm:text-sm md:text-base text-[#003c2f] truncate">
                     Instant Confirmation
                   </p>
-                  <p className="text-xs md:text-base text-gray-600">
+                  <p className="text-[11px] sm:text-xs md:text-sm text-gray-600 truncate sm:whitespace-normal">
                     No Waiting
                   </p>
                 </div>
@@ -378,12 +394,12 @@ export const BookingForm = ({ isModal = false }: { isModal?: boolean }) => {
 
               {/* Refund */}
               <div className="flex items-center gap-2 md:gap-3">
-                <FaShieldAlt className="text-[#003c2f] text-2xl" />
-                <div className="text-left">
-                  <p className="font-bold text-xs md:text-base text-[#003c2f]">
+                <FaShieldAlt className="text-[#003c2f] text-xl sm:text-2xl shrink-0" />
+                <div className="text-left min-w-0">
+                  <p className="font-bold text-xs sm:text-sm md:text-base text-[#003c2f] truncate">
                     100% Refund
                   </p>
-                  <p className="text-xs md:text-base text-gray-600">
+                  <p className="text-[11px] sm:text-xs md:text-sm text-gray-600 truncate sm:whitespace-normal">
                     On Cancellation*
                   </p>
                 </div>
@@ -391,12 +407,12 @@ export const BookingForm = ({ isModal = false }: { isModal?: boolean }) => {
 
               {/* Travelers */}
               <div className="flex items-center gap-2 md:gap-3">
-                <FaUsers className="text-[#003c2f] text-2xl" />
-                <div className="text-left">
-                  <p className="font-bold text-xs md:text-base text-[#003c2f]">
+                <FaUsers className="text-[#003c2f] text-xl sm:text-2xl shrink-0" />
+                <div className="text-left min-w-0">
+                  <p className="font-bold text-xs sm:text-sm md:text-base text-[#003c2f] truncate">
                     10,000+ Travelers
                   </p>
-                  <p className="text-xs md:text-base text-gray-600">
+                  <p className="text-[11px] sm:text-xs md:text-sm text-gray-600 truncate sm:whitespace-normal">
                     Trusted Across India
                   </p>
                 </div>

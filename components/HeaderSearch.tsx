@@ -63,7 +63,7 @@ interface HeaderSearchProps {
   isHome?: boolean;
 }
 
-export const HeaderSearch = ({ isScrolled, isHome }: HeaderSearchProps) => {
+export const HeaderSearch = ({ isScrolled, isHome }: HeaderSearchProps = {}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [activeKeyword, setActiveKeyword] = useState<string | null>(null);
