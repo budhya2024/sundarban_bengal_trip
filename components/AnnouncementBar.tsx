@@ -106,7 +106,7 @@ export const AnnouncementBar = ({
     <div
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
-      className="relative z-60 w-full bg-red-600  md:py-2 text-white select-none transition-colors duration-300"
+      className="relative z-60 w-full bg-emerald-700 md:py-2 text-white select-none transition-colors duration-300"
     >
       <div className="container text-xs sm:text-sm text-center">
 
