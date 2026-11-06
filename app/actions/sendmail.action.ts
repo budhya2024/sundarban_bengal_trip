@@ -5,7 +5,9 @@ import "dotenv/config";
 import nodemailer from "nodemailer";
 
 const transporter = nodemailer.createTransport({
-  service: "gmail",
+  host: process.env.SMTP_HOST,
+  port: Number(process.env.SMTP_PORT) || 587,
+  secure: process.env.SMTP_PORT === "465", // 465 = SSL, 587 = STARTTLS
   pool: true,
   maxConnections: 3,
   maxMessages: 100,
@@ -30,7 +32,7 @@ const sendBaseEmail = async ({
 }) => {
   try {
     const info = await transporter.sendMail({
-      from: `"${name || "Sundarban Bengal Trip"}" <${process.env.NODEMAILER_USER}>`,
+      from: `"${name || "Sundarban Bengal Trip"}" <${process.env.SMTP_FROM}>`,
       to: to,
       replyTo: replyTo,
       subject: subject,
@@ -50,7 +52,7 @@ const sendBaseEmail = async ({
 export const sendContactInquiry = async (data: any) => {
   // 1️⃣ Email to admin
   await sendBaseEmail({
-    to: process.env.SITE_OWNER_EMAIL || process.env.NODEMAILER_USER!,
+    to: process.env.SITE_OWNER_EMAIL || process.env.SMTP_FROM!,
     subject: `[Website Inquiry] ${data.subject}`,
     html: getContactEmailTemplate(data),
     replyTo: data.email,
@@ -62,7 +64,7 @@ export const sendContactInquiry = async (data: any) => {
     to: data.email,
     subject: `We've Received Your Message — Sundarban Bengal Trip`,
     html: getContactClientConfirmationTemplate(data),
-    replyTo: process.env.SITE_OWNER_EMAIL || process.env.NODEMAILER_USER!,
+    replyTo: process.env.SITE_OWNER_EMAIL || process.env.SMTP_FROM!,
     name: "Sundarban Bengal Trip",
   });
 };
@@ -86,7 +88,7 @@ export const sendOtpMail = async (email: string, otp: string) => {
 export const sendBookingInquiry = async (data: BookingValues) => {
   // 1️⃣ Email to admin
   await sendBaseEmail({
-    to: process.env.SITE_OWNER_EMAIL || process.env.NODEMAILER_USER!,
+    to: process.env.SITE_OWNER_EMAIL || process.env.SMTP_FROM!,
     subject: `[New Booking] ${data.package} - ${data.name}`,
     html: getBookingEmailTemplate(data),
     replyTo: data.email,
@@ -98,7 +100,7 @@ export const sendBookingInquiry = async (data: BookingValues) => {
     to: data.email,
     subject: `Booking Request Received — Sundarban Bengal Trip 🎉`,
     html: getBookingClientConfirmationTemplate(data),
-    replyTo: process.env.SITE_OWNER_EMAIL || process.env.NODEMAILER_USER!,
+    replyTo: process.env.SITE_OWNER_EMAIL || process.env.SMTP_FROM!,
     name: "Sundarban Bengal Trip",
   });
 };
@@ -111,7 +113,7 @@ export const sendNewsletterWelcome = async (email: string) => {
     to: email,
     subject: `Welcome to Sundarban Bengal Trip — You're In! 🌿`,
     html: getNewsletterWelcomeTemplate(email),
-    replyTo: process.env.SITE_OWNER_EMAIL || process.env.NODEMAILER_USER!,
+    replyTo: process.env.SITE_OWNER_EMAIL || process.env.SMTP_FROM!,
     name: "Sundarban Bengal Trip",
   });
 };
@@ -137,7 +139,7 @@ const emailFooter = () => `
   <div style="background-color: #f8fafc; border-top: 1px solid #e2e8f0; padding: 28px 32px; text-align: center;">
     <p style="margin: 0 0 8px 0; color: #64748b; font-size: 13px;">
       Questions? Reach us at
-      <a href="mailto:${process.env.NODEMAILER_USER}" style="color: #064e3b; text-decoration: none; font-weight: 600;">${process.env.NODEMAILER_USER}</a>
+      <a href="mailto:${process.env.SMTP_FROM}" style="color: #064e3b; text-decoration: none; font-weight: 600;">${process.env.SMTP_FROM}</a>
     </p>
     <p style="margin: 0 0 16px 0; color: #94a3b8; font-size: 12px;">
       Sundarban Bengal Trip · West Bengal, India

@@ -9,7 +9,9 @@ import nodemailer from "nodemailer";
 // Nodemailer Transporter Setup (Using Gmail App Password from Environment)
 // ─────────────────────────────────────────────────────────────────────────────
 const transporter = nodemailer.createTransport({
-  service: "gmail",
+  host: process.env.SMTP_HOST,
+  port: Number(process.env.SMTP_PORT) || 587,
+  secure: process.env.SMTP_PORT === "465", // 465 = SSL, 587 = STARTTLS
   pool: true,
   maxConnections: 3,
   maxMessages: 100,
@@ -47,7 +49,7 @@ const sendBaseEmail = async ({
 }) => {
   try {
     const info = await transporter.sendMail({
-      from: `"${name || "Sundarban Bengal Trip"}" <${process.env.NODEMAILER_USER}>`,
+      from: `"${name || "Sundarban Bengal Trip"}" <${process.env.SMTP_FROM}>`,
       to: to,
       replyTo: replyTo,
       subject: subject,
@@ -96,7 +98,7 @@ export const sendDurgaPujaHeroEmail = async (data: DurgaPujaHeroBookingData) => 
 
   const recipientEmail =
     process.env.SITE_OWNER_EMAIL ||
-    process.env.NODEMAILER_USER ||
+    process.env.SMTP_FROM ||
     "sundarbanbengaltrip@gmail.com";
 
   const adminEmailResult = await sendBaseEmail({
@@ -156,7 +158,7 @@ const emailFooter = () => `
   <div style="background-color: #f8fafc; border-top: 1px solid #e2e8f0; padding: 26px 28px; text-align: center;">
     <p style="margin: 0 0 6px 0; color: #64748b; font-size: 13px;">
       যেকোনো প্রয়োজনে যোগাযোগ করুন:
-      <a href="mailto:${process.env.NODEMAILER_USER}" style="color: #b91c1c; text-decoration: none; font-weight: 700;">${process.env.NODEMAILER_USER}</a>
+      <a href="mailto:${process.env.SMTP_FROM}" style="color: #b91c1c; text-decoration: none; font-weight: 700;">${process.env.SMTP_FROM}</a>
     </p>
     <p style="margin: 0 0 12px 0; color: #475569; font-size: 13px; font-weight: 600;">
       📞 হেল্পলাইন: <a href="tel:+917586889519" style="color: #064e3b; text-decoration: none;">+91 75868 89519</a>
