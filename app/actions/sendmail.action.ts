@@ -139,7 +139,7 @@ const emailFooter = () => `
   <div style="background-color: #f8fafc; border-top: 1px solid #e2e8f0; padding: 28px 32px; text-align: center;">
     <p style="margin: 0 0 8px 0; color: #64748b; font-size: 13px;">
       Questions? Reach us at
-      <a href="mailto:${process.env.SMTP_FROM}" style="color: #064e3b; text-decoration: none; font-weight: 600;">${process.env.SMTP_FROM}</a>
+      <a href="mailto:${process.env.SITE_OWNER_EMAIL || process.env.SMTP_FROM}" style="color: #064e3b; text-decoration: none; font-weight: 600;">${process.env.SITE_OWNER_EMAIL || process.env.SMTP_FROM}</a>
     </p>
     <p style="margin: 0 0 16px 0; color: #94a3b8; font-size: 12px;">
       Sundarban Bengal Trip · West Bengal, India

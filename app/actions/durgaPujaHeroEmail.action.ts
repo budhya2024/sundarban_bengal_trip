@@ -158,7 +158,7 @@ const emailFooter = () => `
   <div style="background-color: #f8fafc; border-top: 1px solid #e2e8f0; padding: 26px 28px; text-align: center;">
     <p style="margin: 0 0 6px 0; color: #64748b; font-size: 13px;">
       যেকোনো প্রয়োজনে যোগাযোগ করুন:
-      <a href="mailto:${process.env.SMTP_FROM}" style="color: #b91c1c; text-decoration: none; font-weight: 700;">${process.env.SMTP_FROM}</a>
+      <a href="mailto:${process.env.SITE_OWNER_EMAIL || process.env.SMTP_FROM}" style="color: #b91c1c; text-decoration: none; font-weight: 700;">${process.env.SITE_OWNER_EMAIL || process.env.SMTP_FROM}</a>
     </p>
     <p style="margin: 0 0 12px 0; color: #475569; font-size: 13px; font-weight: 600;">
       📞 হেল্পলাইন: <a href="tel:+917586889519" style="color: #064e3b; text-decoration: none;">+91 75868 89519</a>
