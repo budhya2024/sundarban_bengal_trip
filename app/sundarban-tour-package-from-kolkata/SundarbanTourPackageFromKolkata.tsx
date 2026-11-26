@@ -1,8 +1,5 @@
 "use client";
 
-import { useEffect } from "react";
-import AOS from "aos";
-
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { PageHeader } from "@/components/PageHeader";
@@ -14,14 +11,6 @@ import { ExploreSection } from "@/components/sundarban-tour-package-from-kolkata
 import { Heart, Users, Award, Coins, GraduationCap, Briefcase, ShieldCheck, Anchor, Utensils, Car, FileText, Hotel } from "lucide-react";
 
 const SundarbanTourPackageFromKolkata = () => {
-  useEffect(() => {
-    AOS.init({
-      duration: 1000,
-      once: true,
-      easing: "ease-out-cubic",
-    });
-  }, []);
-
   return (
     <main className="min-h-screen bg-white font-sans selection:bg-primary/20 selection:text-primary">
       <Navbar />

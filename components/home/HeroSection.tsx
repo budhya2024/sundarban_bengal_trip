@@ -1,12 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import AOS from "aos";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay, EffectFade } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/effect-fade";
-import "aos/dist/aos.css";
 
 import Link from "next/link";
 import Image from "next/image";
@@ -50,11 +48,27 @@ export const HeroSection = () => {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    AOS.init({ once: true });
+    // Preload all slider images into browser cache for instant transitions
+    slides.forEach((slide) => {
+      if (typeof window !== "undefined") {
+        const img = new window.Image();
+        img.src = slide.image;
+      }
+    });
   }, []);
 
   return (
     <section className="relative overflow-hidden">
+      {/* Preload all hero slider images in document head */}
+      {slides.map((s, idx) => (
+        <link
+          key={s.id}
+          rel="preload"
+          as="image"
+          href={s.image}
+          fetchPriority={idx === 0 ? "high" : "auto"}
+        />
+      ))}
       <Swiper
         modules={[Navigation, Autoplay, EffectFade]}
         navigation={{
@@ -75,14 +89,14 @@ export const HeroSection = () => {
         {slides.map((slide, index) => (
           <SwiperSlide key={slide.id}>
             <div className="relative h-full w-full">
-              {/* Background Image */}
+              {/* Background Image with preloading & eager load */}
               <Image
                 src={slide.image}
                 alt={slide.title}
                 fill
-                priority={index === 0}
-                loading={index === 0 ? "eager" : "lazy"}
-                quality={100}
+                priority={true}
+                loading="eager"
+                quality={90}
                 sizes="100vw"
                 className="object-cover"
               />
@@ -96,8 +110,6 @@ export const HeroSection = () => {
 
                   {/* Title */}
                   <h1
-                    data-aos="fade-up"
-                    data-aos-duration="700"
                     className="text-2xl sm:text-4xl xl:text-5xl lg:text-6xl font-bold leading-tight mb-3 md:mb-5"
                   >
                     {slide.title}

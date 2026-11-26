@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import AOS from "aos";
 import { Button } from "@/components/ui/button";
 import { BookingModal } from "@/components/BookingModal";
 
@@ -65,10 +64,6 @@ export const SonarBanglaPackagesSection = () => {
     fetchPackages();
   }, []);
 
-  useEffect(() => {
-    AOS.refresh();
-  }, []);
-
   if (loading || packages.length === 0) {
     return null;
   }
@@ -78,7 +73,6 @@ export const SonarBanglaPackagesSection = () => {
       <div className="container">
         {/* Header */}
         <div
-          data-aos="fade-up"
           className="text-center max-w-4xl mx-auto mb-8 md:mb-12"
         >
           <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-4">
@@ -136,7 +130,7 @@ export const SonarBanglaPackagesSection = () => {
                         alt={pkg.packageName}
                         fill
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                        quality={100}
+                        quality={85}
                         className="object-cover transition-transform duration-700 group-hover:scale-105"
                         loading="lazy"
                       />

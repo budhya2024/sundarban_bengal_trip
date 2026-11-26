@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect } from "react";
-import AOS from "aos";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { PageHeader } from "@/components/PageHeader";
@@ -34,14 +33,6 @@ const DEFAULT_CONTACT_DATA = {
 };
 
 const ContactPage = ({ data }: { data: ContactPageValues | null }) => {
-  useEffect(() => {
-    AOS.init({
-      duration: 800,
-      once: true,
-      easing: "ease-out-cubic",
-    });
-  }, []);
-
   const contactCards = [
     {
       icon: Phone,

@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import AOS from "aos";
 import { Button } from "@/components/ui/button";
 import { BookingModal } from "@/components/BookingModal";
 
@@ -68,17 +67,13 @@ export const PopularPackagesSection = ({
     fetchPackages();
   }, [excludePackage]);
 
-  useEffect(() => {
-    AOS.refresh();
-  }, []);
-
   if (!loading && packages.length === 0) return null;
 
   return (
     <section className="py-8 md:py-16 bg-muted/30 overflow-hidden">
       <div className="container">
         {/* Header */}
-        <div data-aos="fade-up" className="text-center max-w-4xl mx-auto mb-8 md:mb-12">
+        <div className="text-center max-w-4xl mx-auto mb-8 md:mb-12">
           <span className="text-secondary font-semibold text-xs md:text-sm uppercase tracking-wider">
             Explore More
           </span>
@@ -135,7 +130,7 @@ export const PopularPackagesSection = ({
                         alt={pkg.packageName}
                         fill
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                        quality={100}
+                        quality={85}
                         className="object-cover transition-transform duration-700 group-hover:scale-105"
                         loading="lazy"
                       />

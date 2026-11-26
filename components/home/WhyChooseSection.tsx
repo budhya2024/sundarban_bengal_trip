@@ -1,6 +1,4 @@
-import { useEffect } from "react";
 import Image from "next/image";
-import AOS from "aos";
 import {
   FaBed,
   FaBowlFood,
@@ -56,18 +54,12 @@ const features = [
 ];
 
 export const AboutSection = () => {
-  useEffect(() => {
-    AOS.refresh();
-  }, []);
-
   return (
     <section className="py-10 md:py-16 bg-background overflow-hidden">
       <div className="container">
         <div className="grid lg:grid-cols-2 gap-10 items-center">
           {/* Image */}
           <div
-            data-aos="fade-right"
-            data-aos-duration="800"
             className="relative"
           >
             <div className="relative overflow-hidden rounded-xl h-[280px] md:h-[360px]">
@@ -76,7 +68,7 @@ export const AboutSection = () => {
                 alt="sundarban tour booking"
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
-                quality={100}
+                quality={85}
                 className="object-cover"
                 loading="lazy"
               />
@@ -84,7 +76,7 @@ export const AboutSection = () => {
           </div>
 
           {/* Content */}
-          <div data-aos="fade-left" data-aos-duration="800">
+          <div>
             <span className="text-secondary font-medium text-sm uppercase tracking-wider">
               Why Choose Us
             </span>
@@ -137,8 +129,6 @@ export const AboutSection = () => {
             return (
               <div
                 key={feature.title}
-                data-aos="fade-up"
-                data-aos-delay={(index % 4) * 100}
                 className={`p-3 md:p-8 flex flex-col items-center text-center transition-all duration-300 hover:bg-slate-50/50 ${borderClasses}`}
               >
                 <div className=" mb-4">

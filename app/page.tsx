@@ -1,8 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import AOS from "aos";
-import "aos/dist/aos.css";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { HomeSettingsValues } from "@/schemas/homeSettings.schema";
@@ -42,14 +40,6 @@ const Index = () => {
       setLoading(false);
     };
     fetchHomeSettings();
-  }, []);
-
-  useEffect(() => {
-    AOS.init({
-      duration: 800,
-      once: true,
-      easing: "ease-out-cubic",
-    });
   }, []);
 
   return (

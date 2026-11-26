@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import AOS from "aos";
 import { Button } from "@/components/ui/button";
 import { Calendar, ArrowRight } from "lucide-react";
 import Link from "next/link";
@@ -36,17 +35,11 @@ export const BlogSection = () => {
     fetchBlogs();
   }, []);
 
-  useEffect(() => {
-    AOS.refresh();
-  }, []);
-
   return (
     <section className="py-10 md:py-16 bg-muted overflow-hidden">
       <div className="container">
         {/* Header */}
         <div
-          data-aos="fade-up"
-          data-aos-duration="600"
           className="text-center mb-8 md:mb-12"
         >
           <span className="text-secondary font-medium text-sm uppercase tracking-wider">
@@ -91,7 +84,7 @@ export const BlogSection = () => {
                       alt={post.title}
                       fill
                       sizes="(max-width: 768px) 100vw, 33vw"
-                      quality={100}
+                      quality={85}
                       className="object-cover group-hover:scale-105 transition-transform duration-500"
                       loading="lazy"
                     />
@@ -124,9 +117,6 @@ export const BlogSection = () => {
 
         {/* View All CTA */}
         <div
-          data-aos="fade-up"
-          data-aos-duration="500"
-          data-aos-delay="300"
           className="text-center mt-8 md:mt-12"
         >
           <Button variant="hero" size="lg" asChild>

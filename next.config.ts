@@ -3,6 +3,8 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   output: "standalone",
   compress: true,
+  poweredByHeader: false,
+  reactStrictMode: true,
   images: {
     formats: ["image/avif", "image/webp"],
     deviceSizes: [360, 480, 640, 750, 828, 1080, 1200, 1920],
@@ -24,6 +26,15 @@ const nextConfig: NextConfig = {
     ],
   },
   experimental: {
+    optimizePackageImports: [
+      "lucide-react",
+      "react-icons",
+      "date-fns",
+      "framer-motion",
+      "@radix-ui/react-accordion",
+      "@radix-ui/react-dialog",
+      "@radix-ui/react-alert-dialog",
+    ],
     serverActions: {
       bodySizeLimit: "15mb",
     },

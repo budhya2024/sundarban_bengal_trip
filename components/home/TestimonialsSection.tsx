@@ -1,7 +1,5 @@
 "use client";
 
-import { useEffect } from "react";
-import AOS from "aos";
 import { Star, Quote } from "lucide-react";
 
 // Swiper
@@ -24,10 +22,6 @@ export const TestimonialsSection = ({
   }[];
   loading: boolean;
 }) => {
-  useEffect(() => {
-    AOS.refresh();
-  }, []);
-
   return (
     <section
       className="relative py-10 md:py-16 bg-fixed bg-center bg-cover"
@@ -41,8 +35,6 @@ export const TestimonialsSection = ({
       <div className="relative z-10 container">
         {/* Header */}
         <div
-          data-aos="fade-up"
-          data-aos-duration="600"
           className="text-center mb-8 md:mb-12"
         >
           <span className="text-secondary font-medium text-sm uppercase tracking-wider">

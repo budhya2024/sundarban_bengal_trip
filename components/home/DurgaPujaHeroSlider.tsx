@@ -1,12 +1,9 @@
 "use client";
 
-import { useEffect } from "react";
-import AOS from "aos";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
-import "aos/dist/aos.css";
 
 import Link from "next/link";
 import Image from "next/image";
@@ -33,10 +30,6 @@ const durgaPujaSlides = [
 ];
 
 export const DurgaPujaHeroSlider = () => {
-  useEffect(() => {
-    AOS.init({ once: true });
-  }, []);
-
   return (
     <section className="relative overflow-hidden pt-20">
       <Swiper

@@ -1,7 +1,5 @@
 "use client";
 
-import { useEffect } from "react";
-import AOS from "aos";
 import {
   Accordion,
   AccordionContent,
@@ -19,17 +17,11 @@ export const FAQSection = ({
   }[];
   loading: boolean;
 }) => {
-  useEffect(() => {
-    AOS.refresh();
-  }, []);
-
   return (
     <section className="py-10 md:py-16 bg-background">
       <div className="container">
         {/* Header */}
         <div
-          data-aos="fade-up"
-          data-aos-duration="600"
           className="text-center mb-8 md:mb-12"
         >
           <span className="text-secondary font-medium text-sm uppercase tracking-wider">
@@ -46,9 +38,6 @@ export const FAQSection = ({
 
         {/* FAQ Accordion */}
         <div
-          data-aos="fade-up"
-          data-aos-duration="600"
-          data-aos-delay="100"
           className="max-w-3xl mx-auto"
         >
           {loading ? (

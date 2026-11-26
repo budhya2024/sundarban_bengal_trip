@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState, useTransition, useRef } from "react";
-import AOS from "aos";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Calendar from "react-calendar";
@@ -91,10 +90,6 @@ export const BookingForm = ({ isModal = false }: { isModal?: boolean }) => {
       package: "",
     },
   });
-
-  useEffect(() => {
-    AOS.refresh();
-  }, []);
 
   const onSubmit = async (values: BookingValues) => {
     startTransition(async () => {
@@ -300,9 +295,8 @@ export const BookingForm = ({ isModal = false }: { isModal?: boolean }) => {
                     <FormControl>
                       <select
                         {...field}
-                        className={`w-full h-12 pl-10 sm:pl-12 pr-9 sm:pr-10 rounded-md border border-input bg-background text-sm sm:text-base focus-visible:outline-none focus:outline-none focus-visible:ring-0 shadow-none appearance-none cursor-pointer truncate ${
-                          !field.value ? "text-muted-foreground" : "text-foreground"
-                        }`}
+                        className={`w-full h-12 pl-10 sm:pl-12 pr-9 sm:pr-10 rounded-md border border-input bg-background text-sm sm:text-base focus-visible:outline-none focus:outline-none focus-visible:ring-0 shadow-none appearance-none cursor-pointer truncate ${!field.value ? "text-muted-foreground" : "text-foreground"
+                          }`}
                       >
                         <option value="" disabled className="text-muted-foreground bg-background">
                           Select tour package
@@ -486,8 +480,6 @@ export const BookingForm = ({ isModal = false }: { isModal?: boolean }) => {
     <section className="relative z-20">
       <div className="container">
         <div
-          data-aos="fade-up"
-          data-aos-duration="600"
           className="bg-card rounded-2xl border border-gray-300 shadow-elevated p-3 sm:p-5 md:p-10"
         >
           {FormContent}

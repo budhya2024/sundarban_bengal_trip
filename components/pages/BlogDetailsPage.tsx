@@ -1,7 +1,6 @@
 "use client";
 
 import { use, useEffect, useState } from "react";
-import AOS from "aos";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { PageHeader } from "@/components/PageHeader";
@@ -25,21 +24,6 @@ const BlogDetails = ({
   post?: BlogType;
   latestPosts?: BlogType[];
 }) => {
-  useEffect(() => {
-    AOS.init({
-      duration: 800,
-      once: true,
-      easing: "ease-out-cubic",
-    });
-  }, []);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      AOS.refresh();
-    }, 150); // Give DOM a brief window to parse dynamic html content
-    return () => clearTimeout(timer);
-  }, [post?.id]);
-
   if (!post) {
     return (
       <main className="min-h-screen">

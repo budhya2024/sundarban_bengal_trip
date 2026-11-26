@@ -42,7 +42,7 @@ export const ExploreSundarbanSection = () => {
     <section className="py-10 md:py-16 bg-muted">
       <div className="container">
         {/* Section Header */}
-        <div className="text-center mb-12" data-aos="fade-up">
+        <div className="text-center mb-12">
           <span className="text-secondary font-medium text-sm uppercase tracking-wider">
             Your Gateway
           </span>
@@ -57,7 +57,7 @@ export const ExploreSundarbanSection = () => {
 
         <div className="grid lg:grid-cols-2 gap-6 md:gap-12 items-start">
           {/* Left Side - Details */}
-          <div data-aos="fade-right" className="lg:sticky top-24">
+          <div className="lg:sticky top-24">
             {/* Features Grid */}
             <div className="grid grid-cols-2 gap-2 sm:gap-6 mb-4 lg:mb-8">
               {features.map((feature, index) => (
@@ -96,7 +96,7 @@ export const ExploreSundarbanSection = () => {
           </div>
 
           {/* Right Side - Map with Highlighted Places */}
-          <div data-aos="fade-left">
+          <div>
             <div className="bg-card rounded-2xl shadow-elevated overflow-hidden">
               {/* Map Container */}
               <div className="relative aspect-square bg-primary/5">

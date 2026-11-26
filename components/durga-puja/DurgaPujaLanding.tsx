@@ -1,8 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
-import AOS from "aos";
-import "aos/dist/aos.css";
+import React from "react";
 import { DurgaPujaHero } from "./DurgaPujaHero";
 import { DurgaPujaHighlights } from "./DurgaPujaHighlights";
 import { DurgaPujaWhyVisit } from "./DurgaPujaWhyVisit";
@@ -14,14 +12,6 @@ import { DurgaPujaFAQ } from "./DurgaPujaFAQ";
 import { DurgaPujaBottomCTA } from "./DurgaPujaBottomCTA";
 
 export const DurgaPujaLanding = () => {
-  useEffect(() => {
-    AOS.init({
-      duration: 700,
-      once: true,
-      easing: "ease-out-cubic",
-    });
-  }, []);
-
   return (
     <div className="min-h-screen bg-white selection:bg-amber-400 selection:text-slate-900 font-bengali">
 

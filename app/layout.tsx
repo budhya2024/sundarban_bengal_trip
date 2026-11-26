@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
 import Script from "next/script";
-import { IBM_Plex_Sans } from "next/font/google";
+import { IBM_Plex_Sans, Hind_Siliguri } from "next/font/google";
 
 import "./globals.css";
 import "swiper/css";
-import "aos/dist/aos.css";
 
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Toaster } from "@/components/ui/toaster";
@@ -13,9 +12,6 @@ import { ScrollToTop } from "@/components/ScrollToTop";
 import { SocialSidebar } from "@/components/SocialSidebar";
 import { ScrollToTopButton } from "@/components/ScrollToTopButton";
 import TanstackProvider from "@/components/TanstackProvider";
-import { CustomCursor } from "@/components/CustomCursor";
-import { GlobalBookingModal } from "@/components/GlobalBookingModal";
-import { CookieConsent } from "@/components/CookieConsent";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://sundarbanbengaltrip.com"),
@@ -127,6 +123,13 @@ const ibmPlexSans = IBM_Plex_Sans({
   variable: "--font-ibm-plex-sans",
   display: "swap",
   preload: true,
+});
+
+const hindSiliguri = Hind_Siliguri({
+  subsets: ["bengali"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-hind-siliguri",
+  display: "swap",
 });
 
 export default function RootLayout({
@@ -269,7 +272,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={`${ibmPlexSans.variable} antialiased`}>
+      <body className={`${ibmPlexSans.variable} ${hindSiliguri.variable} antialiased`}>
         {/* Google Tag Manager (noscript) */}
         <noscript>
           <iframe
@@ -386,11 +389,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
         {/* Google Analytics */}
         <Script
-          strategy="afterInteractive"
+          strategy="lazyOnload"
           src="https://www.googletagmanager.com/gtag/js?id=G-LL3C2G6HG8"
         />
 
-        <Script id="google-analytics" strategy="afterInteractive">
+        <Script id="google-analytics" strategy="lazyOnload">
           {`
             window.dataLayer = window.dataLayer || [];
 
@@ -407,7 +410,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         {/* Meta Pixel */}
         <Script
           id="meta-pixel"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
           dangerouslySetInnerHTML={{
             __html: `
               !function(f,b,e,v,n,t,s)
@@ -435,8 +438,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
         <TanstackProvider>
           <TooltipProvider>
-            <CustomCursor />
-
             <Sonner />
 
             <ScrollToTop />
@@ -455,18 +456,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
         <Toaster />
 
-        {/* Sundarban Bengal Trip Assistant */}
-        {/* <Script id="conversia-assistant" strategy="afterInteractive">
-          {`
-            (function (w, d, k) {
-              w.ConversiaSettings = { key: k, locale: "en-US" };
-              var s = d.createElement("script");
-              s.src = "https://conversia-omega-one.vercel.app/widget/v1.js";
-              s.async = true;
-              d.head.appendChild(s);
-            })(window, document, "cv_pk_758a62719bf1b71e42b7e458");
-          `}
-        </Script> */}
+
       </body>
     </html>
   );

@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect } from "react";
-import AOS from "aos";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { PageHeader } from "@/components/PageHeader";
@@ -36,14 +35,6 @@ const PackageDetailsPage = ({
 }: {
   data: (PackageValues & { key: string }) | null;
 }) => {
-  useEffect(() => {
-    AOS.init({
-      duration: 800,
-      once: true,
-      easing: "ease-out-cubic",
-    });
-  }, [data]);
-
   if (!data) {
     return (
       <main className="min-h-screen">

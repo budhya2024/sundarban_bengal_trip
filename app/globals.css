@@ -1,11 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 .font-bengali {
-  font-family: 'Hind Siliguri', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: var(--font-hind-siliguri), 'Hind Siliguri', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 /* Sundarban Travel Agency Design System */
@@ -446,4 +444,13 @@ select:focus {
   background: #003c2f !important;
   opacity: 1 !important;
   border-radius: 9999px !important;
+}
+
+/* Globally disable all scroll entrance animations (AOS) */
+[data-aos],
+[data-aos][data-aos] {
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+  animation: none !important;
 }

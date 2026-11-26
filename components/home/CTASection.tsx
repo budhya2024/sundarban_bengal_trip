@@ -1,14 +1,8 @@
-import { useEffect } from "react";
 import Image from "next/image";
-import AOS from "aos";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 export const CTASection = () => {
-  useEffect(() => {
-    AOS.refresh();
-  }, []);
-
   return (
     <section className="relative py-10 md:py-16 overflow-hidden">
       {/* Background */}
@@ -18,7 +12,7 @@ export const CTASection = () => {
           alt="Sundarban Sunset"
           fill
           sizes="100vw"
-          quality={100}
+          quality={85}
           className="object-cover"
           loading="lazy"
         />
@@ -28,8 +22,6 @@ export const CTASection = () => {
       {/* Content */}
       <div className="relative z-10 container">
         <div
-          data-aos="fade-up"
-          data-aos-duration="600"
           className="max-w-2xl mx-auto text-center"
         >
           <h2 className="font-display text-2xl md:text-3xl font-bold text-white mt-2 mb-4">

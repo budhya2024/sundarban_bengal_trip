@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import AOS from "aos";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { getAllGalleryItems } from "@/app/actions/gallery.actions";
@@ -31,17 +30,11 @@ export const GallerySection = () => {
     fetchGalleryImages();
   }, []);
 
-  useEffect(() => {
-    AOS.refresh();
-  }, []);
-
   return (
     <section className="py-10 md:py-16">
       <div className="container">
         {/* Header */}
         <div
-          data-aos="fade-up"
-          data-aos-duration="600"
           className="text-center mb-8 md:mb-12"
         >
           <span className="text-secondary font-medium text-sm uppercase tracking-wider">
@@ -81,8 +74,6 @@ export const GallerySection = () => {
               return (
                 <div
                   key={image.id}
-                  data-aos="fade-up"
-                  data-aos-delay={index * 100}
                   className={`${spanClass} relative rounded-xl overflow-hidden group cursor-pointer shadow-sm hover:shadow-md transition-shadow`}
                 >
                   <Image
@@ -110,8 +101,6 @@ export const GallerySection = () => {
         {/* View All CTA */}
         {!loading && (
           <div
-            data-aos="fade-up"
-            data-aos-delay="300"
             className="text-center mt-12"
           >
             <Button variant="hero" size="lg" asChild>
