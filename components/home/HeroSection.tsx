@@ -48,27 +48,21 @@ export const HeroSection = () => {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    // Preload all slider images into browser cache for instant transitions
-    slides.forEach((slide) => {
-      if (typeof window !== "undefined") {
-        const img = new window.Image();
-        img.src = slide.image;
-      }
-    });
+    // Defer preloading subsequent slide images until after critical LCP has painted
+    const timer = setTimeout(() => {
+      slides.slice(1).forEach((slide) => {
+        if (typeof window !== "undefined") {
+          const img = new window.Image();
+          img.src = slide.image;
+        }
+      });
+    }, 2500);
+
+    return () => clearTimeout(timer);
   }, []);
 
   return (
     <section className="relative overflow-hidden">
-      {/* Preload all hero slider images in document head */}
-      {slides.map((s, idx) => (
-        <link
-          key={s.id}
-          rel="preload"
-          as="image"
-          href={s.image}
-          fetchPriority={idx === 0 ? "high" : "auto"}
-        />
-      ))}
       <Swiper
         modules={[Navigation, Autoplay, EffectFade]}
         navigation={{
@@ -89,15 +83,15 @@ export const HeroSection = () => {
         {slides.map((slide, index) => (
           <SwiperSlide key={slide.id}>
             <div className="relative h-full w-full">
-              {/* Background Image with preloading & eager load */}
+              {/* Background Image: only slide 0 is LCP prioritized */}
               <Image
                 src={slide.image}
                 alt={slide.title}
                 fill
-                priority={true}
-                loading="eager"
-                quality={90}
-                sizes="100vw"
+                priority={index === 0}
+                loading={index === 0 ? "eager" : "lazy"}
+                quality={80}
+                sizes="(max-width: 768px) 100vw, 100vw"
                 className="object-cover"
               />
 

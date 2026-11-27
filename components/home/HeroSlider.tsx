@@ -100,16 +100,6 @@ export const HeroSlider = () => {
 
   return (
     <section className="relative min-h-screen bg-primary overflow-hidden">
-      {/* Preload slider images */}
-      {slides.map((s, idx) => (
-        <link
-          key={s.id}
-          rel="preload"
-          as="image"
-          href={s.image}
-          fetchPriority={idx === 0 ? "high" : "auto"}
-        />
-      ))}
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_20%_30%,hsl(var(--secondary))_0%,transparent_50%)]" />

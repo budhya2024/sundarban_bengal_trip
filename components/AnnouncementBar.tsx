@@ -61,7 +61,7 @@ export const AnnouncementBar = ({
   useEffect(() => {
     if (propIsScrolled !== undefined) return;
     const onScroll = () => setInternalScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", onScroll);
+    window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, [propIsScrolled]);
 
