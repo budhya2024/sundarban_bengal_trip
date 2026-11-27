@@ -90,7 +90,7 @@ export const HeroSection = () => {
                 fill
                 priority={index === 0}
                 loading={index === 0 ? "eager" : "lazy"}
-                quality={80}
+                quality={75}
                 sizes="(max-width: 768px) 100vw, 100vw"
                 className="object-cover"
               />
