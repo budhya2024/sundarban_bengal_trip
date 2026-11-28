@@ -217,11 +217,10 @@ const Blog = ({
                         <button
                           key={`page-${item}`}
                           onClick={() => handlePageChange(item as number)}
-                          className={`w-10 h-10 text-sm font-semibold rounded-[4px] transition-all ${
-                            currentPage === item
-                              ? "bg-primary text-primary-foreground shadow-sm"
-                              : "border border-border bg-card text-foreground hover:bg-muted"
-                          }`}
+                          className={`w-10 h-10 text-sm font-semibold rounded-[4px] transition-all ${currentPage === item
+                            ? "bg-primary text-primary-foreground shadow-sm"
+                            : "border border-border bg-card text-foreground hover:bg-muted"
+                            }`}
                         >
                           {item}
                         </button>
@@ -258,7 +257,7 @@ export const BlogEmptyState = () => {
         <div className="w-24 h-24 bg-emerald-50 rounded-full flex items-center justify-center animate-pulse">
           <BookOpen className="w-10 h-10 text-emerald-600/40" />
         </div>
-        <Search className="absolute -bottom-2 -right-2 w-8 h-8 text-emerald-700 bg-white rounded-full p-1.5 shadow-sm border border-emerald-100" />
+
       </div>
 
       {/* Text Content */}
